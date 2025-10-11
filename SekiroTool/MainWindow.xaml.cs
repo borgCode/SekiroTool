@@ -8,6 +8,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SekiroTool.Interfaces;
+using SekiroTool.Services;
 
 namespace SekiroTool;
 
@@ -16,8 +18,14 @@ namespace SekiroTool;
 /// </summary>
 public partial class MainWindow : Window
 {
+    
+    private readonly IMemoryService _memoryService;
+    
     public MainWindow()
     {
+        _memoryService = new MemoryService();
+        _memoryService.StartAutoAttach();
+        
         InitializeComponent();
     }
 }
