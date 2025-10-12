@@ -52,6 +52,8 @@ public class PlayerService(IMemoryService memoryService) : IPlayerService
             (playerIns.ToInt64(), 0x4 + 2),
             (Functions.Rest, 0x13 + 2)
         ]);
+        
+        memoryService.AllocateAndExecute(bytes);
     }
 
     #endregion

@@ -145,6 +145,7 @@ public partial class MainWindow : Window
 
     private void Test(object sender, RoutedEventArgs e)
     {
+        _playerService.Rest();
         // _enemyTargetService.ToggleNoDeath(true);
     }
 
