@@ -2,9 +2,25 @@
 
 public static class Offsets
 {
-    public static class PlayerBase
+    public static class WorldChrMan
     {
-      
+        public static IntPtr Base;
+
+        public const int PlayerIns = 0x88;
+        
+        public const int Modules = 0x1FF8;
+        public const int PlayerGameData = 0x2000;
+        
+        public static readonly int[] ChrDataModule = [PlayerIns, Modules, 0x18];
+        
+        public enum ChrDataOffsets
+        {
+            Hp = 0x130,
+            MaxHp = 0x134,
+            Posture = 0x148,
+            MaxPosture = 0x14C
+        }
+        
     }
 
     public static class ActivateAllTeleports

@@ -24,4 +24,12 @@ public enum AddressingMode
 
 public static class Patterns
 {
+    public static readonly Pattern WorldChrMan = new Pattern(
+        [0x48, 0x8B, 0x3D, 0x00, 0x00, 0x00, 0x00, 0x40, 0x32],
+        "xxx????xx",
+        0,
+        AddressingMode.Relative,
+        3,
+        7
+    );
 }
