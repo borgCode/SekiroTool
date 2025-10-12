@@ -88,6 +88,7 @@ public partial class MainWindow : Window
                 _hasAllocatedMemory = true;
             
             }
+            
 
             // if (_memoryService.IsGameLoaded())
             // {

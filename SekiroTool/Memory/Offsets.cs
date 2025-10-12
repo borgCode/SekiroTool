@@ -5,14 +5,16 @@ public static class Offsets
     public static class WorldChrMan
     {
         public static IntPtr Base;
-
         public const int PlayerIns = 0x88;
-        
+    }
+
+    public static class ChrIns
+    {
         public const int Modules = 0x1FF8;
         public const int PlayerGameData = 0x2000;
         
-        public static readonly int[] ChrDataModule = [PlayerIns, Modules, 0x18];
-        public static readonly int[] ChrPhysicsModule = [PlayerIns, Modules, 0x68];
+        public static readonly int[] ChrDataModule = [Modules, 0x18];
+        public static readonly int[] ChrPhysicsModule = [Modules, 0x68];
         
         public enum ChrDataOffsets
         {
@@ -29,12 +31,6 @@ public static class Offsets
             Z = 0x88,
             W = 0x8C
         }
-        
-    }
-
-    public static class ActivateAllTeleports
-    {
-    
     }
 
     public static class InfiniteConsumablesFlag
@@ -92,11 +88,7 @@ public static class Offsets
     {
   
     }
-
-    public static class EnemyIns
-    {
-       
-    }
+    
 
     public static class FieldArea
     {
