@@ -21,7 +21,14 @@ public static class Offsets
             Hp = 0x130,
             MaxHp = 0x134,
             Posture = 0x148,
-            MaxPosture = 0x14C
+            MaxPosture = 0x14C,
+            BitFlags = 0x228
+        }
+        
+        [Flags]
+        public enum ChrDataBitFlags
+        {
+            NoPostureConsume = 1 << 4,
         }
         
         public enum ChrPhysicsOffsets

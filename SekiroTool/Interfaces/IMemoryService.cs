@@ -25,6 +25,8 @@ public interface IMemoryService
     void WriteDouble(nint addr, double val);
     void WriteString(nint addr, string value, int maxLength = 32);
     void WriteBytes(nint addr, byte[] val);
+
+    void SetBitValue(nint addr, int flagMask, bool setValue);
     
     uint RunThread(nint address, uint timeout = uint.MaxValue);
     bool RunThreadAndWaitForCompletion(nint address, uint timeout = uint.MaxValue);

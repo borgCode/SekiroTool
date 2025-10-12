@@ -6,10 +6,16 @@
         xmlns:local="clr-namespace:SekiroTool"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <StackPanel>
         <TextBlock x:Name="IsAttachedText" Text=""
                    HorizontalAlignment="Right" VerticalAlignment="Center"
                    Width="100"
                    Margin="0,0,10,0" />
-    </Grid>
+        <Button Click="Test">
+            On
+        </Button>
+        <Button Click="TestOff">
+            Off
+        </Button>
+    </StackPanel>
 </Window>

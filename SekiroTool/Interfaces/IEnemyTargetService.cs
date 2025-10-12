@@ -11,4 +11,8 @@ public interface IEnemyTargetService
     void SetPosture(int posture);
     int GetCurrentPosture();
     int GetMaxPosture();
+
+    void ToggleNoPostureBuildup(bool isEnabled);
+
+    void ToggleFreezePosture(bool isEnabled);
 }

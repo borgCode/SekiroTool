@@ -129,6 +129,18 @@ public class MemoryService : IMemoryService
         Kernel32.WriteProcessMemory(ProcessHandle, addr, val, val.Length, 0);
     }
 
+    public void SetBitValue(IntPtr addr, int flagMask, bool setValue)
+    {
+        byte currentByte = ReadUInt8(addr);
+        byte modifiedByte;
+
+        if (setValue)
+            modifiedByte = (byte)(currentByte | flagMask);
+        else
+            modifiedByte = (byte)(currentByte & ~flagMask);
+        WriteUInt8(addr, modifiedByte);
+    }
+
     public uint RunThread(nint address, uint timeout = 0xFFFFFFFF)
     {
         nint thread = Kernel32.CreateRemoteThread(ProcessHandle, nint.Zero, 0, address, nint.Zero, 0, nint.Zero);

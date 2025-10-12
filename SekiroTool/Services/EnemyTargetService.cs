@@ -51,6 +51,17 @@ public class EnemyTargetService(IMemoryService memoryService, HookManager hookMa
     public int GetMaxPosture() =>
         memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.MaxPosture);
 
+    public void ToggleNoPostureBuildup(bool isEnabled)
+    {
+        var bitFlags = GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.BitFlags;
+        memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoPostureConsume, isEnabled);
+    }
+
+    public void ToggleFreezePosture(bool isEnabled)
+    {
+        throw new NotImplementedException();
+    }
+
     #endregion
 
 
