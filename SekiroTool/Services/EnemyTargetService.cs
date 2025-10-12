@@ -59,7 +59,28 @@ public class EnemyTargetService(IMemoryService memoryService, HookManager hookMa
 
     public void ToggleFreezePosture(bool isEnabled)
     {
-        throw new NotImplementedException();
+        var code = CodeCaveOffsets.Base + CodeCaveOffsets.FreezeTargetPosture;
+
+        if (isEnabled)
+        {
+            var hookLoc = Hooks.FreezeTargetPosture;
+            var endOfHookedFunc = hookLoc + 0xD1;
+            var lockedTargetPtr = CodeCaveOffsets.Base + CodeCaveOffsets.LockedTarget;
+            var bytes = AsmLoader.GetAsmBytes("FreezeTargetPosture");
+            
+            AsmHelper.WriteRelativeOffsets(bytes, [
+                (code.ToInt64() + 0x1, lockedTargetPtr.ToInt64(), 7, 0x1 + 3),
+                (code.ToInt64() + 0x14, endOfHookedFunc, 6, 0x14 + 2),
+                (code.ToInt64() + 0x1F, hookLoc + 0x5, 5, 0x1F + 1)
+            ]);
+            
+            memoryService.WriteBytes(code, bytes);
+            hookManager.InstallHook(code.ToInt64(), hookLoc, [0x48, 0x89, 0x5C, 0x24, 0x30]);
+        }
+        else
+        {
+            hookManager.UninstallHook(code.ToInt64());
+        }
     }
 
     #endregion

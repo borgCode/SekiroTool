@@ -36,4 +36,14 @@ c3                      ret</value>
 48 8b 80 f8 1f 00 00    mov    rax,QWORD PTR [rax+0x1ff8]
 e9 00 00 00 00          jmp    13 &lt;_main+0x13&gt;</value>
     </data>
+    <data name="FreezeTargetPosture" xml:space="preserve">
+        <value>50                      push   rax
+48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;
+48 8b 80 f8 1f 00 00    mov    rax,QWORD PTR [rax+0x1ff8]
+48 3b 48 18             cmp    rcx,QWORD PTR [rax+0x18]
+58                      pop    rax
+0f 84 00 00 00 00       je     1a &lt;_main+0x1a&gt;
+48 89 5c 24 30          mov    QWORD PTR [rsp+0x30],rbx
+e9 00 00 00 00          jmp    24 &lt;_main+0x24&gt;</value>
+    </data>
 </root>

@@ -86,7 +86,7 @@ public partial class MainWindow : Window
                 _memoryService.AllocCodeCave();
                 Console.WriteLine($"Code cave: 0x{CodeCaveOffsets.Base.ToInt64():X}");
                 _hasAllocatedMemory = true;
-                _enemyTargetService.ToggleTargetHook(true);
+         
             }
             
 
@@ -127,11 +127,11 @@ public partial class MainWindow : Window
 
     private void Test(object sender, RoutedEventArgs e)
     {
-        _enemyTargetService.ToggleNoPostureBuildup(true);
+    
     }
 
     private void TestOff(object sender, RoutedEventArgs e)
     {
-        _enemyTargetService.ToggleNoPostureBuildup(false);
+       
     }
 }

@@ -55,5 +55,13 @@ public static class Patterns
         AddressingMode.Absolute
     );
 
+    public static readonly Pattern FreezeTargetPosture = new Pattern(
+        [0x48, 0x89, 0x5C, 0x24, 0x30, 0x48, 0x8B, 0xCF, 0x8B, 0x9F],
+        "xxxxxxxxxx",
+        0,
+        AddressingMode.Absolute
+    );
+
+
     #endregion
 }

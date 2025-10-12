@@ -28,6 +28,8 @@ public class AoBScanner(IMemoryService memoryService)
         
         TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
             addr => Offsets.Hooks.LockedTarget = addr.ToInt64(), saved);
+        TryPatternWithFallback("FreezeTargetPosture", Patterns.FreezeTargetPosture,
+            addr => Offsets.Hooks.FreezeTargetPosture = addr.ToInt64(), saved);
       
         using (var writer = new StreamWriter(savePath))
         {
@@ -44,6 +46,7 @@ public class AoBScanner(IMemoryService memoryService)
         
         
         Console.WriteLine($"Hooks.LockedTarget: 0x{Offsets.Hooks.LockedTarget:X}");
+        Console.WriteLine($"Hooks.FreezeTargetPosture: 0x{Offsets.Hooks.FreezeTargetPosture:X}");
         
         
         Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");

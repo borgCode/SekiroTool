@@ -126,6 +126,7 @@ public static class Offsets
     public static class Hooks
     {
         public static long LockedTarget;
+        public static long FreezeTargetPosture;
     }
 
     public static class Functions
