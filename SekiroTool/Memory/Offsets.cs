@@ -31,6 +31,7 @@ public static class Offsets
         public enum ChrDataBitFlags
         {
             NoDeath = 1 << 2,
+            NoDamage = 1 << 3,
             NoPostureConsume = 1 << 4,
         }
 

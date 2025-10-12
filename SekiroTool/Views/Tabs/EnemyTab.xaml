@@ -65,51 +65,156 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <!-- <UniformGrid Grid.Column="0" Rows="1" Columns="5"> -->
-                        <!--     <Button Content="Kill" Margin="1" Click="OnHealthButtonClick" CommandParameter="0"> -->
-                        <!--         <Button.IsEnabled> -->
-                        <!--             <MultiBinding Converter="{StaticResource BooleanAndConverter}"> -->
-                        <!--                 <Binding Path="AreOptionsEnabled" /> -->
-                        <!--                 <Binding Path="IsValidTarget" /> -->
-                        <!--             </MultiBinding> -->
-                        <!--         </Button.IsEnabled> -->
-                        <!--     </Button> -->
-                        <!--     <Button Content="25%" Margin="1" Click="OnHealthButtonClick" CommandParameter="25"> -->
-                        <!--         <Button.IsEnabled> -->
-                        <!--             <MultiBinding Converter="{StaticResource BooleanAndConverter}"> -->
-                        <!--                 <Binding Path="AreOptionsEnabled" /> -->
-                        <!--                 <Binding Path="IsValidTarget" /> -->
-                        <!--             </MultiBinding> -->
-                        <!--         </Button.IsEnabled> -->
-                        <!--     </Button> -->
-                        <!--     <Button Content="50%" Margin="1" Click="OnHealthButtonClick" CommandParameter="50"> -->
-                        <!--         <Button.IsEnabled> -->
-                        <!--             <MultiBinding Converter="{StaticResource BooleanAndConverter}"> -->
-                        <!--                 <Binding Path="AreOptionsEnabled" /> -->
-                        <!--                 <Binding Path="IsValidTarget" /> -->
-                        <!--             </MultiBinding> -->
-                        <!--         </Button.IsEnabled> -->
-                        <!--     </Button> -->
-                        <!--     <Button Content="75%" Margin="1" Click="OnHealthButtonClick" CommandParameter="75"> -->
-                        <!--         <Button.IsEnabled> -->
-                        <!--             <MultiBinding Converter="{StaticResource BooleanAndConverter}"> -->
-                        <!--                 <Binding Path="AreOptionsEnabled" /> -->
-                        <!--                 <Binding Path="IsValidTarget" /> -->
-                        <!--             </MultiBinding> -->
-                        <!--         </Button.IsEnabled> -->
-                        <!--     </Button> -->
-                        <!--     <Button Content="100%" Margin="1" Click="OnHealthButtonClick" CommandParameter="100"> -->
-                        <!--         <Button.IsEnabled> -->
-                        <!--             <MultiBinding Converter="{StaticResource BooleanAndConverter}"> -->
-                        <!--                 <Binding Path="AreOptionsEnabled" /> -->
-                        <!--                 <Binding Path="IsValidTarget" /> -->
-                        <!--             </MultiBinding> -->
-                        <!--         </Button.IsEnabled> -->
-                        <!--     </Button> -->
-                        <!-- </UniformGrid> -->
+                        <UniformGrid Grid.Column="0" Rows="1" Columns="5">
+                            <Button Content="1 HP" Margin="1"
+                                    Command="{Binding SetHpCommand}"
+                                    CommandParameter="1">
+                                <Button.IsEnabled>
+                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                        <Binding Path="AreOptionsEnabled" />
+                                        <Binding Path="IsValidTarget" />
+                                    </MultiBinding>
+                                </Button.IsEnabled>
+                            </Button>
+                            <Button Content="25%" Margin="1"
+                                    Command="{Binding SetHpPercentageCommand}"
+                                    CommandParameter="25">
+                                <Button.IsEnabled>
+                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                        <Binding Path="AreOptionsEnabled" />
+                                        <Binding Path="IsValidTarget" />
+                                    </MultiBinding>
+                                </Button.IsEnabled>
+                            </Button>
+                            <Button Content="50%" Margin="1"
+                                    Command="{Binding SetHpPercentageCommand}"
+                                    CommandParameter="50">
+                                <Button.IsEnabled>
+                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                        <Binding Path="AreOptionsEnabled" />
+                                        <Binding Path="IsValidTarget" />
+                                    </MultiBinding>
+                                </Button.IsEnabled>
+                            </Button>
+                            <Button Content="75%" Margin="1"
+                                    Command="{Binding SetHpPercentageCommand}"
+                                    CommandParameter="75">
+                                <Button.IsEnabled>
+                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                        <Binding Path="AreOptionsEnabled" />
+                                        <Binding Path="IsValidTarget" />
+                                    </MultiBinding>
+                                </Button.IsEnabled>
+                            </Button>
+                            <Button Content="100%" Margin="1"
+                                    Command="{Binding SetHpPercentageCommand}"
+                                    CommandParameter="100">
+                                <Button.IsEnabled>
+                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                        <Binding Path="AreOptionsEnabled" />
+                                        <Binding Path="IsValidTarget" />
+                                    </MultiBinding>
+                                </Button.IsEnabled>
+                            </Button>
+                        </UniformGrid>
 
                         <CheckBox Grid.Column="1" Content="Freeze Health" Margin="10,0,0,0"
                                   IsChecked="{Binding IsFreezeHealthEnabled}">
+                            <CheckBox.IsEnabled>
+                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                    <Binding Path="AreOptionsEnabled" />
+                                    <Binding Path="IsValidTarget" />
+                                </MultiBinding>
+                            </CheckBox.IsEnabled>
+                        </CheckBox>
+                    </Grid>
+                    <TextBlock HorizontalAlignment="Center" Margin="0,0,0,5">
+                        <Run Text="Posture: " />
+                        <Run Text="{Binding TargetCurrentPosture, Mode=OneWay}" />
+                        <Run Text="/" />
+                        <Run Text="{Binding TargetMaxPosture, Mode=OneWay}" />
+                    </TextBlock>
+
+                    <ProgressBar Width="250" Height="20"
+                                 Value="{Binding TargetCurrentPosture}"
+                                 Maximum="{Binding TargetMaxPosture, FallbackValue=100}"
+                                 Margin="0,0,0,5">
+                        <ProgressBar.Template>
+                            <ControlTemplate TargetType="ProgressBar">
+                                <Border BorderBrush="#444444" BorderThickness="1" Background="#222222" CornerRadius="3">
+                                    <Grid x:Name="PART_Track">
+                                        <Rectangle x:Name="PART_Indicator"
+                                                   Fill="#CC9900"
+                                                   HorizontalAlignment="Left"
+                                                   RadiusX="2" RadiusY="2"
+                                                   Margin="1" />
+                                    </Grid>
+                                </Border>
+                            </ControlTemplate>
+                        </ProgressBar.Template>
+                    </ProgressBar>
+
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <UniformGrid Grid.Column="0" Rows="1" Columns="5">
+                            <Button Content="1 Posture" Margin="1"
+                                    Command="{Binding SetPostureCommand}"
+                                    CommandParameter="1">
+                                <Button.IsEnabled>
+                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                        <Binding Path="AreOptionsEnabled" />
+                                        <Binding Path="IsValidTarget" />
+                                    </MultiBinding>
+                                </Button.IsEnabled>
+                            </Button>
+                            <Button Content="25%" Margin="1"
+                                    Command="{Binding SetPosturePercentageCommand}"
+                                    CommandParameter="25">
+                                <Button.IsEnabled>
+                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                        <Binding Path="AreOptionsEnabled" />
+                                        <Binding Path="IsValidTarget" />
+                                    </MultiBinding>
+                                </Button.IsEnabled>
+                            </Button>
+                            <Button Content="50%" Margin="1"
+                                    Command="{Binding SetPosturePercentageCommand}"
+                                    CommandParameter="50">
+                                <Button.IsEnabled>
+                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                        <Binding Path="AreOptionsEnabled" />
+                                        <Binding Path="IsValidTarget" />
+                                    </MultiBinding>
+                                </Button.IsEnabled>
+                            </Button>
+                            <Button Content="75%" Margin="1"
+                                    Command="{Binding SetPosturePercentageCommand}"
+                                    CommandParameter="75">
+                                <Button.IsEnabled>
+                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                        <Binding Path="AreOptionsEnabled" />
+                                        <Binding Path="IsValidTarget" />
+                                    </MultiBinding>
+                                </Button.IsEnabled>
+                            </Button>
+                            <Button Content="100%" Margin="1"
+                                    Command="{Binding SetPosturePercentageCommand}"
+                                    CommandParameter="100">
+                                <Button.IsEnabled>
+                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                        <Binding Path="AreOptionsEnabled" />
+                                        <Binding Path="IsValidTarget" />
+                                    </MultiBinding>
+                                </Button.IsEnabled>
+                            </Button>
+                        </UniformGrid>
+
+                        <CheckBox Grid.Column="1" Content="Freeze Posture" Margin="10,0,0,0"
+                                  IsChecked="{Binding IsFreezePostureEnabled}">
                             <CheckBox.IsEnabled>
                                 <MultiBinding Converter="{StaticResource BooleanAndConverter}">
                                     <Binding Path="AreOptionsEnabled" />

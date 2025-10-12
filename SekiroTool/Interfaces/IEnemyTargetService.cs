@@ -16,8 +16,9 @@ public interface IEnemyTargetService
 
     void ToggleNoPostureBuildup(bool isEnabled);
     void ToggleNoDeath(bool isEnabled);
-
+    void ToggleNoDamage(bool isEnabled);
     void ToggleFreezePosture(bool isEnabled);
+    
 
     int GetLastAct();
     int GetLastKengekiAct();

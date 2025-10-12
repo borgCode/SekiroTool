@@ -1,4 +1,6 @@
-﻿using System.Windows.Threading;
+﻿using System.Windows.Input;
+using System.Windows.Threading;
+using SekiroTool.Core;
 using SekiroTool.Enums;
 using SekiroTool.Interfaces;
 
@@ -12,6 +14,7 @@ public class EnemyViewModel : BaseViewModel
     
     private bool _areOptionsEnabled;
     private bool _isTargetOptionsEnabled;
+    private bool _isValidTarget;
     
     private ulong _currentTargetAddr;
     
@@ -19,11 +22,13 @@ public class EnemyViewModel : BaseViewModel
     private bool _customHpHasBeenSet;
     private int _targetCurrentHealth;
     private int _targetMaxHealth;
+    private bool _isFreezeHealthEnabled;
     
     private int _customPosture;
     private bool _customPostureHasBeenSet;
     private int _targetCurrentPosture;
     private int _targetMaxPosture;
+    private bool _isFreezePostureEnabled;
     
     private float _targetSpeed;
 
@@ -42,19 +47,28 @@ public class EnemyViewModel : BaseViewModel
         gameStateService.Subscribe(GameState.Loaded, OnGameLoaded);
         gameStateService.Subscribe(GameState.NotLoaded, OnGameNotLoaded);
 
+        SetHpCommand = new DelegateCommand(SetHp);
+        SetHpPercentageCommand = new DelegateCommand(SetHpPercentage);
+
+        SetPostureCommand = new DelegateCommand(SetPosture);
+        SetPosturePercentageCommand = new DelegateCommand(SetPosturePercentage);
+
         _targetTick = new DispatcherTimer
         {
             Interval = TimeSpan.FromMilliseconds(64)
         };
         _targetTick.Tick += TargetTick;
     }
-
-   
+    
 
     #region Commands
     
-   
-
+    public ICommand SetHpCommand { get; set; }
+    public ICommand SetHpPercentageCommand { get; set; }
+    
+    public ICommand SetPostureCommand { get; set; }
+    public ICommand SetPosturePercentageCommand { get; set; }
+    
     #endregion
 
     #region Public Properties
@@ -63,6 +77,12 @@ public class EnemyViewModel : BaseViewModel
     {
         get => _areOptionsEnabled;
         set => SetProperty(ref _areOptionsEnabled, value);
+    }
+    
+    public bool IsValidTarget
+    {
+        get => _isValidTarget;
+        set => SetProperty(ref _isValidTarget, value);
     }
     
     public bool IsTargetOptionsEnabled
@@ -118,17 +138,36 @@ public class EnemyViewModel : BaseViewModel
         get => _targetMaxHealth;
         set => SetProperty(ref _targetMaxHealth, value);
     }
-    
+
+    public bool IsFreezeHealthEnabled
+    {
+        get => _isFreezeHealthEnabled;
+        set
+        {
+            SetProperty(ref _isFreezeHealthEnabled, value);
+            _enemyTargetService.ToggleNoDamage(_isFreezeHealthEnabled);
+        }
+    }
     public int TargetCurrentPosture
     {
         get => _targetCurrentPosture;
         set => SetProperty(ref _targetCurrentPosture, value);
     }
-
+    
     public int TargetMaxPosture
     {
         get => _targetMaxPosture;
         set => SetProperty(ref _targetMaxPosture, value);
+    }
+    
+    public bool IsFreezePostureEnabled
+    {
+        get => _isFreezePostureEnabled;
+        set
+        {
+            SetProperty(ref _isFreezePostureEnabled, value);
+            _enemyTargetService.ToggleFreezePosture(_isFreezePostureEnabled);
+        }
     }
     
     
@@ -225,7 +264,7 @@ public class EnemyViewModel : BaseViewModel
         //     return;
         // }
         //
-        // IsValidTarget = true;
+        IsValidTarget = true;
         
         
         ulong targetAddr = _enemyTargetService.GetTargetAddr();
@@ -255,6 +294,26 @@ public class EnemyViewModel : BaseViewModel
     private void OnGameNotLoaded()
     {
         AreOptionsEnabled = false;
+    }
+
+    private void SetHp(object parameter) =>
+        _enemyTargetService.SetHp(Convert.ToInt32(parameter));
+    
+    private void SetHpPercentage(object parameter)
+    {
+        int healthPercentage = Convert.ToInt32(parameter);
+        int newHealth = TargetMaxHealth * healthPercentage / 100;
+        _enemyTargetService.SetHp(newHealth);
+    } 
+    
+    private void SetPosture(object parameter) =>
+        _enemyTargetService.SetPosture(Convert.ToInt32(parameter));
+
+    private void SetPosturePercentage(object parameter)
+    {
+        int posturePercentage = Convert.ToInt32(parameter);
+        int newPosture = TargetMaxPosture * posturePercentage / 100;
+        _enemyTargetService.SetPosture(newPosture);
     }
 
     #endregion
