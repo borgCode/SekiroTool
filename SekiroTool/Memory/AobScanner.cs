@@ -38,6 +38,7 @@ public class AoBScanner(IMemoryService memoryService)
         }
 
         Offsets.Functions.AddSen = FindAddressByPattern(Patterns.AddSen).ToInt64();
+        Offsets.Functions.Rest = FindAddressByPattern(Patterns.Rest).ToInt64();
 
 
 #if DEBUG
@@ -50,6 +51,7 @@ public class AoBScanner(IMemoryService memoryService)
         
         
         Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");
+        Console.WriteLine($"Functions.Rest: 0x{Offsets.Functions.Rest:X}");
         
 #endif
     }

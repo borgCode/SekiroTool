@@ -133,5 +133,6 @@ public static class Offsets
     public static class Functions
     {
         public static long AddSen;
+        public static long Rest;
     }
 }
