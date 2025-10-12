@@ -57,6 +57,12 @@ public class EnemyTargetService(IMemoryService memoryService, HookManager hookMa
         memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoPostureConsume, isEnabled);
     }
 
+    public void ToggleNoDeath(bool isEnabled)
+    {
+        var bitFlags = GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.BitFlags;
+        memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDeath, isEnabled);
+    }
+
     public void ToggleFreezePosture(bool isEnabled)
     {
         var code = CodeCaveOffsets.Base + CodeCaveOffsets.FreezeTargetPosture;

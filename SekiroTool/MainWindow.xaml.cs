@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
+using SekiroTool.Enums;
 using SekiroTool.Interfaces;
 using SekiroTool.Memory;
 using SekiroTool.Services;
@@ -13,6 +14,7 @@ namespace SekiroTool;
 public partial class MainWindow : Window
 {
     private readonly IMemoryService _memoryService;
+    private readonly IGameStateService _gameStateService;
     private readonly IPlayerService _playerService;
     private readonly IEnemyTargetService _enemyTargetService;
 
@@ -31,6 +33,7 @@ public partial class MainWindow : Window
         _aobScanner = new AoBScanner(_memoryService);
         _hookManager = new HookManager(_memoryService);
 
+        _gameStateService = new GameStateService(_memoryService);
         _playerService = new PlayerService(_memoryService);
         _enemyTargetService = new EnemyTargetService(_memoryService, _hookManager);
 
@@ -86,29 +89,44 @@ public partial class MainWindow : Window
                 _memoryService.AllocCodeCave();
                 Console.WriteLine($"Code cave: 0x{CodeCaveOffsets.Base.ToInt64():X}");
                 _hasAllocatedMemory = true;
-         
+                _gameStateService.Publish(GameState.Attached);
+                Console.WriteLine("Attached");
             }
             
 
-            // if (_memoryService.IsGameLoaded())
-            // {
-            //     if (_loaded) return;
-            //     _loaded = true;
-            //     TryEnableFeatures();
-            //     TrySetGameStartPrefs();
-            //     if (_appliedOneTimeFeatures) return;
-            //     ApplyOneTimeFeatures();
-            //     _appliedOneTimeFeatures = true;
-            // }
-            // else if (_loaded)
+            if (_gameStateService.IsLoaded())
             {
+                if (_loaded) return;
+                _loaded = true;
+                _gameStateService.Publish(GameState.Loaded);
+                Console.WriteLine("Loaded");
+                // TryEnableFeatures();
+                // TrySetGameStartPrefs();
+                // if (_appliedOneTimeFeatures) return;
+                // ApplyOneTimeFeatures();
+                // _appliedOneTimeFeatures = true;
+            }
+            else if (_loaded)
+            {
+                _gameStateService.Publish(GameState.NotLoaded);
                 // DisableFeatures();
                 // _debugDrawService.Reset();
-                // _loaded = false;
+                _loaded = false;
+                Console.WriteLine("Not loaded");
             }
         }
         else
         {
+            if (_memoryService.IsAttached)
+            {
+                _gameStateService.Publish(GameState.Detached);
+                Console.WriteLine("Detached");
+            }
+            
+            _loaded = false;
+            _hasScanned = false;
+            _hasAllocatedMemory = false;
+
             // _hookManager.ClearHooks();
             // DisableFeatures();
             // _settingsViewModel.ResetLoaded();
@@ -119,19 +137,19 @@ public partial class MainWindow : Window
             // _hasAppliedNoLogo = false;
             // _appliedOneTimeFeatures = false;
             // _hasAppliedAttachedFeatures = false;
-            // IsAttachedText.Text = "Not attached";
-            // IsAttachedText.Foreground = (SolidColorBrush)Application.Current.Resources["NotAttachedBrush"];
+            IsAttachedText.Text = "Not attached";
+            IsAttachedText.Foreground = (SolidColorBrush)Application.Current.Resources["NotAttachedBrush"];
             // LaunchGameButton.IsEnabled = true;
         }
     }
 
     private void Test(object sender, RoutedEventArgs e)
     {
-    
+        // _enemyTargetService.ToggleNoDeath(true);
     }
 
     private void TestOff(object sender, RoutedEventArgs e)
     {
-       
+        // _enemyTargetService.ToggleNoDeath(false);
     }
 }

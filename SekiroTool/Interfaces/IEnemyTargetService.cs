@@ -13,6 +13,7 @@ public interface IEnemyTargetService
     int GetMaxPosture();
 
     void ToggleNoPostureBuildup(bool isEnabled);
+    void ToggleNoDeath(bool isEnabled);
 
     void ToggleFreezePosture(bool isEnabled);
 }
