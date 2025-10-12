@@ -33,6 +33,9 @@ public class EnemyTargetService(IMemoryService memoryService, HookManager hookMa
         }
     }
 
+    public ulong GetTargetAddr() =>
+        memoryService.ReadUInt64(CodeCaveOffsets.Base + CodeCaveOffsets.LockedTarget);
+
     public void SetHp(int hp) =>
         memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Hp, hp);
 
@@ -73,13 +76,13 @@ public class EnemyTargetService(IMemoryService memoryService, HookManager hookMa
             var endOfHookedFunc = hookLoc + 0xD1;
             var lockedTargetPtr = CodeCaveOffsets.Base + CodeCaveOffsets.LockedTarget;
             var bytes = AsmLoader.GetAsmBytes("FreezeTargetPosture");
-            
+
             AsmHelper.WriteRelativeOffsets(bytes, [
                 (code.ToInt64() + 0x1, lockedTargetPtr.ToInt64(), 7, 0x1 + 3),
                 (code.ToInt64() + 0x14, endOfHookedFunc, 6, 0x14 + 2),
                 (code.ToInt64() + 0x1F, hookLoc + 0x5, 5, 0x1F + 1)
             ]);
-            
+
             memoryService.WriteBytes(code, bytes);
             hookManager.InstallHook(code.ToInt64(), hookLoc, [0x48, 0x89, 0x5C, 0x24, 0x30]);
         }
@@ -87,6 +90,48 @@ public class EnemyTargetService(IMemoryService memoryService, HookManager hookMa
         {
             hookManager.UninstallHook(code.ToInt64());
         }
+    }
+
+    public int GetLastAct() =>
+        memoryService.ReadUInt8(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.LastAct);
+
+    public int GetLastKengekiAct() =>
+        memoryService.ReadUInt8(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.LastKengekiAct);
+
+    public void ForceAct(int act) =>
+        memoryService.WriteUInt8(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.ForceAct, (byte)act);
+
+    public void ForceKengekiAct(int act) =>
+        memoryService.WriteUInt8(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.ForceKengekiAct, (byte)act);
+
+    public bool IsTargetRepeating() =>
+        memoryService.ReadUInt8(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.ForceAct) != 0;
+
+    public bool IsTargetRepeatingKengeki() =>
+        memoryService.ReadUInt8(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.ForceKengekiAct) != 0;
+
+    public void ToggleTargetRepeatAct(bool isEnabled)
+    {
+        var aiThinkPtr = GetAiThinkPtr();
+        var forceActPtr = aiThinkPtr + (int)ChrIns.AiThinkOffsets.ForceAct;
+    
+        byte value = isEnabled 
+            ? memoryService.ReadUInt8(aiThinkPtr + (int)ChrIns.AiThinkOffsets.LastAct)
+            : (byte)0;
+    
+        memoryService.WriteUInt8(forceActPtr, value);
+    }
+
+    public void ToggleTargetRepeatKengekiAct(bool isEnabled)
+    {
+        var aiThinkPtr = GetAiThinkPtr();
+        var forceActPtr = aiThinkPtr + (int)ChrIns.AiThinkOffsets.ForceKengekiAct;
+    
+        byte value = isEnabled 
+            ? memoryService.ReadUInt8(aiThinkPtr + (int)ChrIns.AiThinkOffsets.LastKengekiAct)
+            : (byte)0;
+    
+        memoryService.WriteUInt8(forceActPtr, value);
     }
 
     #endregion
@@ -97,6 +142,14 @@ public class EnemyTargetService(IMemoryService memoryService, HookManager hookMa
     private IntPtr GetChrDataPtr() =>
         memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.LockedTarget,
             ChrIns.ChrDataModule, true);
+
+    private IntPtr GetAiThinkPtr()
+    {
+        return memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.LockedTarget, [
+            ChrIns.ComManipulator,
+            ChrIns.AiThink
+        ], true);
+    }
 
     #endregion
 }
