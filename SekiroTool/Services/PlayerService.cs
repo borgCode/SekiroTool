@@ -43,6 +43,14 @@ public class PlayerService(IMemoryService memoryService) : IPlayerService
         memoryService.AllocateAndExecute(bytes);
     }
 
+    public void Rest()
+    {
+        var bytes = AsmLoader.GetAsmBytes("Rest");
+        var playerIns = memoryService.FollowPointers(WorldChrMan.Base,[
+        WorldChrMan.PlayerIns],true);
+        AsmHelper.WriteAbsoluteAddresses(bytes, []
+    }
+
     #endregion
 
 

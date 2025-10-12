@@ -12,6 +12,7 @@ public interface IPlayerService
 
     void AddSen(int senToAdd);
 
+    void Rest();
 
 
 }
