@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="ViewModels\" />
+      <Folder Include="Views\Windows\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -25,6 +25,10 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>Resources.resx</DependentUpon>
       </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Extended.Wpf.Toolkit" Version="5.0.0" />
     </ItemGroup>
 
 </Project>

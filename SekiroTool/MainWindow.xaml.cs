@@ -1,10 +1,13 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
 using SekiroTool.Enums;
 using SekiroTool.Interfaces;
 using SekiroTool.Memory;
 using SekiroTool.Services;
+using SekiroTool.ViewModels;
+using SekiroTool.Views.Tabs;
 
 namespace SekiroTool;
 
@@ -36,6 +39,14 @@ public partial class MainWindow : Window
         _gameStateService = new GameStateService(_memoryService);
         _playerService = new PlayerService(_memoryService);
         _enemyTargetService = new EnemyTargetService(_memoryService, _hookManager);
+
+
+        EnemyViewModel enemyViewModel = new EnemyViewModel(_gameStateService, _enemyTargetService);
+        
+        var enemyTab = new EnemyTab(enemyViewModel);
+        
+        MainTabControl.Items.Add(new TabItem { Header = "Enemies", Content = enemyTab });
+        
 
         _gameLoadedTimer = new DispatcherTimer
         {

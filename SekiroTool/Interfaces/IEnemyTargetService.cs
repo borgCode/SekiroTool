@@ -3,6 +3,8 @@
 public interface IEnemyTargetService
 {
     void ToggleTargetHook(bool isEnabled);
+
+    ulong GetTargetAddr();
     
     void SetHp(int hp);
     int GetCurrentHp();
@@ -16,4 +18,17 @@ public interface IEnemyTargetService
     void ToggleNoDeath(bool isEnabled);
 
     void ToggleFreezePosture(bool isEnabled);
+
+    int GetLastAct();
+    int GetLastKengekiAct();
+    void ForceAct(int act);
+    void ForceKengekiAct(int act);
+    
+    bool IsTargetRepeating();
+    bool IsTargetRepeatingKengeki();
+    
+    void ToggleTargetRepeatAct(bool isEnabled);
+    void ToggleTargetRepeatKengekiAct(bool isEnabled);
+
+
 }

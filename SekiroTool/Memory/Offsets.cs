@@ -14,7 +14,9 @@ public static class Offsets
         public const int PlayerGameData = 0x2000;
         
         public static readonly int[] ChrDataModule = [Modules, 0x18];
+        public static readonly int[] ChrBehaviorModule = [Modules, 0x28];
         public static readonly int[] ChrPhysicsModule = [Modules, 0x68];
+        
         
         public enum ChrDataOffsets
         {
@@ -31,6 +33,11 @@ public static class Offsets
             NoDeath = 1 << 2,
             NoPostureConsume = 1 << 4,
         }
+
+        public enum ChrBehaviorOffsets
+        {
+            AnimationSpeed = 0xD00,
+        }
         
         public enum ChrPhysicsOffsets
         {
@@ -39,6 +46,18 @@ public static class Offsets
             Z = 0x88,
             W = 0x8C
         }
+
+        public const int ComManipulator = 0x58;
+        public const int AiThink = 0x340;
+
+        public enum AiThinkOffsets
+        {
+            ForceAct = 0xB741,
+            LastAct = 0xB742,
+            ForceKengekiAct = 0xB743,
+            LastKengekiAct = 0xB744
+        }
+        
     }
 
     public static class InfiniteConsumablesFlag
