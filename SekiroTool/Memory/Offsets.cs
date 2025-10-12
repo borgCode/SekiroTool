@@ -57,7 +57,10 @@ public static class Offsets
             ForceKengekiAct = 0xB743,
             LastKengekiAct = 0xB744
         }
-        
+        public enum PlayerGameDataOffsets
+        {
+            AttackPower = 0x48,
+        }
     }
 
     public static class InfiniteConsumablesFlag

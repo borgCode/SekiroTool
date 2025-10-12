@@ -58,7 +58,11 @@ public class PlayerService(IMemoryService memoryService) : IPlayerService
 
     public void SetAttackPower(int attackPower)
     {
-        
+        var attackPowerPointer = memoryService.FollowPointers(WorldChrMan.Base, [
+            WorldChrMan.PlayerIns,
+            ChrIns.PlayerGameData,
+            (int)ChrIns.PlayerGameDataOffsets.AttackPower], false);
+        memoryService.WriteInt32(attackPowerPointer, attackPower);
     }
 
     #endregion
