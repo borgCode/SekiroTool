@@ -63,7 +63,6 @@ public partial class MainWindow : Window
             {
                 _aobScanner.Scan();
                 _hasScanned = true;
-           
             }
 
             if (!_hasAppliedNoLogo)

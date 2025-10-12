@@ -9,7 +9,9 @@ public interface IPlayerService
     void SetPosture(int posture);
     int GetCurrentPosture();
     int GetMaxPosture();
-    
-    
+
+    void AddSen(int senToAdd);
+
+
 
 }

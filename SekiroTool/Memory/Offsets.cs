@@ -12,6 +12,7 @@ public static class Offsets
         public const int PlayerGameData = 0x2000;
         
         public static readonly int[] ChrDataModule = [PlayerIns, Modules, 0x18];
+        public static readonly int[] ChrPhysicsModule = [PlayerIns, Modules, 0x68];
         
         public enum ChrDataOffsets
         {
@@ -19,6 +20,14 @@ public static class Offsets
             MaxHp = 0x134,
             Posture = 0x148,
             MaxPosture = 0x14C
+        }
+        
+        public enum ChrPhysicsOffsets
+        {
+            X = 0x80,
+            Y = 0x84,
+            Z = 0x88,
+            W = 0x8C
         }
         
     }
@@ -120,8 +129,8 @@ public static class Offsets
    
     }
 
-    public static class Funcs
+    public static class Functions
     {
-      
+        public static long AddSen;
     }
 }

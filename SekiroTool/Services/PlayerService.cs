@@ -1,4 +1,5 @@
 ﻿using SekiroTool.Interfaces;
+using SekiroTool.Utilities;
 using static SekiroTool.Memory.Offsets;
 
 namespace SekiroTool.Services;
@@ -24,6 +25,23 @@ public class PlayerService(IMemoryService memoryService) : IPlayerService
 
     public int GetMaxPosture() =>
         memoryService.ReadInt32(GetChrDataPtr() + (int)WorldChrMan.ChrDataOffsets.MaxPosture);
+
+    public void AddSen(int senToAdd)
+    {
+        var bytes = AsmLoader.GetAsmBytes("AddSen");
+        var playerGameData = memoryService.FollowPointers(WorldChrMan.Base, [
+            WorldChrMan.PlayerIns,
+            WorldChrMan.PlayerGameData
+        ], true);
+        
+        AsmHelper.WriteAbsoluteAddresses(bytes, [
+            (playerGameData.ToInt64(), 0x4 + 2),
+            (senToAdd, 0xE + 2),
+            (Functions.AddSen, 0x1E + 2)
+        ]);
+        
+        memoryService.AllocateAndExecute(bytes);
+    }
 
     #endregion
 

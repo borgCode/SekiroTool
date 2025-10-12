@@ -32,4 +32,16 @@ public static class Patterns
         3,
         7
     );
+
+
+    #region Functions
+
+    public static readonly Pattern AddSen = new Pattern(
+        new byte[] { 0x7E, 0x69, 0x8B, 0x97 },
+        "xxxx",
+        -0x40,
+        AddressingMode.Absolute
+    );
+
+    #endregion
 }

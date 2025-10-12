@@ -31,11 +31,18 @@ public class AoBScanner(IMemoryService memoryService)
                 writer.WriteLine($"{pair.Key}={pair.Value:X}");
         }
 
- 
+        Offsets.Functions.AddSen = FindAddressByPattern(Patterns.AddSen).ToInt64();
 
 
 #if DEBUG
         Console.WriteLine($"WorldChrMan.Base: 0x{Offsets.WorldChrMan.Base.ToInt64():X}");
+        
+        
+        
+        
+        
+        
+        Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");
         
 #endif
     }
