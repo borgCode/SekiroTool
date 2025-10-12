@@ -77,5 +77,16 @@ namespace SekiroTool {
                 return ResourceManager.GetString("AddSen", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 48 89 05 00 00 00 00    mov    QWORD PTR [rip+0x0],rax        # 7 &lt;_main+0x7&gt;
+        ///48 8b 80 f8 1f 00 00    mov    rax,QWORD PTR [rax+0x1ff8]
+        ///e9 00 00 00 00          jmp    13 &lt;_main+0x13&gt;.
+        /// </summary>
+        internal static string LockedTarget {
+            get {
+                return ResourceManager.GetString("LockedTarget", resourceCulture);
+            }
+        }
     }
 }

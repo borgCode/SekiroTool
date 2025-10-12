@@ -24,6 +24,10 @@ public class AoBScanner(IMemoryService memoryService)
 
 
         Offsets.WorldChrMan.Base = FindAddressByPattern(Patterns.WorldChrMan);
+        
+        
+        TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
+            addr => Offsets.Hooks.LockedTarget = addr.ToInt64(), saved);
       
         using (var writer = new StreamWriter(savePath))
         {
@@ -39,7 +43,7 @@ public class AoBScanner(IMemoryService memoryService)
         
         
         
-        
+        Console.WriteLine($"Hooks.LockedTarget: 0x{Offsets.Hooks.LockedTarget:X}");
         
         
         Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");

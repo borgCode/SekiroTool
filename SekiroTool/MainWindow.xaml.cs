@@ -14,8 +14,10 @@ public partial class MainWindow : Window
 {
     private readonly IMemoryService _memoryService;
     private readonly IPlayerService _playerService;
+    private readonly IEnemyTargetService _enemyTargetService;
 
     private readonly AoBScanner _aobScanner;
+    private readonly HookManager _hookManager;
 
     private readonly DispatcherTimer _gameLoadedTimer;
 
@@ -27,8 +29,10 @@ public partial class MainWindow : Window
         InitializeComponent();
 
         _aobScanner = new AoBScanner(_memoryService);
+        _hookManager = new HookManager(_memoryService);
 
         _playerService = new PlayerService(_memoryService);
+        _enemyTargetService = new EnemyTargetService(_memoryService, _hookManager);
 
         _gameLoadedTimer = new DispatcherTimer
         {
@@ -79,9 +83,10 @@ public partial class MainWindow : Window
 
             if (!_hasAllocatedMemory)
             {
-                // _memoryIo.AllocCodeCave();
+                _memoryService.AllocCodeCave();
                 Console.WriteLine($"Code cave: 0x{CodeCaveOffsets.Base.ToInt64():X}");
                 _hasAllocatedMemory = true;
+            
             }
 
             // if (_memoryService.IsGameLoaded())

@@ -37,9 +37,21 @@ public static class Patterns
     #region Functions
 
     public static readonly Pattern AddSen = new Pattern(
-        new byte[] { 0x7E, 0x69, 0x8B, 0x97 },
+        [0x7E, 0x69, 0x8B, 0x97],
         "xxxx",
         -0x40,
+        AddressingMode.Absolute
+    );
+
+    #endregion
+
+
+    #region Hooks
+
+    public static readonly Pattern LockedTarget = new Pattern(
+        [0x48, 0x8B, 0x80, 0xF8, 0x1F, 0x00, 0x00, 0x48, 0x8B, 0x08, 0x48, 0xB8],
+        "xxxxxxxxxxxx",
+        0,
         AddressingMode.Absolute
     );
 
