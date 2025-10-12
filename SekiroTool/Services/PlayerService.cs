@@ -56,6 +56,11 @@ public class PlayerService(IMemoryService memoryService) : IPlayerService
         memoryService.AllocateAndExecute(bytes);
     }
 
+    public void SetAttackPower(int attackPower)
+    {
+        
+    }
+
     #endregion
 
 
