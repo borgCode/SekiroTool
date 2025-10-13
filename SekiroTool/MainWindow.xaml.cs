@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using SekiroTool.Enums;
@@ -153,15 +155,32 @@ public partial class MainWindow : Window
             // LaunchGameButton.IsEnabled = true;
         }
     }
-
-    private void Test(object sender, RoutedEventArgs e)
+    
+    private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        _playerService.Rest();
-        // _enemyTargetService.ToggleNoDeath(true);
+        if (e.ClickCount == 2)
+        {
+            if (WindowState == WindowState.Maximized)
+                WindowState = WindowState.Normal;
+            else
+                WindowState = WindowState.Maximized;
+        }
+        else
+        {
+            DragMove();
+        }
     }
 
-    private void TestOff(object sender, RoutedEventArgs e)
+    private void MinimizeButton_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+    private void CloseButton_Click(object sender, RoutedEventArgs e) => Close();
+    private void MainWindow_Closing(object sender, CancelEventArgs e)
     {
-        // _enemyTargetService.ToggleNoDeath(false);
+      
+        // SettingsManager.Default.WindowLeft = Left;
+        // SettingsManager.Default.WindowTop = Top;
+        // SettingsManager.Default.Save();
+        // DisableFeatures();
+        // _hookManager.UninstallAllHooks();
+            
     }
 }
