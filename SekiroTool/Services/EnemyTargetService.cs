@@ -54,12 +54,39 @@ public class EnemyTargetService(IMemoryService memoryService, HookManager hookMa
     public int GetMaxPosture() =>
         memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.MaxPosture);
 
+    public float GetCurrentPoise() =>
+        memoryService.ReadFloat(GetChrSuperArmorPtr() + (int)ChrIns.ChrSuperArmorOffsets.Poise);
+
+    public float GetMaxPoise() =>
+        memoryService.ReadFloat(GetChrSuperArmorPtr() + (int)ChrIns.ChrSuperArmorOffsets.MaxPoise);
+
+    public float GetPoiseTimer() =>
+        memoryService.ReadFloat(GetChrSuperArmorPtr() + (int)ChrIns.ChrSuperArmorOffsets.PoiseTimer);
+
+    public int GetCurrentPoison() =>
+        memoryService.ReadInt32(GetChrResistPtr() + (int)ChrIns.ChrResistOffsets.PoisonCurrent);
+
+    public int GetMaxPoison() =>
+        memoryService.ReadInt32(GetChrResistPtr() + (int)ChrIns.ChrResistOffsets.PoisonMax);
+
+    public int GetCurrentBurn() =>
+        memoryService.ReadInt32(GetChrResistPtr() + (int)ChrIns.ChrResistOffsets.BurnCurrent);
+
+    public int GetMaxBurn() =>
+        memoryService.ReadInt32(GetChrResistPtr() + (int)ChrIns.ChrResistOffsets.BurnMax);
+
+    public int GetCurrentShock() =>
+        memoryService.ReadInt32(GetChrResistPtr() + (int)ChrIns.ChrResistOffsets.ShockCurrent);
+
+    public int GetMaxShock() =>
+        memoryService.ReadInt32(GetChrResistPtr() + (int)ChrIns.ChrResistOffsets.ShockMax);
+
     public float[] GetPosition()
     {
         var posPtr = memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.LockedTarget,
             [..ChrIns.ChrPhysicsModule, (int)ChrIns.ChrPhysicsOffsets.X]
-            ,false);
-        
+            , false);
+
         float[] position = new float[3];
         position[0] = memoryService.ReadFloat(posPtr);
         position[1] = memoryService.ReadFloat(posPtr + 0x4);
@@ -111,7 +138,7 @@ public class EnemyTargetService(IMemoryService memoryService, HookManager hookMa
             hookManager.UninstallHook(code.ToInt64());
         }
     }
-
+    
     public int GetLastAct() =>
         memoryService.ReadUInt8(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.LastAct);
 
@@ -162,6 +189,14 @@ public class EnemyTargetService(IMemoryService memoryService, HookManager hookMa
     private IntPtr GetChrDataPtr() =>
         memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.LockedTarget,
             ChrIns.ChrDataModule, true);
+
+    private IntPtr GetChrResistPtr() =>
+        memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.LockedTarget,
+            ChrIns.ChrResistModule, true);
+
+    private IntPtr GetChrSuperArmorPtr() =>
+        memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.LockedTarget,
+            ChrIns.ChrSuperArmorModule, true);
 
     private IntPtr GetAiThinkPtr()
     {

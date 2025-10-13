@@ -29,6 +29,11 @@ public class EnemyViewModel : BaseViewModel
     private int _targetCurrentPosture;
     private int _targetMaxPosture;
     private bool _isFreezePostureEnabled;
+    
+    private float _targetCurrentPoise;
+    private float _targetMaxPoise;
+    private float _targetPoiseTimer;
+    private bool _showPoise;
 
     private int _targetCurrentPoison;
     private int _targetMaxPoison;
@@ -44,6 +49,8 @@ public class EnemyViewModel : BaseViewModel
     private int _targetMaxShock;
     private bool _showShock;
     // private bool _isToxicImmune;
+    
+    private bool _showAllResistances;
 
     private float _targetSpeed;
 
@@ -110,22 +117,21 @@ public class EnemyViewModel : BaseViewModel
             {
                 _enemyTargetService.ToggleTargetHook(true);
                 _targetTick.Start();
-                // ShowAllResistances = true;
+                ShowAllResistances = true;
             }
             else
             {
                 _targetTick.Stop();
                 // IsRepeatActEnabled = false;
                 // IsCinderPhasedLocked = false;
-                // ShowAllResistances = false;
+                ShowAllResistances = false;
                 // IsResistancesWindowOpen = false;
                 // IsFreezeHealthEnabled = false;
                 _enemyTargetService.ToggleTargetHook(false);
-                // ShowPoise = false;
-                // ShowBleed = false;
-                // ShowPoison = false;
-                // ShowFrost = false;
-                // ShowToxic = false;
+                ShowPoise = false;
+                ShowPoison = false;
+                ShowBurn = false;
+                ShowShock = false;
             }
         }
     }
@@ -183,6 +189,36 @@ public class EnemyViewModel : BaseViewModel
         {
             SetProperty(ref _isFreezePostureEnabled, value);
             _enemyTargetService.ToggleFreezePosture(_isFreezePostureEnabled);
+        }
+    }
+    
+    public float TargetCurrentPoise
+    {
+        get => _targetCurrentPoise;
+        set => SetProperty(ref _targetCurrentPoise, value);
+    }
+
+    public float TargetMaxPoise
+    {
+        get => _targetMaxPoise;
+        set => SetProperty(ref _targetMaxPoise, value);
+    }
+
+    public float TargetPoiseTimer
+    {
+        get => _targetPoiseTimer;
+        set => SetProperty(ref _targetPoiseTimer, value);
+    }
+
+    public bool ShowPoise
+    {
+        get => _showPoise;
+        set
+        {
+            SetProperty(ref _showPoise, value);
+            // if (!IsResistancesWindowOpen || _resistancesWindowWindow == null) return;
+            // _resistancesWindowWindow.DataContext = null;
+            // _resistancesWindowWindow.DataContext = this;
         }
     }
 
@@ -256,6 +292,18 @@ public class EnemyViewModel : BaseViewModel
             // if (!IsResistancesWindowOpen || _resistancesWindowWindow == null) return;
             // _resistancesWindowWindow.DataContext = null;
             // _resistancesWindowWindow.DataContext = this;
+        }
+    }
+    
+    public bool ShowAllResistances
+    {
+        get => _showAllResistances;
+        set
+        {
+            if (SetProperty(ref _showAllResistances, value))
+            {
+                UpdateResistancesDisplay();
+            }
         }
     }
 
@@ -360,14 +408,23 @@ public class EnemyViewModel : BaseViewModel
         if (targetAddr != _currentTargetAddr)
         {
             _currentTargetAddr = targetAddr;
+            
+            TargetMaxHealth = _enemyTargetService.GetMaxHp();
+            TargetMaxPosture = _enemyTargetService.GetMaxPosture();
+            TargetMaxPoise = _enemyTargetService.GetMaxPoise();
+            TargetMaxPoison = _enemyTargetService.GetMaxPoison();
+            TargetMaxBurn = _enemyTargetService.GetMaxBurn();
+            TargetMaxShock = _enemyTargetService.GetMaxShock();
         }
 
         TargetCurrentHealth = _enemyTargetService.GetCurrentHp();
-        TargetMaxHealth = _enemyTargetService.GetMaxHp();
-
         TargetCurrentPosture = _enemyTargetService.GetCurrentPosture();
-        TargetMaxPosture = _enemyTargetService.GetMaxPosture();
-
+        TargetCurrentPoise = _enemyTargetService.GetCurrentPoise();
+        TargetPoiseTimer = _enemyTargetService.GetPoiseTimer();
+        TargetCurrentPoison = _enemyTargetService.GetCurrentPoison();
+        TargetCurrentBurn = _enemyTargetService.GetCurrentBurn();
+        TargetCurrentShock = _enemyTargetService.GetCurrentShock();
+        
         LastAct = _enemyTargetService.GetLastAct();
         LastKengekiAct = _enemyTargetService.GetLastKengekiAct();
     }
@@ -421,6 +478,25 @@ public class EnemyViewModel : BaseViewModel
         int posturePercentage = Convert.ToInt32(parameter);
         int newPosture = TargetMaxPosture * posturePercentage / 100;
         _enemyTargetService.SetPosture(newPosture);
+    }
+
+    private void UpdateResistancesDisplay()
+    {
+        if (!IsTargetOptionsEnabled) return;
+        if (_showAllResistances)
+        {
+            ShowPoise = true;
+            ShowPoison = true;
+            ShowBurn = true;
+            ShowShock = true;
+        }
+        else
+        {
+            ShowPoise = false;
+            ShowPoison = false;
+            ShowBurn = false;
+            ShowShock = false;
+        }
     }
 
     #endregion

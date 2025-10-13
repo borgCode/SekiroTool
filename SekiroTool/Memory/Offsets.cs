@@ -17,6 +17,7 @@ public static class Offsets
         public static readonly int[] ChrDataModule = [Modules, 0x18];
         public static readonly int[] ChrResistModule = [Modules, 0x20];
         public static readonly int[] ChrBehaviorModule = [Modules, 0x28];
+        public static readonly int[] ChrSuperArmorModule = [Modules, 0x40];
         public static readonly int[] ChrPhysicsModule = [Modules, 0x68];
         
         
@@ -50,6 +51,13 @@ public static class Offsets
         public enum ChrBehaviorOffsets
         {
             AnimationSpeed = 0xD00,
+        }
+
+        public enum ChrSuperArmorOffsets
+        {
+            Poise = 0x28,
+            MaxPoise = 0x2C,
+            PoiseTimer = 0x34
         }
         
         public enum ChrPhysicsOffsets

@@ -14,6 +14,17 @@ public interface IEnemyTargetService
     int GetCurrentPosture();
     int GetMaxPosture();
 
+    float GetCurrentPoise();
+    float GetMaxPoise();
+    float GetPoiseTimer();
+
+    int GetCurrentPoison();
+    int GetMaxPoison();
+    int GetCurrentBurn();
+    int GetMaxBurn();
+    int GetCurrentShock();
+    int GetMaxShock();
+
     float[] GetPosition();
 
     void ToggleNoPostureBuildup(bool isEnabled);
