@@ -19,7 +19,6 @@ public interface IEnemyTargetService
     void ToggleNoDamage(bool isEnabled);
     void ToggleFreezePosture(bool isEnabled);
     
-
     int GetLastAct();
     int GetLastKengekiAct();
     void ForceAct(int act);
@@ -32,4 +31,5 @@ public interface IEnemyTargetService
     void ToggleTargetRepeatKengekiAct(bool isEnabled);
 
 
+    
 }

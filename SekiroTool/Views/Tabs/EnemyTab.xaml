@@ -531,11 +531,66 @@
                         </CheckBox>
                         <TextBlock Text="Last Act: " Margin="20,0,0,0" VerticalAlignment="Center" />
                         <TextBlock Text="{Binding LastAct}" VerticalAlignment="Center" Width="20" TextAlignment="Right" />
-                        <Button Content="Defenses"
-                                IsEnabled="{Binding AreButtonsEnabled}"
-                                HorizontalAlignment="Right"
-                                Margin="130,0,0,0"
-                        />
+
+                        <TextBlock Text="Force Act: " Margin="30,0,10,0" VerticalAlignment="Center" />
+                        <xctk:IntegerUpDown Width="50" Height="20"
+                                            Value="{Binding ForceAct, UpdateSourceTrigger=PropertyChanged}"
+                                            Minimum="0"
+                                            Maximum="255"
+                                            VerticalAlignment="Center">
+                            <xctk:IntegerUpDown.IsEnabled>
+                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                    <Binding Path="AreOptionsEnabled" />
+                                    <Binding Path="IsValidTarget" />
+                                </MultiBinding>
+                            </xctk:IntegerUpDown.IsEnabled>
+                        </xctk:IntegerUpDown>
+                        <Border
+                            Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Force Act:&#x0A;• Enter 0 for normal behavior&#x0A;• Enter a number to repeat a specific action&#x0A;• Numbers exceeding available acts will be ignored"
+                            ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+                    </StackPanel>
+                    
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                        <CheckBox x:Name="RepeatKengekiActCheckbox" Content="Repeat Last Kengeki Act" Margin="10,0,0,0">
+                            <CheckBox.IsEnabled>
+                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                    <Binding Path="AreOptionsEnabled" />
+                                    <Binding Path="IsValidTarget" />
+                                </MultiBinding>
+                            </CheckBox.IsEnabled>
+                            <CheckBox.IsChecked>
+                                <Binding Path="IsRepeatKengekiActEnabled" />
+                            </CheckBox.IsChecked>
+                        </CheckBox>
+                        <TextBlock Text="Last Kengeki Act: " Margin="20,0,0,0" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding LastKengekiAct}" VerticalAlignment="Center" Width="20" TextAlignment="Right" />
+
+                        <TextBlock Text="Force Kengeki Act: " Margin="30,0,10,0" VerticalAlignment="Center" />
+                        <xctk:IntegerUpDown Width="50" Height="20"
+                                            Value="{Binding ForceKengekiAct, UpdateSourceTrigger=PropertyChanged}"
+                                            Minimum="0"
+                                            Maximum="255"
+                                            VerticalAlignment="Center">
+                            <xctk:IntegerUpDown.IsEnabled>
+                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                    <Binding Path="AreOptionsEnabled" />
+                                    <Binding Path="IsValidTarget" />
+                                </MultiBinding>
+                            </xctk:IntegerUpDown.IsEnabled>
+                        </xctk:IntegerUpDown>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
@@ -569,74 +624,11 @@
             </Border>
 
             <Border Grid.Column="1"
-                    IsEnabled="{Binding IsScholar}"
+                   
                     BorderThickness="1"
                     BorderBrush="#333"
                     CornerRadius="3"
                     Margin="5,0,0,0">
-                <StackPanel Margin="15,10,0,0">
-                    <Grid Margin="0,0,0,10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        
-                        <TextBlock Grid.Column="0"
-                                   Text="Forlorn"
-                                   FontSize="18"
-                                   FontWeight="Bold"
-                                   Foreground="#F0F0F0" />
-                        
-                        <CheckBox Grid.Column="2"
-                                  Content="Guaranteed Spawn"
-                                  IsEnabled="{Binding IsForlornAvailable}"
-                                  IsChecked="{Binding IsGuaranteedSpawnEnabled}"
-                                  VerticalAlignment="Center"
-                                  Margin="0,0,6,0" />
-                        
-                        <Border Grid.Column="3"
-                                Background="#3498db"
-                                CornerRadius="10"
-                                Width="14"
-                                Height="14"
-                                VerticalAlignment="Center"
-                                Margin="0,0,6,0"
-                                ToolTip="Select the forlorn that you want and reload the area by warping&#x0A;&#x0A;For spawning Forlorn in forest of the fallen giants, set the King's Ring flag in the Events tab"
-                                ToolTipService.InitialShowDelay="100">
-                            <TextBlock Text="i"
-                                       Foreground="White"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontWeight="Bold"
-                                       FontSize="10" 
-                                      />
-                        </Border>
-                    </Grid>
-                    
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                        <TextBlock Text="Select Location:"
-                                   VerticalAlignment="Center"
-                                   Width="100"
-                                   Margin="0,0,5,0" />
-                        <ComboBox Width="150"
-                                  ItemsSource="{Binding AvailableForlorns}"
-                                  SelectedItem="{Binding SelectedForlorn}"
-                                  DisplayMemberPath="AreaName" />
-                    </StackPanel>
-                    
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                        <TextBlock Text="Select Spawn:"
-                                   VerticalAlignment="Center"
-                                   Width="100"
-                                   Margin="0,0,5,0" />
-                   <ComboBox Width="150"
-                             IsEnabled="{Binding IsForlornAvailable}"
-                             ItemsSource="{Binding ForlornIndexes, IsAsync=False}"
-                             SelectedIndex="{Binding SelectedForlornIndex}" />
-                    </StackPanel>
-                </StackPanel>
             </Border>
         </Grid>
     </Grid>

@@ -37,7 +37,7 @@ public class EnemyViewModel : BaseViewModel
     private int _forceKengekiAct;
     private int _lastKengekiAct;
     private bool _isRepeatActEnabled;
-    private bool _isRepeatKegekiActEnabled;
+    private bool _isRepeatKengekiActEnabled;
 
 
     public EnemyViewModel(IGameStateService gameStateService, IEnemyTargetService enemyTargetService)
@@ -201,7 +201,7 @@ public class EnemyViewModel : BaseViewModel
         {
             if (!SetProperty(ref _forceKengekiAct, value)) return;
             _enemyTargetService.ForceKengekiAct(_forceKengekiAct);
-            if (_forceKengekiAct == 0) IsRepeatKegekiActEnabled = false;
+            if (_forceKengekiAct == 0) IsRepeatKengekiActEnabled = false;
         }
     }
     
@@ -228,12 +228,12 @@ public class EnemyViewModel : BaseViewModel
         }
     }
     
-    public bool IsRepeatKegekiActEnabled
+    public bool IsRepeatKengekiActEnabled
     {
-        get => _isRepeatKegekiActEnabled;
+        get => _isRepeatKengekiActEnabled;
         set
         {
-            if (!SetProperty(ref _isRepeatKegekiActEnabled, value)) return;
+            if (!SetProperty(ref _isRepeatKengekiActEnabled, value)) return;
 
             bool isRepeating = _enemyTargetService.IsTargetRepeatingKengeki();
 
