@@ -33,6 +33,15 @@ public static class Patterns
         7
     );
 
+    public static readonly Pattern WorldChrManDbg = new Pattern(
+        [0x7D, 0x4B, 0xF6, 0x81],
+        "xxxx",
+        0xF,
+        AddressingMode.Relative,
+        3,
+        8
+    );
+
 
     #region Functions
 

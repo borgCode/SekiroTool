@@ -2,6 +2,7 @@
 
 public static class Offsets
 {
+    
     public static class WorldChrMan
     {
         public static IntPtr Base;
@@ -14,6 +15,7 @@ public static class Offsets
         public const int PlayerGameData = 0x2000;
         
         public static readonly int[] ChrDataModule = [Modules, 0x18];
+        public static readonly int[] ChrResistModule = [Modules, 0x20];
         public static readonly int[] ChrBehaviorModule = [Modules, 0x28];
         public static readonly int[] ChrPhysicsModule = [Modules, 0x68];
         
@@ -33,6 +35,16 @@ public static class Offsets
             NoDeath = 1 << 2,
             NoDamage = 1 << 3,
             NoPostureConsume = 1 << 4,
+        }
+
+        public enum ChrResistOffsets
+        {
+            PoisonCurrent = 0x10,
+            BurnCurrent = 0x18,
+            ShockCurrent = 0x20,
+            PoisonMax = 0x24,
+            BurnMax = 0x2C,
+            ShockMax = 0x34
         }
 
         public enum ChrBehaviorOffsets
@@ -64,9 +76,11 @@ public static class Offsets
         }
     }
 
-    public static class InfiniteConsumablesFlag
+    public static class WorldChrManDbg
     {
-       
+        public static IntPtr Base;
+
+        public const int EnableDebugDraw = 0x6F;
     }
 
     public static class DebugFlagsBaseA

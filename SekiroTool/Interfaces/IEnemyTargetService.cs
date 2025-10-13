@@ -14,6 +14,8 @@ public interface IEnemyTargetService
     int GetCurrentPosture();
     int GetMaxPosture();
 
+    float[] GetPosition();
+
     void ToggleNoPostureBuildup(bool isEnabled);
     void ToggleNoDeath(bool isEnabled);
     void ToggleNoDamage(bool isEnabled);

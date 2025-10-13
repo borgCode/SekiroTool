@@ -11,25 +11,40 @@ public class EnemyViewModel : BaseViewModel
     private readonly IEnemyTargetService _enemyTargetService;
 
     private readonly DispatcherTimer _targetTick;
-    
+
     private bool _areOptionsEnabled;
     private bool _isTargetOptionsEnabled;
     private bool _isValidTarget;
-    
+
     private ulong _currentTargetAddr;
-    
+
     private int _customHp;
     private bool _customHpHasBeenSet;
     private int _targetCurrentHealth;
     private int _targetMaxHealth;
     private bool _isFreezeHealthEnabled;
-    
+
     private int _customPosture;
     private bool _customPostureHasBeenSet;
     private int _targetCurrentPosture;
     private int _targetMaxPosture;
     private bool _isFreezePostureEnabled;
+
+    private int _targetCurrentPoison;
+    private int _targetMaxPoison;
+    private bool _showPoison;
+    // private bool _isPoisonImmune;
     
+    private int _targetCurrentBurn;
+    private int _targetMaxBurn;
+    private bool _showBurn;
+    // private bool _isBleedImmune;
+    
+    private int _targetCurrentShock;
+    private int _targetMaxShock;
+    private bool _showShock;
+    // private bool _isToxicImmune;
+
     private float _targetSpeed;
 
     private int _forceAct;
@@ -43,7 +58,7 @@ public class EnemyViewModel : BaseViewModel
     public EnemyViewModel(IGameStateService gameStateService, IEnemyTargetService enemyTargetService)
     {
         _enemyTargetService = enemyTargetService;
-        
+
         gameStateService.Subscribe(GameState.Loaded, OnGameLoaded);
         gameStateService.Subscribe(GameState.NotLoaded, OnGameNotLoaded);
 
@@ -59,16 +74,16 @@ public class EnemyViewModel : BaseViewModel
         };
         _targetTick.Tick += TargetTick;
     }
-    
+
 
     #region Commands
-    
+
     public ICommand SetHpCommand { get; set; }
     public ICommand SetHpPercentageCommand { get; set; }
-    
+
     public ICommand SetPostureCommand { get; set; }
     public ICommand SetPosturePercentageCommand { get; set; }
-    
+
     #endregion
 
     #region Public Properties
@@ -78,13 +93,13 @@ public class EnemyViewModel : BaseViewModel
         get => _areOptionsEnabled;
         set => SetProperty(ref _areOptionsEnabled, value);
     }
-    
+
     public bool IsValidTarget
     {
         get => _isValidTarget;
         set => SetProperty(ref _isValidTarget, value);
     }
-    
+
     public bool IsTargetOptionsEnabled
     {
         get => _isTargetOptionsEnabled;
@@ -114,11 +129,11 @@ public class EnemyViewModel : BaseViewModel
             }
         }
     }
-    
+
     public int CustomHp
     {
         get => _customHp;
-        set 
+        set
         {
             if (SetProperty(ref _customHp, value))
             {
@@ -126,7 +141,7 @@ public class EnemyViewModel : BaseViewModel
             }
         }
     }
-    
+
     public int TargetCurrentHealth
     {
         get => _targetCurrentHealth;
@@ -148,18 +163,19 @@ public class EnemyViewModel : BaseViewModel
             _enemyTargetService.ToggleNoDamage(_isFreezeHealthEnabled);
         }
     }
+
     public int TargetCurrentPosture
     {
         get => _targetCurrentPosture;
         set => SetProperty(ref _targetCurrentPosture, value);
     }
-    
+
     public int TargetMaxPosture
     {
         get => _targetMaxPosture;
         set => SetProperty(ref _targetMaxPosture, value);
     }
-    
+
     public bool IsFreezePostureEnabled
     {
         get => _isFreezePostureEnabled;
@@ -169,8 +185,80 @@ public class EnemyViewModel : BaseViewModel
             _enemyTargetService.ToggleFreezePosture(_isFreezePostureEnabled);
         }
     }
+
     
+    public int TargetCurrentPoison
+    {
+        get => _targetCurrentPoison;
+        set => SetProperty(ref _targetCurrentPoison, value);
+    }
+
+    public int TargetMaxPoison
+    {
+        get => _targetMaxPoison;
+        set => SetProperty(ref _targetMaxPoison, value);
+    }
+
+    public bool ShowPoison
+    {
+        get => _showPoison;
+        set
+        {
+            SetProperty(ref _showPoison, value);
+            // if (!IsResistancesWindowOpen || _resistancesWindowWindow == null) return;
+            // _resistancesWindowWindow.DataContext = null;
+            // _resistancesWindowWindow.DataContext = this;
+        }
+    }
     
+    public int TargetCurrentBurn
+    {
+        get => _targetCurrentBurn;
+        set => SetProperty(ref _targetCurrentBurn, value);
+    }
+
+    public int TargetMaxBurn
+    {
+        get => _targetMaxBurn;
+        set => SetProperty(ref _targetMaxBurn, value);
+    }
+
+    public bool ShowBurn
+    {
+        get => _showBurn;
+        set
+        {
+            SetProperty(ref _showBurn, value);
+            // if (!IsResistancesWindowOpen || _resistancesWindowWindow == null) return;
+            // _resistancesWindowWindow.DataContext = null;
+            // _resistancesWindowWindow.DataContext = this;
+        }
+    }
+    
+    public int TargetCurrentShock
+    {
+        get => _targetCurrentShock;
+        set => SetProperty(ref _targetCurrentShock, value);
+    }
+
+    public int TargetMaxShock
+    {
+        get => _targetMaxShock;
+        set => SetProperty(ref _targetMaxShock, value);
+    }
+
+    public bool ShowShock
+    {
+        get => _showShock;
+        set
+        {
+            SetProperty(ref _showShock, value);
+            // if (!IsResistancesWindowOpen || _resistancesWindowWindow == null) return;
+            // _resistancesWindowWindow.DataContext = null;
+            // _resistancesWindowWindow.DataContext = this;
+        }
+    }
+
     public int LastAct
     {
         get => _lastAct;
@@ -187,7 +275,7 @@ public class EnemyViewModel : BaseViewModel
             if (_forceAct == 0) IsRepeatActEnabled = false;
         }
     }
-    
+
     public int LastKengekiAct
     {
         get => _lastKengekiAct;
@@ -204,7 +292,7 @@ public class EnemyViewModel : BaseViewModel
             if (_forceKengekiAct == 0) IsRepeatKengekiActEnabled = false;
         }
     }
-    
+
     public bool IsRepeatActEnabled
     {
         get => _isRepeatActEnabled;
@@ -227,7 +315,7 @@ public class EnemyViewModel : BaseViewModel
             }
         }
     }
-    
+
     public bool IsRepeatKengekiActEnabled
     {
         get => _isRepeatKengekiActEnabled;
@@ -250,7 +338,6 @@ public class EnemyViewModel : BaseViewModel
             }
         }
     }
-    
 
     #endregion
 
@@ -258,23 +345,23 @@ public class EnemyViewModel : BaseViewModel
 
     private void TargetTick(object? sender, EventArgs e)
     {
-        // if (!IsTargetValid())
-        // {
-        //     IsValidTarget = false;
-        //     return;
-        // }
-        //
+        if (!IsTargetValid())
+        {
+            IsValidTarget = false;
+            return;
+        }
+
         IsValidTarget = true;
-        
-        
+
+
         ulong targetAddr = _enemyTargetService.GetTargetAddr();
-        
-        
+
+
         if (targetAddr != _currentTargetAddr)
         {
             _currentTargetAddr = targetAddr;
         }
-        
+
         TargetCurrentHealth = _enemyTargetService.GetCurrentHp();
         TargetMaxHealth = _enemyTargetService.GetMaxHp();
 
@@ -283,9 +370,29 @@ public class EnemyViewModel : BaseViewModel
 
         LastAct = _enemyTargetService.GetLastAct();
         LastKengekiAct = _enemyTargetService.GetLastKengekiAct();
-        
     }
-    
+
+    private bool IsTargetValid()
+    {
+        ulong targetAddr = _enemyTargetService.GetTargetAddr();
+        if (targetAddr == 0) return false;
+
+        float health = _enemyTargetService.GetCurrentHp();
+        float maxHealth = _enemyTargetService.GetMaxHp();
+        if (health < 0 || maxHealth <= 0 || health > 10000000 || maxHealth > 10000000) return false;
+
+        if (health > maxHealth * 1.5) return false;
+
+        var position = _enemyTargetService.GetPosition();
+
+        if (float.IsNaN(position[0]) || float.IsNaN(position[1]) || float.IsNaN(position[2])) return false;
+
+        if (Math.Abs(position[0]) > 10000 || Math.Abs(position[1]) > 10000 || Math.Abs(position[2]) > 10000)
+            return false;
+
+        return true;
+    }
+
     private void OnGameLoaded()
     {
         AreOptionsEnabled = true;
@@ -298,14 +405,14 @@ public class EnemyViewModel : BaseViewModel
 
     private void SetHp(object parameter) =>
         _enemyTargetService.SetHp(Convert.ToInt32(parameter));
-    
+
     private void SetHpPercentage(object parameter)
     {
         int healthPercentage = Convert.ToInt32(parameter);
         int newHealth = TargetMaxHealth * healthPercentage / 100;
         _enemyTargetService.SetHp(newHealth);
-    } 
-    
+    }
+
     private void SetPosture(object parameter) =>
         _enemyTargetService.SetPosture(Convert.ToInt32(parameter));
 

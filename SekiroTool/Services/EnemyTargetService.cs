@@ -54,6 +54,20 @@ public class EnemyTargetService(IMemoryService memoryService, HookManager hookMa
     public int GetMaxPosture() =>
         memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.MaxPosture);
 
+    public float[] GetPosition()
+    {
+        var posPtr = memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.LockedTarget,
+            [..ChrIns.ChrPhysicsModule, (int)ChrIns.ChrPhysicsOffsets.X]
+            ,false);
+        
+        float[] position = new float[3];
+        position[0] = memoryService.ReadFloat(posPtr);
+        position[1] = memoryService.ReadFloat(posPtr + 0x4);
+        position[2] = memoryService.ReadFloat(posPtr + 0x8);
+
+        return position;
+    }
+
     public void ToggleNoPostureBuildup(bool isEnabled)
     {
         var bitFlags = GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.BitFlags;
@@ -120,11 +134,11 @@ public class EnemyTargetService(IMemoryService memoryService, HookManager hookMa
     {
         var aiThinkPtr = GetAiThinkPtr();
         var forceActPtr = aiThinkPtr + (int)ChrIns.AiThinkOffsets.ForceAct;
-    
-        byte value = isEnabled 
+
+        byte value = isEnabled
             ? memoryService.ReadUInt8(aiThinkPtr + (int)ChrIns.AiThinkOffsets.LastAct)
             : (byte)0;
-    
+
         memoryService.WriteUInt8(forceActPtr, value);
     }
 
@@ -132,11 +146,11 @@ public class EnemyTargetService(IMemoryService memoryService, HookManager hookMa
     {
         var aiThinkPtr = GetAiThinkPtr();
         var forceActPtr = aiThinkPtr + (int)ChrIns.AiThinkOffsets.ForceKengekiAct;
-    
-        byte value = isEnabled 
+
+        byte value = isEnabled
             ? memoryService.ReadUInt8(aiThinkPtr + (int)ChrIns.AiThinkOffsets.LastKengekiAct)
             : (byte)0;
-    
+
         memoryService.WriteUInt8(forceActPtr, value);
     }
 
