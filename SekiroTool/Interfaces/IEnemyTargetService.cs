@@ -31,6 +31,9 @@ public interface IEnemyTargetService
     void ToggleNoDeath(bool isEnabled);
     void ToggleNoDamage(bool isEnabled);
     void ToggleFreezePosture(bool isEnabled);
+
+    float GetSpeed();
+    void SetSpeed(float speed);
     
     int GetLastAct();
     int GetLastKengekiAct();

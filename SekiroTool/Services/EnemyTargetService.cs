@@ -138,7 +138,13 @@ public class EnemyTargetService(IMemoryService memoryService, HookManager hookMa
             hookManager.UninstallHook(code.ToInt64());
         }
     }
+
+    public float GetSpeed() =>
+        memoryService.ReadFloat(GetChrBehaviorPtr() + (int)ChrIns.ChrBehaviorOffsets.AnimationSpeed);
     
+    public void SetSpeed(float speed) =>
+        memoryService.WriteFloat(GetChrBehaviorPtr() + (int)ChrIns.ChrBehaviorOffsets.AnimationSpeed, speed);
+
     public int GetLastAct() =>
         memoryService.ReadUInt8(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.LastAct);
 
@@ -193,6 +199,10 @@ public class EnemyTargetService(IMemoryService memoryService, HookManager hookMa
     private IntPtr GetChrResistPtr() =>
         memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.LockedTarget,
             ChrIns.ChrResistModule, true);
+
+    private IntPtr GetChrBehaviorPtr() =>
+        memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.LockedTarget,
+            ChrIns.ChrBehaviorModule, true);
 
     private IntPtr GetChrSuperArmorPtr() =>
         memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.LockedTarget,

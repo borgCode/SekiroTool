@@ -306,6 +306,20 @@ public class EnemyViewModel : BaseViewModel
             }
         }
     }
+    
+    public float TargetSpeed
+    {
+        get => _targetSpeed;
+        set
+        {
+            if (SetProperty(ref _targetSpeed, value))
+            {
+                _enemyTargetService.SetSpeed(value);
+            }
+        }
+    }
+    
+    public void SetSpeed(double value) => TargetSpeed = (float)value;
 
     public int LastAct
     {
@@ -424,6 +438,8 @@ public class EnemyViewModel : BaseViewModel
         TargetCurrentPoison = _enemyTargetService.GetCurrentPoison();
         TargetCurrentBurn = _enemyTargetService.GetCurrentBurn();
         TargetCurrentShock = _enemyTargetService.GetCurrentShock();
+
+        TargetSpeed = _enemyTargetService.GetSpeed();
         
         LastAct = _enemyTargetService.GetLastAct();
         LastKengekiAct = _enemyTargetService.GetLastKengekiAct();
@@ -500,4 +516,6 @@ public class EnemyViewModel : BaseViewModel
     }
 
     #endregion
+
+    
 }

@@ -486,7 +486,7 @@
                         <TextBlock Text="{Binding LastAct}" VerticalAlignment="Center" Width="20" TextAlignment="Right" />
 
                         <TextBlock Text="Force Act: " Margin="30,0,10,0" VerticalAlignment="Center" />
-                        <xctk:IntegerUpDown Width="50" Height="20"
+                        <xctk:IntegerUpDown  Width="50" Height="20"
                                             Value="{Binding ForceAct, UpdateSourceTrigger=PropertyChanged}"
                                             Minimum="0"
                                             Maximum="255"
