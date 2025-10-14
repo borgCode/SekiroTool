@@ -3,7 +3,7 @@ using SekiroTool.Memory;
 
 namespace SekiroTool.Services;
 
-public class DebugDrawService(MemoryService memoryService) : IDebugDrawService
+public class DebugDrawService(IMemoryService memoryService) : IDebugDrawService
 {
     private int _clientCount;
     

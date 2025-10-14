@@ -2,7 +2,6 @@
 
 public static class Offsets
 {
-    
     public static class WorldChrMan
     {
         public static IntPtr Base;
@@ -11,16 +10,26 @@ public static class Offsets
 
     public static class ChrIns
     {
+        public const int BitFlagsStart = 0x1F40;
+
+        public static readonly BitFlag NoHit = new(0x0, 1 << 5);
+        public static readonly BitFlag NoAttack = new(0x0, 1 << 6);
+        public static readonly BitFlag NoMove = new(0x0, 1 << 7);
+        public static readonly BitFlag FreezeAi = new(0x1, 1 << 4);
+        public static readonly BitFlag NoGoodsConsume = new(0x2, 1 << 4);
+        public static readonly BitFlag NoEmblemsConsume = new(0x3, 1 << 0);
+
+
         public const int Modules = 0x1FF8;
         public const int PlayerGameData = 0x2000;
-        
+
         public static readonly int[] ChrDataModule = [Modules, 0x18];
         public static readonly int[] ChrResistModule = [Modules, 0x20];
         public static readonly int[] ChrBehaviorModule = [Modules, 0x28];
         public static readonly int[] ChrSuperArmorModule = [Modules, 0x40];
         public static readonly int[] ChrPhysicsModule = [Modules, 0x68];
-        
-        
+
+
         public enum ChrDataOffsets
         {
             Hp = 0x130,
@@ -29,7 +38,7 @@ public static class Offsets
             MaxPosture = 0x14C,
             BitFlags = 0x228
         }
-        
+
         [Flags]
         public enum ChrDataBitFlags
         {
@@ -59,7 +68,7 @@ public static class Offsets
             MaxPoise = 0x2C,
             PoiseTimer = 0x34
         }
-        
+
         public enum ChrPhysicsOffsets
         {
             X = 0x80,
@@ -70,14 +79,18 @@ public static class Offsets
 
         public const int ComManipulator = 0x58;
         public const int AiThink = 0x340;
+        
+        public static readonly BitFlag TargetView = new(0x5A, 1 << 3);
 
         public enum AiThinkOffsets
         {
+            TargetingSystem = 0x7B30,
             ForceAct = 0xB741,
             LastAct = 0xB742,
             ForceKengekiAct = 0xB743,
             LastKengekiAct = 0xB744
         }
+
         public enum PlayerGameDataOffsets
         {
             AttackPower = 0x48,
@@ -93,79 +106,64 @@ public static class Offsets
 
     public static class DebugFlagsBaseA
     {
-       
     }
 
     public static class DebugFlags
     {
-      
     }
 
     public static class DebugEvent
     {
-    
     }
 
     public static class SoloParamRepo
     {
-        
     }
 
     public static class MenuMan
     {
-       
     }
 
     public static class LuaEventMan
     {
-
     }
 
 
     public static class AiTargetingFlags
     {
-     
     }
 
     public static class MapItemMan
     {
-
     }
 
     public static class HitIns
     {
-    
     }
 
     public static class WorldObjMan
     {
-  
     }
-    
+
 
     public static class FieldArea
     {
-      
     }
 
     public static class GroupMask
     {
-    
     }
 
     public static class UserInputManager
     {
-   
     }
 
     public static class SprjFlipper
     {
-     
     }
 
     public static class Patches
     {
-       
     }
 
 

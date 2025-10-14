@@ -43,6 +43,21 @@ public static class Patterns
     );
 
 
+    #region Patches
+
+    public static readonly Pattern UpdateSaveCoords = new Pattern(
+        [0x80, 0xB9, 0xFC, 0x11],
+        "xxxx",
+        0,
+        AddressingMode.Absolute
+    );
+    //TODO patch cmp and jz
+    
+
+
+    #endregion
+
+
     #region Functions
 
     public static readonly Pattern AddSen = new Pattern(

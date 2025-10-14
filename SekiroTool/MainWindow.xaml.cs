@@ -21,7 +21,8 @@ public partial class MainWindow : Window
     private readonly IMemoryService _memoryService;
     private readonly IGameStateService _gameStateService;
     private readonly IPlayerService _playerService;
-    private readonly IEnemyTargetService _enemyTargetService;
+    private readonly ITargetService _targetService;
+    private readonly IDebugDrawService _debugDrawService;
 
     private readonly AoBScanner _aobScanner;
     private readonly HookManager _hookManager;
@@ -40,14 +41,15 @@ public partial class MainWindow : Window
 
         _gameStateService = new GameStateService(_memoryService);
         _playerService = new PlayerService(_memoryService);
-        _enemyTargetService = new EnemyTargetService(_memoryService, _hookManager);
+        _targetService = new TargetService(_memoryService, _hookManager);
+        _debugDrawService = new DebugDrawService(_memoryService);
 
 
-        EnemyViewModel enemyViewModel = new EnemyViewModel(_gameStateService, _enemyTargetService);
+        TargetViewModel targetViewModel = new TargetViewModel(_gameStateService, _targetService, _debugDrawService);
         
-        var enemyTab = new EnemyTab(enemyViewModel);
+        var targetTab = new TargetTab(targetViewModel);
         
-        MainTabControl.Items.Add(new TabItem { Header = "Enemies", Content = enemyTab });
+        MainTabControl.Items.Add(new TabItem { Header = "Target", Content = targetTab });
         
 
         _gameLoadedTimer = new DispatcherTimer

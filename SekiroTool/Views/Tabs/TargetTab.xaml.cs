@@ -4,16 +4,16 @@ using SekiroTool.ViewModels;
 
 namespace SekiroTool.Views.Tabs;
 
-public partial class EnemyTab : UserControl
+public partial class TargetTab : UserControl
 {
 
-    private readonly EnemyViewModel _enemyViewModel;
+    private readonly TargetViewModel _targetViewModel;
     
-    public EnemyTab(EnemyViewModel enemyViewModel)
+    public TargetTab(TargetViewModel targetViewModel)
     {
-        _enemyViewModel = enemyViewModel;
+        _targetViewModel = targetViewModel;
         InitializeComponent();
-        DataContext = enemyViewModel;
+        DataContext = targetViewModel;
 
         InitializeUpDownHelpers();
     }
@@ -22,7 +22,7 @@ public partial class EnemyTab : UserControl
     {
         new UpDownHelper<double>(
             SpeedUpDown,
-            _enemyViewModel.SetSpeed
+            _targetViewModel.SetSpeed
         );
     }
 }

@@ -5,7 +5,7 @@ using static SekiroTool.Memory.Offsets;
 
 namespace SekiroTool.Services;
 
-public class EnemyTargetService(IMemoryService memoryService, HookManager hookManager) : IEnemyTargetService
+public class TargetService(IMemoryService memoryService, HookManager hookManager) : ITargetService
 {
     #region Public Methods
 
@@ -101,16 +101,34 @@ public class EnemyTargetService(IMemoryService memoryService, HookManager hookMa
         memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoPostureConsume, isEnabled);
     }
 
+    public bool IsNoPostureBuildupEnabled()
+    {
+        var bitFlags = GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.BitFlags;
+        return memoryService.IsBitSet(bitFlags, (int)ChrIns.ChrDataBitFlags.NoPostureConsume);
+    }
+
     public void ToggleNoDeath(bool isEnabled)
     {
         var bitFlags = GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.BitFlags;
         memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDeath, isEnabled);
     }
 
+    public bool IsNoDeathEnabled()
+    {
+        var bitFlags = GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.BitFlags;
+        return memoryService.IsBitSet(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDeath);
+    }
+
     public void ToggleNoDamage(bool isEnabled)
     {
         var bitFlags = GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.BitFlags;
         memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDamage, isEnabled);
+    }
+
+    public bool IsNoDamageEnabled()
+    {
+        var bitFlags = GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.BitFlags;
+        return memoryService.IsBitSet(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDamage);
     }
 
     public void ToggleFreezePosture(bool isEnabled)
@@ -141,9 +159,65 @@ public class EnemyTargetService(IMemoryService memoryService, HookManager hookMa
 
     public float GetSpeed() =>
         memoryService.ReadFloat(GetChrBehaviorPtr() + (int)ChrIns.ChrBehaviorOffsets.AnimationSpeed);
-    
+
     public void SetSpeed(float speed) =>
         memoryService.WriteFloat(GetChrBehaviorPtr() + (int)ChrIns.ChrBehaviorOffsets.AnimationSpeed, speed);
+
+    public void ToggleAiFreeze(bool isEnabled)
+    {
+        var bitFlagStart = (IntPtr)memoryService.ReadInt64(CodeCaveOffsets.Base + CodeCaveOffsets.LockedTarget)
+                           + ChrIns.BitFlagsStart;
+        memoryService.SetBitValue(bitFlagStart + ChrIns.FreezeAi.Offset, ChrIns.FreezeAi.Bit, isEnabled);
+    }
+
+    public bool IsAiFreezeEnabled()
+    {
+        var bitFlagStart = (IntPtr)memoryService.ReadInt64(CodeCaveOffsets.Base + CodeCaveOffsets.LockedTarget)
+                           + ChrIns.BitFlagsStart;
+        return memoryService.IsBitSet(bitFlagStart + ChrIns.FreezeAi.Offset, ChrIns.FreezeAi.Bit);
+    }
+
+    public void ToggleNoAttack(bool isEnabled)
+    {
+        var bitFlagStart = (IntPtr)memoryService.ReadInt64(CodeCaveOffsets.Base + CodeCaveOffsets.LockedTarget)
+                           + ChrIns.BitFlagsStart;
+        memoryService.SetBitValue(bitFlagStart + ChrIns.NoAttack.Offset, ChrIns.NoAttack.Bit, isEnabled);
+    }
+
+    public bool IsNoAttackEnabled()
+    {
+        var bitFlagStart = (IntPtr)memoryService.ReadInt64(CodeCaveOffsets.Base + CodeCaveOffsets.LockedTarget)
+                           + ChrIns.BitFlagsStart;
+        return memoryService.IsBitSet(bitFlagStart + ChrIns.NoAttack.Offset, ChrIns.NoAttack.Bit);
+    }
+
+    public void ToggleNoMove(bool isEnabled)
+    {
+        var bitFlagStart = (IntPtr)memoryService.ReadInt64(CodeCaveOffsets.Base + CodeCaveOffsets.LockedTarget)
+                           + ChrIns.BitFlagsStart;
+        memoryService.SetBitValue(bitFlagStart + ChrIns.NoMove.Offset, ChrIns.NoMove.Bit, isEnabled);
+    }
+
+    public bool IsNoMoveEnabled()
+    {
+        var bitFlagStart = (IntPtr)memoryService.ReadInt64(CodeCaveOffsets.Base + CodeCaveOffsets.LockedTarget)
+                           + ChrIns.BitFlagsStart;
+        return memoryService.IsBitSet(bitFlagStart + ChrIns.NoMove.Offset, ChrIns.NoMove.Bit);
+    }
+
+    public void ToggleTargetView(bool isEnabled)
+    {
+        var targetingSystemPtr = memoryService.ReadInt64(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.TargetingSystem);
+        memoryService.SetBitValue((IntPtr)targetingSystemPtr + ChrIns.TargetView.Offset, ChrIns.TargetView.Bit,
+            isEnabled);
+    }
+
+
+    public bool IsTargetViewEnabled()
+    {
+        var targetingSystemPtr = memoryService.ReadInt64(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.TargetingSystem);
+        return memoryService.IsBitSet((IntPtr)targetingSystemPtr + ChrIns.TargetView.Offset, ChrIns.TargetView.Bit);
+    }
 
     public int GetLastAct() =>
         memoryService.ReadUInt8(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.LastAct);

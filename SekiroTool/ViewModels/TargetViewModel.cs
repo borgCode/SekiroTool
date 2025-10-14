@@ -6,10 +6,11 @@ using SekiroTool.Interfaces;
 
 namespace SekiroTool.ViewModels;
 
-public class EnemyViewModel : BaseViewModel
+public class TargetViewModel : BaseViewModel
 {
-    private readonly IEnemyTargetService _enemyTargetService;
-
+    private readonly ITargetService _targetService;
+    private readonly IDebugDrawService _debugDrawService;
+    
     private readonly DispatcherTimer _targetTick;
 
     private bool _areOptionsEnabled;
@@ -51,20 +52,29 @@ public class EnemyViewModel : BaseViewModel
     // private bool _isToxicImmune;
     
     private bool _showAllResistances;
-
-    private float _targetSpeed;
-
+    
     private int _forceAct;
     private int _lastAct;
     private int _forceKengekiAct;
     private int _lastKengekiAct;
     private bool _isRepeatActEnabled;
     private bool _isRepeatKengekiActEnabled;
+    
+    private float _targetSpeed;
+
+    private bool _isAiFreezEnabled;
+    private bool _isNoAttackEnabled;
+    private bool _isNoMoveEnabled;
+    private bool _isNoDeathEnabled;
+    private bool _isNoPostureBuildupEnabled;
+    private bool _isTargetViewEnabled;
 
 
-    public EnemyViewModel(IGameStateService gameStateService, IEnemyTargetService enemyTargetService)
+    public TargetViewModel(IGameStateService gameStateService, ITargetService targetService,
+        IDebugDrawService debugDrawService)
     {
-        _enemyTargetService = enemyTargetService;
+        _targetService = targetService;
+        _debugDrawService = debugDrawService;
 
         gameStateService.Subscribe(GameState.Loaded, OnGameLoaded);
         gameStateService.Subscribe(GameState.NotLoaded, OnGameNotLoaded);
@@ -115,7 +125,7 @@ public class EnemyViewModel : BaseViewModel
             if (!SetProperty(ref _isTargetOptionsEnabled, value)) return;
             if (value)
             {
-                _enemyTargetService.ToggleTargetHook(true);
+                _targetService.ToggleTargetHook(true);
                 _targetTick.Start();
                 ShowAllResistances = true;
             }
@@ -127,7 +137,7 @@ public class EnemyViewModel : BaseViewModel
                 ShowAllResistances = false;
                 // IsResistancesWindowOpen = false;
                 // IsFreezeHealthEnabled = false;
-                _enemyTargetService.ToggleTargetHook(false);
+                _targetService.ToggleTargetHook(false);
                 ShowPoise = false;
                 ShowPoison = false;
                 ShowBurn = false;
@@ -166,7 +176,7 @@ public class EnemyViewModel : BaseViewModel
         set
         {
             SetProperty(ref _isFreezeHealthEnabled, value);
-            _enemyTargetService.ToggleNoDamage(_isFreezeHealthEnabled);
+            _targetService.ToggleNoDamage(_isFreezeHealthEnabled);
         }
     }
 
@@ -188,7 +198,7 @@ public class EnemyViewModel : BaseViewModel
         set
         {
             SetProperty(ref _isFreezePostureEnabled, value);
-            _enemyTargetService.ToggleFreezePosture(_isFreezePostureEnabled);
+            _targetService.ToggleFreezePosture(_isFreezePostureEnabled);
         }
     }
     
@@ -307,20 +317,6 @@ public class EnemyViewModel : BaseViewModel
         }
     }
     
-    public float TargetSpeed
-    {
-        get => _targetSpeed;
-        set
-        {
-            if (SetProperty(ref _targetSpeed, value))
-            {
-                _enemyTargetService.SetSpeed(value);
-            }
-        }
-    }
-    
-    public void SetSpeed(double value) => TargetSpeed = (float)value;
-
     public int LastAct
     {
         get => _lastAct;
@@ -333,7 +329,7 @@ public class EnemyViewModel : BaseViewModel
         set
         {
             if (!SetProperty(ref _forceAct, value)) return;
-            _enemyTargetService.ForceAct(_forceAct);
+            _targetService.ForceAct(_forceAct);
             if (_forceAct == 0) IsRepeatActEnabled = false;
         }
     }
@@ -350,7 +346,7 @@ public class EnemyViewModel : BaseViewModel
         set
         {
             if (!SetProperty(ref _forceKengekiAct, value)) return;
-            _enemyTargetService.ForceKengekiAct(_forceKengekiAct);
+            _targetService.ForceKengekiAct(_forceKengekiAct);
             if (_forceKengekiAct == 0) IsRepeatKengekiActEnabled = false;
         }
     }
@@ -362,16 +358,16 @@ public class EnemyViewModel : BaseViewModel
         {
             if (!SetProperty(ref _isRepeatActEnabled, value)) return;
 
-            bool isRepeating = _enemyTargetService.IsTargetRepeating();
+            bool isRepeating = _targetService.IsTargetRepeating();
 
             switch (value)
             {
                 case true when !isRepeating:
-                    _enemyTargetService.ToggleTargetRepeatAct(true);
-                    ForceAct = _enemyTargetService.GetLastAct();
+                    _targetService.ToggleTargetRepeatAct(true);
+                    ForceAct = _targetService.GetLastAct();
                     break;
                 case false when isRepeating:
-                    _enemyTargetService.ToggleTargetRepeatAct(false);
+                    _targetService.ToggleTargetRepeatAct(false);
                     ForceAct = 0;
                     break;
             }
@@ -385,18 +381,108 @@ public class EnemyViewModel : BaseViewModel
         {
             if (!SetProperty(ref _isRepeatKengekiActEnabled, value)) return;
 
-            bool isRepeating = _enemyTargetService.IsTargetRepeatingKengeki();
+            bool isRepeating = _targetService.IsTargetRepeatingKengeki();
 
             switch (value)
             {
                 case true when !isRepeating:
-                    _enemyTargetService.ToggleTargetRepeatKengekiAct(true);
-                    ForceKengekiAct = _enemyTargetService.GetLastKengekiAct();
+                    _targetService.ToggleTargetRepeatKengekiAct(true);
+                    ForceKengekiAct = _targetService.GetLastKengekiAct();
                     break;
                 case false when isRepeating:
-                    _enemyTargetService.ToggleTargetRepeatKengekiAct(false);
+                    _targetService.ToggleTargetRepeatKengekiAct(false);
                     ForceKengekiAct = 0;
                     break;
+            }
+        }
+    }
+    
+    public float TargetSpeed
+    {
+        get => _targetSpeed;
+        set
+        {
+            if (SetProperty(ref _targetSpeed, value))
+            {
+                _targetService.SetSpeed(value);
+            }
+        }
+    }
+    
+    public void SetSpeed(double value) => TargetSpeed = (float)value;
+    
+    
+    public bool IsAiFreezeEnabled
+    {
+        get => _isAiFreezEnabled;
+        set
+        {
+            if (SetProperty(ref _isAiFreezEnabled, value))
+            {
+                _targetService.ToggleAiFreeze(_isAiFreezEnabled);
+            }
+        }
+    }
+    
+    public bool IsNoAttackEnabled
+    {
+        get => _isNoAttackEnabled;
+        set
+        {
+            if (SetProperty(ref _isNoAttackEnabled, value))
+            {
+                _targetService.ToggleNoAttack(_isNoAttackEnabled);
+            }
+        }
+    }
+    
+    public bool IsNoMoveEnabled
+    {
+        get => _isNoMoveEnabled;
+        set
+        {
+            if (SetProperty(ref _isNoMoveEnabled, value))
+            {
+                _targetService.ToggleNoMove(_isNoMoveEnabled);
+            }
+        }
+    }
+    
+    public bool IsNoDeathEnabled
+    {
+        get => _isNoDeathEnabled;
+        set
+        {
+            if (SetProperty(ref _isNoDeathEnabled, value))
+            {
+                _targetService.ToggleNoDeath(_isNoDeathEnabled);
+            }
+        }
+    }
+    
+    public bool IsNoPostureBuildupEnabled
+    {
+        get => _isNoPostureBuildupEnabled;
+        set
+        {
+            if (SetProperty(ref _isNoPostureBuildupEnabled, value))
+            {
+                _targetService.ToggleNoPostureBuildup(_isNoPostureBuildupEnabled);
+            }
+        }
+    }
+    
+    public bool IsTargetViewEnabled
+    {
+        get => _isTargetViewEnabled;
+        set
+        {
+            if (SetProperty(ref _isTargetViewEnabled, value))
+            {
+                if (_isTargetViewEnabled) _debugDrawService.RequestDebugDraw();
+                else _debugDrawService.ReleaseDebugDraw();
+                
+                _targetService.ToggleTargetView(_isTargetViewEnabled);
             }
         }
     }
@@ -416,47 +502,57 @@ public class EnemyViewModel : BaseViewModel
         IsValidTarget = true;
 
 
-        ulong targetAddr = _enemyTargetService.GetTargetAddr();
+        ulong targetAddr = _targetService.GetTargetAddr();
 
 
         if (targetAddr != _currentTargetAddr)
         {
             _currentTargetAddr = targetAddr;
             
-            TargetMaxHealth = _enemyTargetService.GetMaxHp();
-            TargetMaxPosture = _enemyTargetService.GetMaxPosture();
-            TargetMaxPoise = _enemyTargetService.GetMaxPoise();
-            TargetMaxPoison = _enemyTargetService.GetMaxPoison();
-            TargetMaxBurn = _enemyTargetService.GetMaxBurn();
-            TargetMaxShock = _enemyTargetService.GetMaxShock();
+            TargetMaxHealth = _targetService.GetMaxHp();
+            TargetMaxPosture = _targetService.GetMaxPosture();
+            TargetMaxPoise = _targetService.GetMaxPoise();
+            TargetMaxPoison = _targetService.GetMaxPoison();
+            TargetMaxBurn = _targetService.GetMaxBurn();
+            TargetMaxShock = _targetService.GetMaxShock();
+
+            IsAiFreezeEnabled = _targetService.IsAiFreezeEnabled();
+            IsNoAttackEnabled = _targetService.IsNoAttackEnabled();
+            IsNoMoveEnabled = _targetService.IsNoMoveEnabled();
+            IsFreezeHealthEnabled = _targetService.IsNoDamageEnabled();
+            IsNoDeathEnabled = _targetService.IsNoDeathEnabled();
+            IsNoPostureBuildupEnabled = _targetService.IsNoPostureBuildupEnabled();
+            
+            _isTargetViewEnabled = _targetService.IsTargetViewEnabled();
+            OnPropertyChanged(nameof(IsTargetViewEnabled));
         }
 
-        TargetCurrentHealth = _enemyTargetService.GetCurrentHp();
-        TargetCurrentPosture = _enemyTargetService.GetCurrentPosture();
-        TargetCurrentPoise = _enemyTargetService.GetCurrentPoise();
-        TargetPoiseTimer = _enemyTargetService.GetPoiseTimer();
-        TargetCurrentPoison = _enemyTargetService.GetCurrentPoison();
-        TargetCurrentBurn = _enemyTargetService.GetCurrentBurn();
-        TargetCurrentShock = _enemyTargetService.GetCurrentShock();
+        TargetCurrentHealth = _targetService.GetCurrentHp();
+        TargetCurrentPosture = _targetService.GetCurrentPosture();
+        TargetCurrentPoise = _targetService.GetCurrentPoise();
+        TargetPoiseTimer = _targetService.GetPoiseTimer();
+        TargetCurrentPoison = _targetService.GetCurrentPoison();
+        TargetCurrentBurn = _targetService.GetCurrentBurn();
+        TargetCurrentShock = _targetService.GetCurrentShock();
 
-        TargetSpeed = _enemyTargetService.GetSpeed();
+        TargetSpeed = _targetService.GetSpeed();
         
-        LastAct = _enemyTargetService.GetLastAct();
-        LastKengekiAct = _enemyTargetService.GetLastKengekiAct();
+        LastAct = _targetService.GetLastAct();
+        LastKengekiAct = _targetService.GetLastKengekiAct();
     }
 
     private bool IsTargetValid()
     {
-        ulong targetAddr = _enemyTargetService.GetTargetAddr();
+        ulong targetAddr = _targetService.GetTargetAddr();
         if (targetAddr == 0) return false;
 
-        float health = _enemyTargetService.GetCurrentHp();
-        float maxHealth = _enemyTargetService.GetMaxHp();
+        float health = _targetService.GetCurrentHp();
+        float maxHealth = _targetService.GetMaxHp();
         if (health < 0 || maxHealth <= 0 || health > 10000000 || maxHealth > 10000000) return false;
 
         if (health > maxHealth * 1.5) return false;
 
-        var position = _enemyTargetService.GetPosition();
+        var position = _targetService.GetPosition();
 
         if (float.IsNaN(position[0]) || float.IsNaN(position[1]) || float.IsNaN(position[2])) return false;
 
@@ -477,23 +573,23 @@ public class EnemyViewModel : BaseViewModel
     }
 
     private void SetHp(object parameter) =>
-        _enemyTargetService.SetHp(Convert.ToInt32(parameter));
+        _targetService.SetHp(Convert.ToInt32(parameter));
 
     private void SetHpPercentage(object parameter)
     {
         int healthPercentage = Convert.ToInt32(parameter);
         int newHealth = TargetMaxHealth * healthPercentage / 100;
-        _enemyTargetService.SetHp(newHealth);
+        _targetService.SetHp(newHealth);
     }
 
     private void SetPosture(object parameter) =>
-        _enemyTargetService.SetPosture(Convert.ToInt32(parameter));
+        _targetService.SetPosture(Convert.ToInt32(parameter));
 
     private void SetPosturePercentage(object parameter)
     {
         int posturePercentage = Convert.ToInt32(parameter);
         int newPosture = TargetMaxPosture * posturePercentage / 100;
-        _enemyTargetService.SetPosture(newPosture);
+        _targetService.SetPosture(newPosture);
     }
 
     private void UpdateResistancesDisplay()

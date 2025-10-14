@@ -1,6 +1,6 @@
 ﻿namespace SekiroTool.Interfaces;
 
-public interface IEnemyTargetService
+public interface ITargetService
 {
     void ToggleTargetHook(bool isEnabled);
 
@@ -28,12 +28,30 @@ public interface IEnemyTargetService
     float[] GetPosition();
 
     void ToggleNoPostureBuildup(bool isEnabled);
+    bool IsNoPostureBuildupEnabled();
+    
     void ToggleNoDeath(bool isEnabled);
+    bool IsNoDeathEnabled();
+    
     void ToggleNoDamage(bool isEnabled);
+    bool IsNoDamageEnabled();
+    
     void ToggleFreezePosture(bool isEnabled);
 
     float GetSpeed();
     void SetSpeed(float speed);
+
+    void ToggleAiFreeze(bool isEnabled);
+    bool IsAiFreezeEnabled();
+    
+    void ToggleNoAttack(bool isEnabled);
+    bool IsNoAttackEnabled();
+    
+    void ToggleNoMove(bool isEnabled);
+    bool IsNoMoveEnabled();
+
+    void ToggleTargetView(bool isEnabled);
+    bool IsTargetViewEnabled();
     
     int GetLastAct();
     int GetLastKengekiAct();

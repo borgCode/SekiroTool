@@ -27,6 +27,7 @@ public interface IMemoryService
     void WriteBytes(nint addr, byte[] val);
 
     void SetBitValue(nint addr, int flagMask, bool setValue);
+    bool IsBitSet(nint addr, int flagMask);
     
     uint RunThread(nint address, uint timeout = uint.MaxValue);
     bool RunThreadAndWaitForCompletion(nint address, uint timeout = uint.MaxValue);
