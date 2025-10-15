@@ -17,7 +17,7 @@ public class HotkeyManager
         _keyboardHook.HandleModifierKeys = true;
         _keyboardHook.Down += KeyboardHook_Down;
         LoadHotkeys();
-        // if (SettingsManager.Default.EnableHotkeys) _keyboardHook.Start();
+        if (SettingsManager.Default.EnableHotkeys) _keyboardHook.Start();
     }
     
     public void Start()

@@ -6,8 +6,9 @@ public class SettingsManager
 {
     private static SettingsManager _default;
     public static SettingsManager Default => _default ??= Load();
+    
     public string HotkeyActionIds { get; set; } = "";
-
+    public bool EnableHotkeys { get; set; }
 
     private static string SettingsPath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -24,6 +25,7 @@ public class SettingsManager
             var lines = new[]
             {
                 $"HotkeyActionIds={HotkeyActionIds}",
+                $"EnableHotkeys={EnableHotkeys}",
             };
 
             File.WriteAllLines(SettingsPath, lines);
@@ -54,6 +56,10 @@ public class SettingsManager
                         switch (key)
                         {
                             case "HotkeyActionIds": settings.HotkeyActionIds = value; break;
+                            case "EnableHotkeys":
+                                bool.TryParse(value, out bool eh);
+                                settings.EnableHotkeys = eh;
+                                break;
                         }
                     }
                 }

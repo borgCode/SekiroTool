@@ -24,6 +24,7 @@ public enum HotkeyActions
     TargetNoPostureBuild,
     TargetNoDeath,
     TargetTargetingView,
+    Quitout
     
     
 }

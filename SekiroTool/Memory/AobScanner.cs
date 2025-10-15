@@ -25,6 +25,7 @@ public class AoBScanner(IMemoryService memoryService)
 
         Offsets.WorldChrMan.Base = FindAddressByPattern(Patterns.WorldChrMan);
         Offsets.WorldChrManDbg.Base = FindAddressByPattern(Patterns.WorldChrManDbg);
+        Offsets.MenuMan.Base = FindAddressByPattern(Patterns.MenuMan);
         
         
         TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
@@ -45,6 +46,7 @@ public class AoBScanner(IMemoryService memoryService)
 #if DEBUG
         Console.WriteLine($"WorldChrMan.Base: 0x{Offsets.WorldChrMan.Base.ToInt64():X}");
         Console.WriteLine($"WorldChrManDbg.Base: 0x{Offsets.WorldChrManDbg.Base.ToInt64():X}");
+        Console.WriteLine($"MenuMan.Base: 0x{Offsets.MenuMan.Base.ToInt64():X}");
         
         
         

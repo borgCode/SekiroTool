@@ -49,11 +49,14 @@ public partial class MainWindow : Window
 
         TargetViewModel targetViewModel =
             new TargetViewModel(_gameStateService, _hotkeyManager, targetService, debugDrawService);
-        SettingsViewmodel settingsViewmodel = new SettingsViewmodel(settingsService, _hotkeyManager);
+        SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, _hotkeyManager);
 
         var targetTab = new TargetTab(targetViewModel);
+        var settingsTab = new SettingsTab(settingsViewModel);
 
         MainTabControl.Items.Add(new TabItem { Header = "Target", Content = targetTab });
+        MainTabControl.Items.Add(new TabItem { Header = "Settings", Content = settingsTab });
+        
 
         _gameLoadedTimer = new DispatcherTimer
         {
