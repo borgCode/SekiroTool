@@ -31,7 +31,6 @@ public partial class MainWindow : Window
 
     public MainWindow()
     {
-        
         _memoryService = new MemoryService();
         _memoryService.StartAutoAttach();
 
@@ -45,12 +44,15 @@ public partial class MainWindow : Window
         _playerService = new PlayerService(_memoryService);
         ITargetService targetService = new TargetService(_memoryService, _hookManager);
         IDebugDrawService debugDrawService = new DebugDrawService(_memoryService);
+        ISettingsService settingsService = new SettingsService(_memoryService);
 
 
-        TargetViewModel targetViewModel = new TargetViewModel(_gameStateService, _hotkeyManager, targetService, debugDrawService);
-        
+        TargetViewModel targetViewModel =
+            new TargetViewModel(_gameStateService, _hotkeyManager, targetService, debugDrawService);
+        SettingsViewmodel settingsViewmodel = new SettingsViewmodel(settingsService, _hotkeyManager);
+
         var targetTab = new TargetTab(targetViewModel);
-        
+
         MainTabControl.Items.Add(new TabItem { Header = "Target", Content = targetTab });
 
         _gameLoadedTimer = new DispatcherTimer
@@ -108,7 +110,7 @@ public partial class MainWindow : Window
                 _gameStateService.Publish(GameState.Attached);
                 Console.WriteLine("Attached");
             }
-            
+
 
             if (_gameStateService.IsLoaded())
             {
@@ -138,7 +140,7 @@ public partial class MainWindow : Window
                 _gameStateService.Publish(GameState.Detached);
                 Console.WriteLine("Detached");
             }
-            
+
             _loaded = false;
             _hasScanned = false;
             _hasAllocatedMemory = false;
@@ -158,7 +160,7 @@ public partial class MainWindow : Window
             // LaunchGameButton.IsEnabled = true;
         }
     }
-    
+
     private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if (e.ClickCount == 2)
@@ -176,14 +178,13 @@ public partial class MainWindow : Window
 
     private void MinimizeButton_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
     private void CloseButton_Click(object sender, RoutedEventArgs e) => Close();
+
     private void MainWindow_Closing(object sender, CancelEventArgs e)
     {
-      
         // SettingsManager.Default.WindowLeft = Left;
         // SettingsManager.Default.WindowTop = Top;
         // SettingsManager.Default.Save();
         // DisableFeatures();
         // _hookManager.UninstallAllHooks();
-            
     }
 }
