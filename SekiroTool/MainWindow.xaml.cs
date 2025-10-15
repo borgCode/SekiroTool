@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using SekiroTool.Enums;
@@ -19,7 +21,8 @@ public partial class MainWindow : Window
     private readonly IMemoryService _memoryService;
     private readonly IGameStateService _gameStateService;
     private readonly IPlayerService _playerService;
-    private readonly IEnemyTargetService _enemyTargetService;
+    private readonly ITargetService _targetService;
+    private readonly IDebugDrawService _debugDrawService;
 
     private readonly AoBScanner _aobScanner;
     private readonly HookManager _hookManager;
@@ -38,14 +41,15 @@ public partial class MainWindow : Window
 
         _gameStateService = new GameStateService(_memoryService);
         _playerService = new PlayerService(_memoryService);
-        _enemyTargetService = new EnemyTargetService(_memoryService, _hookManager);
+        _targetService = new TargetService(_memoryService, _hookManager);
+        _debugDrawService = new DebugDrawService(_memoryService);
 
 
-        EnemyViewModel enemyViewModel = new EnemyViewModel(_gameStateService, _enemyTargetService);
+        TargetViewModel targetViewModel = new TargetViewModel(_gameStateService, _targetService, _debugDrawService);
         
-        var enemyTab = new EnemyTab(enemyViewModel);
+        var targetTab = new TargetTab(targetViewModel);
         
-        MainTabControl.Items.Add(new TabItem { Header = "Enemies", Content = enemyTab });
+        MainTabControl.Items.Add(new TabItem { Header = "Target", Content = targetTab });
         
 
         _gameLoadedTimer = new DispatcherTimer
@@ -153,15 +157,32 @@ public partial class MainWindow : Window
             // LaunchGameButton.IsEnabled = true;
         }
     }
-
-    private void Test(object sender, RoutedEventArgs e)
+    
+    private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        _playerService.Rest();
-        // _enemyTargetService.ToggleNoDeath(true);
+        if (e.ClickCount == 2)
+        {
+            if (WindowState == WindowState.Maximized)
+                WindowState = WindowState.Normal;
+            else
+                WindowState = WindowState.Maximized;
+        }
+        else
+        {
+            DragMove();
+        }
     }
 
-    private void TestOff(object sender, RoutedEventArgs e)
+    private void MinimizeButton_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+    private void CloseButton_Click(object sender, RoutedEventArgs e) => Close();
+    private void MainWindow_Closing(object sender, CancelEventArgs e)
     {
-        // _enemyTargetService.ToggleNoDeath(false);
+      
+        // SettingsManager.Default.WindowLeft = Left;
+        // SettingsManager.Default.WindowTop = Top;
+        // SettingsManager.Default.Save();
+        // DisableFeatures();
+        // _hookManager.UninstallAllHooks();
+            
     }
 }

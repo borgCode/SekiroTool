@@ -141,6 +141,13 @@ public class MemoryService : IMemoryService
         WriteUInt8(addr, modifiedByte);
     }
 
+    public bool IsBitSet(IntPtr addr, int flagMask)
+    {
+        byte currentByte = ReadUInt8(addr);
+            
+        return (currentByte & flagMask) != 0;
+    }
+
     public uint RunThread(nint address, uint timeout = 0xFFFFFFFF)
     {
         nint thread = Kernel32.CreateRemoteThread(ProcessHandle, nint.Zero, 0, address, nint.Zero, 0, nint.Zero);
