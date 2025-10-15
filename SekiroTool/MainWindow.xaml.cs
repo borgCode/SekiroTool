@@ -8,6 +8,7 @@ using SekiroTool.Enums;
 using SekiroTool.Interfaces;
 using SekiroTool.Memory;
 using SekiroTool.Services;
+using SekiroTool.Utilities;
 using SekiroTool.ViewModels;
 using SekiroTool.Views.Tabs;
 
@@ -21,16 +22,16 @@ public partial class MainWindow : Window
     private readonly IMemoryService _memoryService;
     private readonly IGameStateService _gameStateService;
     private readonly IPlayerService _playerService;
-    private readonly ITargetService _targetService;
-    private readonly IDebugDrawService _debugDrawService;
 
     private readonly AoBScanner _aobScanner;
     private readonly HookManager _hookManager;
+    private readonly HotkeyManager _hotkeyManager;
 
     private readonly DispatcherTimer _gameLoadedTimer;
 
     public MainWindow()
     {
+        
         _memoryService = new MemoryService();
         _memoryService.StartAutoAttach();
 
@@ -38,19 +39,19 @@ public partial class MainWindow : Window
 
         _aobScanner = new AoBScanner(_memoryService);
         _hookManager = new HookManager(_memoryService);
+        _hotkeyManager = new HotkeyManager(_memoryService);
 
         _gameStateService = new GameStateService(_memoryService);
         _playerService = new PlayerService(_memoryService);
-        _targetService = new TargetService(_memoryService, _hookManager);
-        _debugDrawService = new DebugDrawService(_memoryService);
+        ITargetService targetService = new TargetService(_memoryService, _hookManager);
+        IDebugDrawService debugDrawService = new DebugDrawService(_memoryService);
 
 
-        TargetViewModel targetViewModel = new TargetViewModel(_gameStateService, _targetService, _debugDrawService);
+        TargetViewModel targetViewModel = new TargetViewModel(_gameStateService, _hotkeyManager, targetService, debugDrawService);
         
         var targetTab = new TargetTab(targetViewModel);
         
         MainTabControl.Items.Add(new TabItem { Header = "Target", Content = targetTab });
-        
 
         _gameLoadedTimer = new DispatcherTimer
         {

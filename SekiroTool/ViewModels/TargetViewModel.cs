@@ -3,14 +3,16 @@ using System.Windows.Threading;
 using SekiroTool.Core;
 using SekiroTool.Enums;
 using SekiroTool.Interfaces;
+using SekiroTool.Utilities;
 
 namespace SekiroTool.ViewModels;
 
 public class TargetViewModel : BaseViewModel
 {
+    private readonly HotkeyManager _hotkeyManager;
     private readonly ITargetService _targetService;
     private readonly IDebugDrawService _debugDrawService;
-    
+
     private readonly DispatcherTimer _targetTick;
 
     private bool _areOptionsEnabled;
@@ -30,7 +32,7 @@ public class TargetViewModel : BaseViewModel
     private int _targetCurrentPosture;
     private int _targetMaxPosture;
     private bool _isFreezePostureEnabled;
-    
+
     private float _targetCurrentPoise;
     private float _targetMaxPoise;
     private float _targetPoiseTimer;
@@ -40,26 +42,26 @@ public class TargetViewModel : BaseViewModel
     private int _targetMaxPoison;
     private bool _showPoison;
     // private bool _isPoisonImmune;
-    
+
     private int _targetCurrentBurn;
     private int _targetMaxBurn;
     private bool _showBurn;
     // private bool _isBleedImmune;
-    
+
     private int _targetCurrentShock;
     private int _targetMaxShock;
     private bool _showShock;
     // private bool _isToxicImmune;
-    
+
     private bool _showAllResistances;
-    
+
     private int _forceAct;
     private int _lastAct;
     private int _forceKengekiAct;
     private int _lastKengekiAct;
     private bool _isRepeatActEnabled;
     private bool _isRepeatKengekiActEnabled;
-    
+
     private float _targetSpeed;
 
     private bool _isAiFreezEnabled;
@@ -70,11 +72,15 @@ public class TargetViewModel : BaseViewModel
     private bool _isTargetViewEnabled;
 
 
-    public TargetViewModel(IGameStateService gameStateService, ITargetService targetService,
+    public TargetViewModel(IGameStateService gameStateService, HotkeyManager hotkeyManager,
+        ITargetService targetService,
         IDebugDrawService debugDrawService)
     {
+        _hotkeyManager = hotkeyManager;
         _targetService = targetService;
         _debugDrawService = debugDrawService;
+
+        RegisterHotkeys();
 
         gameStateService.Subscribe(GameState.Loaded, OnGameLoaded);
         gameStateService.Subscribe(GameState.NotLoaded, OnGameNotLoaded);
@@ -201,7 +207,7 @@ public class TargetViewModel : BaseViewModel
             _targetService.ToggleFreezePosture(_isFreezePostureEnabled);
         }
     }
-    
+
     public float TargetCurrentPoise
     {
         get => _targetCurrentPoise;
@@ -232,7 +238,7 @@ public class TargetViewModel : BaseViewModel
         }
     }
 
-    
+
     public int TargetCurrentPoison
     {
         get => _targetCurrentPoison;
@@ -256,7 +262,7 @@ public class TargetViewModel : BaseViewModel
             // _resistancesWindowWindow.DataContext = this;
         }
     }
-    
+
     public int TargetCurrentBurn
     {
         get => _targetCurrentBurn;
@@ -280,7 +286,7 @@ public class TargetViewModel : BaseViewModel
             // _resistancesWindowWindow.DataContext = this;
         }
     }
-    
+
     public int TargetCurrentShock
     {
         get => _targetCurrentShock;
@@ -304,7 +310,7 @@ public class TargetViewModel : BaseViewModel
             // _resistancesWindowWindow.DataContext = this;
         }
     }
-    
+
     public bool ShowAllResistances
     {
         get => _showAllResistances;
@@ -316,7 +322,7 @@ public class TargetViewModel : BaseViewModel
             }
         }
     }
-    
+
     public int LastAct
     {
         get => _lastAct;
@@ -396,7 +402,7 @@ public class TargetViewModel : BaseViewModel
             }
         }
     }
-    
+
     public float TargetSpeed
     {
         get => _targetSpeed;
@@ -408,10 +414,10 @@ public class TargetViewModel : BaseViewModel
             }
         }
     }
-    
+
     public void SetSpeed(double value) => TargetSpeed = (float)value;
-    
-    
+
+
     public bool IsAiFreezeEnabled
     {
         get => _isAiFreezEnabled;
@@ -423,7 +429,7 @@ public class TargetViewModel : BaseViewModel
             }
         }
     }
-    
+
     public bool IsNoAttackEnabled
     {
         get => _isNoAttackEnabled;
@@ -435,7 +441,7 @@ public class TargetViewModel : BaseViewModel
             }
         }
     }
-    
+
     public bool IsNoMoveEnabled
     {
         get => _isNoMoveEnabled;
@@ -447,7 +453,7 @@ public class TargetViewModel : BaseViewModel
             }
         }
     }
-    
+
     public bool IsNoDeathEnabled
     {
         get => _isNoDeathEnabled;
@@ -459,7 +465,7 @@ public class TargetViewModel : BaseViewModel
             }
         }
     }
-    
+
     public bool IsNoPostureBuildupEnabled
     {
         get => _isNoPostureBuildupEnabled;
@@ -471,7 +477,7 @@ public class TargetViewModel : BaseViewModel
             }
         }
     }
-    
+
     public bool IsTargetViewEnabled
     {
         get => _isTargetViewEnabled;
@@ -481,7 +487,7 @@ public class TargetViewModel : BaseViewModel
             {
                 if (_isTargetViewEnabled) _debugDrawService.RequestDebugDraw();
                 else _debugDrawService.ReleaseDebugDraw();
-                
+
                 _targetService.ToggleTargetView(_isTargetViewEnabled);
             }
         }
@@ -490,6 +496,43 @@ public class TargetViewModel : BaseViewModel
     #endregion
 
     #region Private Methods
+
+    private void RegisterHotkeys()
+    {
+        _hotkeyManager.RegisterAction(HotkeyActions.EnableTargetOptions.ToString(),
+            () => { IsTargetOptionsEnabled = !IsTargetOptionsEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.FreezeTargetHp.ToString(), () =>
+            ExecuteTargetAction(() => IsFreezeHealthEnabled = !IsFreezeHealthEnabled));
+        
+        
+        _hotkeyManager.RegisterAction(HotkeyActions.ShowAllResistances.ToString(), () =>
+        {
+            if (!IsTargetOptionsEnabled) IsTargetOptionsEnabled = true;
+            _showAllResistances = !_showAllResistances;
+            UpdateResistancesDisplay();
+        });
+        
+        
+    }
+
+    private void ExecuteTargetAction(Action action)
+    {
+        if (!IsTargetOptionsEnabled)
+        {
+            IsTargetOptionsEnabled = true;
+            Task.Run(async () =>
+            {
+                await Task.Delay(100);
+                if (EnsureValidTarget()) action();
+            });
+            return;
+        }
+
+        if (!IsValidTarget) return;
+        action();
+    }
+
+    private bool EnsureValidTarget() => IsValidTarget || IsTargetValid();
 
     private void TargetTick(object? sender, EventArgs e)
     {
@@ -508,7 +551,7 @@ public class TargetViewModel : BaseViewModel
         if (targetAddr != _currentTargetAddr)
         {
             _currentTargetAddr = targetAddr;
-            
+
             TargetMaxHealth = _targetService.GetMaxHp();
             TargetMaxPosture = _targetService.GetMaxPosture();
             TargetMaxPoise = _targetService.GetMaxPoise();
@@ -522,7 +565,7 @@ public class TargetViewModel : BaseViewModel
             IsFreezeHealthEnabled = _targetService.IsNoDamageEnabled();
             IsNoDeathEnabled = _targetService.IsNoDeathEnabled();
             IsNoPostureBuildupEnabled = _targetService.IsNoPostureBuildupEnabled();
-            
+
             _isTargetViewEnabled = _targetService.IsTargetViewEnabled();
             OnPropertyChanged(nameof(IsTargetViewEnabled));
         }
@@ -536,7 +579,7 @@ public class TargetViewModel : BaseViewModel
         TargetCurrentShock = _targetService.GetCurrentShock();
 
         TargetSpeed = _targetService.GetSpeed();
-        
+
         LastAct = _targetService.GetLastAct();
         LastKengekiAct = _targetService.GetLastKengekiAct();
     }
@@ -612,6 +655,4 @@ public class TargetViewModel : BaseViewModel
     }
 
     #endregion
-
-    
 }

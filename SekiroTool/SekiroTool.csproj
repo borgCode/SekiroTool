@@ -29,6 +29,7 @@
 
     <ItemGroup>
       <PackageReference Include="Extended.Wpf.Toolkit" Version="5.0.0" />
+      <PackageReference Include="H.Hooks" Version="1.7.0" />
     </ItemGroup>
 
 </Project>
