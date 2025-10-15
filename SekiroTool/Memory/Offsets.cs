@@ -178,5 +178,6 @@ public static class Offsets
     {
         public static long AddSen;
         public static long Rest;
+        public static long AddExperience;
     }
 }

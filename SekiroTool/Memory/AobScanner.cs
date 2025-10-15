@@ -31,6 +31,7 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Hooks.LockedTarget = addr.ToInt64(), saved);
         TryPatternWithFallback("FreezeTargetPosture", Patterns.FreezeTargetPosture,
             addr => Offsets.Hooks.FreezeTargetPosture = addr.ToInt64(), saved);
+        
       
         using (var writer = new StreamWriter(savePath))
         {
@@ -40,7 +41,7 @@ public class AoBScanner(IMemoryService memoryService)
 
         Offsets.Functions.AddSen = FindAddressByPattern(Patterns.AddSen).ToInt64();
         Offsets.Functions.Rest = FindAddressByPattern(Patterns.Rest).ToInt64();
-
+        Offsets.Functions.AddExperience = FindAddressByPattern(Patterns.AddExperience).ToInt64();
 
 #if DEBUG
         Console.WriteLine($"WorldChrMan.Base: 0x{Offsets.WorldChrMan.Base.ToInt64():X}");
@@ -54,6 +55,7 @@ public class AoBScanner(IMemoryService memoryService)
         
         Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");
         Console.WriteLine($"Functions.Rest: 0x{Offsets.Functions.Rest:X}");
+        Console.WriteLine($"Functions.AddExperience: 0x{Offsets.Functions.AddExperience:X}");
         
 #endif
     }

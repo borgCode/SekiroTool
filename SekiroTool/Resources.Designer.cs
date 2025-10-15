@@ -65,6 +65,24 @@ namespace SekiroTool {
         ///00 00 00
         ///48 ba 00 00 00 00 00    movabs rdx,0x0
         ///00 00 00
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///ff d0                   call   rax
+        ///48 83 c4 28             add    rsp,0x28
+        ///c3                      ret.
+        /// </summary>
+        internal static string AddExperience {
+            get {
+                return ResourceManager.GetString("AddExperience", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 48 83 ec 28             sub    rsp,0x28
+        ///48 b9 00 00 00 00 00    movabs rcx,0x0
+        ///00 00 00
+        ///48 ba 00 00 00 00 00    movabs rdx,0x0
+        ///00 00 00
         ///41 b8 01 00 00 00       mov    r8d,0x1
         ///48 b8 00 00 00 00 00    movabs rax,0x0
         ///00 00 00

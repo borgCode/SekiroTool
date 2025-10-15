@@ -40,6 +40,7 @@ public static class Patterns
         AddressingMode.Relative,
         3,
         8
+
     );
 
 
@@ -74,6 +75,14 @@ public static class Patterns
         AddressingMode.Relative,
         1,
         5
+    );    
+        
+    public static readonly Pattern AddExperience = new Pattern(
+        new byte[] { 0x79, 0x06, 0x48, 0x8D, 0x40 },
+        "xxxxx",
+        -0x37,
+        AddressingMode.Absolute
+        
     );
 
     #endregion

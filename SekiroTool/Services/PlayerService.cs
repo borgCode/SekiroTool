@@ -50,8 +50,7 @@ public class PlayerService(IMemoryService memoryService) : IPlayerService
         WorldChrMan.PlayerIns],true);
         AsmHelper.WriteAbsoluteAddresses(bytes, [
             (playerIns.ToInt64(), 0x4 + 2),
-            (Functions.Rest, 0x13 + 2)
-        ]);
+            (Functions.Rest, 0x13 + 2)]);
         
         memoryService.AllocateAndExecute(bytes);
     }
@@ -67,11 +66,16 @@ public class PlayerService(IMemoryService memoryService) : IPlayerService
 
     public void AddExperience(int experience)
     {
-        var experiencePointer = memoryService.FollowPointers(WorldChrMan.Base, [
-            WorldChrMan.PlayerIns,
-            ChrIns.PlayerGameData,
-            (int)ChrIns.PlayerGameDataOffsets.Experience], false);
-        memoryService.WriteInt32(experiencePointer, experience);
+       var bytes = AsmLoader.GetAsmBytes("AddExperience");
+       var playerGameData = memoryService.FollowPointers(WorldChrMan.Base, [
+       WorldChrMan.PlayerIns,
+       ChrIns.PlayerGameData],true);
+       AsmHelper.WriteAbsoluteAddresses(bytes, [
+           (playerGameData.ToInt64(), 0x4 + 2),
+           (experience, 0xE + 2),
+           (Functions.AddExperience, 0x18 + 2)
+       ]);
+       memoryService.AllocateAndExecute(bytes);
     }
 
     #endregion
