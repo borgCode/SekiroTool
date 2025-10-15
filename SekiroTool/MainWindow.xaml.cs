@@ -91,7 +91,6 @@ public partial class MainWindow : Window
             {
                 _aobScanner.Scan();
                 _hasScanned = true;
-                _playerService.AddExperience(5000);
             }
 
             if (!_hasAppliedNoLogo)

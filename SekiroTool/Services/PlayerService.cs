@@ -31,7 +31,7 @@ public class PlayerService(IMemoryService memoryService) : IPlayerService
         var bytes = AsmLoader.GetAsmBytes("AddSen");
         var playerGameData = memoryService.FollowPointers(WorldChrMan.Base, [
             WorldChrMan.PlayerIns,
-            ChrIns.PlayerGameData
+            WorldChrMan.PlayerGameData
         ], true);
 
         AsmHelper.WriteAbsoluteAddresses(bytes, [
@@ -59,7 +59,7 @@ public class PlayerService(IMemoryService memoryService) : IPlayerService
     {
         var attackPowerPointer = memoryService.FollowPointers(WorldChrMan.Base, [
             WorldChrMan.PlayerIns,
-            ChrIns.PlayerGameData,
+            WorldChrMan.PlayerGameData,
             (int)ChrIns.PlayerGameDataOffsets.AttackPower], false);
         memoryService.WriteInt32(attackPowerPointer, attackPower);
     }
@@ -69,7 +69,7 @@ public class PlayerService(IMemoryService memoryService) : IPlayerService
        var bytes = AsmLoader.GetAsmBytes("AddExperience");
        var playerGameData = memoryService.FollowPointers(WorldChrMan.Base, [
        WorldChrMan.PlayerIns,
-       ChrIns.PlayerGameData],true);
+       WorldChrMan.PlayerGameData],true);
        AsmHelper.WriteAbsoluteAddresses(bytes, [
            (playerGameData.ToInt64(), 0x4 + 2),
            (experience, 0xE + 2),

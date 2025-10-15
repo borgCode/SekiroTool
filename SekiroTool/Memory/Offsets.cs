@@ -6,6 +6,7 @@ public static class Offsets
     {
         public static IntPtr Base;
         public const int PlayerIns = 0x88;
+        public const int PlayerGameData = 0x2000;
     }
 
     public static class ChrIns
@@ -21,7 +22,6 @@ public static class Offsets
 
 
         public const int Modules = 0x1FF8;
-        public const int PlayerGameData = 0x2000;
 
         public static readonly int[] ChrDataModule = [Modules, 0x18];
         public static readonly int[] ChrResistModule = [Modules, 0x20];
