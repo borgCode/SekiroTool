@@ -47,13 +47,18 @@ public partial class MainWindow : Window
         ISettingsService settingsService = new SettingsService(_memoryService);
 
 
+        PlayerViewModel playerViewModel = new PlayerViewModel(_playerService);
         TargetViewModel targetViewModel =
             new TargetViewModel(_gameStateService, _hotkeyManager, targetService, debugDrawService);
         SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, _hotkeyManager);
 
+
+        var playerTab = new PlayerTab(playerViewModel);
         var targetTab = new TargetTab(targetViewModel);
         var settingsTab = new SettingsTab(settingsViewModel);
 
+        
+        MainTabControl.Items.Add(new TabItem { Header = "Player", Content = playerTab });
         MainTabControl.Items.Add(new TabItem { Header = "Target", Content = targetTab });
         MainTabControl.Items.Add(new TabItem { Header = "Settings", Content = settingsTab });
         
