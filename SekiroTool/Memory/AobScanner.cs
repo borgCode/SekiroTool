@@ -32,6 +32,10 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Hooks.LockedTarget = addr.ToInt64(), saved);
         TryPatternWithFallback("FreezeTargetPosture", Patterns.FreezeTargetPosture,
             addr => Offsets.Hooks.FreezeTargetPosture = addr.ToInt64(), saved);
+        TryPatternWithFallback("SetWarpCoordinates", Patterns.SetWarpCoordinates,
+            addr => Offsets.Hooks.SetWarpCoordinates = addr.ToInt64(), saved);
+        TryPatternWithFallback("SetWarpAngle", Patterns.SetWarpAngle,
+            addr => Offsets.Hooks.SetWarpAngle = addr.ToInt64(), saved);
       
         using (var writer = new StreamWriter(savePath))
         {
@@ -41,6 +45,9 @@ public class AoBScanner(IMemoryService memoryService)
 
         Offsets.Functions.AddSen = FindAddressByPattern(Patterns.AddSen).ToInt64();
         Offsets.Functions.Rest = FindAddressByPattern(Patterns.Rest).ToInt64();
+        Offsets.Functions.SetEvent = FindAddressByPattern(Patterns.SetEvent).ToInt64();
+        Offsets.Functions.GetEvent = FindAddressByPattern(Patterns.GetEvent).ToInt64();
+        Offsets.Functions.Warp = FindAddressByPattern(Patterns.Warp).ToInt64();
 
 
 #if DEBUG
@@ -48,14 +55,16 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"WorldChrManDbg.Base: 0x{Offsets.WorldChrManDbg.Base.ToInt64():X}");
         Console.WriteLine($"MenuMan.Base: 0x{Offsets.MenuMan.Base.ToInt64():X}");
         
-        
-        
         Console.WriteLine($"Hooks.LockedTarget: 0x{Offsets.Hooks.LockedTarget:X}");
         Console.WriteLine($"Hooks.FreezeTargetPosture: 0x{Offsets.Hooks.FreezeTargetPosture:X}");
-        
+        Console.WriteLine($"Hooks.SetWarpCoordinates: 0x{Offsets.Hooks.SetWarpCoordinates:X}");
+        Console.WriteLine($"Hooks.SetWarpAngle: 0x{Offsets.Hooks.SetWarpAngle:X}");
         
         Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");
         Console.WriteLine($"Functions.Rest: 0x{Offsets.Functions.Rest:X}");
+        Console.WriteLine($"Functions.SetEvent: 0x{Offsets.Functions.SetEvent:X}");
+        Console.WriteLine($"Functions.GetEvent: 0x{Offsets.Functions.GetEvent:X}");
+        Console.WriteLine($"Functions.Warp: 0x{Offsets.Functions.Warp:X}");
         
 #endif
     }

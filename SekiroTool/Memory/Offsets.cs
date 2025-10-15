@@ -36,7 +36,9 @@ public static class Offsets
             MaxHp = 0x134,
             Posture = 0x148,
             MaxPosture = 0x14C,
-            BitFlags = 0x228
+            BitFlags = 0x228,
+            CurrentBossPhase = 0x25C
+            
         }
 
         [Flags]
@@ -170,11 +172,16 @@ public static class Offsets
     {
         public static long LockedTarget;
         public static long FreezeTargetPosture;
+        public static long SetWarpCoordinates;
+        public static long SetWarpAngle;
     }
 
     public static class Functions
     {
         public static long AddSen;
         public static long Rest;
+        public static long SetEvent;
+        public static long GetEvent;
+        public static long Warp;
     }
 }

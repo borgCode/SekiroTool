@@ -24,6 +24,9 @@ public enum AddressingMode
 
 public static class Patterns
 {
+
+    #region Globals
+
     public static readonly Pattern WorldChrMan = new Pattern(
         [0x48, 0x8B, 0x3D, 0x00, 0x00, 0x00, 0x00, 0x40, 0x32],
         "xxx????xx",
@@ -51,7 +54,9 @@ public static class Patterns
         7
     );
 
-
+    #endregion
+    
+    
     #region Patches
 
     public static readonly Pattern UpdateSaveCoords = new Pattern(
@@ -83,6 +88,31 @@ public static class Patterns
         5
     );
 
+    public static readonly Pattern SetEvent = new Pattern(
+        new byte[] { 0x45, 0x33, 0xC9, 0x44, 0x0F, 0xB6, 0xC3, 0xBA, 0xDA },
+        "xxxxxxxxx",
+        0xC,
+        AddressingMode.Relative,
+        1,
+        5
+    );
+
+    public static readonly Pattern GetEvent = new Pattern(
+        new byte[] { 0xE8, 0x00, 0x00, 0x00, 0x00, 0x84, 0xC0, 0x74, 0x02, 0x0B, 0xF3 },
+        "x????xxxxxx",
+        0,
+        AddressingMode.Relative,
+        1,
+        5
+    );
+
+    public static readonly Pattern Warp = new Pattern(
+        new byte[] { 0x0F, 0x84, 0xC2, 0x00, 0x00, 0x00, 0xB8 },
+        "xxxxxxx",
+        -0x1B,
+        AddressingMode.Absolute
+    );
+
     #endregion
 
 
@@ -98,6 +128,20 @@ public static class Patterns
     public static readonly Pattern FreezeTargetPosture = new Pattern(
         [0x48, 0x89, 0x5C, 0x24, 0x30, 0x48, 0x8B, 0xCF, 0x8B, 0x9F],
         "xxxxxxxxxx",
+        0,
+        AddressingMode.Absolute
+    );
+
+    public static readonly Pattern SetWarpCoordinates = new Pattern(
+        new byte[] { 0x66, 0x0F, 0x7F, 0x80, 0xC0, 0x0A },
+        "xxxxxx",
+        0,
+        AddressingMode.Absolute
+    );
+
+    public static readonly Pattern SetWarpAngle = new Pattern(
+        new byte[] { 0x66, 0x0F, 0x7F, 0x80, 0xD0, 0x0A },
+        "xxxxxx",
         0,
         AddressingMode.Absolute
     );
