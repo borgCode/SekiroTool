@@ -94,6 +94,7 @@ public static class Offsets
         public enum PlayerGameDataOffsets
         {
             AttackPower = 0x48,
+            Experience = 0x160
         }
     }
 

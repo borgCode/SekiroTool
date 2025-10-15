@@ -16,5 +16,5 @@ public interface IPlayerService
     
     void SetAttackPower(int attackPower);
 
-
+    void AddExperience(int experience);
 }
