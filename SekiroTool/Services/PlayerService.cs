@@ -65,15 +65,6 @@ public class PlayerService(IMemoryService memoryService) : IPlayerService
         memoryService.WriteInt32(attackPowerPointer, attackPower);
     }
 
-    public void AddExperience(int experience)
-    {
-        var experiencePointer = memoryService.FollowPointers(WorldChrMan.Base, [
-            WorldChrMan.PlayerIns,
-            ChrIns.PlayerGameData,
-            (int)ChrIns.PlayerGameDataOffsets.Experience], false);
-        memoryService.WriteInt32(experiencePointer,experience);
-    }
-
     #endregion
 
 
