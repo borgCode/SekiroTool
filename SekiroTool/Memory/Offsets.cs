@@ -105,8 +105,11 @@ public static class Offsets
         public const int EnableDebugDraw = 0x6F;
     }
 
-    public static class DebugFlagsBaseA
+    public static class MenuMan
     {
+        public static IntPtr Base;
+
+        public const int Quitout = 0x23C;
     }
 
     public static class DebugFlags
@@ -118,10 +121,6 @@ public static class Offsets
     }
 
     public static class SoloParamRepo
-    {
-    }
-
-    public static class MenuMan
     {
     }
 

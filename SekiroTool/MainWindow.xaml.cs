@@ -8,6 +8,7 @@ using SekiroTool.Enums;
 using SekiroTool.Interfaces;
 using SekiroTool.Memory;
 using SekiroTool.Services;
+using SekiroTool.Utilities;
 using SekiroTool.ViewModels;
 using SekiroTool.Views.Tabs;
 
@@ -21,11 +22,10 @@ public partial class MainWindow : Window
     private readonly IMemoryService _memoryService;
     private readonly IGameStateService _gameStateService;
     private readonly IPlayerService _playerService;
-    private readonly ITargetService _targetService;
-    private readonly IDebugDrawService _debugDrawService;
 
     private readonly AoBScanner _aobScanner;
     private readonly HookManager _hookManager;
+    private readonly HotkeyManager _hotkeyManager;
 
     private readonly DispatcherTimer _gameLoadedTimer;
 
@@ -38,18 +38,24 @@ public partial class MainWindow : Window
 
         _aobScanner = new AoBScanner(_memoryService);
         _hookManager = new HookManager(_memoryService);
+        _hotkeyManager = new HotkeyManager(_memoryService);
 
         _gameStateService = new GameStateService(_memoryService);
         _playerService = new PlayerService(_memoryService);
-        _targetService = new TargetService(_memoryService, _hookManager);
-        _debugDrawService = new DebugDrawService(_memoryService);
+        ITargetService targetService = new TargetService(_memoryService, _hookManager);
+        IDebugDrawService debugDrawService = new DebugDrawService(_memoryService);
+        ISettingsService settingsService = new SettingsService(_memoryService);
 
 
-        TargetViewModel targetViewModel = new TargetViewModel(_gameStateService, _targetService, _debugDrawService);
-        
+        TargetViewModel targetViewModel =
+            new TargetViewModel(_gameStateService, _hotkeyManager, targetService, debugDrawService);
+        SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, _hotkeyManager);
+
         var targetTab = new TargetTab(targetViewModel);
-        
+        var settingsTab = new SettingsTab(settingsViewModel);
+
         MainTabControl.Items.Add(new TabItem { Header = "Target", Content = targetTab });
+        MainTabControl.Items.Add(new TabItem { Header = "Settings", Content = settingsTab });
         
 
         _gameLoadedTimer = new DispatcherTimer
@@ -108,7 +114,7 @@ public partial class MainWindow : Window
                 _gameStateService.Publish(GameState.Attached);
                 Console.WriteLine("Attached");
             }
-            
+
 
             if (_gameStateService.IsLoaded())
             {
@@ -138,7 +144,7 @@ public partial class MainWindow : Window
                 _gameStateService.Publish(GameState.Detached);
                 Console.WriteLine("Detached");
             }
-            
+
             _loaded = false;
             _hasScanned = false;
             _hasAllocatedMemory = false;
@@ -158,7 +164,7 @@ public partial class MainWindow : Window
             // LaunchGameButton.IsEnabled = true;
         }
     }
-    
+
     private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if (e.ClickCount == 2)
@@ -176,14 +182,13 @@ public partial class MainWindow : Window
 
     private void MinimizeButton_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
     private void CloseButton_Click(object sender, RoutedEventArgs e) => Close();
+
     private void MainWindow_Closing(object sender, CancelEventArgs e)
     {
-      
         // SettingsManager.Default.WindowLeft = Left;
         // SettingsManager.Default.WindowTop = Top;
         // SettingsManager.Default.Save();
         // DisableFeatures();
         // _hookManager.UninstallAllHooks();
-            
     }
 }

@@ -43,6 +43,15 @@ public static class Patterns
 
     );
 
+    public static readonly Pattern MenuMan = new Pattern(
+        new byte[] { 0x48, 0x8B, 0x05, 0x00, 0x00, 0x00, 0x00, 0x48, 0x8B, 0x88, 0x88, 0x30 },
+        "xxx????xxxxx",
+        0,
+        AddressingMode.Relative,
+        3,
+        7
+    );
+
 
     #region Patches
 
@@ -53,8 +62,6 @@ public static class Patterns
         AddressingMode.Absolute
     );
     //TODO patch cmp and jz
-    
-
 
     #endregion
 
