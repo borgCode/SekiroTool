@@ -71,6 +71,15 @@ public static class Patterns
         7
     );
 
+    public static readonly Pattern DebugFlagStart = new Pattern(
+        new byte[] { 0x80, 0x3D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x75, 0x36 },
+        "xx????xxx",
+        0,
+        AddressingMode.Relative,
+        2,
+        7
+    );
+
     #endregion
 
 

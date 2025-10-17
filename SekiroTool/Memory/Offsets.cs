@@ -129,8 +129,31 @@ public static class Offsets
         public const int HitboxView = 0x31;
     }
 
-    public static class SoloParamRepo
+    public static class DebugFlags
     {
+        public static IntPtr Base;
+
+        public enum Flag
+        {
+            PlayerNoDeath = 0x0,
+            OneShotHealth = 0x1,
+            OneShotPosture = 0x2,
+            NoGoodsConsume = 0x3,
+            NoEmblemsConsume = 0x4,
+            NoRevivalConsume = 0x5,
+            PlayerHide = 0x9,
+            PlayerSilent = 0xA,
+            AllNoDeath = 0xB,
+            AllNoDamage = 0xC,
+            AllNoHit = 0xD,
+            AllNoAttack = 0xE,
+            AllNoMove = 0xF,
+            DisableAi = 0x10,
+            AllNoPosture = 0x17,
+            
+            
+            
+        }
     }
 
     public static class LuaEventMan
