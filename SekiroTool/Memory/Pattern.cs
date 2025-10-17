@@ -24,7 +24,6 @@ public enum AddressingMode
 
 public static class Patterns
 {
-
     #region Globals
 
     public static readonly Pattern WorldChrMan = new Pattern(
@@ -43,7 +42,6 @@ public static class Patterns
         AddressingMode.Relative,
         3,
         8
-
     );
 
     public static readonly Pattern MenuMan = new Pattern(
@@ -55,9 +53,27 @@ public static class Patterns
         7
     );
 
+    public static readonly Pattern WorldAiMan = new Pattern(
+        new byte[] { 0x48, 0x8B, 0x0D, 0x00, 0x00, 0x00, 0x00, 0xC7, 0x44, 0x24, 0x20, 0x00 },
+        "xxx????xxxxx",
+        0,
+        AddressingMode.Relative,
+        3,
+        7
+    );
+
+    public static readonly Pattern DamageManager = new Pattern(
+        new byte[] { 0x74, 0x1D, 0x8B, 0x53 },
+        "xxxx",
+        0x5,
+        AddressingMode.Relative,
+        3,
+        7
+    );
+
     #endregion
-    
-    
+
+
     #region Patches
 
     public static readonly Pattern UpdateSaveCoords = new Pattern(
@@ -87,14 +103,13 @@ public static class Patterns
         AddressingMode.Relative,
         1,
         5
-    );    
-        
+    );
+
     public static readonly Pattern AddExperience = new Pattern(
         new byte[] { 0x79, 0x06, 0x48, 0x8D, 0x40 },
         "xxxxx",
         -0x37,
         AddressingMode.Absolute
-        
     );
 
     public static readonly Pattern SetEvent = new Pattern(
@@ -120,6 +135,15 @@ public static class Patterns
         "xxxxxxx",
         -0x1B,
         AddressingMode.Absolute
+    );
+
+    public static readonly Pattern ApplySpEffect = new Pattern(
+        new byte[] { 0xE8, 0x00, 0x00, 0x00, 0x00, 0x48, 0x8B, 0x8E, 0xF8, 0x1F, 0x00, 0x00, 0xB2 },
+        "x????xxxxxxxx",
+        0,
+        AddressingMode.Relative,
+        1,
+        5
     );
 
     #endregion
@@ -152,6 +176,13 @@ public static class Patterns
         new byte[] { 0x66, 0x0F, 0x7F, 0x80, 0xD0, 0x0A },
         "xxxxxx",
         0,
+        AddressingMode.Absolute
+    );
+
+    public static readonly Pattern AddSubGoal = new Pattern(
+        new byte[] { 0x0F, 0x88, 0x7F, 0x03, 0x00, 0x00, 0x48, 0x8B, 0x09 },
+        "xxxxxxxxx",
+        -0x3E,
         AddressingMode.Absolute
     );
 

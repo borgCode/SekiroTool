@@ -26,6 +26,8 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.WorldChrMan.Base = FindAddressByPattern(Patterns.WorldChrMan);
         Offsets.WorldChrManDbg.Base = FindAddressByPattern(Patterns.WorldChrManDbg);
         Offsets.MenuMan.Base = FindAddressByPattern(Patterns.MenuMan);
+        Offsets.WorldAiMan.Base = FindAddressByPattern(Patterns.WorldAiMan);
+        Offsets.DamageManager.Base = FindAddressByPattern(Patterns.DamageManager);
         
         
         TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
@@ -36,6 +38,8 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Hooks.SetWarpCoordinates = addr.ToInt64(), saved);
         TryPatternWithFallback("SetWarpAngle", Patterns.SetWarpAngle,
             addr => Offsets.Hooks.SetWarpAngle = addr.ToInt64(), saved);
+        TryPatternWithFallback("AddSubGoal", Patterns.AddSubGoal,
+            addr => Offsets.Hooks.AddSubGoal = addr.ToInt64(), saved);
       
         using (var writer = new StreamWriter(savePath))
         {
@@ -49,23 +53,27 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.Functions.GetEvent = FindAddressByPattern(Patterns.GetEvent).ToInt64();
         Offsets.Functions.Warp = FindAddressByPattern(Patterns.Warp).ToInt64();
         Offsets.Functions.AddExperience = FindAddressByPattern(Patterns.AddExperience).ToInt64();
+        Offsets.Functions.ApplySpEffect = FindAddressByPattern(Patterns.ApplySpEffect).ToInt64();
 
 #if DEBUG
         Console.WriteLine($"WorldChrMan.Base: 0x{Offsets.WorldChrMan.Base.ToInt64():X}");
         Console.WriteLine($"WorldChrManDbg.Base: 0x{Offsets.WorldChrManDbg.Base.ToInt64():X}");
         Console.WriteLine($"MenuMan.Base: 0x{Offsets.MenuMan.Base.ToInt64():X}");
+        Console.WriteLine($"WorldAiMan.Base: 0x{Offsets.WorldAiMan.Base.ToInt64():X}");
+        Console.WriteLine($"DamageManager.Base: 0x{Offsets.DamageManager.Base.ToInt64():X}");
         
         Console.WriteLine($"Hooks.LockedTarget: 0x{Offsets.Hooks.LockedTarget:X}");
         Console.WriteLine($"Hooks.FreezeTargetPosture: 0x{Offsets.Hooks.FreezeTargetPosture:X}");
         Console.WriteLine($"Hooks.SetWarpCoordinates: 0x{Offsets.Hooks.SetWarpCoordinates:X}");
         Console.WriteLine($"Hooks.SetWarpAngle: 0x{Offsets.Hooks.SetWarpAngle:X}");
+        Console.WriteLine($"Hooks.AddSubGoal: 0x{Offsets.Hooks.AddSubGoal:X}");
         
         Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");
         Console.WriteLine($"Functions.Rest: 0x{Offsets.Functions.Rest:X}");
         Console.WriteLine($"Functions.SetEvent: 0x{Offsets.Functions.SetEvent:X}");
         Console.WriteLine($"Functions.GetEvent: 0x{Offsets.Functions.GetEvent:X}");
         Console.WriteLine($"Functions.Warp: 0x{Offsets.Functions.Warp:X}");
-        Console.WriteLine($"Functions.AddExperience: 0x{Offsets.Functions.AddExperience:X}");
+        Console.WriteLine($"Functions.ApplySpEffect: 0x{Offsets.Functions.ApplySpEffect:X}");
 #endif
     }
 

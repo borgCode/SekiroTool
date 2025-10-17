@@ -38,7 +38,6 @@ public static class Offsets
             MaxPosture = 0x14C,
             BitFlags = 0x228,
             CurrentBossPhase = 0x25C
-            
         }
 
         [Flags]
@@ -81,7 +80,7 @@ public static class Offsets
 
         public const int ComManipulator = 0x58;
         public const int AiThink = 0x340;
-        
+
         public static readonly BitFlag TargetView = new(0x5A, 1 << 3);
 
         public enum AiThinkOffsets
@@ -114,12 +113,20 @@ public static class Offsets
         public const int Quitout = 0x23C;
     }
 
-    public static class DebugFlags
+    public static class WorldAiMan
     {
+        public static IntPtr Base;
+
+        public const int GlobalForceAct = 0x4C6EC;
+        public const int GlobalForceKengekiAct = 0x4C6ED;
     }
 
-    public static class DebugEvent
+
+    public static class DamageManager
     {
+        public static IntPtr Base;
+
+        public const int HitboxView = 0x31;
     }
 
     public static class SoloParamRepo
@@ -175,6 +182,7 @@ public static class Offsets
         public static long FreezeTargetPosture;
         public static long SetWarpCoordinates;
         public static long SetWarpAngle;
+        public static long AddSubGoal;
     }
 
     public static class Functions
@@ -185,5 +193,6 @@ public static class Offsets
         public static long GetEvent;
         public static long Warp;
         public static long AddExperience;
+        public static long ApplySpEffect;
     }
 }
