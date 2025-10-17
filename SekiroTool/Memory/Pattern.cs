@@ -80,6 +80,15 @@ public static class Patterns
         7
     );
 
+    public static readonly Pattern MapItemMan = new Pattern(
+        new byte[] { 0x48, 0x8B, 0x91, 0x98, 0x00, 0x00, 0x00, 0x49 },
+        "xxxxxxxx",
+        0x1E,
+        AddressingMode.Relative,
+        3,
+        7
+    );
+
     #endregion
 
 
@@ -153,6 +162,13 @@ public static class Patterns
         AddressingMode.Relative,
         1,
         5
+    );
+
+    public static readonly Pattern ItemSpawn = new Pattern(
+        new byte[] { 0x45, 0x33, 0xED, 0x44, 0x89, 0x6C, 0x24, 0x44 },
+        "xxxxxxxx",
+        -0x38,
+        AddressingMode.Absolute
     );
 
     #endregion

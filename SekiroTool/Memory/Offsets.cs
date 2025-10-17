@@ -156,18 +156,16 @@ public static class Offsets
         }
     }
 
-    public static class LuaEventMan
+    public static class MapItemMan
     {
+        public static IntPtr Base;
     }
 
 
     public static class AiTargetingFlags
     {
     }
-
-    public static class MapItemMan
-    {
-    }
+    
 
     public static class HitIns
     {
@@ -217,5 +215,6 @@ public static class Offsets
         public static long Warp;
         public static long AddExperience;
         public static long ApplySpEffect;
+        public static long ItemSpawn;
     }
 }

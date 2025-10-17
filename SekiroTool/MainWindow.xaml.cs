@@ -44,7 +44,9 @@ public partial class MainWindow : Window
         _playerService = new PlayerService(_memoryService);
         ITargetService targetService = new TargetService(_memoryService, _hookManager);
         IDebugDrawService debugDrawService = new DebugDrawService(_memoryService);
+        IItemService itemService = new ItemService(_memoryService);
         ISettingsService settingsService = new SettingsService(_memoryService);
+        
 
 
         PlayerViewModel playerViewModel = new PlayerViewModel(_playerService);
@@ -116,7 +118,7 @@ public partial class MainWindow : Window
                 Console.WriteLine($"Code cave: 0x{CodeCaveOffsets.Base.ToInt64():X}");
                 _hasAllocatedMemory = true;
                 _gameStateService.Publish(GameState.Attached);
-                Console.WriteLine("Attached");
+            
             }
 
 
@@ -125,7 +127,7 @@ public partial class MainWindow : Window
                 if (_loaded) return;
                 _loaded = true;
                 _gameStateService.Publish(GameState.Loaded);
-                Console.WriteLine("Loaded");
+            
                 // TryEnableFeatures();
                 // TrySetGameStartPrefs();
                 // if (_appliedOneTimeFeatures) return;
@@ -138,7 +140,7 @@ public partial class MainWindow : Window
                 // DisableFeatures();
                 // _debugDrawService.Reset();
                 _loaded = false;
-                Console.WriteLine("Not loaded");
+             
             }
         }
         else
@@ -146,7 +148,7 @@ public partial class MainWindow : Window
             if (_memoryService.IsAttached)
             {
                 _gameStateService.Publish(GameState.Detached);
-                Console.WriteLine("Detached");
+        
             }
 
             _loaded = false;

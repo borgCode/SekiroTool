@@ -113,6 +113,24 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 48 83 ec 38             sub    rsp,0x38
+        ///48 8b 0d 00 00 00 00    mov    rcx,QWORD PTR [rip+0x0]        # b &lt;_main+0xb&gt;
+        ///48 8d 15 00 00 00 00    lea    rdx,[rip+0x0]        # 12 &lt;_main+0x12&gt;
+        ///4d 31 c0                xor    r8,r8
+        ///4d 31 c9                xor    r9,r9
+        ///44 89 44 24 24          mov    DWORD PTR [rsp+0x24],r8d
+        ///44 89 44 24 28          mov    DWORD PTR [rsp+0x28],r8d
+        ///e8 00 00 00 00          call   27 &lt;_main+0x27&gt;
+        ///48 83 c4 38             add    rsp,0x38
+        ///c3                      ret.
+        /// </summary>
+        internal static string GiveItem {
+            get {
+                return ResourceManager.GetString("GiveItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 48 89 05 00 00 00 00    mov    QWORD PTR [rip+0x0],rax        # 7 &lt;_main+0x7&gt;
         ///48 8b 80 f8 1f 00 00    mov    rax,QWORD PTR [rax+0x1ff8]
         ///e9 00 00 00 00          jmp    13 &lt;_main+0x13&gt;.

@@ -20,6 +20,7 @@ public interface IMemoryService
     byte[] ReadBytes(nint addr, int size);
     
     void WriteUInt8(nint addr, byte val);
+    void WriteUInt16(nint addr, short val);
     void WriteInt32(nint addr, int val);
     void WriteFloat(nint addr, float val);
     void WriteDouble(nint addr, double val);

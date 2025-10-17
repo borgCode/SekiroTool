@@ -101,6 +101,11 @@ public class MemoryService : IMemoryService
         WriteBytes(addr, bytes);
     }
 
+    public void WriteUInt16(IntPtr addr, short val)
+    {
+        WriteBytes(addr, BitConverter.GetBytes(val));
+    }
+
     public void WriteInt32(IntPtr addr, int val)
     {
         WriteBytes(addr, BitConverter.GetBytes(val));
