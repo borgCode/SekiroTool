@@ -44,26 +44,28 @@ public class SettingsViewModel : BaseViewModel
                 // { "IncreaseGameSpeed", text => IncreaseGameSpeedHotkeyText = text },
                 // { "DecreaseGameSpeed", text => DecreaseGameSpeedHotkeyText = text },
                 // { "NoClip", text => NoClipHotkeyText = text },
+                { HotkeyActions.Quitout.ToString(), text => QuitoutHotkeyText = text },
+                // { "ForceSave", text => ForceSaveHotkeyText = text },
+                // { "EnableFreeCam", text => EnableFreeCamHotkeyText = text },
+                // { "MoveCamToPlayer", text => MoveCamToPlayerHotkeyText = text },
                 // { "Warp", text => WarpHotkeyText = text },
                 // { "IncreaseNoClipSpeed", text => IncreaseNoClipSpeedHotkeyText = text },
                 // { "DecreaseNoClipSpeed", text => DecreaseNoClipSpeedHotkeyText = text },
                 // { "DisableTargetAi", text => DisableTargetAiHotkeyText = text },
                 // { "KillTarget", text => KillTargetHotkeyText = text },
                 // { "TargetView", text => TargetViewHotkeyText = text },
-                // { "FreezeHp", text => FreezeHpHotkeyText = text },
+                
                 // { "TargetRepeatAct", text => TargetRepeatActHotkeyText = text },
                 // { "IncreaseTargetSpeed", text => IncreaseTargetSpeedHotkeyText = text },
                 // { "DecreaseTargetSpeed", text => DecreaseTargetSpeedHotkeyText = text },
-                // { "EnableTargetOptions", text => EnableTargetOptionsHotkeyText = text },
+                { HotkeyActions.EnableTargetOptions.ToString(), text => EnableTargetOptionsHotkeyText = text },
+                { HotkeyActions.FreezeTargetHp.ToString(), text => FreezeHpHotkeyText = text },
                 // { "ShowAllResistances", text => ShowAllResistancesHotkeyText = text },
                 // { "DisableAi", text => DisableAiHotkeyText = text },
                 // { "AllNoDeath", text => AllNoDeathHotkeyText = text },
                 // { "AllNoDamage", text => AllNoDamageHotkeyText = text },
                 // { "AllRepeatAct", text => AllRepeatActHotkeyText = text },
-                { HotkeyActions.Quitout.ToString(), text => QuitoutHotkeyText = text },
-                // { "ForceSave", text => ForceSaveHotkeyText = text },
-                // { "EnableFreeCam", text => EnableFreeCamHotkeyText = text },
-                // { "MoveCamToPlayer", text => MoveCamToPlayerHotkeyText = text },
+               
             };
             
             LoadHotkeyDisplays();
@@ -93,6 +95,21 @@ public class SettingsViewModel : BaseViewModel
     {
         get => _quitoutHotkeyText;
         set => SetProperty(ref _quitoutHotkeyText, value);
+    }
+
+
+    private string _enableTargetOptionsHotkeyText;
+    public string EnableTargetOptionsHotkeyText
+    {
+        get => _enableTargetOptionsHotkeyText;
+        set => SetProperty(ref _enableTargetOptionsHotkeyText, value);
+    }
+    
+    private string _freezeHpHotkeyText;
+    public string FreezeHpHotkeyText
+    {
+        get => _freezeHpHotkeyText;
+        set => SetProperty(ref _freezeHpHotkeyText, value);
     }
 
     #endregion

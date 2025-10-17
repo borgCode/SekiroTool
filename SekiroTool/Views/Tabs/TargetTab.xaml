@@ -33,12 +33,20 @@
                           Margin="0,0,0,0" />
 
                 <StackPanel Visibility="{Binding IsTargetOptionsEnabled, Converter={StaticResource BoolToVis}}">
-                    <TextBlock HorizontalAlignment="Center" Margin="0,0,0,5">
-                        <Run Text="Health: " />
-                        <Run Text="{Binding TargetCurrentHealth, Mode=OneWay}" />
-                        <Run Text="/" />
-                        <Run Text="{Binding TargetMaxHealth, Mode=OneWay}" />
-                    </TextBlock>
+
+                    <Grid HorizontalAlignment="Stretch">
+                        <TextBlock HorizontalAlignment="Center" Margin="0,0,0,5">
+                            <Run Text="Health: " />
+                            <Run Text="{Binding TargetCurrentHealth, Mode=OneWay}" />
+                            <Run Text="/" />
+                            <Run Text="{Binding TargetMaxHealth, Mode=OneWay}" />
+                        </TextBlock>
+    
+                        <xctk:IntegerUpDown Width="80" Margin="5,2"
+                                            HorizontalAlignment="Right"
+                                            Value="{Binding CustomHp}"
+                                            Minimum="0"/>
+                    </Grid>
 
                     <ProgressBar Width="250" Height="20"
                                  Value="{Binding TargetCurrentHealth}"
@@ -444,7 +452,7 @@
                         <TextBlock Text="{Binding LastAct}" VerticalAlignment="Center" Width="20" TextAlignment="Right" />
 
                         <TextBlock Text="Force Act: " Margin="30,0,10,0" VerticalAlignment="Center" />
-                        <xctk:IntegerUpDown  Width="50" Height="20"
+                        <xctk:IntegerUpDown Width="50" Height="20"
                                             Value="{Binding ForceAct, UpdateSourceTrigger=PropertyChanged}"
                                             Minimum="0"
                                             Maximum="255"
@@ -550,8 +558,8 @@
                                 <Binding Path="IsAiFreezeEnabled" />
                             </CheckBox.IsChecked>
                         </CheckBox>
-                        
-                        <CheckBox Grid.Row="1" Grid.Column="1" Content="No Posture Buildup"  Margin="10,10,0,0">
+
+                        <CheckBox Grid.Row="1" Grid.Column="1" Content="No Posture Buildup" Margin="10,10,0,0">
                             <CheckBox.IsEnabled>
                                 <MultiBinding Converter="{StaticResource BooleanAndConverter}">
                                     <Binding Path="AreOptionsEnabled" />
@@ -562,7 +570,7 @@
                                 <Binding Path="IsNoPostureBuildupEnabled" />
                             </CheckBox.IsChecked>
                         </CheckBox>
-                        <CheckBox Grid.Row="2" Grid.Column="0" Content="No Attack"  Margin="10,5,0,0">
+                        <CheckBox Grid.Row="2" Grid.Column="0" Content="No Attack" Margin="10,5,0,0">
                             <CheckBox.IsEnabled>
                                 <MultiBinding Converter="{StaticResource BooleanAndConverter}">
                                     <Binding Path="AreOptionsEnabled" />
@@ -573,8 +581,8 @@
                                 <Binding Path="IsNoAttackEnabled" />
                             </CheckBox.IsChecked>
                         </CheckBox>
-                        
-                        <CheckBox Grid.Row="2" Grid.Column="1" Content="No Death"  Margin="10,5,0,0">
+
+                        <CheckBox Grid.Row="2" Grid.Column="1" Content="No Death" Margin="10,5,0,0">
                             <CheckBox.IsEnabled>
                                 <MultiBinding Converter="{StaticResource BooleanAndConverter}">
                                     <Binding Path="AreOptionsEnabled" />
@@ -585,7 +593,7 @@
                                 <Binding Path="IsNoDeathEnabled" />
                             </CheckBox.IsChecked>
                         </CheckBox>
-                        <CheckBox Grid.Row="3" Grid.Column="0" Content="No Move"  Margin="10,5,0,0">
+                        <CheckBox Grid.Row="3" Grid.Column="0" Content="No Move" Margin="10,5,0,0">
                             <CheckBox.IsEnabled>
                                 <MultiBinding Converter="{StaticResource BooleanAndConverter}">
                                     <Binding Path="AreOptionsEnabled" />
@@ -596,8 +604,8 @@
                                 <Binding Path="IsNoMoveEnabled" />
                             </CheckBox.IsChecked>
                         </CheckBox>
-                        
-                        <CheckBox Grid.Row="3" Grid.Column="1" Content="Target View"  Margin="10,5,0,0">
+
+                        <CheckBox Grid.Row="3" Grid.Column="1" Content="Target View" Margin="10,5,0,0">
                             <CheckBox.IsEnabled>
                                 <MultiBinding Converter="{StaticResource BooleanAndConverter}">
                                     <Binding Path="AreOptionsEnabled" />
@@ -608,7 +616,7 @@
                                 <Binding Path="IsTargetViewEnabled" />
                             </CheckBox.IsChecked>
                         </CheckBox>
-                        
+
                     </Grid>
                 </StackPanel>
             </StackPanel>
