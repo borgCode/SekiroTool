@@ -205,6 +205,8 @@ public static class Offsets
         public static long SetWarpCoordinates;
         public static long SetWarpAngle;
         public static long AddSubGoal;
+        public static long InAirTimer;
+        public static long UpdateCoords;
     }
 
     public static class Functions

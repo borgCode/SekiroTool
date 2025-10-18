@@ -220,5 +220,19 @@ public static class Patterns
         AddressingMode.Absolute
     );
 
+    public static readonly Pattern InAirTimer = new Pattern(
+        new byte[] { 0xF3, 0x41, 0x0F, 0x10, 0x46, 0x08, 0xF3, 0x0F, 0x58, 0x86 },
+        "xxxxxxxxxx",
+        0x6,
+        AddressingMode.Absolute
+    );
+
+    public static readonly Pattern UpdateCoords = new Pattern(
+        new byte[] { 0x75, 0x0F, 0x0F, 0x29, 0xB6 },
+        "xxxxx",
+        0x2,
+        AddressingMode.Absolute
+    );
+
     #endregion
 }
