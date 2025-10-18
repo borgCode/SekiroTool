@@ -76,7 +76,8 @@ public class PlayerViewModel : BaseViewModel
     private void OnGameLoaded()
     {
         AreOptionsEnabled = true;
-        if (IsNoDeathEnabled) _playerService.TogglePlayerNoDeath(true);   
+        if (IsNoDeathEnabled) _playerService.TogglePlayerNoDeath(true);
+        
     }
     
     

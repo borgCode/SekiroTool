@@ -9,6 +9,8 @@ public class SettingsManager
     
     public string HotkeyActionIds { get; set; } = "";
     public bool EnableHotkeys { get; set; }
+    public bool NoLogo { get; set; }
+    public bool AlwaysOnTop { get; set; }
 
     private static string SettingsPath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -26,6 +28,8 @@ public class SettingsManager
             {
                 $"HotkeyActionIds={HotkeyActionIds}",
                 $"EnableHotkeys={EnableHotkeys}",
+                $"NoLogo={NoLogo}",
+                $"AlwaysOnTop={AlwaysOnTop}",
             };
 
             File.WriteAllLines(SettingsPath, lines);
@@ -59,6 +63,14 @@ public class SettingsManager
                             case "EnableHotkeys":
                                 bool.TryParse(value, out bool eh);
                                 settings.EnableHotkeys = eh;
+                                break;
+                            case "NoLogo":
+                                bool.TryParse(value, out bool nl);
+                                settings.NoLogo = nl;
+                                break;
+                            case "AlwaysOnTop":
+                                bool.TryParse(value, out bool aot);
+                                settings.AlwaysOnTop = aot;
                                 break;
                         }
                     }

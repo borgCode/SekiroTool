@@ -47,6 +47,9 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Hooks.InAirTimer = addr.ToInt64(), saved);
         TryPatternWithFallback("UpdateCoords", Patterns.UpdateCoords,
             addr => Offsets.Hooks.UpdateCoords = addr.ToInt64(), saved);
+        
+        TryPatternWithFallback("NoLogo", Patterns.NoLogo,
+            addr => Offsets.Patches.NoLogo = addr, saved);
       
         using (var writer = new StreamWriter(savePath))
         {
@@ -80,6 +83,9 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Hooks.AddSubGoal: 0x{Offsets.Hooks.AddSubGoal:X}");
         Console.WriteLine($"Hooks.InAirTimer: 0x{Offsets.Hooks.InAirTimer:X}");
         Console.WriteLine($"Hooks.UpdateCoords: 0x{Offsets.Hooks.UpdateCoords:X}");
+        
+        
+        Console.WriteLine($"Patches.NoLogo: 0x{Offsets.Patches.NoLogo.ToInt64():X}");
         
         Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");
         Console.WriteLine($"Functions.Rest: 0x{Offsets.Functions.Rest:X}");

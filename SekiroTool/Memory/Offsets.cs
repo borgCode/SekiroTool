@@ -195,6 +195,7 @@ public static class Offsets
 
     public static class Patches
     {
+        public static IntPtr NoLogo;
     }
 
 

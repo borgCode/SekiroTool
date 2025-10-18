@@ -10,36 +10,28 @@
         <StackPanel Margin="10">
             <TextBlock Text="Options" FontWeight="Bold" Margin="0,0,0,10" />
 
-            <Grid Margin="0,5,0,10">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" MinWidth="150" />
-                    <ColumnDefinition Width="Auto" MinWidth="150" />
-                </Grid.ColumnDefinitions>
-
-                <CheckBox Grid.Row="0" Grid.Column="0" Content="Enable Hotkeys"
-                                      IsChecked="{Binding IsEnableHotkeysEnabled}"
-                                      Margin="0,0,0,0" />
-                <CheckBox Grid.Row="0" Grid.Column="1" Content="Faster Menu (Skips dialogs and online check)"
-                          IsChecked="{Binding IsFastQuitoutEnabled}"
-                          Margin="0,0,10,0" />
-                <CheckBox Grid.Row="1" Grid.Column="0" Content="Always On Top"
-                          IsChecked="{Binding IsAlwaysOnTopEnabled}"
-                          Margin="0,5,0,0" />
-                
-                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal"
-                          Margin="0,5,0,0">
-                <CheckBox Content="Baby jump fix"
-                          IsChecked="{Binding IsBabyJumpFixEnabled}"
-                          Margin="0,5,0,0" />
-                <CheckBox Content="Disable Double Click"
-                          IsChecked="{Binding IsDisableDoubleClickEnabled}"
-                          Margin="10,5,0,0" />
+            <StackPanel Margin="0,5,0,10">
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                    <CheckBox Content="Enable Hotkeys"
+                              IsChecked="{Binding IsEnableHotkeysEnabled}"
+                              Margin="0,0,10,0" />
+                    <CheckBox Content="No Logo"
+                              IsChecked="{Binding IsNoLogoEnabled}"
+                              Margin="0,0,10,0" />
+                    <CheckBox Content="Always On Top"
+                              IsChecked="{Binding IsAlwaysOnTopEnabled}"
+                              Margin="0,0,0,0" />
                 </StackPanel>
-            </Grid>
+    
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                    <CheckBox Content="Baby jump fix"
+                              IsChecked="{Binding IsBabyJumpFixEnabled}"
+                              Margin="0,0,10,0" />
+                    <CheckBox Content="Disable Double Click"
+                              IsChecked="{Binding IsDisableDoubleClickEnabled}"
+                              Margin="0,0,0,0" />
+                </StackPanel>
+            </StackPanel>
 
             <Separator Margin="0,0,0,10" />
             <TextBlock Text="Hotkey Bindings" FontWeight="Bold" Margin="0,0,0,10" />
