@@ -20,6 +20,8 @@ public interface IPlayerService
 
     void TogglePlayerNoDeath(bool isEnabled);
     
+    void TogglePlayerNoDamage(bool isEnabled);
+    
     void TogglePlayerOneShotHealth(bool isEnabled);
     
     void TogglePlayerOneShotPosture(bool isEnabled);

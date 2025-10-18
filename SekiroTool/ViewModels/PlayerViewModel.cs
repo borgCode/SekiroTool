@@ -1,4 +1,5 @@
-﻿using System.Windows.Threading;
+﻿using System.Configuration;
+using System.Windows.Threading;
 using SekiroTool.Enums;
 using SekiroTool.Interfaces;
 using SekiroTool.Utilities;
@@ -63,7 +64,107 @@ public class PlayerViewModel : BaseViewModel
             }
         }
     }
+    
+    // TODO PlayerNoDamage
+    
+    private bool _isOneShotEnabled;
 
+    public bool IsOneShotEnabled
+    {
+        get => _isOneShotEnabled;
+        set
+        {
+            if (SetProperty(ref _isOneShotEnabled, value))
+            {
+                _playerService.TogglePlayerOneShotHealth(_isOneShotEnabled);
+            }    
+        }
+    }
+    
+    private bool _isOneShotPostureEnabled;
+
+    public bool IsOneShotPostureEnabled
+    {
+        get => _isOneShotPostureEnabled;
+        set
+        {
+            if (SetProperty(ref _isOneShotPostureEnabled, value))
+            {
+                _playerService.TogglePlayerOneShotPosture(_isOneShotPostureEnabled);
+            }
+        }
+    }
+    
+    private bool _isNoGoodsConsumeEnabled;
+
+    public bool IsNoGoodsConsumeEnabled
+    {
+        get => _isNoGoodsConsumeEnabled;
+        set
+        {
+            if (SetProperty(ref _isNoGoodsConsumeEnabled, value))
+            {
+                _playerService.TogglePlayerNoGoodsConsume(_isNoGoodsConsumeEnabled);
+            }
+        }
+    }
+    
+    private bool _isNoEmblemConsumeEnabled;
+
+    public bool IsNoEmblemConsumeEnabled
+    {
+        get => _isNoEmblemConsumeEnabled;
+        set
+        {
+            if (SetProperty(ref _isNoEmblemConsumeEnabled, value))
+            {
+                _playerService.TogglePlayerNoEmblemsConsume(_isNoEmblemConsumeEnabled);
+            }
+        }
+    }
+    
+    private bool _isNoRevivalConsumeEnabled;
+
+    public bool IsNoRevivalConsumeEnabled
+    {
+        get => _isNoRevivalConsumeEnabled;
+        set
+        {
+            if (SetProperty(ref _isNoRevivalConsumeEnabled, value))
+            {
+                _playerService.TogglePlayerNoRevivalConsume(_isNoRevivalConsumeEnabled);    
+            }
+        }
+    }
+    
+    private bool _isPlayerHideEnabled;
+
+    public bool IsPlayerHideEnabled
+    {
+        get => _isPlayerHideEnabled;
+        set
+        {
+            if (SetProperty(ref _isPlayerHideEnabled, value))
+            {
+                _playerService.TogglePlayerHide(_isPlayerHideEnabled);
+            }
+        }
+    }
+    
+    private bool _isPlayerSilentEnabled;
+
+    public bool IsPlayerSilentEnabled
+    {
+        get => _isPlayerSilentEnabled;
+        set
+        {
+            if (SetProperty(ref _isPlayerSilentEnabled, value))
+            {
+                _playerService.TogglePlayerSilent(_isPlayerSilentEnabled);
+            }
+        }
+    }
+    
     #endregion
 
     #region Private Methods
@@ -76,7 +177,22 @@ public class PlayerViewModel : BaseViewModel
     private void OnGameLoaded()
     {
         AreOptionsEnabled = true;
-        if (IsNoDeathEnabled) _playerService.TogglePlayerNoDeath(true);   
+        if (IsNoDeathEnabled) _playerService.TogglePlayerNoDeath(true); 
+        //TODO No Damage
+        
+        if (IsOneShotEnabled) _playerService.TogglePlayerOneShotHealth(true);
+        
+        if (IsOneShotPostureEnabled) _playerService.TogglePlayerOneShotPosture(true);
+
+        if (IsNoGoodsConsumeEnabled) _playerService.TogglePlayerNoGoodsConsume(true);
+
+        if (IsNoEmblemConsumeEnabled) _playerService.TogglePlayerNoGoodsConsume(true);
+        
+        if (_isNoRevivalConsumeEnabled) _playerService.TogglePlayerNoRevivalConsume(true);
+        
+        if (_isPlayerHideEnabled) _playerService.TogglePlayerHide(true);
+        
+        if (_isPlayerSilentEnabled) _playerService.TogglePlayerSilent(true);
     }
     
     

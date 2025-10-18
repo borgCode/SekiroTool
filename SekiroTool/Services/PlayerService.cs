@@ -83,6 +83,11 @@ public class PlayerService(IMemoryService memoryService) : IPlayerService
         memoryService.WriteUInt8(DebugFlags.Base + (int) DebugFlags.Flag.PlayerNoDeath, (byte)(isEnabled ? 1 : 0));
         }
 
+    public void TogglePlayerNoDamage(bool isEnabled)
+    {
+        
+    }
+
     public void TogglePlayerOneShotHealth(bool isEnabled)
     {
         memoryService.WriteUInt8(DebugFlags.Base + (int) DebugFlags.Flag.PlayerOneShotHealth, (byte)(isEnabled ? 1 : 0));
