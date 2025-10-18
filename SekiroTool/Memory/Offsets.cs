@@ -162,8 +162,9 @@ public static class Offsets
     }
 
 
-    public static class AiTargetingFlags
+    public static class EventFlagMan
     {
+        public static IntPtr Base;
     }
     
 

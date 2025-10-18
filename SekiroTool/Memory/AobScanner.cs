@@ -30,6 +30,7 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.DamageManager.Base = FindAddressByPattern(Patterns.DamageManager);
         Offsets.DebugFlags.Base = FindAddressByPattern(Patterns.DebugFlagStart);
         Offsets.MapItemMan.Base = FindAddressByPattern(Patterns.MapItemMan);
+        Offsets.EventFlagMan.Base = FindAddressByPattern(Patterns.EventFlagMan);
         
         
         TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
@@ -66,6 +67,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"DamageManager.Base: 0x{Offsets.DamageManager.Base.ToInt64():X}");
         Console.WriteLine($"DebugFlags.Base: 0x{Offsets.DebugFlags.Base.ToInt64():X}");
         Console.WriteLine($"MapItemMan.Base: 0x{Offsets.MapItemMan.Base.ToInt64():X}");
+        Console.WriteLine($"EventFlagMan.Base: 0x{Offsets.EventFlagMan.Base.ToInt64():X}");
         
         Console.WriteLine($"Hooks.LockedTarget: 0x{Offsets.Hooks.LockedTarget:X}");
         Console.WriteLine($"Hooks.FreezeTargetPosture: 0x{Offsets.Hooks.FreezeTargetPosture:X}");

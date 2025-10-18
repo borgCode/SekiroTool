@@ -157,5 +157,26 @@ namespace SekiroTool {
                 return ResourceManager.GetString("Rest", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 48 83 ec 28             sub    rsp,0x28
+        ///48 b9 00 00 00 00 00    movabs rcx,0x0
+        ///00 00 00
+        ///48 ba 00 00 00 00 00    movabs rdx,0x0
+        ///00 00 00
+        ///49 b8 00 00 00 00 00    movabs r8,0x0
+        ///00 00 00
+        ///4d 31 c9                xor    r9,r9
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///ff d0                   call   rax
+        ///48 83 c4 28             add    rsp,0x28
+        ///c3                      ret.
+        /// </summary>
+        internal static string SetEvent {
+            get {
+                return ResourceManager.GetString("SetEvent", resourceCulture);
+            }
+        }
     }
 }

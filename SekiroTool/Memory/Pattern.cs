@@ -89,6 +89,15 @@ public static class Patterns
         7
     );
 
+    public static readonly Pattern EventFlagMan = new Pattern(
+        new byte[] { 0x84, 0xC0, 0x75, 0x6E, 0x48, 0x8B, 0x0D },
+        "xxxxxxx",
+        0x4,
+        AddressingMode.Relative,
+        3,
+        7
+    );
+
     #endregion
 
 
