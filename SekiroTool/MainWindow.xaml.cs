@@ -49,7 +49,7 @@ public partial class MainWindow : Window
         
 
 
-        PlayerViewModel playerViewModel = new PlayerViewModel(_playerService);
+        PlayerViewModel playerViewModel = new PlayerViewModel(_playerService, _hotkeyManager, _gameStateService);
         TargetViewModel targetViewModel =
             new TargetViewModel(_gameStateService, _hotkeyManager, targetService, debugDrawService);
         SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, _hotkeyManager);
@@ -98,7 +98,6 @@ public partial class MainWindow : Window
             {
                 _aobScanner.Scan();
                 _hasScanned = true;
-                //_playerService.AddExperience();
             }
 
             if (!_hasAppliedNoLogo)
