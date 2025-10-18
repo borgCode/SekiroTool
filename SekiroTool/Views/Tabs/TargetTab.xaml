@@ -41,31 +41,46 @@
                             <Run Text="/" />
                             <Run Text="{Binding TargetMaxHealth, Mode=OneWay}" />
                         </TextBlock>
-    
+
                         <xctk:IntegerUpDown Width="80" Margin="5,2"
                                             HorizontalAlignment="Right"
                                             Value="{Binding CustomHp}"
-                                            Minimum="0"/>
+                                            Minimum="0" />
                     </Grid>
 
-                    <ProgressBar Width="250" Height="20"
-                                 Value="{Binding TargetCurrentHealth}"
-                                 Maximum="{Binding TargetMaxHealth, FallbackValue=100}"
-                                 Margin="0,0,0,5">
-                        <ProgressBar.Template>
-                            <ControlTemplate TargetType="ProgressBar">
-                                <Border BorderBrush="#444444" BorderThickness="1" Background="#222222" CornerRadius="3">
-                                    <Grid x:Name="PART_Track">
-                                        <Rectangle x:Name="PART_Indicator"
-                                                   Fill="#4CAF50"
-                                                   HorizontalAlignment="Left"
-                                                   RadiusX="2" RadiusY="2"
-                                                   Margin="1" />
-                                    </Grid>
-                                </Border>
-                            </ControlTemplate>
-                        </ProgressBar.Template>
-                    </ProgressBar>
+
+                    <Grid HorizontalAlignment="Stretch">
+                        <ProgressBar Width="250" Height="20" HorizontalAlignment="Center"
+                                     Value="{Binding TargetCurrentHealth}"
+                                     Maximum="{Binding TargetMaxHealth, FallbackValue=100}"
+                                     Margin="0,0,0,5">
+                            <ProgressBar.Template>
+                                <ControlTemplate TargetType="ProgressBar">
+                                    <Border BorderBrush="#444444" BorderThickness="1" Background="#222222"
+                                            CornerRadius="3">
+                                        <Grid x:Name="PART_Track">
+                                            <Rectangle x:Name="PART_Indicator"
+                                                       Fill="#4CAF50"
+                                                       HorizontalAlignment="Left"
+                                                       RadiusX="2" RadiusY="2"
+                                                       Margin="1" />
+                                        </Grid>
+                                    </Border>
+                                </ControlTemplate>
+                            </ProgressBar.Template>
+                        </ProgressBar>
+                        <Button Content="Set Hp"
+                                Margin="0,3,10,0"
+                                HorizontalAlignment="Right"
+                                Command="{Binding SetCustomHpCommand}">
+                            <Button.IsEnabled>
+                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                    <Binding Path="AreOptionsEnabled" />
+                                    <Binding Path="IsValidTarget" />
+                                </MultiBinding>
+                            </Button.IsEnabled>
+                        </Button>
+                    </Grid>
 
                     <Grid Margin="0,0,0,10">
                         <Grid.ColumnDefinitions>
@@ -136,31 +151,53 @@
                             </CheckBox.IsEnabled>
                         </CheckBox>
                     </Grid>
-                    <TextBlock HorizontalAlignment="Center" Margin="0,0,0,5">
-                        <Run Text="Posture: " />
-                        <Run Text="{Binding TargetCurrentPosture, Mode=OneWay}" />
-                        <Run Text="/" />
-                        <Run Text="{Binding TargetMaxPosture, Mode=OneWay}" />
-                    </TextBlock>
 
-                    <ProgressBar Width="250" Height="20"
-                                 Value="{Binding TargetCurrentPosture}"
-                                 Maximum="{Binding TargetMaxPosture, FallbackValue=100}"
-                                 Margin="0,0,0,5">
-                        <ProgressBar.Template>
-                            <ControlTemplate TargetType="ProgressBar">
-                                <Border BorderBrush="#444444" BorderThickness="1" Background="#222222" CornerRadius="3">
-                                    <Grid x:Name="PART_Track">
-                                        <Rectangle x:Name="PART_Indicator"
-                                                   Fill="#CC9900"
-                                                   HorizontalAlignment="Left"
-                                                   RadiusX="2" RadiusY="2"
-                                                   Margin="1" />
-                                    </Grid>
-                                </Border>
-                            </ControlTemplate>
-                        </ProgressBar.Template>
-                    </ProgressBar>
+                    <Grid HorizontalAlignment="Stretch">
+                        <TextBlock HorizontalAlignment="Center" Margin="0,0,0,5">
+                            <Run Text="Posture: " />
+                            <Run Text="{Binding TargetCurrentPosture, Mode=OneWay}" />
+                            <Run Text="/" />
+                            <Run Text="{Binding TargetMaxPosture, Mode=OneWay}" />
+                        </TextBlock>
+                        <xctk:IntegerUpDown Width="80" Margin="5,2"
+                                            HorizontalAlignment="Right"
+                                            Value="{Binding CustomPosture}"
+                                            Minimum="0" />
+                    </Grid>
+
+                    <Grid HorizontalAlignment="Stretch">
+                        <ProgressBar Width="250" Height="20" HorizontalAlignment="Center"
+                                     Value="{Binding TargetCurrentPosture}"
+                                     Maximum="{Binding TargetMaxPosture, FallbackValue=100}"
+                                     Margin="0,0,0,5">
+                            <ProgressBar.Template>
+                                <ControlTemplate TargetType="ProgressBar">
+                                    <Border BorderBrush="#444444" BorderThickness="1" Background="#222222"
+                                            CornerRadius="3">
+                                        <Grid x:Name="PART_Track">
+                                            <Rectangle x:Name="PART_Indicator"
+                                                       Fill="#CC9900"
+                                                       HorizontalAlignment="Left"
+                                                       RadiusX="2" RadiusY="2"
+                                                       Margin="1" />
+                                        </Grid>
+                                    </Border>
+                                </ControlTemplate>
+                            </ProgressBar.Template>
+                        </ProgressBar>
+
+                        <Button Content="Set Posture"
+                                Margin="0,3,10,0"
+                                HorizontalAlignment="Right"
+                                Command="{Binding SetCustomPostureCommand}">
+                            <Button.IsEnabled>
+                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                    <Binding Path="AreOptionsEnabled" />
+                                    <Binding Path="IsValidTarget" />
+                                </MultiBinding>
+                            </Button.IsEnabled>
+                        </Button>
+                    </Grid>
 
                     <Grid Margin="0,0,0,10">
                         <Grid.ColumnDefinitions>

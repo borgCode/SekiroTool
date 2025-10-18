@@ -87,10 +87,12 @@ public class TargetViewModel : BaseViewModel
 
         SetHpCommand = new DelegateCommand(SetHp);
         SetHpPercentageCommand = new DelegateCommand(SetHpPercentage);
+        SetCustomHpCommand = new DelegateCommand(SetCustomHp);
 
         SetPostureCommand = new DelegateCommand(SetPosture);
         SetPosturePercentageCommand = new DelegateCommand(SetPosturePercentage);
-
+        SetCustomPostureCommand = new DelegateCommand(SetCustomPosture);
+        
         _targetTick = new DispatcherTimer
         {
             Interval = TimeSpan.FromMilliseconds(64)
@@ -103,10 +105,12 @@ public class TargetViewModel : BaseViewModel
 
     public ICommand SetHpCommand { get; set; }
     public ICommand SetHpPercentageCommand { get; set; }
+    public ICommand SetCustomHpCommand { get; set; }
 
     public ICommand SetPostureCommand { get; set; }
     public ICommand SetPosturePercentageCommand { get; set; }
-
+    public ICommand SetCustomPostureCommand { get; set; }
+    
     #endregion
 
     #region Public Properties
@@ -183,6 +187,18 @@ public class TargetViewModel : BaseViewModel
         {
             SetProperty(ref _isFreezeHealthEnabled, value);
             _targetService.ToggleNoDamage(_isFreezeHealthEnabled);
+        }
+    }
+    
+    public int CustomPosture
+    {
+        get => _customPosture;
+        set
+        {
+            if (SetProperty(ref _customPosture, value))
+            {
+                _customPostureHasBeenSet = true;
+            }
         }
     }
 
@@ -625,6 +641,13 @@ public class TargetViewModel : BaseViewModel
         _targetService.SetHp(newHealth);
     }
 
+    private void SetCustomHp(object? obj)
+    {
+        if (!_customHpHasBeenSet) return;
+        if (CustomHp > TargetMaxHealth) CustomHp = TargetMaxHealth;
+        _targetService.SetHp(CustomHp);
+    }
+
     private void SetPosture(object parameter) =>
         _targetService.SetPosture(Convert.ToInt32(parameter));
 
@@ -634,6 +657,14 @@ public class TargetViewModel : BaseViewModel
         int newPosture = TargetMaxPosture * posturePercentage / 100;
         _targetService.SetPosture(newPosture);
     }
+    
+    private void SetCustomPosture(object? obj)
+    {
+        if (!_customPostureHasBeenSet) return;
+        if (CustomPosture > TargetMaxPosture) CustomPosture = TargetMaxPosture;
+        _targetService.SetPosture(CustomPosture);
+    }
+    
 
     private void UpdateResistancesDisplay()
     {
