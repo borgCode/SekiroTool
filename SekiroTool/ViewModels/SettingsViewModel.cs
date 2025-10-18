@@ -1,4 +1,5 @@
-﻿using H.Hooks;
+﻿using System.Windows;
+using H.Hooks;
 using SekiroTool.Enums;
 using SekiroTool.Interfaces;
 using SekiroTool.Utilities;
@@ -8,79 +9,83 @@ namespace SekiroTool.ViewModels;
 public class SettingsViewModel : BaseViewModel
 {
     private readonly ISettingsService _settingsService;
+    private readonly IGameStateService _gameStateService;
     private readonly HotkeyManager _hotkeyManager;
-    
+
     private readonly Dictionary<string, Action<string>> _propertySetters;
-    
+
     private string _currentSettingHotkeyId;
     private LowLevelKeyboardHook _tempHook;
     private Keys _currentKeys;
 
-    public SettingsViewModel(ISettingsService settingsService, HotkeyManager hotkeyManager)
+    public SettingsViewModel(ISettingsService settingsService, IGameStateService gameStateService,
+        HotkeyManager hotkeyManager)
     {
         _settingsService = settingsService;
+        _gameStateService = gameStateService;
         _hotkeyManager = hotkeyManager;
 
+        _gameStateService.Subscribe(GameState.Attached, OnGameAttached);
+
         RegisterHotkeys();
-        
+
         _propertySetters = new Dictionary<string, Action<string>>
-            {
-                // { "SavePos1", text => SavePos1HotkeyText = text },
-                // { "SavePos2", text => SavePos2HotkeyText = text },
-                // { "RestorePos1", text => RestorePos1HotkeyText = text },
-                // { "RestorePos2", text => RestorePos2HotkeyText = text },
-                // { "RTSR", text => RtsrHotkeyText = text },
-                // { "NoDeath", text => NoDeathHotkeyText = text },
-                // { "OneShot", text => OneShotHotkeyText = text },
-                // { "PlayerNoDamage", text => NoDamagePlayerHotkeyText = text },
-                // { "TogglePlayerSpeed", text => TogglePlayerSpeedHotkeyText = text },
-                // { "IncreasePlayerSpeed", text => IncreasePlayerSpeedHotkeyText = text },
-                // { "DecreasePlayerSpeed", text => DecreasePlayerSpeedHotkeyText = text },
-                // { "DealNoDamage", text => DealNoDamageHotkeyText = text },
-                // { "RestoreSpellcasts", text => RestoreSpellcastsHotkeyText = text },
-                // { "RestoreHumanity", text => RestoreHumanityHotkeyText = text },
-                // { "Rest", text => RestHotkeyText = text },
-                // { "ToggleGameSpeed", text => ToggleGameSpeedHotkeyText = text },
-                // { "IncreaseGameSpeed", text => IncreaseGameSpeedHotkeyText = text },
-                // { "DecreaseGameSpeed", text => DecreaseGameSpeedHotkeyText = text },
-                // { "NoClip", text => NoClipHotkeyText = text },
-                { HotkeyActions.Quitout.ToString(), text => QuitoutHotkeyText = text },
-                // { "ForceSave", text => ForceSaveHotkeyText = text },
-                // { "EnableFreeCam", text => EnableFreeCamHotkeyText = text },
-                // { "MoveCamToPlayer", text => MoveCamToPlayerHotkeyText = text },
-                // { "Warp", text => WarpHotkeyText = text },
-                // { "IncreaseNoClipSpeed", text => IncreaseNoClipSpeedHotkeyText = text },
-                // { "DecreaseNoClipSpeed", text => DecreaseNoClipSpeedHotkeyText = text },
-                { HotkeyActions.EnableTargetOptions.ToString(), text => EnableTargetOptionsHotkeyText = text },
-                { HotkeyActions.FreezeTargetHp.ToString(), text => FreezeHpHotkeyText = text },
-                { HotkeyActions.SetTargetOneHp.ToString(), text => SetTargetOneHpHotkeyText = text },
-                { HotkeyActions.TargetCustomHp.ToString(), text => TargetCustomHpHotkeyText = text },
-                { HotkeyActions.FreezeTargetPosture.ToString(), text => FreezeTargetPostureHotkeyText = text },
-                { HotkeyActions.SetTargetOnePosture.ToString(), text => SetTargetOnePostureHotkeyText = text },
-                { HotkeyActions.TargetCustomPosture.ToString(), text => TargetCustomPostureHotkeyText = text },
-                { HotkeyActions.ShowAllResistances.ToString(), text => ShowAllResistancesHotkeyText = text },
-                { HotkeyActions.RepeatAct.ToString(), text => RepeatActHotkeyText = text },
-                { HotkeyActions.RepeatKengekiAct.ToString(), text => RepeatKengekiActHotkeyText = text },
-                { HotkeyActions.IncreaseTargetSpeed.ToString(), text => IncreaseTargetSpeedHotkeyText = text },
-                { HotkeyActions.DecreaseTargetSpeed.ToString(), text => DecreaseTargetSpeedHotkeyText = text },
-                { HotkeyActions.ToggleTargetSpeed.ToString(), text => ToggleTargetSpeedHotkeyText = text },
-                { HotkeyActions.FreezeTargetAi.ToString(), text => FreezeTargetAiHotkeyText = text },
-                { HotkeyActions.NoAttackTargetAi.ToString(), text => NoAttackTargetAiHotkeyText = text },
-                { HotkeyActions.NoMoveTargetAi.ToString(), text => NoMoveTargetAiHotkeyText = text },
-                { HotkeyActions.TargetNoPostureBuildup.ToString(), text => TargetNoPostureBuildupHotkeyText = text },
-                { HotkeyActions.TargetNoDeath.ToString(), text => TargetNoDeathHotkeyText = text },
-                { HotkeyActions.TargetTargetingView.ToString(), text => TargetTargetingViewHotkeyText = text },
-                // { "AllNoDeath", text => AllNoDeathHotkeyText = text },
-                // { "AllNoDamage", text => AllNoDamageHotkeyText = text },
-                // { "AllRepeatAct", text => AllRepeatActHotkeyText = text },
-               
-            };
-            
-            LoadHotkeyDisplays();
+        {
+            // { "SavePos1", text => SavePos1HotkeyText = text },
+            // { "SavePos2", text => SavePos2HotkeyText = text },
+            // { "RestorePos1", text => RestorePos1HotkeyText = text },
+            // { "RestorePos2", text => RestorePos2HotkeyText = text },
+            // { "RTSR", text => RtsrHotkeyText = text },
+            // { "NoDeath", text => NoDeathHotkeyText = text },
+            // { "OneShot", text => OneShotHotkeyText = text },
+            // { "PlayerNoDamage", text => NoDamagePlayerHotkeyText = text },
+            // { "TogglePlayerSpeed", text => TogglePlayerSpeedHotkeyText = text },
+            // { "IncreasePlayerSpeed", text => IncreasePlayerSpeedHotkeyText = text },
+            // { "DecreasePlayerSpeed", text => DecreasePlayerSpeedHotkeyText = text },
+            // { "DealNoDamage", text => DealNoDamageHotkeyText = text },
+            // { "RestoreSpellcasts", text => RestoreSpellcastsHotkeyText = text },
+            // { "RestoreHumanity", text => RestoreHumanityHotkeyText = text },
+            // { "Rest", text => RestHotkeyText = text },
+            // { "ToggleGameSpeed", text => ToggleGameSpeedHotkeyText = text },
+            // { "IncreaseGameSpeed", text => IncreaseGameSpeedHotkeyText = text },
+            // { "DecreaseGameSpeed", text => DecreaseGameSpeedHotkeyText = text },
+            // { "NoClip", text => NoClipHotkeyText = text },
+            { HotkeyActions.Quitout.ToString(), text => QuitoutHotkeyText = text },
+            // { "ForceSave", text => ForceSaveHotkeyText = text },
+            // { "EnableFreeCam", text => EnableFreeCamHotkeyText = text },
+            // { "MoveCamToPlayer", text => MoveCamToPlayerHotkeyText = text },
+            // { "Warp", text => WarpHotkeyText = text },
+            // { "IncreaseNoClipSpeed", text => IncreaseNoClipSpeedHotkeyText = text },
+            // { "DecreaseNoClipSpeed", text => DecreaseNoClipSpeedHotkeyText = text },
+            { HotkeyActions.EnableTargetOptions.ToString(), text => EnableTargetOptionsHotkeyText = text },
+            { HotkeyActions.FreezeTargetHp.ToString(), text => FreezeHpHotkeyText = text },
+            { HotkeyActions.SetTargetOneHp.ToString(), text => SetTargetOneHpHotkeyText = text },
+            { HotkeyActions.TargetCustomHp.ToString(), text => TargetCustomHpHotkeyText = text },
+            { HotkeyActions.FreezeTargetPosture.ToString(), text => FreezeTargetPostureHotkeyText = text },
+            { HotkeyActions.SetTargetOnePosture.ToString(), text => SetTargetOnePostureHotkeyText = text },
+            { HotkeyActions.TargetCustomPosture.ToString(), text => TargetCustomPostureHotkeyText = text },
+            { HotkeyActions.ShowAllResistances.ToString(), text => ShowAllResistancesHotkeyText = text },
+            { HotkeyActions.RepeatAct.ToString(), text => RepeatActHotkeyText = text },
+            { HotkeyActions.RepeatKengekiAct.ToString(), text => RepeatKengekiActHotkeyText = text },
+            { HotkeyActions.IncreaseTargetSpeed.ToString(), text => IncreaseTargetSpeedHotkeyText = text },
+            { HotkeyActions.DecreaseTargetSpeed.ToString(), text => DecreaseTargetSpeedHotkeyText = text },
+            { HotkeyActions.ToggleTargetSpeed.ToString(), text => ToggleTargetSpeedHotkeyText = text },
+            { HotkeyActions.FreezeTargetAi.ToString(), text => FreezeTargetAiHotkeyText = text },
+            { HotkeyActions.NoAttackTargetAi.ToString(), text => NoAttackTargetAiHotkeyText = text },
+            { HotkeyActions.NoMoveTargetAi.ToString(), text => NoMoveTargetAiHotkeyText = text },
+            { HotkeyActions.TargetNoPostureBuildup.ToString(), text => TargetNoPostureBuildupHotkeyText = text },
+            { HotkeyActions.TargetNoDeath.ToString(), text => TargetNoDeathHotkeyText = text },
+            { HotkeyActions.TargetTargetingView.ToString(), text => TargetTargetingViewHotkeyText = text },
+            // { "AllNoDeath", text => AllNoDeathHotkeyText = text },
+            // { "AllNoDamage", text => AllNoDamageHotkeyText = text },
+            // { "AllRepeatAct", text => AllRepeatActHotkeyText = text },
+        };
+
+        LoadHotkeyDisplays();
     }
 
     #region Properties
-    
+
     private bool _isEnableHotkeysEnabled;
     public bool IsEnableHotkeysEnabled
     {
@@ -96,9 +101,40 @@ public class SettingsViewModel : BaseViewModel
             }
         }
     }
-    
-    
+
+    private bool _isNoLogoEnabled;
+    public bool IsNoLogoEnabled
+    {
+        get => _isNoLogoEnabled;
+        set
+        {
+            if (SetProperty(ref _isNoLogoEnabled, value))
+            {
+                SettingsManager.Default.NoLogo = value;
+                SettingsManager.Default.Save();
+
+                _settingsService.ToggleNoLogo(_isNoLogoEnabled);
+            }
+        }
+    }
+
+    private bool _isAlwaysOnTopEnabled;
+    public bool IsAlwaysOnTopEnabled
+    {
+        get => _isAlwaysOnTopEnabled;
+        set
+        {
+            if (!SetProperty(ref _isAlwaysOnTopEnabled, value)) return;
+            SettingsManager.Default.AlwaysOnTop = value;
+            SettingsManager.Default.Save();
+            var mainWindow = Application.Current.MainWindow;
+            if (mainWindow != null) mainWindow.Topmost = _isAlwaysOnTopEnabled;
+        }
+    }
+
+
     private string _quitoutHotkeyText;
+
     public string QuitoutHotkeyText
     {
         get => _quitoutHotkeyText;
@@ -107,137 +143,156 @@ public class SettingsViewModel : BaseViewModel
 
 
     private string _enableTargetOptionsHotkeyText;
+
     public string EnableTargetOptionsHotkeyText
     {
         get => _enableTargetOptionsHotkeyText;
         set => SetProperty(ref _enableTargetOptionsHotkeyText, value);
     }
-    
+
     private string _freezeHpHotkeyText;
+
     public string FreezeHpHotkeyText
     {
         get => _freezeHpHotkeyText;
         set => SetProperty(ref _freezeHpHotkeyText, value);
     }
-    
+
     private string _setTargetOneHpHotkeyText;
-public string SetTargetOneHpHotkeyText
-{
-    get => _setTargetOneHpHotkeyText;
-    set => SetProperty(ref _setTargetOneHpHotkeyText, value);
-}
 
-private string _targetCustomHpHotkeyText;
-public string TargetCustomHpHotkeyText
-{
-    get => _targetCustomHpHotkeyText;
-    set => SetProperty(ref _targetCustomHpHotkeyText, value);
-}
+    public string SetTargetOneHpHotkeyText
+    {
+        get => _setTargetOneHpHotkeyText;
+        set => SetProperty(ref _setTargetOneHpHotkeyText, value);
+    }
 
-private string _freezeTargetPostureHotkeyText;
-public string FreezeTargetPostureHotkeyText
-{
-    get => _freezeTargetPostureHotkeyText;
-    set => SetProperty(ref _freezeTargetPostureHotkeyText, value);
-}
+    private string _targetCustomHpHotkeyText;
 
-private string _setTargetOnePostureHotkeyText;
-public string SetTargetOnePostureHotkeyText
-{
-    get => _setTargetOnePostureHotkeyText;
-    set => SetProperty(ref _setTargetOnePostureHotkeyText, value);
-}
+    public string TargetCustomHpHotkeyText
+    {
+        get => _targetCustomHpHotkeyText;
+        set => SetProperty(ref _targetCustomHpHotkeyText, value);
+    }
 
-private string _targetCustomPostureHotkeyText;
-public string TargetCustomPostureHotkeyText
-{
-    get => _targetCustomPostureHotkeyText;
-    set => SetProperty(ref _targetCustomPostureHotkeyText, value);
-}
+    private string _freezeTargetPostureHotkeyText;
 
-private string _showAllResistancesHotkeyText;
-public string ShowAllResistancesHotkeyText
-{
-    get => _showAllResistancesHotkeyText;
-    set => SetProperty(ref _showAllResistancesHotkeyText, value);
-}
+    public string FreezeTargetPostureHotkeyText
+    {
+        get => _freezeTargetPostureHotkeyText;
+        set => SetProperty(ref _freezeTargetPostureHotkeyText, value);
+    }
 
-private string _repeatActHotkeyText;
-public string RepeatActHotkeyText
-{
-    get => _repeatActHotkeyText;
-    set => SetProperty(ref _repeatActHotkeyText, value);
-}
+    private string _setTargetOnePostureHotkeyText;
 
-private string _repeatKengekiActHotkeyText;
-public string RepeatKengekiActHotkeyText
-{
-    get => _repeatKengekiActHotkeyText;
-    set => SetProperty(ref _repeatKengekiActHotkeyText, value);
-}
+    public string SetTargetOnePostureHotkeyText
+    {
+        get => _setTargetOnePostureHotkeyText;
+        set => SetProperty(ref _setTargetOnePostureHotkeyText, value);
+    }
 
-private string _increaseTargetSpeedHotkeyText;
-public string IncreaseTargetSpeedHotkeyText
-{
-    get => _increaseTargetSpeedHotkeyText;
-    set => SetProperty(ref _increaseTargetSpeedHotkeyText, value);
-}
+    private string _targetCustomPostureHotkeyText;
 
-private string _decreaseTargetSpeedHotkeyText;
-public string DecreaseTargetSpeedHotkeyText
-{
-    get => _decreaseTargetSpeedHotkeyText;
-    set => SetProperty(ref _decreaseTargetSpeedHotkeyText, value);
-}
+    public string TargetCustomPostureHotkeyText
+    {
+        get => _targetCustomPostureHotkeyText;
+        set => SetProperty(ref _targetCustomPostureHotkeyText, value);
+    }
 
-private string _toggleTargetSpeedHotkeyText;
-public string ToggleTargetSpeedHotkeyText
-{
-    get => _toggleTargetSpeedHotkeyText;
-    set => SetProperty(ref _toggleTargetSpeedHotkeyText, value);
-}
+    private string _showAllResistancesHotkeyText;
 
-private string _freezeTargetAiHotkeyText;
-public string FreezeTargetAiHotkeyText
-{
-    get => _freezeTargetAiHotkeyText;
-    set => SetProperty(ref _freezeTargetAiHotkeyText, value);
-}
+    public string ShowAllResistancesHotkeyText
+    {
+        get => _showAllResistancesHotkeyText;
+        set => SetProperty(ref _showAllResistancesHotkeyText, value);
+    }
 
-private string _noAttackTargetAiHotkeyText;
-public string NoAttackTargetAiHotkeyText
-{
-    get => _noAttackTargetAiHotkeyText;
-    set => SetProperty(ref _noAttackTargetAiHotkeyText, value);
-}
+    private string _repeatActHotkeyText;
 
-private string _noMoveTargetAiHotkeyText;
-public string NoMoveTargetAiHotkeyText
-{
-    get => _noMoveTargetAiHotkeyText;
-    set => SetProperty(ref _noMoveTargetAiHotkeyText, value);
-}
+    public string RepeatActHotkeyText
+    {
+        get => _repeatActHotkeyText;
+        set => SetProperty(ref _repeatActHotkeyText, value);
+    }
 
-private string _targetNoPostureBuildupHotkeyText;
-public string TargetNoPostureBuildupHotkeyText
-{
-    get => _targetNoPostureBuildupHotkeyText;
-    set => SetProperty(ref _targetNoPostureBuildupHotkeyText, value);
-}
+    private string _repeatKengekiActHotkeyText;
 
-private string _targetNoDeathHotkeyText;
-public string TargetNoDeathHotkeyText
-{
-    get => _targetNoDeathHotkeyText;
-    set => SetProperty(ref _targetNoDeathHotkeyText, value);
-}
+    public string RepeatKengekiActHotkeyText
+    {
+        get => _repeatKengekiActHotkeyText;
+        set => SetProperty(ref _repeatKengekiActHotkeyText, value);
+    }
 
-private string _targetTargetingViewHotkeyText;
-public string TargetTargetingViewHotkeyText
-{
-    get => _targetTargetingViewHotkeyText;
-    set => SetProperty(ref _targetTargetingViewHotkeyText, value);
-}
+    private string _increaseTargetSpeedHotkeyText;
+
+    public string IncreaseTargetSpeedHotkeyText
+    {
+        get => _increaseTargetSpeedHotkeyText;
+        set => SetProperty(ref _increaseTargetSpeedHotkeyText, value);
+    }
+
+    private string _decreaseTargetSpeedHotkeyText;
+
+    public string DecreaseTargetSpeedHotkeyText
+    {
+        get => _decreaseTargetSpeedHotkeyText;
+        set => SetProperty(ref _decreaseTargetSpeedHotkeyText, value);
+    }
+
+    private string _toggleTargetSpeedHotkeyText;
+
+    public string ToggleTargetSpeedHotkeyText
+    {
+        get => _toggleTargetSpeedHotkeyText;
+        set => SetProperty(ref _toggleTargetSpeedHotkeyText, value);
+    }
+
+    private string _freezeTargetAiHotkeyText;
+
+    public string FreezeTargetAiHotkeyText
+    {
+        get => _freezeTargetAiHotkeyText;
+        set => SetProperty(ref _freezeTargetAiHotkeyText, value);
+    }
+
+    private string _noAttackTargetAiHotkeyText;
+
+    public string NoAttackTargetAiHotkeyText
+    {
+        get => _noAttackTargetAiHotkeyText;
+        set => SetProperty(ref _noAttackTargetAiHotkeyText, value);
+    }
+
+    private string _noMoveTargetAiHotkeyText;
+
+    public string NoMoveTargetAiHotkeyText
+    {
+        get => _noMoveTargetAiHotkeyText;
+        set => SetProperty(ref _noMoveTargetAiHotkeyText, value);
+    }
+
+    private string _targetNoPostureBuildupHotkeyText;
+
+    public string TargetNoPostureBuildupHotkeyText
+    {
+        get => _targetNoPostureBuildupHotkeyText;
+        set => SetProperty(ref _targetNoPostureBuildupHotkeyText, value);
+    }
+
+    private string _targetNoDeathHotkeyText;
+
+    public string TargetNoDeathHotkeyText
+    {
+        get => _targetNoDeathHotkeyText;
+        set => SetProperty(ref _targetNoDeathHotkeyText, value);
+    }
+
+    private string _targetTargetingViewHotkeyText;
+
+    public string TargetTargetingViewHotkeyText
+    {
+        get => _targetTargetingViewHotkeyText;
+        set => SetProperty(ref _targetTargetingViewHotkeyText, value);
+    }
 
     #endregion
 
@@ -263,10 +318,9 @@ public string TargetTargetingViewHotkeyText
         _tempHook.Down += TempHook_Down;
         _tempHook.Start();
     }
-    
+
     public void ConfirmHotkey()
     {
-            
         var currentSettingHotkeyId = _currentSettingHotkeyId;
         var currentKeys = _currentKeys;
         if (currentSettingHotkeyId == null || currentKeys == null || currentKeys.IsEmpty)
@@ -280,7 +334,7 @@ public string TargetTargetingViewHotkeyText
 
         StopSettingHotkey();
     }
-    
+
     public void CancelSettingHotkey()
     {
         if (_currentSettingHotkeyId != null &&
@@ -292,6 +346,19 @@ public string TargetTargetingViewHotkeyText
 
         StopSettingHotkey();
     }
+    
+    public void ApplyStartUpOptions()
+    {
+        _isEnableHotkeysEnabled = SettingsManager.Default.EnableHotkeys;
+        if (_isEnableHotkeysEnabled) _hotkeyManager.Start();
+        else _hotkeyManager.Stop();
+        OnPropertyChanged(nameof(IsEnableHotkeysEnabled));
+            
+        _isNoLogoEnabled = SettingsManager.Default.NoLogo;
+        OnPropertyChanged(nameof(IsNoLogoEnabled));
+            
+        IsAlwaysOnTopEnabled = SettingsManager.Default.AlwaysOnTop;
+    }
 
     #endregion
 
@@ -302,6 +369,11 @@ public string TargetTargetingViewHotkeyText
         _hotkeyManager.RegisterAction(HotkeyActions.Quitout.ToString(), () => _settingsService.Quitout());
     }
     
+    private void OnGameAttached()
+    {
+        if (IsNoLogoEnabled) _settingsService.ToggleNoLogo(true);
+    }
+
     private void LoadHotkeyDisplays()
     {
         foreach (var entry in _propertySetters)
@@ -312,13 +384,13 @@ public string TargetTargetingViewHotkeyText
             setter(GetHotkeyDisplayText(actionId));
         }
     }
-        
+
     private string GetHotkeyDisplayText(string actionId)
     {
         Keys keys = _hotkeyManager.GetHotkey(actionId);
         return keys != null && keys.Values.ToArray().Length > 0 ? string.Join(" + ", keys) : "None";
     }
-    
+
     private void TempHook_Down(object sender, KeyboardEventArgs e)
     {
         if (_currentSettingHotkeyId == null || e.Keys.IsEmpty)
@@ -370,8 +442,7 @@ public string TargetTargetingViewHotkeyText
 
         e.IsHandled = true;
     }
-    
-    
+
 
     private void StopSettingHotkey()
     {
@@ -385,23 +456,23 @@ public string TargetTargetingViewHotkeyText
         _currentSettingHotkeyId = null;
         _currentKeys = null;
     }
-    
+
     private void HandleExistingHotkey(Keys currentKeys)
     {
         string existingHotkeyId = _hotkeyManager.GetActionIdByKeys(currentKeys);
         if (string.IsNullOrEmpty(existingHotkeyId)) return;
-            
+
         _hotkeyManager.ClearHotkey(existingHotkeyId);
         if (_propertySetters.TryGetValue(existingHotkeyId, out var oldSetter))
         {
             oldSetter("None");
         }
     }
-        
+
     private void SetNewHotkey(string currentSettingHotkeyId, Keys currentKeys)
     {
         _hotkeyManager.SetHotkey(currentSettingHotkeyId, currentKeys);
-            
+
         if (_propertySetters.TryGetValue(currentSettingHotkeyId, out var setter))
         {
             setter(new Keys(currentKeys.Values.ToArray()).ToString());
@@ -409,6 +480,4 @@ public string TargetTargetingViewHotkeyText
     }
 
     #endregion
-    
-    
 }

@@ -52,7 +52,7 @@ public partial class MainWindow : Window
         PlayerViewModel playerViewModel = new PlayerViewModel(_playerService, _hotkeyManager, _gameStateService);
         TargetViewModel targetViewModel =
             new TargetViewModel(_gameStateService, _hotkeyManager, targetService, debugDrawService);
-        SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, _hotkeyManager);
+        SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, _gameStateService, _hotkeyManager);
 
 
         var playerTab = new PlayerTab(playerViewModel);
@@ -64,7 +64,8 @@ public partial class MainWindow : Window
         MainTabControl.Items.Add(new TabItem { Header = "Target", Content = targetTab });
         MainTabControl.Items.Add(new TabItem { Header = "Settings", Content = settingsTab });
         
-
+        settingsViewModel.ApplyStartUpOptions();
+        
         _gameLoadedTimer = new DispatcherTimer
         {
             Interval = TimeSpan.FromMilliseconds(25)
@@ -79,12 +80,10 @@ public partial class MainWindow : Window
     private bool _hasScanned;
 
     private bool _hasAllocatedMemory;
-
-    private bool _hasAppliedNoLogo;
+    
 
     private bool _appliedOneTimeFeatures;
-
-    private bool _hasAppliedAttachedFeatures;
+    
 
     private void Timer_Tick(object sender, EventArgs e)
     {
@@ -99,19 +98,7 @@ public partial class MainWindow : Window
                 _aobScanner.Scan();
                 _hasScanned = true;
             }
-
-            if (!_hasAppliedNoLogo)
-            {
-                // _memoryIo.WriteBytes(Patches.NoLogo, AsmLoader.GetAsmBytes("NoLogo"));
-                _hasAppliedNoLogo = true;
-            }
-
-            if (!_hasAppliedAttachedFeatures)
-            {
-                // _settingsViewModel.ApplyAttachedSettings();
-                _hasAppliedAttachedFeatures = true;
-            }
-
+            
             if (!_hasAllocatedMemory)
             {
                 _memoryService.AllocCodeCave();
