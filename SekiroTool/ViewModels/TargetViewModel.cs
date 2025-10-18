@@ -63,6 +63,9 @@ public class TargetViewModel : BaseViewModel
     private bool _isRepeatKengekiActEnabled;
 
     private float _targetSpeed;
+    private float _targetDesiredSpeed = -1f;
+    private const float DefaultSpeed = 1f;
+    private const float Epsilon = 0.0001f;
 
     private bool _isAiFreezEnabled;
     private bool _isNoAttackEnabled;
@@ -92,7 +95,7 @@ public class TargetViewModel : BaseViewModel
         SetPostureCommand = new DelegateCommand(SetPosture);
         SetPosturePercentageCommand = new DelegateCommand(SetPosturePercentage);
         SetCustomPostureCommand = new DelegateCommand(SetCustomPosture);
-        
+
         _targetTick = new DispatcherTimer
         {
             Interval = TimeSpan.FromMilliseconds(64)
@@ -110,7 +113,7 @@ public class TargetViewModel : BaseViewModel
     public ICommand SetPostureCommand { get; set; }
     public ICommand SetPosturePercentageCommand { get; set; }
     public ICommand SetCustomPostureCommand { get; set; }
-    
+
     #endregion
 
     #region Public Properties
@@ -189,7 +192,7 @@ public class TargetViewModel : BaseViewModel
             _targetService.ToggleNoDamage(_isFreezeHealthEnabled);
         }
     }
-    
+
     public int CustomPosture
     {
         get => _customPosture;
@@ -519,17 +522,46 @@ public class TargetViewModel : BaseViewModel
             () => { IsTargetOptionsEnabled = !IsTargetOptionsEnabled; });
         _hotkeyManager.RegisterAction(HotkeyActions.FreezeTargetHp.ToString(), () =>
             ExecuteTargetAction(() => IsFreezeHealthEnabled = !IsFreezeHealthEnabled));
-        
-        
+        _hotkeyManager.RegisterAction(HotkeyActions.SetTargetOneHp.ToString(), () =>
+            ExecuteTargetAction(() => SetHp(1)));
+        _hotkeyManager.RegisterAction(HotkeyActions.TargetCustomHp.ToString(), () => ExecuteTargetAction(SetCustomHp));
+        _hotkeyManager.RegisterAction(HotkeyActions.FreezeTargetPosture.ToString(),
+            () => ExecuteTargetAction(() => IsFreezePostureEnabled = !IsFreezePostureEnabled));
+        _hotkeyManager.RegisterAction(HotkeyActions.SetTargetOnePosture.ToString(),
+            () => ExecuteTargetAction(() => SetPosture(1)));
+        _hotkeyManager.RegisterAction(HotkeyActions.TargetCustomPosture.ToString(),
+            () => ExecuteTargetAction(SetCustomPosture));
         _hotkeyManager.RegisterAction(HotkeyActions.ShowAllResistances.ToString(), () =>
         {
             if (!IsTargetOptionsEnabled) IsTargetOptionsEnabled = true;
             _showAllResistances = !_showAllResistances;
             UpdateResistancesDisplay();
         });
-        
-        
+        _hotkeyManager.RegisterAction(HotkeyActions.RepeatAct.ToString(),
+            () => ExecuteTargetAction(() => IsRepeatActEnabled = !IsRepeatActEnabled));
+        _hotkeyManager.RegisterAction(HotkeyActions.RepeatKengekiAct.ToString(),
+            () => ExecuteTargetAction(() => IsRepeatKengekiActEnabled = !IsRepeatKengekiActEnabled));
+        _hotkeyManager.RegisterAction(HotkeyActions.IncreaseTargetSpeed.ToString(), () =>
+            ExecuteTargetAction(() => SetSpeed(Math.Min(5, TargetSpeed + 0.25f))));
+        _hotkeyManager.RegisterAction(HotkeyActions.DecreaseTargetSpeed.ToString(), () =>
+            ExecuteTargetAction(() => SetSpeed(Math.Max(0, TargetSpeed - 0.25f))));
+        _hotkeyManager.RegisterAction(HotkeyActions.ToggleTargetSpeed.ToString(), () => 
+                ExecuteTargetAction(ToggleTargetSpeed));
+        _hotkeyManager.RegisterAction(HotkeyActions.FreezeTargetAi.ToString(),
+            () => ExecuteTargetAction(() => IsAiFreezeEnabled = !IsAiFreezeEnabled));
+        _hotkeyManager.RegisterAction(HotkeyActions.NoAttackTargetAi.ToString(),
+            () => ExecuteTargetAction(() => IsNoAttackEnabled = !IsNoAttackEnabled));
+        _hotkeyManager.RegisterAction(HotkeyActions.NoMoveTargetAi.ToString(),
+            () => ExecuteTargetAction(() => IsNoMoveEnabled = !IsNoMoveEnabled));
+        _hotkeyManager.RegisterAction(HotkeyActions.TargetNoPostureBuildup.ToString(),
+            () => ExecuteTargetAction(() => IsNoPostureBuildupEnabled = !IsNoPostureBuildupEnabled));
+        _hotkeyManager.RegisterAction(HotkeyActions.TargetNoDeath.ToString(),
+            () => ExecuteTargetAction(() => IsNoDeathEnabled = !IsNoDeathEnabled));
+        _hotkeyManager.RegisterAction(HotkeyActions.TargetTargetingView.ToString(),
+            () => ExecuteTargetAction(() => IsTargetViewEnabled = !IsTargetViewEnabled));
+       
     }
+    
 
     private void ExecuteTargetAction(Action action)
     {
@@ -641,7 +673,7 @@ public class TargetViewModel : BaseViewModel
         _targetService.SetHp(newHealth);
     }
 
-    private void SetCustomHp(object? obj)
+    private void SetCustomHp()
     {
         if (!_customHpHasBeenSet) return;
         if (CustomHp > TargetMaxHealth) CustomHp = TargetMaxHealth;
@@ -657,14 +689,31 @@ public class TargetViewModel : BaseViewModel
         int newPosture = TargetMaxPosture * posturePercentage / 100;
         _targetService.SetPosture(newPosture);
     }
-    
-    private void SetCustomPosture(object? obj)
+
+    private void SetCustomPosture()
     {
         if (!_customPostureHasBeenSet) return;
         if (CustomPosture > TargetMaxPosture) CustomPosture = TargetMaxPosture;
         _targetService.SetPosture(CustomPosture);
     }
     
+    private void ToggleTargetSpeed()
+    {
+        if (!AreOptionsEnabled) return;
+
+        if (!IsApproximately(TargetSpeed, DefaultSpeed))
+        {
+            _targetDesiredSpeed = TargetSpeed;
+            SetSpeed(DefaultSpeed);
+        }
+        else if (_targetDesiredSpeed >= 0)
+        {
+            SetSpeed(_targetDesiredSpeed);
+        }
+    }
+
+    private bool IsApproximately(float a, float b) => Math.Abs(a - b) < Epsilon;
+
 
     private void UpdateResistancesDisplay()
     {

@@ -51,17 +51,25 @@ public class SettingsViewModel : BaseViewModel
                 // { "Warp", text => WarpHotkeyText = text },
                 // { "IncreaseNoClipSpeed", text => IncreaseNoClipSpeedHotkeyText = text },
                 // { "DecreaseNoClipSpeed", text => DecreaseNoClipSpeedHotkeyText = text },
-                // { "DisableTargetAi", text => DisableTargetAiHotkeyText = text },
-                // { "KillTarget", text => KillTargetHotkeyText = text },
-                // { "TargetView", text => TargetViewHotkeyText = text },
-                
-                // { "TargetRepeatAct", text => TargetRepeatActHotkeyText = text },
-                // { "IncreaseTargetSpeed", text => IncreaseTargetSpeedHotkeyText = text },
-                // { "DecreaseTargetSpeed", text => DecreaseTargetSpeedHotkeyText = text },
                 { HotkeyActions.EnableTargetOptions.ToString(), text => EnableTargetOptionsHotkeyText = text },
                 { HotkeyActions.FreezeTargetHp.ToString(), text => FreezeHpHotkeyText = text },
-                // { "ShowAllResistances", text => ShowAllResistancesHotkeyText = text },
-                // { "DisableAi", text => DisableAiHotkeyText = text },
+                { HotkeyActions.SetTargetOneHp.ToString(), text => SetTargetOneHpHotkeyText = text },
+                { HotkeyActions.TargetCustomHp.ToString(), text => TargetCustomHpHotkeyText = text },
+                { HotkeyActions.FreezeTargetPosture.ToString(), text => FreezeTargetPostureHotkeyText = text },
+                { HotkeyActions.SetTargetOnePosture.ToString(), text => SetTargetOnePostureHotkeyText = text },
+                { HotkeyActions.TargetCustomPosture.ToString(), text => TargetCustomPostureHotkeyText = text },
+                { HotkeyActions.ShowAllResistances.ToString(), text => ShowAllResistancesHotkeyText = text },
+                { HotkeyActions.RepeatAct.ToString(), text => RepeatActHotkeyText = text },
+                { HotkeyActions.RepeatKengekiAct.ToString(), text => RepeatKengekiActHotkeyText = text },
+                { HotkeyActions.IncreaseTargetSpeed.ToString(), text => IncreaseTargetSpeedHotkeyText = text },
+                { HotkeyActions.DecreaseTargetSpeed.ToString(), text => DecreaseTargetSpeedHotkeyText = text },
+                { HotkeyActions.ToggleTargetSpeed.ToString(), text => ToggleTargetSpeedHotkeyText = text },
+                { HotkeyActions.FreezeTargetAi.ToString(), text => FreezeTargetAiHotkeyText = text },
+                { HotkeyActions.NoAttackTargetAi.ToString(), text => NoAttackTargetAiHotkeyText = text },
+                { HotkeyActions.NoMoveTargetAi.ToString(), text => NoMoveTargetAiHotkeyText = text },
+                { HotkeyActions.TargetNoPostureBuildup.ToString(), text => TargetNoPostureBuildupHotkeyText = text },
+                { HotkeyActions.TargetNoDeath.ToString(), text => TargetNoDeathHotkeyText = text },
+                { HotkeyActions.TargetTargetingView.ToString(), text => TargetTargetingViewHotkeyText = text },
                 // { "AllNoDeath", text => AllNoDeathHotkeyText = text },
                 // { "AllNoDamage", text => AllNoDamageHotkeyText = text },
                 // { "AllRepeatAct", text => AllRepeatActHotkeyText = text },
@@ -111,6 +119,125 @@ public class SettingsViewModel : BaseViewModel
         get => _freezeHpHotkeyText;
         set => SetProperty(ref _freezeHpHotkeyText, value);
     }
+    
+    private string _setTargetOneHpHotkeyText;
+public string SetTargetOneHpHotkeyText
+{
+    get => _setTargetOneHpHotkeyText;
+    set => SetProperty(ref _setTargetOneHpHotkeyText, value);
+}
+
+private string _targetCustomHpHotkeyText;
+public string TargetCustomHpHotkeyText
+{
+    get => _targetCustomHpHotkeyText;
+    set => SetProperty(ref _targetCustomHpHotkeyText, value);
+}
+
+private string _freezeTargetPostureHotkeyText;
+public string FreezeTargetPostureHotkeyText
+{
+    get => _freezeTargetPostureHotkeyText;
+    set => SetProperty(ref _freezeTargetPostureHotkeyText, value);
+}
+
+private string _setTargetOnePostureHotkeyText;
+public string SetTargetOnePostureHotkeyText
+{
+    get => _setTargetOnePostureHotkeyText;
+    set => SetProperty(ref _setTargetOnePostureHotkeyText, value);
+}
+
+private string _targetCustomPostureHotkeyText;
+public string TargetCustomPostureHotkeyText
+{
+    get => _targetCustomPostureHotkeyText;
+    set => SetProperty(ref _targetCustomPostureHotkeyText, value);
+}
+
+private string _showAllResistancesHotkeyText;
+public string ShowAllResistancesHotkeyText
+{
+    get => _showAllResistancesHotkeyText;
+    set => SetProperty(ref _showAllResistancesHotkeyText, value);
+}
+
+private string _repeatActHotkeyText;
+public string RepeatActHotkeyText
+{
+    get => _repeatActHotkeyText;
+    set => SetProperty(ref _repeatActHotkeyText, value);
+}
+
+private string _repeatKengekiActHotkeyText;
+public string RepeatKengekiActHotkeyText
+{
+    get => _repeatKengekiActHotkeyText;
+    set => SetProperty(ref _repeatKengekiActHotkeyText, value);
+}
+
+private string _increaseTargetSpeedHotkeyText;
+public string IncreaseTargetSpeedHotkeyText
+{
+    get => _increaseTargetSpeedHotkeyText;
+    set => SetProperty(ref _increaseTargetSpeedHotkeyText, value);
+}
+
+private string _decreaseTargetSpeedHotkeyText;
+public string DecreaseTargetSpeedHotkeyText
+{
+    get => _decreaseTargetSpeedHotkeyText;
+    set => SetProperty(ref _decreaseTargetSpeedHotkeyText, value);
+}
+
+private string _toggleTargetSpeedHotkeyText;
+public string ToggleTargetSpeedHotkeyText
+{
+    get => _toggleTargetSpeedHotkeyText;
+    set => SetProperty(ref _toggleTargetSpeedHotkeyText, value);
+}
+
+private string _freezeTargetAiHotkeyText;
+public string FreezeTargetAiHotkeyText
+{
+    get => _freezeTargetAiHotkeyText;
+    set => SetProperty(ref _freezeTargetAiHotkeyText, value);
+}
+
+private string _noAttackTargetAiHotkeyText;
+public string NoAttackTargetAiHotkeyText
+{
+    get => _noAttackTargetAiHotkeyText;
+    set => SetProperty(ref _noAttackTargetAiHotkeyText, value);
+}
+
+private string _noMoveTargetAiHotkeyText;
+public string NoMoveTargetAiHotkeyText
+{
+    get => _noMoveTargetAiHotkeyText;
+    set => SetProperty(ref _noMoveTargetAiHotkeyText, value);
+}
+
+private string _targetNoPostureBuildupHotkeyText;
+public string TargetNoPostureBuildupHotkeyText
+{
+    get => _targetNoPostureBuildupHotkeyText;
+    set => SetProperty(ref _targetNoPostureBuildupHotkeyText, value);
+}
+
+private string _targetNoDeathHotkeyText;
+public string TargetNoDeathHotkeyText
+{
+    get => _targetNoDeathHotkeyText;
+    set => SetProperty(ref _targetNoDeathHotkeyText, value);
+}
+
+private string _targetTargetingViewHotkeyText;
+public string TargetTargetingViewHotkeyText
+{
+    get => _targetTargetingViewHotkeyText;
+    set => SetProperty(ref _targetTargetingViewHotkeyText, value);
+}
 
     #endregion
 
