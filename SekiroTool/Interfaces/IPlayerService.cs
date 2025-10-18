@@ -17,4 +17,24 @@ public interface IPlayerService
     void SetAttackPower(int attackPower);
 
     void AddExperience(int experience);
+
+    void TogglePlayerNoDeath(bool isEnabled);
+    
+    void TogglePlayerOneShotHealth(bool isEnabled);
+    
+    void TogglePlayerOneShotPosture(bool isEnabled);
+    
+    void TogglePlayerNoGoodsConsume(bool isEnabled);
+    
+    void TogglePlayerNoEmblemsConsume(bool isEnabled);
+    
+    void TogglePlayerNoRevivalConsume(bool isEnabled);
+    
+    void TogglePlayerHide(bool isEnabled);
+    
+    void TogglePlayerSilent(bool isEnabled);
+    
+    
+    
+    
 }

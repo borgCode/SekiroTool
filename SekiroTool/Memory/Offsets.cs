@@ -136,11 +136,11 @@ public static class Offsets
         public enum Flag
         {
             PlayerNoDeath = 0x0,
-            OneShotHealth = 0x1,
-            OneShotPosture = 0x2,
-            NoGoodsConsume = 0x3,
-            NoEmblemsConsume = 0x4,
-            NoRevivalConsume = 0x5,
+            PlayerOneShotHealth = 0x1,
+            PlayerOneShotPosture = 0x2,
+            PlayerNoGoodsConsume = 0x3,
+            PlayerNoEmblemsConsume = 0x4,
+            PlayerNoRevivalConsume = 0x5,
             PlayerHide = 0x9,
             PlayerSilent = 0xA,
             AllNoDeath = 0xB,
