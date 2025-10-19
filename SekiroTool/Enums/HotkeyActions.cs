@@ -4,7 +4,10 @@ namespace SekiroTool.Enums;
 
 public enum HotkeyActions
 {
-    
+    SavePos1,
+    SavePos2,
+    RestorePos1,
+    RestorePos2,
     EnableTargetOptions,
     FreezeTargetHp,
     SetTargetOneHp,

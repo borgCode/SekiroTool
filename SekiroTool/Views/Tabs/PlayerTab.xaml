@@ -40,16 +40,16 @@
                     <TextBlock Text="{Binding CurrentMaxHp, StringFormat=Max: {0}}"
                                VerticalAlignment="Center"
                                Margin="10,0,0,0" />
-                    <Button 
-                            Content="RTSR"
-                            IsEnabled="{Binding AreOptionsEnabled}"
-                            Margin="10,0,0,0"
-                            Width="60" />
-                    <Button 
-                            Content="Max Hp"
-                            IsEnabled="{Binding AreOptionsEnabled}"
-                            Margin="10,0,0,0"
-                            Width="60" />
+                    <Button
+                        Content="RTSR"
+                        IsEnabled="{Binding AreOptionsEnabled}"
+                        Margin="10,0,0,0"
+                        Width="60" />
+                    <Button
+                        Content="Max Hp"
+                        IsEnabled="{Binding AreOptionsEnabled}"
+                        Margin="10,0,0,0"
+                        Width="60" />
 
                     <CheckBox Content="Health Overlay"
                               IsChecked="{Binding IsHealthWindowOpen}"
@@ -87,13 +87,15 @@
 
                     <UniformGrid Grid.Row="0" Grid.Column="0" Rows="1" Columns="2">
                         <Button Content="Save Pos 1"
-                                 CommandParameter="0"
+                                CommandParameter="0"
                                 Margin="0,0,5,5"
-                                IsEnabled="{Binding AreOptionsEnabled}" />
+                                IsEnabled="{Binding AreOptionsEnabled}"
+                                Command="{Binding SavePositionCommand}" />
 
                         <Button Content="Restore Pos 1"
-                               CommandParameter="0"
-                                Margin="5,0,0,5">
+                                CommandParameter="0"
+                                Margin="5,0,0,5"
+                                Command="{Binding RestorePositionCommand}">
                             <Button.IsEnabled>
                                 <MultiBinding Converter="{StaticResource BooleanAndConverter}">
                                     <Binding Path="IsPos1Saved" />
@@ -130,13 +132,16 @@
 
                     <UniformGrid Grid.Row="1" Grid.Column="0" Rows="1" Columns="2">
                         <Button Content="Save Pos 2"
-                              CommandParameter="1"
+                                CommandParameter="1"
                                 Margin="0,5,5,0"
-                                IsEnabled="{Binding AreOptionsEnabled}" />
+                                IsEnabled="{Binding AreOptionsEnabled}"
+                                Command="{Binding SavePositionCommand}"/>
 
                         <Button Content="Restore Pos 2"
-                                 CommandParameter="1"
-                                Margin="5,5,0,0">
+                                CommandParameter="1"
+                                Margin="5,5,0,0"
+                                
+                                Command="{Binding RestorePositionCommand}">
                             <Button.IsEnabled>
                                 <MultiBinding Converter="{StaticResource BooleanAndConverter}">
                                     <Binding Path="IsPos2Saved" />
@@ -234,17 +239,17 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-   
+
                 <TextBlock Grid.Column="0" Text="{Binding SoulLevel, StringFormat='Soul Level: {0}'}" FontWeight="Bold" />
                 <TextBlock Grid.Column="1" Text="{Binding SoulMemory, StringFormat='Soul Memory: {0}'}"
                            FontWeight="Bold" Margin="15,0,0,0" />
-   
-                <CheckBox Grid.Column="2" 
+
+                <CheckBox Grid.Column="2"
                           IsChecked="{Binding IsDisableSoulMemWriteEnabled}"
                           Content="Exclude Soul Memory when stat editing"
-                          VerticalAlignment="Center" 
+                          VerticalAlignment="Center"
                           Margin="25,0,5,0" />
-                
+
             </Grid>
             <Grid Grid.Row="4">
                 <Grid.ColumnDefinitions>
@@ -265,7 +270,7 @@
                                             Minimum="1"
                                             Maximum="99"
                                             Grid.Column="0"
-                                      
+
                                             IsEnabled="{Binding AreOptionsEnabled}"
                                             BorderBrush="#3F3F46"
                                             Tag="Vigor" />
@@ -284,7 +289,7 @@
                                             Minimum="1"
                                             Maximum="99"
                                             Grid.Column="0"
-                                  
+
                                             Tag="Endurance"
                                             IsEnabled="{Binding AreOptionsEnabled}"
                                             BorderBrush="#3F3F46" />
@@ -303,7 +308,7 @@
                                             Minimum="1"
                                             Maximum="99"
                                             Grid.Column="0"
-                                      
+
                                             Tag="Vitality"
                                             IsEnabled="{Binding AreOptionsEnabled}"
                                             BorderBrush="#3F3F46" />
@@ -321,7 +326,7 @@
                                             Minimum="1"
                                             Maximum="99"
                                             Grid.Column="0"
-                                    
+
                                             Tag="Attunement"
                                             IsEnabled="{Binding AreOptionsEnabled}"
                                             BorderBrush="#3F3F46" />
@@ -340,7 +345,7 @@
                                             Minimum="1"
                                             Maximum="99"
                                             Grid.Column="0"
-                               
+
                                             Tag="Strength"
                                             IsEnabled="{Binding AreOptionsEnabled}"
                                             BorderBrush="#3F3F46" />
@@ -362,7 +367,7 @@
                                             Minimum="1"
                                             Maximum="99"
                                             Grid.Column="0"
-                               
+
                                             Tag="Dexterity"
                                             IsEnabled="{Binding AreOptionsEnabled}"
                                             BorderBrush="#3F3F46" />
@@ -382,7 +387,7 @@
                                             Minimum="1"
                                             Maximum="99"
                                             Grid.Column="0"
-                                  
+
                                             Tag="Adp"
                                             IsEnabled="{Binding AreOptionsEnabled}"
                                             BorderBrush="#3F3F46" />
@@ -400,7 +405,7 @@
                                             Minimum="1"
                                             Maximum="99"
                                             Grid.Column="0"
-                                 
+
                                             Tag="Intelligence"
                                             IsEnabled="{Binding AreOptionsEnabled}"
                                             BorderBrush="#3F3F46" />
@@ -419,7 +424,7 @@
                                             Minimum="1"
                                             Maximum="99"
                                             Grid.Column="0"
-                                     
+
                                             Tag="Faith"
                                             IsEnabled="{Binding AreOptionsEnabled}"
                                             BorderBrush="#3F3F46" />
@@ -432,19 +437,19 @@
                     <Button Content="Restore Spellcasts"
                             Width="150"
                             Margin="0, 15, 0,0"
-                      
+
                             IsEnabled="{Binding AreOptionsEnabled}">
                     </Button>
                     <Button Content="Restore Humanity"
                             Width="150"
                             Margin="0, 15, 0,0"
-                  
+
                             IsEnabled="{Binding AreOptionsEnabled}">
                     </Button>
                     <Button Content="Rest"
                             Width="150"
                             Margin="0, 15, 0,0"
-                       
+
                             IsEnabled="{Binding AreOptionsEnabled}">
                     </Button>
                 </StackPanel>
@@ -460,18 +465,18 @@
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="10,0,0,0">
                     <xctk:IntegerUpDown
-                                        Value="{Binding Souls}"
-                                        TextAlignment="Center"
-                                        Width="120"
-                                        Minimum="0"
-                                        Maximum="999999999"
-                                        DefaultValue="10000"
-                             
-                                        IsEnabled="{Binding AreOptionsEnabled}"
-                                        BorderBrush="#3F3F46" />
+                        Value="{Binding Souls}"
+                        TextAlignment="Center"
+                        Width="120"
+                        Minimum="0"
+                        Maximum="999999999"
+                        DefaultValue="10000"
+
+                        IsEnabled="{Binding AreOptionsEnabled}"
+                        BorderBrush="#3F3F46" />
 
                     <Button Content="Give Souls"
-                   
+
                             IsEnabled="{Binding AreOptionsEnabled}"
                             Margin="10,0,0,0"
                             Width="100"

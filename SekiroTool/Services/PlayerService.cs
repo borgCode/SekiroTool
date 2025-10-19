@@ -1,4 +1,5 @@
 ﻿using SekiroTool.Interfaces;
+using SekiroTool.Memory;
 using SekiroTool.Utilities;
 using static SekiroTool.Memory.Offsets;
 
@@ -7,6 +8,49 @@ namespace SekiroTool.Services;
 public class PlayerService(IMemoryService memoryService) : IPlayerService
 {
     #region Public Methods
+
+    public void SavePos(int index)
+    {
+        var chrPhysicsPtr = GetChrPhysicsPtr();
+
+        byte[] positionBytes = memoryService.ReadBytes(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.X, 12);
+        float angle = memoryService.ReadFloat(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.Angle);
+        
+        byte[] angleBytes = BitConverter.GetBytes(angle);
+        byte[] data = new byte[16];
+        Buffer.BlockCopy(positionBytes, 0, data, 0, 12);
+        Buffer.BlockCopy(angleBytes, 0, data, 12, 4);
+        
+        if (index == 0) memoryService.WriteBytes(CodeCaveOffsets.Base + CodeCaveOffsets.SavePos1, data);
+        else memoryService.WriteBytes(CodeCaveOffsets.Base + CodeCaveOffsets.SavePos2, data);
+    }
+
+    public void RestorePos(int index)
+    {
+        byte[] positionBytes;
+        if (index == 0) positionBytes = memoryService.ReadBytes(CodeCaveOffsets.Base + CodeCaveOffsets.SavePos1, 16);
+        else positionBytes = memoryService.ReadBytes(CodeCaveOffsets.Base + CodeCaveOffsets.SavePos2, 16);
+
+        float angle = BitConverter.ToSingle(positionBytes, 12);
+        
+        var chrPhysicsPtr = GetChrPhysicsPtr();
+        
+        byte[] xyzBytes = new byte[12];
+        Buffer.BlockCopy(positionBytes, 0, xyzBytes, 0, 12);
+        
+        memoryService.WriteBytes(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.X, xyzBytes);
+        memoryService.WriteFloat(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.Angle, angle);
+    }
+
+    public (float x, float y, float z) GetCoords()
+    {
+        byte[] coordBytes = memoryService.ReadBytes(GetChrPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.X, 12);
+        float x = BitConverter.ToSingle(coordBytes, 0);
+        float z = BitConverter.ToSingle(coordBytes, 4);
+        float y = BitConverter.ToSingle(coordBytes, 8);
+        return (x, y, z); 
+    }
+
 
     public void SetHp(int hp) =>
         memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Hp, hp);
@@ -46,12 +90,14 @@ public class PlayerService(IMemoryService memoryService) : IPlayerService
     public void Rest()
     {
         var bytes = AsmLoader.GetAsmBytes("Rest");
-        var playerIns = memoryService.FollowPointers(WorldChrMan.Base,[
-        WorldChrMan.PlayerIns],true);
+        var playerIns = memoryService.FollowPointers(WorldChrMan.Base, [
+            WorldChrMan.PlayerIns
+        ], true);
         AsmHelper.WriteAbsoluteAddresses(bytes, [
             (playerIns.ToInt64(), 0x4 + 2),
-            (Functions.Rest, 0x13 + 2)]);
-        
+            (Functions.Rest, 0x13 + 2)
+        ]);
+
         memoryService.AllocateAndExecute(bytes);
     }
 
@@ -60,67 +106,72 @@ public class PlayerService(IMemoryService memoryService) : IPlayerService
         var attackPowerPointer = memoryService.FollowPointers(WorldChrMan.Base, [
             WorldChrMan.PlayerIns,
             WorldChrMan.PlayerGameData,
-            (int)ChrIns.PlayerGameDataOffsets.AttackPower], false);
+            (int)ChrIns.PlayerGameDataOffsets.AttackPower
+        ], false);
         memoryService.WriteInt32(attackPowerPointer, attackPower);
     }
 
     public void AddExperience(int experience)
     {
-       var bytes = AsmLoader.GetAsmBytes("AddExperience");
-       var playerGameData = memoryService.FollowPointers(WorldChrMan.Base, [
-       WorldChrMan.PlayerIns,
-       WorldChrMan.PlayerGameData],true);
-       AsmHelper.WriteAbsoluteAddresses(bytes, [
-           (playerGameData.ToInt64(), 0x4 + 2),
-           (experience, 0xE + 2),
-           (Functions.AddExperience, 0x18 + 2)
-       ]);
-       memoryService.AllocateAndExecute(bytes);
+        var bytes = AsmLoader.GetAsmBytes("AddExperience");
+        var playerGameData = memoryService.FollowPointers(WorldChrMan.Base, [
+            WorldChrMan.PlayerIns,
+            WorldChrMan.PlayerGameData
+        ], true);
+        AsmHelper.WriteAbsoluteAddresses(bytes, [
+            (playerGameData.ToInt64(), 0x4 + 2),
+            (experience, 0xE + 2),
+            (Functions.AddExperience, 0x18 + 2)
+        ]);
+        memoryService.AllocateAndExecute(bytes);
     }
 
     public void TogglePlayerNoDeath(bool isEnabled)
-        { 
-        memoryService.WriteUInt8(DebugFlags.Base + (int) DebugFlags.Flag.PlayerNoDeath, (byte)(isEnabled ? 1 : 0));
-        }
+    {
+        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoDeath, (byte)(isEnabled ? 1 : 0));
+    }
 
     public void TogglePlayerNoDamage(bool isEnabled)
     {
-        
     }
 
     public void TogglePlayerOneShotHealth(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + (int) DebugFlags.Flag.PlayerOneShotHealth, (byte)(isEnabled ? 1 : 0));
+        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerOneShotHealth, (byte)(isEnabled ? 1 : 0));
     }
 
     public void TogglePlayerOneShotPosture(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + (int) DebugFlags.Flag.PlayerOneShotPosture, (byte)(isEnabled ? 1 : 0));
+        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerOneShotPosture,
+            (byte)(isEnabled ? 1 : 0));
     }
 
     public void TogglePlayerNoGoodsConsume(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + (int) DebugFlags.Flag.PlayerNoGoodsConsume, (byte)(isEnabled ? 1 : 0));
+        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoGoodsConsume,
+            (byte)(isEnabled ? 1 : 0));
     }
 
     public void TogglePlayerNoEmblemsConsume(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + (int) DebugFlags.Flag.PlayerNoEmblemsConsume, (byte)(isEnabled ? 1 : 0));
+        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoEmblemsConsume,
+            (byte)(isEnabled ? 1 : 0));
     }
 
     public void TogglePlayerNoRevivalConsume(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + (int) DebugFlags.Flag.PlayerNoRevivalConsume, (byte)(isEnabled ? 1 : 0));
+        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoRevivalConsume,
+            (byte)(isEnabled ? 1 : 0));
     }
 
     public void TogglePlayerHide(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + (int) DebugFlags.Flag.PlayerHide, (byte)(isEnabled ? 1 : 0));
+        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerHide, (byte)(isEnabled ? 1 : 0));
     }
 
     public void TogglePlayerSilent(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + (int) DebugFlags.Flag.PlayerSilent, (byte)(isEnabled ? 1 : 0));
+        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerSilent, (byte)(isEnabled ? 1 : 0));
     }
 
     #endregion
@@ -130,6 +181,9 @@ public class PlayerService(IMemoryService memoryService) : IPlayerService
 
     private IntPtr GetChrDataPtr() =>
         memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrDataModule], true);
+
+    private IntPtr GetChrPhysicsPtr() =>
+        memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrPhysicsModule], true);
 
     #endregion
 }

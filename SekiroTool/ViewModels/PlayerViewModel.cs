@@ -1,5 +1,7 @@
 ﻿using System.Configuration;
+using System.Windows.Input;
 using System.Windows.Threading;
+using SekiroTool.Core;
 using SekiroTool.Enums;
 using SekiroTool.Interfaces;
 using SekiroTool.Utilities;
@@ -24,6 +26,9 @@ public class PlayerViewModel : BaseViewModel
         
         gameStateService.Subscribe(GameState.Loaded, OnGameLoaded);
         gameStateService.Subscribe(GameState.NotLoaded, OnGameNotLoaded);
+        
+        SavePositionCommand = new DelegateCommand(SavePosition);
+        RestorePositionCommand = new DelegateCommand(RestorePosition);
 
         _playerTick = new DispatcherTimer
         {
@@ -32,11 +37,11 @@ public class PlayerViewModel : BaseViewModel
         _playerTick.Tick += PlayerTick;
 
     }
-
     
-
-
     #region Commands
+    
+    public ICommand SavePositionCommand { get; set; }
+    public ICommand RestorePositionCommand { get; set; }
 
     // Check TargetViewModel for examples of commands when you need to implement that
 
@@ -50,6 +55,20 @@ public class PlayerViewModel : BaseViewModel
     {
         get => _areOptionsEnabled;
         set => SetProperty(ref _areOptionsEnabled, value);
+    }
+    
+    private bool _isPos1Saved;
+    public bool IsPos1Saved
+    {
+        get => _isPos1Saved;
+        set => SetProperty(ref _isPos1Saved, value);
+    }
+
+    private bool _isPos2Saved;
+    public bool IsPos2Saved
+    {
+        get => _isPos2Saved;
+        set => SetProperty(ref _isPos2Saved, value);
     }
 
     private bool _isNoDeathEnabled;
@@ -171,7 +190,10 @@ public class PlayerViewModel : BaseViewModel
 
     private void RegisterHotkeys()
     {
-        // Check targetviewmodel when you are ready to implement hotkeys
+        _hotkeyManager.RegisterAction(HotkeyActions.SavePos1.ToString(), () => SavePosition(0));
+        _hotkeyManager.RegisterAction(HotkeyActions.SavePos2.ToString(), () => SavePosition(1));
+        _hotkeyManager.RegisterAction(HotkeyActions.RestorePos1.ToString(), () => RestorePosition(0));
+        _hotkeyManager.RegisterAction(HotkeyActions.RestorePos2.ToString(), () => RestorePosition(1));
     }
     
     private void OnGameLoaded()
@@ -204,6 +226,24 @@ public class PlayerViewModel : BaseViewModel
     private void PlayerTick(object? sender, EventArgs e)
     {
         // We'll have logic such as reading hp every tick etc, see how it works in targetviewmodel
+    }
+    
+    
+    private void SavePosition(object parameter)
+    {
+        int index = Convert.ToInt32(parameter);
+        if (index == 0) IsPos1Saved = true;
+        else IsPos2Saved = true;
+        //TODO include state
+        
+        _playerService.SavePos(index);
+    }
+
+    private void RestorePosition(object parameter)
+    {
+        int index = Convert.ToInt32(parameter);
+        _playerService.RestorePos(index);
+        //TODO include state
     }
 
     #endregion

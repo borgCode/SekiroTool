@@ -14,6 +14,9 @@ public static class CodeCaveOffsets
 
     public const int GetEventResult = 0x180;
 
+    public const int SavePos1 = 0x190;
+    public const int SavePos2 = 0x1A0;
+
 
 
 }

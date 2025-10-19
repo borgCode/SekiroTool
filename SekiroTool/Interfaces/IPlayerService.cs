@@ -2,6 +2,10 @@
 
 public interface IPlayerService
 {
+    void SavePos(int index);
+    void RestorePos(int index);
+    (float x, float y, float z) GetCoords();
+    
     void SetHp(int hp);
     int GetCurrentHp();
     int GetMaxHp();
@@ -19,21 +23,13 @@ public interface IPlayerService
     void AddExperience(int experience);
 
     void TogglePlayerNoDeath(bool isEnabled);
-    
     void TogglePlayerNoDamage(bool isEnabled);
-    
     void TogglePlayerOneShotHealth(bool isEnabled);
-    
     void TogglePlayerOneShotPosture(bool isEnabled);
-    
     void TogglePlayerNoGoodsConsume(bool isEnabled);
-    
     void TogglePlayerNoEmblemsConsume(bool isEnabled);
-    
     void TogglePlayerNoRevivalConsume(bool isEnabled);
-    
     void TogglePlayerHide(bool isEnabled);
-    
     void TogglePlayerSilent(bool isEnabled);
     
     

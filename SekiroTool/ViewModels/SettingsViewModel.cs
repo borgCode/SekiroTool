@@ -31,10 +31,10 @@ public class SettingsViewModel : BaseViewModel
 
         _propertySetters = new Dictionary<string, Action<string>>
         {
-            // { "SavePos1", text => SavePos1HotkeyText = text },
-            // { "SavePos2", text => SavePos2HotkeyText = text },
-            // { "RestorePos1", text => RestorePos1HotkeyText = text },
-            // { "RestorePos2", text => RestorePos2HotkeyText = text },
+            { HotkeyActions.SavePos1.ToString(), text => SavePos1HotkeyText = text },
+            { HotkeyActions.SavePos2.ToString(), text => SavePos2HotkeyText = text },
+            { HotkeyActions.RestorePos1.ToString(), text => RestorePos1HotkeyText = text },
+            { HotkeyActions.RestorePos2.ToString(), text => RestorePos2HotkeyText = text },
             // { "RTSR", text => RtsrHotkeyText = text },
             // { "NoDeath", text => NoDeathHotkeyText = text },
             // { "OneShot", text => OneShotHotkeyText = text },
@@ -148,6 +148,38 @@ public class SettingsViewModel : BaseViewModel
     {
         get => _enableTargetOptionsHotkeyText;
         set => SetProperty(ref _enableTargetOptionsHotkeyText, value);
+    }
+    
+    private string _savePos1HotkeyText;
+
+    public string SavePos1HotkeyText
+    {
+        get => _savePos1HotkeyText;
+        set => SetProperty(ref _savePos1HotkeyText, value);
+    }
+
+    private string _savePos2HotkeyText;
+
+    public string SavePos2HotkeyText
+    {
+        get => _savePos2HotkeyText;
+        set => SetProperty(ref _savePos2HotkeyText, value);
+    }
+    
+    private string _restorePos1HotkeyText;
+
+    public string RestorePos1HotkeyText
+    {
+        get => _restorePos1HotkeyText;
+        set => SetProperty(ref _restorePos1HotkeyText, value);
+    }
+
+    private string _restorePos2HotkeyText;
+
+    public string RestorePos2HotkeyText
+    {
+        get => _restorePos2HotkeyText;
+        set => SetProperty(ref _restorePos2HotkeyText, value);
     }
 
     private string _freezeHpHotkeyText;

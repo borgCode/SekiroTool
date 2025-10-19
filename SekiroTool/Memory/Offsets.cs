@@ -72,6 +72,7 @@ public static class Offsets
 
         public enum ChrPhysicsOffsets
         {
+            Angle = 0x74,
             X = 0x80,
             Y = 0x84,
             Z = 0x88,
