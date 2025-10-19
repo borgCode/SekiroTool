@@ -31,6 +31,7 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.DebugFlags.Base = FindAddressByPattern(Patterns.DebugFlagStart);
         Offsets.MapItemMan.Base = FindAddressByPattern(Patterns.MapItemMan);
         Offsets.EventFlagMan.Base = FindAddressByPattern(Patterns.EventFlagMan);
+        Offsets.DebugEventMan.Base = FindAddressByPattern(Patterns.DebugEventMan);
         
         
         TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
@@ -50,6 +51,10 @@ public class AoBScanner(IMemoryService memoryService)
         
         TryPatternWithFallback("NoLogo", Patterns.NoLogo,
             addr => Offsets.Patches.NoLogo = addr, saved);
+        TryPatternWithFallback("DebugFont", Patterns.DebugFontPatch,
+            addr => Offsets.Patches.DebugFont = addr, saved);
+        TryPatternWithFallback("EventView", Patterns.EventViewPatch,
+            addr => Offsets.Patches.EventView = addr + 0xE, saved);
       
         using (var writer = new StreamWriter(savePath))
         {
@@ -75,6 +80,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"DebugFlags.Base: 0x{Offsets.DebugFlags.Base.ToInt64():X}");
         Console.WriteLine($"MapItemMan.Base: 0x{Offsets.MapItemMan.Base.ToInt64():X}");
         Console.WriteLine($"EventFlagMan.Base: 0x{Offsets.EventFlagMan.Base.ToInt64():X}");
+        Console.WriteLine($"DebugEventMan.Base: 0x{Offsets.DebugEventMan.Base.ToInt64():X}");
         
         Console.WriteLine($"Hooks.LockedTarget: 0x{Offsets.Hooks.LockedTarget:X}");
         Console.WriteLine($"Hooks.FreezeTargetPosture: 0x{Offsets.Hooks.FreezeTargetPosture:X}");
@@ -86,6 +92,8 @@ public class AoBScanner(IMemoryService memoryService)
         
         
         Console.WriteLine($"Patches.NoLogo: 0x{Offsets.Patches.NoLogo.ToInt64():X}");
+        Console.WriteLine($"Patches.DebugFont: 0x{Offsets.Patches.DebugFont.ToInt64():X}");
+        Console.WriteLine($"Patches.EventView: 0x{Offsets.Patches.EventView.ToInt64():X}");
         
         Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");
         Console.WriteLine($"Functions.Rest: 0x{Offsets.Functions.Rest:X}");

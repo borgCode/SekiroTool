@@ -44,6 +44,7 @@ public partial class MainWindow : Window
         _playerService = new PlayerService(_memoryService);
         ITargetService targetService = new TargetService(_memoryService, _hookManager);
         IDebugDrawService debugDrawService = new DebugDrawService(_memoryService);
+        IEventService eventService = new EventService(_memoryService);
         IItemService itemService = new ItemService(_memoryService);
         ISettingsService settingsService = new SettingsService(_memoryService);
         
@@ -52,16 +53,18 @@ public partial class MainWindow : Window
         PlayerViewModel playerViewModel = new PlayerViewModel(_playerService, _hotkeyManager, _gameStateService);
         TargetViewModel targetViewModel =
             new TargetViewModel(_gameStateService, _hotkeyManager, targetService, debugDrawService);
+        EventViewModel eventViewModel = new EventViewModel(eventService, _gameStateService, debugDrawService);
         SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, _gameStateService, _hotkeyManager);
 
 
         var playerTab = new PlayerTab(playerViewModel);
         var targetTab = new TargetTab(targetViewModel);
+        var eventTab = new EventTab(eventViewModel);
         var settingsTab = new SettingsTab(settingsViewModel);
-
         
         MainTabControl.Items.Add(new TabItem { Header = "Player", Content = playerTab });
         MainTabControl.Items.Add(new TabItem { Header = "Target", Content = targetTab });
+        MainTabControl.Items.Add(new TabItem { Header = "Event", Content = eventTab });
         MainTabControl.Items.Add(new TabItem { Header = "Settings", Content = settingsTab });
         
         settingsViewModel.ApplyStartUpOptions();

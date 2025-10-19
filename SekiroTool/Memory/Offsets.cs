@@ -168,8 +168,11 @@ public static class Offsets
     }
     
 
-    public static class HitIns
+    public static class DebugEventMan
     {
+        public static IntPtr Base;
+
+        public const int DrawAllEvent = 0x18;
     }
 
     public static class WorldObjMan
@@ -196,6 +199,8 @@ public static class Offsets
     public static class Patches
     {
         public static IntPtr NoLogo;
+        public static IntPtr DebugFont;
+        public static IntPtr EventView;
     }
 
 

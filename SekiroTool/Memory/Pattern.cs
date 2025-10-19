@@ -98,6 +98,15 @@ public static class Patterns
         7
     );
 
+    public static readonly Pattern DebugEventMan = new Pattern(
+        new byte[] { 0x48, 0x8B, 0x0D, 0x00, 0x00, 0x00, 0x00, 0x4C, 0x8B, 0x64 },
+        "xxx????xxx",
+        0,
+        AddressingMode.Relative,
+        3,
+        7
+    );
+
     #endregion
 
 
@@ -116,6 +125,22 @@ public static class Patterns
         "xxxxxxxxxxxxxx",
         -0x10,
         AddressingMode.Absolute
+    );
+
+    public static readonly Pattern DebugFontPatch = new Pattern(
+        new byte[] { 0x48, 0x8D, 0x54, 0x24, 0x20, 0x48, 0x8B, 0x4B, 0x38, 0x4C },
+        "xxxxxxxxxx",
+        0x30,
+        AddressingMode.Absolute
+    );
+
+    public static readonly Pattern EventViewPatch = new Pattern(
+        new byte[] { 0x48, 0x8B, 0x47, 0x10, 0x48, 0x8B, 0x18, 0x48, 0x3B, 0xD8, 0x74, 0x1A },
+        "xxxxxxxxxxxx",
+        -0xC,
+        AddressingMode.Relative,
+        1,
+        5
     );
 
     #endregion

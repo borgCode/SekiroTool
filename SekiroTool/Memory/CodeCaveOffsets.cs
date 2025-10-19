@@ -12,4 +12,8 @@ public static class CodeCaveOffsets
     public const int ItemStruct = 0x100;
     public const int ItemGiveCode = 0x120;
 
+    public const int GetEventResult = 0x180;
+
+
+
 }
