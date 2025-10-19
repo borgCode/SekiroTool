@@ -1,12 +1,24 @@
-﻿using SekiroTool.Interfaces;
+﻿using SekiroTool.Enums;
+using SekiroTool.Interfaces;
 using SekiroTool.Memory;
+using static SekiroTool.Memory.Offsets;
 
 namespace SekiroTool.Services;
 
-public class DebugDrawService(IMemoryService memoryService) : IDebugDrawService
+public class DebugDrawService : IDebugDrawService
 {
+    private readonly IMemoryService _memoryService;
+    private readonly NopManager _nopManager;
     private int _clientCount;
-    
+
+
+    public DebugDrawService(IMemoryService memoryService, IGameStateService gameStateService, NopManager nopManager)
+    {
+        _memoryService = memoryService;
+        _nopManager = nopManager;
+        gameStateService.Subscribe(GameState.Detached, Reset);
+    }
+
     public void RequestDebugDraw()
     {
         if (_clientCount == 0) ToggleDebugDraw(true);
@@ -22,7 +34,7 @@ public class DebugDrawService(IMemoryService memoryService) : IDebugDrawService
         if (_clientCount < 0) _clientCount = 0;
     }
 
-    public void Reset()
+    private void Reset()
     {
         _clientCount = 0;
         ToggleDebugDraw(false);
@@ -30,7 +42,10 @@ public class DebugDrawService(IMemoryService memoryService) : IDebugDrawService
 
     private void ToggleDebugDraw(bool isEnabled)
     {
-        var flagPtr = memoryService.ReadInt64(Offsets.WorldChrManDbg.Base) + Offsets.WorldChrManDbg.EnableDebugDraw;
-        memoryService.WriteUInt8((IntPtr)flagPtr, (byte)(isEnabled ? 1 : 0));
+        if (isEnabled) _nopManager.InstallNop(Patches.DebugFont, 5);
+        else _nopManager.RestoreNop(Patches.DebugFont);
+        
+        var flagPtr = _memoryService.ReadInt64(WorldChrManDbg.Base) + WorldChrManDbg.EnableDebugDraw;
+        _memoryService.WriteUInt8((IntPtr)flagPtr, (byte)(isEnabled ? 1 : 0));
     }
 }

@@ -2,8 +2,9 @@
 
 public static class GameEvent
 {
-    public const long NoKurosCharm = 6911;
-    public const long DemonBell = 9830;
-    public const long MoveIsshinToCastle = 71100500;
-    
+    public const long IsNoKurosCharm = 6911;
+    public const long IsDemonBellActivated = 9830;
+    public const long HasIsshinMovedToCastle = 71100500;
+    public const long HasPlayerEscapedSnake = 11100850;
+
 }

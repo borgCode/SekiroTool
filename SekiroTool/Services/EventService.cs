@@ -53,6 +53,7 @@ public class EventService(IMemoryService memoryService) : IEventService
 
     public void ToggleDisableEvent(bool isEnabled)
     {
-        throw new NotImplementedException();
+        var ptr = memoryService.ReadInt64(DebugEventMan.Base) + DebugEventMan.DisableEvent;
+        memoryService.WriteUInt8((IntPtr)ptr, (byte)(isEnabled ? 1 : 0));
     }
 }

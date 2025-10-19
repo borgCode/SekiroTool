@@ -173,6 +173,7 @@ public static class Offsets
         public static IntPtr Base;
 
         public const int DrawAllEvent = 0x18;
+        public const int DisableEvent = 0x44;
     }
 
     public static class WorldObjMan

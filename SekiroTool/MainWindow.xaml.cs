@@ -38,12 +38,13 @@ public partial class MainWindow : Window
 
         _aobScanner = new AoBScanner(_memoryService);
         _hookManager = new HookManager(_memoryService);
+        NopManager nopManager = new NopManager(_memoryService);
         _hotkeyManager = new HotkeyManager(_memoryService);
 
         _gameStateService = new GameStateService(_memoryService);
         _playerService = new PlayerService(_memoryService);
         ITargetService targetService = new TargetService(_memoryService, _hookManager);
-        IDebugDrawService debugDrawService = new DebugDrawService(_memoryService);
+        IDebugDrawService debugDrawService = new DebugDrawService(_memoryService, _gameStateService, nopManager);
         IEventService eventService = new EventService(_memoryService);
         IItemService itemService = new ItemService(_memoryService);
         ISettingsService settingsService = new SettingsService(_memoryService);

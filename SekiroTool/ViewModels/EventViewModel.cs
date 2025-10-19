@@ -88,6 +88,17 @@ public class EventViewModel : BaseViewModel
         }
     }
     
+    private bool _isDisableEventsEnabled;
+    public bool IsDisableEventsEnabled
+    {
+        get => _isDisableEventsEnabled;
+        set
+        {
+            if (!SetProperty(ref _isDisableEventsEnabled, value)) return;
+            _eventService.ToggleDisableEvent(_isDisableEventsEnabled);
+        }
+    }
+    
     #endregion
     
     #region Private Methods
@@ -100,6 +111,7 @@ public class EventViewModel : BaseViewModel
             _debugDrawService.RequestDebugDraw();
             _eventService.ToggleDrawEvents(true);
         }
+        if (IsDisableEventsEnabled) _eventService.ToggleDisableEvent(true);
     }
 
     private void OnGameNotLoaded()

@@ -372,7 +372,6 @@ public class SettingsViewModel : BaseViewModel
     private void OnGameAttached()
     {
         if (IsNoLogoEnabled) _settingsService.ToggleNoLogo(true);
-        _settingsService.NopDebugFontCall();
     }
 
     private void LoadHotkeyDisplays()
