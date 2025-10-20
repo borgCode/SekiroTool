@@ -43,6 +43,7 @@ public partial class MainWindow : Window
 
         _gameStateService = new GameStateService(_memoryService);
         _playerService = new PlayerService(_memoryService);
+        IEnemyService enemyService = new EnemyService(_memoryService);
         ITargetService targetService = new TargetService(_memoryService, _hookManager);
         IDebugDrawService debugDrawService = new DebugDrawService(_memoryService, _gameStateService, nopManager);
         IEventService eventService = new EventService(_memoryService);
@@ -52,6 +53,7 @@ public partial class MainWindow : Window
 
 
         PlayerViewModel playerViewModel = new PlayerViewModel(_playerService, _hotkeyManager, _gameStateService);
+        EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _hotkeyManager, _gameStateService, debugDrawService);
         TargetViewModel targetViewModel =
             new TargetViewModel(_gameStateService, _hotkeyManager, targetService, debugDrawService);
         EventViewModel eventViewModel = new EventViewModel(eventService, _gameStateService, debugDrawService);
@@ -59,11 +61,13 @@ public partial class MainWindow : Window
 
 
         var playerTab = new PlayerTab(playerViewModel);
+        var enemyTab = new EnemyTab(enemyViewModel);
         var targetTab = new TargetTab(targetViewModel);
         var eventTab = new EventTab(eventViewModel);
         var settingsTab = new SettingsTab(settingsViewModel);
         
         MainTabControl.Items.Add(new TabItem { Header = "Player", Content = playerTab });
+        MainTabControl.Items.Add(new TabItem { Header = "Enemies", Content = enemyTab });
         MainTabControl.Items.Add(new TabItem { Header = "Target", Content = targetTab });
         MainTabControl.Items.Add(new TabItem { Header = "Event", Content = eventTab });
         MainTabControl.Items.Add(new TabItem { Header = "Settings", Content = settingsTab });

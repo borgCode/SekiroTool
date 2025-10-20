@@ -43,6 +43,8 @@ public class SettingsViewModel : BaseViewModel
             // { "IncreasePlayerSpeed", text => IncreasePlayerSpeedHotkeyText = text },
             // { "DecreasePlayerSpeed", text => DecreasePlayerSpeedHotkeyText = text },
             // { "DealNoDamage", text => DealNoDamageHotkeyText = text },
+            { HotkeyActions.SkipDragonPhaseOne.ToString(), text => SkipDragonPhaseOneHotkeyText = text },
+
             // { "RestoreSpellcasts", text => RestoreSpellcastsHotkeyText = text },
             // { "RestoreHumanity", text => RestoreHumanityHotkeyText = text },
             // { "Rest", text => RestHotkeyText = text },
@@ -87,6 +89,7 @@ public class SettingsViewModel : BaseViewModel
     #region Properties
 
     private bool _isEnableHotkeysEnabled;
+
     public bool IsEnableHotkeysEnabled
     {
         get => _isEnableHotkeysEnabled;
@@ -103,6 +106,7 @@ public class SettingsViewModel : BaseViewModel
     }
 
     private bool _isNoLogoEnabled;
+
     public bool IsNoLogoEnabled
     {
         get => _isNoLogoEnabled;
@@ -119,6 +123,7 @@ public class SettingsViewModel : BaseViewModel
     }
 
     private bool _isAlwaysOnTopEnabled;
+
     public bool IsAlwaysOnTopEnabled
     {
         get => _isAlwaysOnTopEnabled;
@@ -149,7 +154,7 @@ public class SettingsViewModel : BaseViewModel
         get => _enableTargetOptionsHotkeyText;
         set => SetProperty(ref _enableTargetOptionsHotkeyText, value);
     }
-    
+
     private string _savePos1HotkeyText;
 
     public string SavePos1HotkeyText
@@ -165,7 +170,7 @@ public class SettingsViewModel : BaseViewModel
         get => _savePos2HotkeyText;
         set => SetProperty(ref _savePos2HotkeyText, value);
     }
-    
+
     private string _restorePos1HotkeyText;
 
     public string RestorePos1HotkeyText
@@ -181,6 +186,16 @@ public class SettingsViewModel : BaseViewModel
         get => _restorePos2HotkeyText;
         set => SetProperty(ref _restorePos2HotkeyText, value);
     }
+
+
+    private string _skipDragonPhaseOneHotkeyText;
+
+    public string SkipDragonPhaseOneHotkeyText
+    {
+        get => _skipDragonPhaseOneHotkeyText;
+        set => SetProperty(ref _skipDragonPhaseOneHotkeyText, value);
+    }
+
 
     private string _freezeHpHotkeyText;
 
@@ -378,17 +393,17 @@ public class SettingsViewModel : BaseViewModel
 
         StopSettingHotkey();
     }
-    
+
     public void ApplyStartUpOptions()
     {
         _isEnableHotkeysEnabled = SettingsManager.Default.EnableHotkeys;
         if (_isEnableHotkeysEnabled) _hotkeyManager.Start();
         else _hotkeyManager.Stop();
         OnPropertyChanged(nameof(IsEnableHotkeysEnabled));
-            
+
         _isNoLogoEnabled = SettingsManager.Default.NoLogo;
         OnPropertyChanged(nameof(IsNoLogoEnabled));
-            
+
         IsAlwaysOnTopEnabled = SettingsManager.Default.AlwaysOnTop;
     }
 
@@ -400,7 +415,7 @@ public class SettingsViewModel : BaseViewModel
     {
         _hotkeyManager.RegisterAction(HotkeyActions.Quitout.ToString(), () => _settingsService.Quitout());
     }
-    
+
     private void OnGameAttached()
     {
         if (IsNoLogoEnabled) _settingsService.ToggleNoLogo(true);

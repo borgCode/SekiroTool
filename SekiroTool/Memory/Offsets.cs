@@ -227,5 +227,6 @@ public static class Offsets
         public static long AddExperience;
         public static long ApplySpEffect;
         public static long ItemSpawn;
+        public static long GetEnemyInsWithPackedWorldIdAndChrId;
     }
 }

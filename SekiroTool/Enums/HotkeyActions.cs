@@ -8,6 +8,10 @@ public enum HotkeyActions
     SavePos2,
     RestorePos1,
     RestorePos2,
+    
+    SkipDragonPhaseOne,
+    
+    
     EnableTargetOptions,
     FreezeTargetHp,
     SetTargetOneHp,

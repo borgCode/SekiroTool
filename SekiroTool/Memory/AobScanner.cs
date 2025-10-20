@@ -70,6 +70,7 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.Functions.AddExperience = FindAddressByPattern(Patterns.AddExperience).ToInt64();
         Offsets.Functions.ApplySpEffect = FindAddressByPattern(Patterns.ApplySpEffect).ToInt64();
         Offsets.Functions.ItemSpawn = FindAddressByPattern(Patterns.ItemSpawn).ToInt64();
+        Offsets.Functions.GetEnemyInsWithPackedWorldIdAndChrId = FindAddressByPattern(Patterns.GetEnemyInsWithPackedWorldIdAndChrId).ToInt64();
 
 #if DEBUG
         Console.WriteLine($"WorldChrMan.Base: 0x{Offsets.WorldChrMan.Base.ToInt64():X}");
@@ -102,6 +103,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Functions.Warp: 0x{Offsets.Functions.Warp:X}");
         Console.WriteLine($"Functions.ApplySpEffect: 0x{Offsets.Functions.ApplySpEffect:X}");
         Console.WriteLine($"Functions.ItemSpawn: 0x{Offsets.Functions.ItemSpawn:X}");
+        Console.WriteLine($"Functions.GetEnemyInsWithPackedWorldIdAndChrId: 0x{Offsets.Functions.GetEnemyInsWithPackedWorldIdAndChrId:X}");
 #endif
     }
 

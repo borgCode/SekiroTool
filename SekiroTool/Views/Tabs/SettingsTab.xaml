@@ -282,6 +282,154 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
+                
+                <TabItem Header="Enemies">
+                    <ScrollViewer MaxHeight="370" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="5,0,0,0">
+                            <Grid Margin="0,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="125" />
+                                    <ColumnDefinition Width="85" />
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="125" />
+                                    <ColumnDefinition Width="85" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Skip Dragon Phase 1" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                                <TextBox Grid.Column="1"
+                                         Text="{Binding SkipDragonPhaseOneHotkeyText}"
+                                         Style="{StaticResource HotkeyTextBoxStyle}"
+                                         GotFocus="HotkeyTextBox_GotFocus"
+                                         LostFocus="HotkeyTextBox_LostFocus"
+                                         Tag="SkipDragonPhaseOne"
+                                         KeyDown="HotkeyTextBox_KeyDown" />
+                        
+                                <!-- <TextBlock Grid.Column="3" Text="Freeze HP:" VerticalAlignment="Center" -->
+                                <!--            HorizontalAlignment="Left" /> -->
+                                <!-- <TextBox Grid.Column="4" -->
+                                <!--          Margin="5,0,-10,0" -->
+                                <!--          Text="{Binding FreezeHpHotkeyText}" -->
+                                <!--          Style="{StaticResource HotkeyTextBoxStyle}" -->
+                                <!--          GotFocus="HotkeyTextBox_GotFocus" -->
+                                <!--          LostFocus="HotkeyTextBox_LostFocus" -->
+                                <!--          Tag="FreezeHp" -->
+                                <!--          KeyDown="HotkeyTextBox_KeyDown" /> -->
+                            </Grid>
+                        <!--      -->
+                        <!--     <Grid Margin="0,5"> -->
+                        <!--         <Grid.ColumnDefinitions> -->
+                        <!--             <ColumnDefinition Width="125" /> -->
+                        <!--             <ColumnDefinition Width="85" /> -->
+                        <!--             <ColumnDefinition Width="20" /> -->
+                        <!--             <ColumnDefinition Width="125" /> -->
+                        <!--             <ColumnDefinition Width="85" /> -->
+                        <!--         </Grid.ColumnDefinitions> -->
+                        <!--         <TextBlock Grid.Column="0" Text="Kill Target:" VerticalAlignment="Center" -->
+                        <!--                    HorizontalAlignment="Left" /> -->
+                        <!--         <TextBox Grid.Column="1" -->
+                        <!--                  Text="{Binding KillTargetHotkeyText}" -->
+                        <!--                  Style="{StaticResource HotkeyTextBoxStyle}" -->
+                        <!--                  GotFocus="HotkeyTextBox_GotFocus" -->
+                        <!--                  LostFocus="HotkeyTextBox_LostFocus" -->
+                        <!--                  Tag="KillTarget" -->
+                        <!--                  KeyDown="HotkeyTextBox_KeyDown" /> -->
+                        <!-- -->
+                        <!--         <TextBlock Grid.Column="3" Text="Disable Target AI:" VerticalAlignment="Center" -->
+                        <!--                    HorizontalAlignment="Left" /> -->
+                        <!--         <TextBox Grid.Column="4" -->
+                        <!--                  Margin="5,0,-10,0" -->
+                        <!--                  Text="{Binding DisableTargetAiHotkeyText}" -->
+                        <!--                  Style="{StaticResource HotkeyTextBoxStyle}" -->
+                        <!--                  GotFocus="HotkeyTextBox_GotFocus" -->
+                        <!--                  LostFocus="HotkeyTextBox_LostFocus" -->
+                        <!--                  Tag="DisableTargetAi" -->
+                        <!--                  KeyDown="HotkeyTextBox_KeyDown" /> -->
+                        <!--     </Grid> -->
+                        <!-- -->
+                        <!--     <Grid Margin="0,5"> -->
+                        <!--         <Grid.ColumnDefinitions> -->
+                        <!--             <ColumnDefinition Width="125" /> -->
+                        <!--             <ColumnDefinition Width="85" /> -->
+                        <!--             <ColumnDefinition Width="20" /> -->
+                        <!--             <ColumnDefinition Width="125" /> -->
+                        <!--             <ColumnDefinition Width="85" /> -->
+                        <!--         </Grid.ColumnDefinitions> -->
+                        <!-- -->
+                        <!--         <TextBlock Grid.Column="0" Text="Target Repeat Action:" VerticalAlignment="Center" -->
+                        <!--                    HorizontalAlignment="Left" /> -->
+                        <!--         <TextBox Grid.Column="1" -->
+                        <!--                  Text="{Binding TargetRepeatActHotkeyText}" -->
+                        <!--                  Style="{StaticResource HotkeyTextBoxStyle}" -->
+                        <!--                  GotFocus="HotkeyTextBox_GotFocus" -->
+                        <!--                  LostFocus="HotkeyTextBox_LostFocus" -->
+                        <!--                  Tag="TargetRepeatAct" -->
+                        <!--                  KeyDown="HotkeyTextBox_KeyDown" /> -->
+                        <!--         <TextBlock Grid.Column="3" Text="Show Target Resist:" VerticalAlignment="Center" -->
+                        <!--                    HorizontalAlignment="Left" /> -->
+                        <!--         <TextBox Grid.Column="4" -->
+                        <!--                  Text="{Binding ShowAllResistancesHotkeyText}" -->
+                        <!--                  Style="{StaticResource HotkeyTextBoxStyle}" -->
+                        <!--                  Margin="5,0,-10,0" -->
+                        <!--                  GotFocus="HotkeyTextBox_GotFocus" -->
+                        <!--                  LostFocus="HotkeyTextBox_LostFocus" -->
+                        <!--                  Tag="ShowAllResistances" -->
+                        <!--                  KeyDown="HotkeyTextBox_KeyDown" /> -->
+                        <!--     </Grid> -->
+                        <!-- -->
+                        <!--     <Grid Margin="0,5"> -->
+                        <!--         <Grid.ColumnDefinitions> -->
+                        <!--             <ColumnDefinition Width="125" /> -->
+                        <!--             <ColumnDefinition Width="85" /> -->
+                        <!--             <ColumnDefinition Width="20" /> -->
+                        <!--             <ColumnDefinition Width="125" /> -->
+                        <!--             <ColumnDefinition Width="85" /> -->
+                        <!--         </Grid.ColumnDefinitions> -->
+                        <!-- -->
+                        <!--         <TextBlock Grid.Column="0" Text="Increase Target Speed:" VerticalAlignment="Center" -->
+                        <!--                    HorizontalAlignment="Left" /> -->
+                        <!--         <TextBox Grid.Column="1" -->
+                        <!--                  Text="{Binding IncreaseTargetSpeedHotkeyText}" -->
+                        <!--                  Style="{StaticResource HotkeyTextBoxStyle}" -->
+                        <!--                  GotFocus="HotkeyTextBox_GotFocus" -->
+                        <!--                  LostFocus="HotkeyTextBox_LostFocus" -->
+                        <!--                  Tag="IncreaseTargetSpeed" -->
+                        <!--                  KeyDown="HotkeyTextBox_KeyDown" /> -->
+                        <!-- -->
+                        <!--         <TextBlock Grid.Column="3" Text="Decrease Target Speed:" VerticalAlignment="Center" -->
+                        <!--                    HorizontalAlignment="Left" /> -->
+                        <!--         <TextBox Grid.Column="4" -->
+                        <!--                  Margin="5,0,-10,0" -->
+                        <!--                  Text="{Binding DecreaseTargetSpeedHotkeyText}" -->
+                        <!--                  Style="{StaticResource HotkeyTextBoxStyle}" -->
+                        <!--                  GotFocus="HotkeyTextBox_GotFocus" -->
+                        <!--                  LostFocus="HotkeyTextBox_LostFocus" -->
+                        <!--                  Tag="DecreaseTargetSpeed" -->
+                        <!--                  KeyDown="HotkeyTextBox_KeyDown" /> -->
+                        <!--     </Grid> -->
+                        <!--      -->
+                        <!--      <Grid Margin="0,5"> -->
+                        <!--         <Grid.ColumnDefinitions> -->
+                        <!--             <ColumnDefinition Width="125" /> -->
+                        <!--             <ColumnDefinition Width="85" /> -->
+                        <!--             <ColumnDefinition Width="20" /> -->
+                        <!--             <ColumnDefinition Width="125" /> -->
+                        <!--             <ColumnDefinition Width="85" /> -->
+                        <!--         </Grid.ColumnDefinitions> -->
+                        <!-- -->
+                        <!--         <TextBlock Grid.Column="0" Text="Disable All Ai" VerticalAlignment="Center" -->
+                        <!--                    HorizontalAlignment="Left" /> -->
+                        <!--         <TextBox Grid.Column="1" -->
+                        <!--                  Text="{Binding DisableAiHotkeyText}" -->
+                        <!--                  Style="{StaticResource HotkeyTextBoxStyle}" -->
+                        <!--                  GotFocus="HotkeyTextBox_GotFocus" -->
+                        <!--                  LostFocus="HotkeyTextBox_LostFocus" -->
+                        <!--                  Tag="DisableAi" -->
+                        <!--                  KeyDown="HotkeyTextBox_KeyDown" /> -->
+                        <!--          -->
+                        <!--     </Grid> -->
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
 
                 <TabItem Header="Utility">
                     <ScrollViewer MaxHeight="370" VerticalScrollBarVisibility="Auto">
@@ -434,155 +582,6 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
-                
-                <TabItem Header="Enemies">
-                    <ScrollViewer MaxHeight="370" VerticalScrollBarVisibility="Auto">
-                        <!-- <StackPanel Margin="5,0,0,0"> -->
-                        <!--     <Grid Margin="0,5"> -->
-                        <!--         <Grid.ColumnDefinitions> -->
-                        <!--             <ColumnDefinition Width="125" /> -->
-                        <!--             <ColumnDefinition Width="85" /> -->
-                        <!--             <ColumnDefinition Width="20" /> -->
-                        <!--             <ColumnDefinition Width="125" /> -->
-                        <!--             <ColumnDefinition Width="85" /> -->
-                        <!--         </Grid.ColumnDefinitions> -->
-                        <!--         <TextBlock Grid.Column="0" Text="Enable Target Options:" VerticalAlignment="Center" -->
-                        <!--                    HorizontalAlignment="Left" /> -->
-                        <!--         <TextBox Grid.Column="1" -->
-                        <!--                  Text="{Binding EnableTargetOptionsHotkeyText}" -->
-                        <!--                  Style="{StaticResource HotkeyTextBoxStyle}" -->
-                        <!--                  GotFocus="HotkeyTextBox_GotFocus" -->
-                        <!--                  LostFocus="HotkeyTextBox_LostFocus" -->
-                        <!--                  Tag="EnableTargetOptions" -->
-                        <!--                  KeyDown="HotkeyTextBox_KeyDown" /> -->
-                        <!-- -->
-                        <!--         <TextBlock Grid.Column="3" Text="Freeze HP:" VerticalAlignment="Center" -->
-                        <!--                    HorizontalAlignment="Left" /> -->
-                        <!--         <TextBox Grid.Column="4" -->
-                        <!--                  Margin="5,0,-10,0" -->
-                        <!--                  Text="{Binding FreezeHpHotkeyText}" -->
-                        <!--                  Style="{StaticResource HotkeyTextBoxStyle}" -->
-                        <!--                  GotFocus="HotkeyTextBox_GotFocus" -->
-                        <!--                  LostFocus="HotkeyTextBox_LostFocus" -->
-                        <!--                  Tag="FreezeHp" -->
-                        <!--                  KeyDown="HotkeyTextBox_KeyDown" /> -->
-                        <!--     </Grid> -->
-                        <!--      -->
-                        <!--     <Grid Margin="0,5"> -->
-                        <!--         <Grid.ColumnDefinitions> -->
-                        <!--             <ColumnDefinition Width="125" /> -->
-                        <!--             <ColumnDefinition Width="85" /> -->
-                        <!--             <ColumnDefinition Width="20" /> -->
-                        <!--             <ColumnDefinition Width="125" /> -->
-                        <!--             <ColumnDefinition Width="85" /> -->
-                        <!--         </Grid.ColumnDefinitions> -->
-                        <!--         <TextBlock Grid.Column="0" Text="Kill Target:" VerticalAlignment="Center" -->
-                        <!--                    HorizontalAlignment="Left" /> -->
-                        <!--         <TextBox Grid.Column="1" -->
-                        <!--                  Text="{Binding KillTargetHotkeyText}" -->
-                        <!--                  Style="{StaticResource HotkeyTextBoxStyle}" -->
-                        <!--                  GotFocus="HotkeyTextBox_GotFocus" -->
-                        <!--                  LostFocus="HotkeyTextBox_LostFocus" -->
-                        <!--                  Tag="KillTarget" -->
-                        <!--                  KeyDown="HotkeyTextBox_KeyDown" /> -->
-                        <!-- -->
-                        <!--         <TextBlock Grid.Column="3" Text="Disable Target AI:" VerticalAlignment="Center" -->
-                        <!--                    HorizontalAlignment="Left" /> -->
-                        <!--         <TextBox Grid.Column="4" -->
-                        <!--                  Margin="5,0,-10,0" -->
-                        <!--                  Text="{Binding DisableTargetAiHotkeyText}" -->
-                        <!--                  Style="{StaticResource HotkeyTextBoxStyle}" -->
-                        <!--                  GotFocus="HotkeyTextBox_GotFocus" -->
-                        <!--                  LostFocus="HotkeyTextBox_LostFocus" -->
-                        <!--                  Tag="DisableTargetAi" -->
-                        <!--                  KeyDown="HotkeyTextBox_KeyDown" /> -->
-                        <!--     </Grid> -->
-                        <!-- -->
-                        <!--     <Grid Margin="0,5"> -->
-                        <!--         <Grid.ColumnDefinitions> -->
-                        <!--             <ColumnDefinition Width="125" /> -->
-                        <!--             <ColumnDefinition Width="85" /> -->
-                        <!--             <ColumnDefinition Width="20" /> -->
-                        <!--             <ColumnDefinition Width="125" /> -->
-                        <!--             <ColumnDefinition Width="85" /> -->
-                        <!--         </Grid.ColumnDefinitions> -->
-                        <!-- -->
-                        <!--         <TextBlock Grid.Column="0" Text="Target Repeat Action:" VerticalAlignment="Center" -->
-                        <!--                    HorizontalAlignment="Left" /> -->
-                        <!--         <TextBox Grid.Column="1" -->
-                        <!--                  Text="{Binding TargetRepeatActHotkeyText}" -->
-                        <!--                  Style="{StaticResource HotkeyTextBoxStyle}" -->
-                        <!--                  GotFocus="HotkeyTextBox_GotFocus" -->
-                        <!--                  LostFocus="HotkeyTextBox_LostFocus" -->
-                        <!--                  Tag="TargetRepeatAct" -->
-                        <!--                  KeyDown="HotkeyTextBox_KeyDown" /> -->
-                        <!--         <TextBlock Grid.Column="3" Text="Show Target Resist:" VerticalAlignment="Center" -->
-                        <!--                    HorizontalAlignment="Left" /> -->
-                        <!--         <TextBox Grid.Column="4" -->
-                        <!--                  Text="{Binding ShowAllResistancesHotkeyText}" -->
-                        <!--                  Style="{StaticResource HotkeyTextBoxStyle}" -->
-                        <!--                  Margin="5,0,-10,0" -->
-                        <!--                  GotFocus="HotkeyTextBox_GotFocus" -->
-                        <!--                  LostFocus="HotkeyTextBox_LostFocus" -->
-                        <!--                  Tag="ShowAllResistances" -->
-                        <!--                  KeyDown="HotkeyTextBox_KeyDown" /> -->
-                        <!--     </Grid> -->
-                        <!-- -->
-                        <!--     <Grid Margin="0,5"> -->
-                        <!--         <Grid.ColumnDefinitions> -->
-                        <!--             <ColumnDefinition Width="125" /> -->
-                        <!--             <ColumnDefinition Width="85" /> -->
-                        <!--             <ColumnDefinition Width="20" /> -->
-                        <!--             <ColumnDefinition Width="125" /> -->
-                        <!--             <ColumnDefinition Width="85" /> -->
-                        <!--         </Grid.ColumnDefinitions> -->
-                        <!-- -->
-                        <!--         <TextBlock Grid.Column="0" Text="Increase Target Speed:" VerticalAlignment="Center" -->
-                        <!--                    HorizontalAlignment="Left" /> -->
-                        <!--         <TextBox Grid.Column="1" -->
-                        <!--                  Text="{Binding IncreaseTargetSpeedHotkeyText}" -->
-                        <!--                  Style="{StaticResource HotkeyTextBoxStyle}" -->
-                        <!--                  GotFocus="HotkeyTextBox_GotFocus" -->
-                        <!--                  LostFocus="HotkeyTextBox_LostFocus" -->
-                        <!--                  Tag="IncreaseTargetSpeed" -->
-                        <!--                  KeyDown="HotkeyTextBox_KeyDown" /> -->
-                        <!-- -->
-                        <!--         <TextBlock Grid.Column="3" Text="Decrease Target Speed:" VerticalAlignment="Center" -->
-                        <!--                    HorizontalAlignment="Left" /> -->
-                        <!--         <TextBox Grid.Column="4" -->
-                        <!--                  Margin="5,0,-10,0" -->
-                        <!--                  Text="{Binding DecreaseTargetSpeedHotkeyText}" -->
-                        <!--                  Style="{StaticResource HotkeyTextBoxStyle}" -->
-                        <!--                  GotFocus="HotkeyTextBox_GotFocus" -->
-                        <!--                  LostFocus="HotkeyTextBox_LostFocus" -->
-                        <!--                  Tag="DecreaseTargetSpeed" -->
-                        <!--                  KeyDown="HotkeyTextBox_KeyDown" /> -->
-                        <!--     </Grid> -->
-                        <!--      -->
-                        <!--      <Grid Margin="0,5"> -->
-                        <!--         <Grid.ColumnDefinitions> -->
-                        <!--             <ColumnDefinition Width="125" /> -->
-                        <!--             <ColumnDefinition Width="85" /> -->
-                        <!--             <ColumnDefinition Width="20" /> -->
-                        <!--             <ColumnDefinition Width="125" /> -->
-                        <!--             <ColumnDefinition Width="85" /> -->
-                        <!--         </Grid.ColumnDefinitions> -->
-                        <!-- -->
-                        <!--         <TextBlock Grid.Column="0" Text="Disable All Ai" VerticalAlignment="Center" -->
-                        <!--                    HorizontalAlignment="Left" /> -->
-                        <!--         <TextBox Grid.Column="1" -->
-                        <!--                  Text="{Binding DisableAiHotkeyText}" -->
-                        <!--                  Style="{StaticResource HotkeyTextBoxStyle}" -->
-                        <!--                  GotFocus="HotkeyTextBox_GotFocus" -->
-                        <!--                  LostFocus="HotkeyTextBox_LostFocus" -->
-                        <!--                  Tag="DisableAi" -->
-                        <!--                  KeyDown="HotkeyTextBox_KeyDown" /> -->
-                        <!--          -->
-                        <!--     </Grid> -->
-                        <!-- </StackPanel> -->
-                    </ScrollViewer>
-                </TabItem>
-                
                 <TabItem Header="Target">
                     <ScrollViewer MaxHeight="370" VerticalScrollBarVisibility="Auto">
                         <StackPanel Margin="5,0,0,0">

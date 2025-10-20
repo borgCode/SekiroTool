@@ -212,6 +212,13 @@ public static class Patterns
         AddressingMode.Absolute
     );
 
+    public static readonly Pattern GetEnemyInsWithPackedWorldIdAndChrId = new Pattern(
+        new byte[] { 0x48, 0x8B, 0x8C, 0xDF, 0x18 },
+        "xxxxx",
+        -0x41,
+        AddressingMode.Absolute
+    );
+
     #endregion
 
 

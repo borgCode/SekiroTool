@@ -17,6 +17,8 @@ public static class CodeCaveOffsets
     public const int SavePos1 = 0x190;
     public const int SavePos2 = 0x1A0;
 
+    public const int ButterflyNoSnap = 0x1C0;
+
 
 
 }

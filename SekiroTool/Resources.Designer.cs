@@ -97,6 +97,50 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 48 89 e0                mov    rax,rsp
+        ///55                      push   rbp
+        ///56                      push   rsi
+        ///50                      push   rax
+        ///48 8b 01                mov    rax,QWORD PTR [rcx]
+        ///81 78 18 21 ac 08 03    cmp    DWORD PTR [rax+0x18],0x308ac21
+        ///75 12                   jne    24 &lt;exit&gt;
+        ///66 0f 7e d8             movd   eax,xmm3
+        ///3d 00 c0 3c 45          cmp    eax,0x453cc000
+        ///75 07                   jne    24 &lt;exit&gt;
+        ///48 c7 c2 ff ff ff ff    mov    rdx,0xffffffffffffffff
+        ///000000000024 &lt;exit&gt;:
+        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ButterflyNoSnap {
+            get {
+                return ResourceManager.GetString("ButterflyNoSnap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 48 b9 00 00 00 00 00    movabs rcx,0x0
+        ///00 00 00
+        ///48 ba ba 00 03 10 00    movabs rdx,0x100300ba
+        ///00 00 00
+        ///48 83 ec 28             sub    rsp,0x28
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///ff d0                   call   rax
+        ///48 83 c4 28             add    rsp,0x28
+        ///48 85 c0                test   rax,rax
+        ///74 29                   je     56 &lt;exit&gt;
+        ///48 8b 00                mov    rax,QWORD PTR [rax]
+        ///48 89 c3                mov    rbx,rax
+        ///48 8b 40 58             mov    rax,QWORD PTR [rax+0x58]
+        ///48 83  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string DragonSkipPhaseOne {
+            get {
+                return ResourceManager.GetString("DragonSkipPhaseOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 50                      push   rax
         ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;
         ///48 8b 80 f8 1f 00 00    mov    rax,QWORD PTR [rax+0x1ff8]
