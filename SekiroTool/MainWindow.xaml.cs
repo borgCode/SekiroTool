@@ -24,7 +24,6 @@ public partial class MainWindow : Window
     private readonly IPlayerService _playerService;
 
     private readonly AoBScanner _aobScanner;
-    private readonly HookManager _hookManager;
     private readonly HotkeyManager _hotkeyManager;
 
     private readonly DispatcherTimer _gameLoadedTimer;
@@ -37,14 +36,14 @@ public partial class MainWindow : Window
         InitializeComponent();
 
         _aobScanner = new AoBScanner(_memoryService);
-        _hookManager = new HookManager(_memoryService);
+        var hookManager = new HookManager(_memoryService);
         NopManager nopManager = new NopManager(_memoryService);
         _hotkeyManager = new HotkeyManager(_memoryService);
 
         _gameStateService = new GameStateService(_memoryService);
         _playerService = new PlayerService(_memoryService);
-        IEnemyService enemyService = new EnemyService(_memoryService);
-        ITargetService targetService = new TargetService(_memoryService, _hookManager);
+        IEnemyService enemyService = new EnemyService(_memoryService, hookManager);
+        ITargetService targetService = new TargetService(_memoryService, hookManager);
         IDebugDrawService debugDrawService = new DebugDrawService(_memoryService, _gameStateService, nopManager);
         IEventService eventService = new EventService(_memoryService);
         IItemService itemService = new ItemService(_memoryService);

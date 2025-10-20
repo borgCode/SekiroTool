@@ -143,13 +143,12 @@ c3                      ret</value>
 50                      push   rax
 48 8b 01                mov    rax,QWORD PTR [rcx]
 81 78 18 21 ac 08 03    cmp    DWORD PTR [rax+0x18],0x308ac21
-75 12                   jne    24 &lt;exit&gt;
-66 0f 7e d8             movd   eax,xmm3
-3d 00 c0 3c 45          cmp    eax,0x453cc000
-75 07                   jne    24 &lt;exit&gt;
-48 c7 c2 ff ff ff ff    mov    rdx,0xffffffffffffffff
-000000000024 &lt;exit&gt;:
+75 0e                   jne    20 &lt;exit&gt;
+0f 2f 1d 00 00 00 00    comiss xmm3,DWORD PTR [rip+0x0]        # 19 &lt;_main+0x19&gt;
+75 05                   jne    20 &lt;exit&gt;
+ba ff ff ff ff          mov    edx,0xffffffff
+000000000020 &lt;exit&gt;:
 58                      pop    rax
-e9 00 00 00 00          jmp    2a &lt;exit+0x6&gt;</value>
+e9 00 00 00 00          jmp    26 &lt;exit+0x6&gt;</value>
     </data>
 </root>

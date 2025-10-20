@@ -24,8 +24,8 @@
             }
         }
 
-        public static byte[] GetJmpOriginOffsetBytes(long hookLocation, int originalInstrLen, IntPtr customCodeAddr)
-            => BitConverter.GetBytes((int)(hookLocation + originalInstrLen - customCodeAddr.ToInt64()));
+        public static byte[] GetJmpOriginOffsetBytes(long hookLocation, int originalInstrLen, IntPtr customCodeAddrAfterJmp)
+            => BitConverter.GetBytes((int)(hookLocation + originalInstrLen - customCodeAddrAfterJmp.ToInt64()));
 
         public static void WriteJumpOffsets(byte[] bytes,
             (long hookLocation, int originalInstrLen, IntPtr customCodeAddr, int destinationIndex)[] jumpOffsets)

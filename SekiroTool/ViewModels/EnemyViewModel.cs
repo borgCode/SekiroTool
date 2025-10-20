@@ -8,7 +8,6 @@ namespace SekiroTool.ViewModels;
 
 public class EnemyViewModel : BaseViewModel
 {
-  
     private readonly IEnemyService _enemyService;
     private readonly HotkeyManager _hotkeyManager;
     private readonly IDebugDrawService _debugDrawService;
@@ -21,36 +20,47 @@ public class EnemyViewModel : BaseViewModel
         _debugDrawService = debugDrawService;
 
         RegisterHotkeys();
-        
+
         gameStateService.Subscribe(GameState.Loaded, OnGameLoaded);
         gameStateService.Subscribe(GameState.NotLoaded, OnGameNotLoaded);
-        
-        SkipDragonPhaseOneCommand = new DelegateCommand(SkipDragonPhaseOne);
 
+        SkipDragonPhaseOneCommand = new DelegateCommand(SkipDragonPhaseOne);
     }
 
-    
 
     #region Commands
 
-    public ICommand SkipDragonPhaseOneCommand {get; set;}
+    public ICommand SkipDragonPhaseOneCommand { get; set; }
 
     #endregion
 
     #region Properties
 
     private bool _areOptionsEnabled;
+
     public bool AreOptionsEnabled
     {
         get => _areOptionsEnabled;
         set => SetProperty(ref _areOptionsEnabled, value);
     }
-    
+
+    private bool _isNoButterflySummonsEnabled;
+
+    public bool IsNoButterflySummonsEnabled
+    {
+        get => _isNoButterflySummonsEnabled;
+        set
+        {
+            SetProperty(ref _isNoButterflySummonsEnabled, value); 
+            _enemyService.ToggleButterflyNoSnap(_isNoButterflySummonsEnabled);
+        }
+    }
+
     #endregion
 
 
     #region Private Methods
-    
+
     private void RegisterHotkeys()
     {
         _hotkeyManager.RegisterAction(HotkeyActions.SkipDragonPhaseOne.ToString(), () =>
@@ -64,15 +74,13 @@ public class EnemyViewModel : BaseViewModel
     {
         AreOptionsEnabled = true;
     }
-    
+
     private void OnGameNotLoaded()
     {
         AreOptionsEnabled = false;
     }
-    
+
     private void SkipDragonPhaseOne() => _enemyService.SkipDragonPhaseOne();
-  
 
     #endregion
-    
 }
