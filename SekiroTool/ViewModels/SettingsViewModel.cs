@@ -436,6 +436,7 @@ public class SettingsViewModel : BaseViewModel
     private void OnGameAttached()
     {
         if (IsNoLogoEnabled) _settingsService.ToggleNoLogo(true);
+        if (IsNoTutorialsEnabled) _settingsService.ToggleNoTutorials(true);
     }
 
     private void LoadHotkeyDisplays()
