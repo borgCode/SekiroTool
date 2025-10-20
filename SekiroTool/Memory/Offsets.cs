@@ -203,6 +203,9 @@ public static class Offsets
         public static IntPtr NoLogo;
         public static IntPtr DebugFont;
         public static IntPtr EventView;
+        public static IntPtr MenuTutorialSkip;
+        public static IntPtr ShowSmallHintBox;
+        public static IntPtr ShowTutorialText;
     }
 
 

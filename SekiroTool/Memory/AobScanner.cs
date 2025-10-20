@@ -55,6 +55,13 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Patches.DebugFont = addr, saved);
         TryPatternWithFallback("EventView", Patterns.EventViewPatch,
             addr => Offsets.Patches.EventView = addr + 0xE, saved);
+        TryPatternWithFallback("MenuTutorialSkip", Patterns.MenuTutorialSkip,
+            addr => Offsets.Patches.MenuTutorialSkip = addr, saved);
+        TryPatternWithFallback("ShowSmallHintBox", Patterns.ShowSmallHintBox,
+            addr => Offsets.Patches.ShowSmallHintBox = addr, saved);
+        TryPatternWithFallback("ShowTutorialText", Patterns.ShowTutorialText,
+            addr => Offsets.Patches.ShowTutorialText = addr, saved);
+        
       
         using (var writer = new StreamWriter(savePath))
         {
@@ -95,6 +102,9 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Patches.NoLogo: 0x{Offsets.Patches.NoLogo.ToInt64():X}");
         Console.WriteLine($"Patches.DebugFont: 0x{Offsets.Patches.DebugFont.ToInt64():X}");
         Console.WriteLine($"Patches.EventView: 0x{Offsets.Patches.EventView.ToInt64():X}");
+        Console.WriteLine($"Patches.MenuTutorialSkip: 0x{Offsets.Patches.MenuTutorialSkip.ToInt64():X}");
+        Console.WriteLine($"Patches.ShowSmallHintBox: 0x{Offsets.Patches.ShowSmallHintBox.ToInt64():X}");
+        Console.WriteLine($"Patches.ShowTutorialText: 0x{Offsets.Patches.ShowTutorialText.ToInt64():X}");
         
         Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");
         Console.WriteLine($"Functions.Rest: 0x{Offsets.Functions.Rest:X}");

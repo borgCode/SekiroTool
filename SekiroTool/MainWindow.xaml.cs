@@ -47,7 +47,7 @@ public partial class MainWindow : Window
         IDebugDrawService debugDrawService = new DebugDrawService(_memoryService, _gameStateService, nopManager);
         IEventService eventService = new EventService(_memoryService);
         IItemService itemService = new ItemService(_memoryService);
-        ISettingsService settingsService = new SettingsService(_memoryService);
+        ISettingsService settingsService = new SettingsService(_memoryService, nopManager);
         
 
 

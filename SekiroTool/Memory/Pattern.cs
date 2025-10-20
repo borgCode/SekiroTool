@@ -143,6 +143,27 @@ public static class Patterns
         5
     );
 
+    public static readonly Pattern MenuTutorialSkip = new Pattern(
+        new byte[] { 0x84, 0xC0, 0x75, 0x08, 0x49, 0x89 },
+        "xxxxxx",
+        0,
+        AddressingMode.Absolute
+    );
+
+    public static readonly Pattern ShowSmallHintBox = new Pattern(
+        new byte[] { 0x8B, 0x01, 0x89, 0x45, 0x40, 0x8B, 0x51 },
+        "xxxxxxx",
+        0xC,
+        AddressingMode.Absolute
+    );
+
+    public static readonly Pattern ShowTutorialText = new Pattern(
+        new byte[] { 0x44, 0x8B, 0x49, 0x08, 0x44, 0x8B, 0x41 },
+        "xxxxxxx",
+        0xE,
+        AddressingMode.Absolute
+    );
+
     #endregion
 
 

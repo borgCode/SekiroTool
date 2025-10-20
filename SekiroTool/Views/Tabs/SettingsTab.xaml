@@ -24,8 +24,8 @@
                 </StackPanel>
     
                 <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                    <CheckBox Content="Baby jump fix"
-                              IsChecked="{Binding IsBabyJumpFixEnabled}"
+                    <CheckBox Content="No Tutorials"
+                              IsChecked="{Binding IsNoTutorialsEnabled}"
                               Margin="0,0,10,0" />
                     <CheckBox Content="Disable Double Click"
                               IsChecked="{Binding IsDisableDoubleClickEnabled}"

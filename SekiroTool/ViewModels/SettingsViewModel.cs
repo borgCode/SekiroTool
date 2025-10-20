@@ -136,6 +136,23 @@ public class SettingsViewModel : BaseViewModel
             if (mainWindow != null) mainWindow.Topmost = _isAlwaysOnTopEnabled;
         }
     }
+    
+    private bool _isNoTutorialsEnabled;
+
+    public bool IsNoTutorialsEnabled
+    {
+        get => _isNoTutorialsEnabled;
+        set
+        {
+            if (SetProperty(ref _isNoTutorialsEnabled, value))
+            {
+                SettingsManager.Default.NoTutorials = value;
+                SettingsManager.Default.Save();
+
+                _settingsService.ToggleNoTutorials(_isNoTutorialsEnabled);
+            }
+        }
+    }
 
 
     private string _quitoutHotkeyText;
