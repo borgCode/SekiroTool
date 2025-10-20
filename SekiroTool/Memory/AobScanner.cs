@@ -61,6 +61,8 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Patches.ShowSmallHintBox = addr, saved);
         TryPatternWithFallback("ShowTutorialText", Patterns.ShowTutorialText,
             addr => Offsets.Patches.ShowTutorialText = addr, saved);
+        TryPatternWithFallback("SaveInCombat", Patterns.UpdateSaveCoords,
+            addr => Offsets.Patches.SaveInCombat = addr, saved);
         
       
         using (var writer = new StreamWriter(savePath))
@@ -105,6 +107,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Patches.MenuTutorialSkip: 0x{Offsets.Patches.MenuTutorialSkip.ToInt64():X}");
         Console.WriteLine($"Patches.ShowSmallHintBox: 0x{Offsets.Patches.ShowSmallHintBox.ToInt64():X}");
         Console.WriteLine($"Patches.ShowTutorialText: 0x{Offsets.Patches.ShowTutorialText.ToInt64():X}");
+        Console.WriteLine($"Patches.SaveInCombat: 0x{Offsets.Patches.SaveInCombat.ToInt64():X}");
         
         Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");
         Console.WriteLine($"Functions.Rest: 0x{Offsets.Functions.Rest:X}");

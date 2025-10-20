@@ -118,7 +118,6 @@ public static class Patterns
         0,
         AddressingMode.Absolute
     );
-    //TODO patch cmp and jz
 
     public static readonly Pattern NoLogo = new Pattern(
         new byte[] { 0xBB, 0x01, 0x00, 0x00, 0x00, 0x89, 0x5C, 0x24, 0x20, 0x44, 0x0F, 0xB6, 0x4E, 0x04 },

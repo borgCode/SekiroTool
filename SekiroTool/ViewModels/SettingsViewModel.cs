@@ -153,6 +153,23 @@ public class SettingsViewModel : BaseViewModel
             }
         }
     }
+    
+    private bool _isSaveInCombatEnabled;
+
+    public bool IsSaveInCombatEnabled
+    {
+        get => _isSaveInCombatEnabled;
+        set
+        {
+            if (SetProperty(ref _isSaveInCombatEnabled, value))
+            {
+                SettingsManager.Default.SaveInCombat = value;
+                SettingsManager.Default.Save();
+
+                _settingsService.ToggleSaveInCombat(_isSaveInCombatEnabled);
+            }
+        }
+    }
 
 
     private string _quitoutHotkeyText;
@@ -420,6 +437,12 @@ public class SettingsViewModel : BaseViewModel
 
         _isNoLogoEnabled = SettingsManager.Default.NoLogo;
         OnPropertyChanged(nameof(IsNoLogoEnabled));
+        
+        _isNoTutorialsEnabled = SettingsManager.Default.NoTutorials;
+        OnPropertyChanged(nameof(IsNoTutorialsEnabled));
+        
+        _isSaveInCombatEnabled = SettingsManager.Default.SaveInCombat;
+        OnPropertyChanged(nameof(IsSaveInCombatEnabled));
 
         IsAlwaysOnTopEnabled = SettingsManager.Default.AlwaysOnTop;
     }
@@ -437,6 +460,7 @@ public class SettingsViewModel : BaseViewModel
     {
         if (IsNoLogoEnabled) _settingsService.ToggleNoLogo(true);
         if (IsNoTutorialsEnabled) _settingsService.ToggleNoTutorials(true);
+        if (IsSaveInCombatEnabled) _settingsService.ToggleSaveInCombat(true);
     }
 
     private void LoadHotkeyDisplays()
