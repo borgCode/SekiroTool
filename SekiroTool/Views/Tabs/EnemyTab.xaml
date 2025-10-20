@@ -25,14 +25,6 @@
                                 Margin="3" />
                     </WrapPanel>
                     
-                    <WrapPanel HorizontalAlignment="Center">
-                        <!-- <CheckBox Content="No butterfly summons" -->
-                        <!--         IsEnabled="{Binding AreOptionsEnabled}" -->
-                        <!--         IsChecked="{Binding IsNoButterflySummonsEnabled}" -->
-                        <!--         Height="24" -->
-                        <!--         Margin="3" /> -->
-                    </WrapPanel>
-                    
                     
                     
                 </StackPanel>

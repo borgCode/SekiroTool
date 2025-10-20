@@ -43,19 +43,7 @@ public class EnemyViewModel : BaseViewModel
         get => _areOptionsEnabled;
         set => SetProperty(ref _areOptionsEnabled, value);
     }
-
-    private bool _isNoButterflySummonsEnabled;
-
-    public bool IsNoButterflySummonsEnabled
-    {
-        get => _isNoButterflySummonsEnabled;
-        set
-        {
-            SetProperty(ref _isNoButterflySummonsEnabled, value); 
-            _enemyService.ToggleButterflyNoSnap(_isNoButterflySummonsEnabled);
-        }
-    }
-
+    
     #endregion
 
 
