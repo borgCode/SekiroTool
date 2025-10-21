@@ -286,6 +286,22 @@ public static class Patterns
         AddressingMode.Absolute
     );
 
+    public static readonly Pattern PadTriggers = new Pattern(
+        new byte[] { 0x0F, 0x84, 0xC6, 0x01, 0x00, 0x00, 0x48, 0x8B, 0x49 },
+        "xxxxxxxxx",
+        -0x31,
+        AddressingMode.Absolute
+    );
+    //TODO hook at start, check previous func in ghidra for codes
+
+    public static readonly Pattern KeyBoard = new Pattern(
+        new byte[] { 0xF6, 0x84, 0x08, 0x98 },
+        "xxxx",
+        0,
+        AddressingMode.Absolute
+    );
+
+
     public static readonly Pattern UpdateCoords = new Pattern(
         new byte[] { 0x75, 0x0F, 0x0F, 0x29, 0xB6 },
         "xxxxx",
