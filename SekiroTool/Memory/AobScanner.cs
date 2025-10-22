@@ -32,6 +32,7 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.MapItemMan.Base = FindAddressByPattern(Patterns.MapItemMan);
         Offsets.EventFlagMan.Base = FindAddressByPattern(Patterns.EventFlagMan);
         Offsets.DebugEventMan.Base = FindAddressByPattern(Patterns.DebugEventMan);
+        Offsets.SprjFlipperImp.Base = FindAddressByPattern(Patterns.SprjFlipperImp);
         
         
         TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
@@ -48,6 +49,10 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Hooks.InAirTimer = addr.ToInt64(), saved);
         TryPatternWithFallback("UpdateCoords", Patterns.UpdateCoords,
             addr => Offsets.Hooks.UpdateCoords = addr.ToInt64(), saved);
+        TryPatternWithFallback("PadTriggers", Patterns.PadTriggers,
+            addr => Offsets.Hooks.PadTriggers = addr.ToInt64(), saved);
+        TryPatternWithFallback("KeyBoard", Patterns.KeyBoard,
+            addr => Offsets.Hooks.KeyBoard = addr.ToInt64(), saved);
         
         TryPatternWithFallback("NoLogo", Patterns.NoLogo,
             addr => Offsets.Patches.NoLogo = addr, saved);
@@ -91,6 +96,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"MapItemMan.Base: 0x{Offsets.MapItemMan.Base.ToInt64():X}");
         Console.WriteLine($"EventFlagMan.Base: 0x{Offsets.EventFlagMan.Base.ToInt64():X}");
         Console.WriteLine($"DebugEventMan.Base: 0x{Offsets.DebugEventMan.Base.ToInt64():X}");
+        Console.WriteLine($"SprjFlipperImp.Base: 0x{Offsets.SprjFlipperImp.Base.ToInt64():X}");
         
         Console.WriteLine($"Hooks.LockedTarget: 0x{Offsets.Hooks.LockedTarget:X}");
         Console.WriteLine($"Hooks.FreezeTargetPosture: 0x{Offsets.Hooks.FreezeTargetPosture:X}");
@@ -99,6 +105,8 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Hooks.AddSubGoal: 0x{Offsets.Hooks.AddSubGoal:X}");
         Console.WriteLine($"Hooks.InAirTimer: 0x{Offsets.Hooks.InAirTimer:X}");
         Console.WriteLine($"Hooks.UpdateCoords: 0x{Offsets.Hooks.UpdateCoords:X}");
+        Console.WriteLine($"Hooks.PadTriggers: 0x{Offsets.Hooks.PadTriggers:X}");
+        Console.WriteLine($"Hooks.KeyBoard: 0x{Offsets.Hooks.KeyBoard:X}");
         
         
         Console.WriteLine($"Patches.NoLogo: 0x{Offsets.Patches.NoLogo.ToInt64():X}");

@@ -177,8 +177,11 @@ public static class Offsets
         public const int DisableEvent = 0x44;
     }
 
-    public static class WorldObjMan
+    public static class SprjFlipperImp
     {
+        public static IntPtr Base;
+        
+        public const int GameSpeed = 0x344;
     }
 
 
@@ -193,10 +196,7 @@ public static class Offsets
     public static class UserInputManager
     {
     }
-
-    public static class SprjFlipper
-    {
-    }
+    
 
     public static class Patches
     {
@@ -219,6 +219,8 @@ public static class Offsets
         public static long AddSubGoal;
         public static long InAirTimer;
         public static long UpdateCoords;
+        public static long PadTriggers;
+        public static long KeyBoard;
     }
 
     public static class Functions

@@ -107,6 +107,15 @@ public static class Patterns
         7
     );
 
+    public static readonly Pattern SprjFlipperImp = new Pattern(
+        new byte[] { 0x48, 0x8B, 0x05, 0x73, 0xE0, 0x2E },
+        "xxxxxx",
+        0,
+        AddressingMode.Relative,
+        3,
+        7
+    );
+
     #endregion
 
 
