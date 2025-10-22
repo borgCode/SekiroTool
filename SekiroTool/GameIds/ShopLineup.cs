@@ -16,4 +16,7 @@ public class ShopLineup(long startId, long endId)
     public static readonly ShopLineup ExiledMemorialMob = new ShopLineup(1500000, 1500049);
     public static readonly ShopLineup ToxicMemorialMob = new ShopLineup(1700000, 1700049);
     public static readonly ShopLineup ShugendoMemorialMob = new ShopLineup(2000000, 2000049);
+    
+    public static readonly ShopLineup Prosthetics = new ShopLineup(1101000, 1101009);
+    
 }

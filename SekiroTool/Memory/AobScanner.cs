@@ -95,6 +95,7 @@ public class AoBScanner(IMemoryService memoryService)
             {addr => Offsets.Functions.OpenSkillMenu = addr, 0x2A03},
             {addr => Offsets.Functions.UpgradeProstheticsMenu = addr, 0x29DC},
             {addr => Offsets.Functions.OpenScalesShop = addr, 0x29B5},
+            {addr => Offsets.Functions.OpenProstheticsShop = addr, 0x24FA},
         });
 
 #if DEBUG
@@ -142,6 +143,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Functions.OpenSkillMenu: 0x{Offsets.Functions.OpenSkillMenu:X}");
         Console.WriteLine($"Functions.UpgradeProstheticsMenu: 0x{Offsets.Functions.UpgradeProstheticsMenu:X}");
         Console.WriteLine($"Functions.OpenScalesShop: 0x{Offsets.Functions.OpenScalesShop:X}");
+        Console.WriteLine($"Functions.OpenProstheticsShop: 0x{Offsets.Functions.OpenProstheticsShop:X}");
 #endif
     }
 

@@ -246,6 +246,10 @@
                                         Command="{Binding KoremoriCommand}"
                                         IsEnabled="{Binding AreButtonsEnabled}"
                                         Margin="3" />
+                                 <Button Content="Prosthetics"
+                                          Command="{Binding ProstheticsCommand}"
+                                          IsEnabled="{Binding AreButtonsEnabled}"
+                                          Margin="3" />
                             </UniformGrid>
 
                             <CheckBox Content="Access full shop lineup"

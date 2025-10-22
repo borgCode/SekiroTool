@@ -41,6 +41,7 @@ public class UtilityViewModel : BaseViewModel
         ShugendoMemorialMobCommand = new DelegateCommand(() => OpenRegularShop(ShopLineup.ShugendoMemorialMob));
         HarunagaCommand = new DelegateCommand(() => OpenScalesShop(ScaleLineup.Harunaga));
         KoremoriCommand = new DelegateCommand(() => OpenScalesShop(ScaleLineup.Koremori));
+        ProstheticsCommand = new DelegateCommand(() => OpenProstheticsShop(ShopLineup.Prosthetics));
     }
 
     
@@ -61,9 +62,8 @@ public class UtilityViewModel : BaseViewModel
     public ICommand ShugendoMemorialMobCommand { get; set; }
     public ICommand HarunagaCommand { get; set; }
     public ICommand KoremoriCommand { get; set; }
+    public ICommand ProstheticsCommand { get; set; }
     
-    
-
     #endregion
     
     #region Properties
@@ -97,6 +97,7 @@ public class UtilityViewModel : BaseViewModel
     private void OpenUpgradeProstheticsMenu() => _utilityService.OpenUpgradeProstheticsMenu();
     private void OpenRegularShop(ShopLineup shopLineup) => _utilityService.OpenRegularShop(shopLineup);
     private void OpenScalesShop(ScaleLineup scaleLineup) => _utilityService.OpenScalesShop(scaleLineup);
+    private void OpenProstheticsShop(ShopLineup shopLineup) => _utilityService.OpenProstheticsShop(shopLineup);
 
     #endregion
 }

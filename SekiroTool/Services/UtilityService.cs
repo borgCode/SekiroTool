@@ -49,4 +49,15 @@ public class UtilityService(IMemoryService memoryService) : IUtilityService
         ]);
         memoryService.AllocateAndExecute(bytes);
     }
+
+    public void OpenProstheticsShop(ShopLineup shopLineup)
+    {
+        var bytes = AsmLoader.GetAsmBytes("OpenMenuTwoParams");
+        AsmHelper.WriteAbsoluteAddresses(bytes, [
+            (shopLineup.StartId, 0x8 + 2),
+            (shopLineup.EndId, 0x12 + 2),
+            (Functions.OpenProstheticsShop, 0x1C +2)
+        ]);
+        memoryService.AllocateAndExecute(bytes);
+    }
 }

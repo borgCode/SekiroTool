@@ -239,5 +239,6 @@ public static class Offsets
         public static long OpenSkillMenu;
         public static long UpgradeProstheticsMenu;
         public static long OpenScalesShop;
+        public static long OpenProstheticsShop;
     }
 }

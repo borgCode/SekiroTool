@@ -8,4 +8,5 @@ public interface IUtilityService
     void OpenUpgradeProstheticsMenu();
     void OpenRegularShop(ShopLineup shopLineup);
     void OpenScalesShop(ScaleLineup scaleLineup);
+    void OpenProstheticsShop(ShopLineup shopLineup);
 }
