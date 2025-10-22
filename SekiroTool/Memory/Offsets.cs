@@ -207,6 +207,7 @@ public static class Offsets
         public static IntPtr ShowSmallHintBox;
         public static IntPtr ShowTutorialText;
         public static IntPtr SaveInCombat;
+        public static IntPtr OpenRegularShopPatch;
     }
 
 
@@ -237,5 +238,6 @@ public static class Offsets
         public static long OpenRegularShop;
         public static long OpenSkillMenu;
         public static long UpgradeProstheticsMenu;
+        public static long OpenScalesShop;
     }
 }

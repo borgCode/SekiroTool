@@ -68,6 +68,8 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Patches.ShowTutorialText = addr, saved);
         TryPatternWithFallback("SaveInCombat", Patterns.UpdateSaveCoords,
             addr => Offsets.Patches.SaveInCombat = addr, saved);
+        TryPatternWithFallback("OpenRegularShopPatch", Patterns.OpenRegularShopPatch,
+            addr => Offsets.Patches.OpenRegularShopPatch = addr, saved);
 
 
         using (var writer = new StreamWriter(savePath))
@@ -92,6 +94,7 @@ public class AoBScanner(IMemoryService memoryService)
             {addr => Offsets.Functions.OpenRegularShop = addr, 0xBCF},
             {addr => Offsets.Functions.OpenSkillMenu = addr, 0x2A03},
             {addr => Offsets.Functions.UpgradeProstheticsMenu = addr, 0x29DC},
+            {addr => Offsets.Functions.OpenScalesShop = addr, 0x29B5},
         });
 
 #if DEBUG
@@ -124,6 +127,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Patches.ShowSmallHintBox: 0x{Offsets.Patches.ShowSmallHintBox.ToInt64():X}");
         Console.WriteLine($"Patches.ShowTutorialText: 0x{Offsets.Patches.ShowTutorialText.ToInt64():X}");
         Console.WriteLine($"Patches.SaveInCombat: 0x{Offsets.Patches.SaveInCombat.ToInt64():X}");
+        Console.WriteLine($"Patches.OpenRegularShopPatch: 0x{Offsets.Patches.OpenRegularShopPatch.ToInt64():X}");
 
         Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");
         Console.WriteLine($"Functions.Rest: 0x{Offsets.Functions.Rest:X}");
@@ -137,6 +141,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Functions.OpenRegularShop: 0x{Offsets.Functions.OpenRegularShop:X}");
         Console.WriteLine($"Functions.OpenSkillMenu: 0x{Offsets.Functions.OpenSkillMenu:X}");
         Console.WriteLine($"Functions.UpgradeProstheticsMenu: 0x{Offsets.Functions.UpgradeProstheticsMenu:X}");
+        Console.WriteLine($"Functions.OpenScalesShop: 0x{Offsets.Functions.OpenScalesShop:X}");
 #endif
     }
 

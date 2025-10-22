@@ -160,4 +160,32 @@ ff d0                   call   rax
 48 83 c4 48             add    rsp,0x48
 c3                      ret</value>
     </data>
+    <data name="OpenMenuTwoParams" xml:space="preserve">
+        <value>48 83 ec 48             sub    rsp,0x48
+48 8d 0c 24             lea    rcx,[rsp]
+48 ba 00 00 00 00 00    movabs rdx,0x0
+00 00 00
+49 b8 00 00 00 00 00    movabs r8,0x0
+00 00 00
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+48 83 c4 48             add    rsp,0x48
+c3                      ret</value>
+    </data>
+    <data name="OpenMenuThreeParams" xml:space="preserve">
+        <value>48 83 ec 48             sub    rsp,0x48
+48 8d 0c 24             lea    rcx,[rsp]
+48 ba 00 00 00 00 00    movabs rdx,0x0
+00 00 00
+49 b8 00 00 00 00 00    movabs r8,0x0
+00 00 00
+49 b9 00 00 00 00 00    movabs r9,0x0
+00 00 00
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+48 83 c4 48             add    rsp,0x48
+c3                      ret</value>
+    </data>
 </root>

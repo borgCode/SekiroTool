@@ -170,140 +170,90 @@
         </Border>
 
         <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <Border Grid.Column="0"
-                    BorderThickness="1"
+            <Border BorderThickness="1"
                     BorderBrush="#333"
                     CornerRadius="3"
-                    Margin="0,0,5,0">
-                <StackPanel Margin="10">
-                    <TextBlock Text="Menu"
-                               FontWeight="Bold"
-                               Margin="0,0,0,10" />
+                    Margin="0,0,5,0"
+                    Padding="5">
 
-                    <WrapPanel HorizontalAlignment="Center">
-                        <Button Content="Skills"
-                                IsEnabled="{Binding AreButtonsEnabled}"
-                                Command="{Binding OpenSkillsCommand}"
-                                Width="80"
-                                Height="24"
-                                Margin="3" />
+                <TabControl >
+                    <TabItem Header="Menu">
+                        <UniformGrid Columns="2" Margin="10">
+                            <Button Content="Skills"
+                                    IsEnabled="{Binding AreButtonsEnabled}"
+                                    Command="{Binding OpenSkillsCommand}"
+                                    Margin="3" />
 
-                        <Button Content="Upgrade Prosthetics"
-                                IsEnabled="{Binding AreButtonsEnabled}"
-                                Command="{Binding OpenUpgradeProstheticsCommand}"
-                                Width="80"
-                                Height="24"
-                                Margin="3" />
+                            <Button Content="Upgrade Prosthetics"
+                                    IsEnabled="{Binding AreButtonsEnabled}"
+                                    Command="{Binding OpenUpgradeProstheticsCommand}"
+                                    Margin="3" />
+                        </UniformGrid>
+                    </TabItem>
 
-                        <!-- <Button Content="Upgrade" -->
-                        <!--         IsEnabled="{Binding AreButtonsEnabled}" -->
-                        <!-- -->
-                        <!--         Height="24" -->
-                        <!--         Width="80" -->
-                        <!--         Margin="3" /> -->
-                        <!-- -->
-                        <!-- <Button Content="Repair" -->
-                        <!--         IsEnabled="{Binding AreButtonsEnabled}" -->
-                        <!-- -->
-                        <!--         Height="24" -->
-                        <!--         Width="80" -->
-                        <!--         Margin="3" /> -->
-                        <!-- -->
-                        <!-- <Button Content="Infuse" -->
-                        <!--         IsEnabled="{Binding AreButtonsEnabled}" -->
-                        <!-- -->
-                        <!--         Height="24" -->
-                        <!--         Width="80" -->
-                        <!--         Margin="3" /> -->
-                        <!-- -->
-                        <!-- <Button Content="Allot Estus" -->
-                        <!--         IsEnabled="{Binding AreButtonsEnabled}" -->
-                        <!--         Height="24" -->
-                        <!-- -->
-                        <!--         Width="80" -->
-                        <!--         Margin="3" /> -->
-                        <!-- -->
-                        <!-- <Button Content="Attunement" -->
-                        <!--         IsEnabled="{Binding AreButtonsEnabled}" -->
-                        <!--         Height="24" -->
-                        <!--         Width="80" -->
-                        <!--         Margin="3" /> -->
-                    </WrapPanel>
-                </StackPanel>
-            </Border>
+                    <TabItem Header="Shop">
+                        <StackPanel Margin="10">
+                            <TextBlock Text="Shops"
+                                       FontWeight="Bold"
+                                       Margin="0,0,0,10" />
 
-            <Border Grid.Column="1"
-                    BorderThickness="1"
-                    BorderBrush="#333"
-                    CornerRadius="3"
-                    Margin="5,0,0,0">
-                <StackPanel Margin="10">
-                    <TextBlock Text="Shops"
-                               FontWeight="Bold"
-                               Margin="0,0,0,10" />
+                            <UniformGrid Columns="3">
+                                <Button Content="Idol"
+                                        Command="{Binding IdolCommand}"
+                                        IsEnabled="{Binding AreButtonsEnabled}"
+                                        Margin="3" />
+                                <Button Content="Crow's Bed Memorial Mob"
+                                        Command="{Binding CrowsBedMemorialMobCommand}"
+                                        IsEnabled="{Binding AreButtonsEnabled}"
+                                        Margin="3" />
+                                <Button Content="Battlefield Memorial Mob"
+                                        Command="{Binding BattlefieldMemorialMobCommand}"
+                                        IsEnabled="{Binding AreButtonsEnabled}"
+                                        Margin="3" />
+                                <Button Content="Anayama"
+                                        Command="{Binding AnayamaCommand}"
+                                        IsEnabled="{Binding AreButtonsEnabled}"
+                                        Margin="3" />
+                                <Button Content="Fujioka"
+                                        Command="{Binding FujiokaCommand}"
+                                        IsEnabled="{Binding AreButtonsEnabled}"
+                                        Margin="3" />
+                                <Button Content="Dungeon Memorial Mob"
+                                        Command="{Binding DungeonMemorialMobCommand}"
+                                        IsEnabled="{Binding AreButtonsEnabled}"
+                                        Margin="3" />
+                                <Button Content="Badger"
+                                        Command="{Binding BadgerCommand}"
+                                        IsEnabled="{Binding AreButtonsEnabled}"
+                                        Margin="3" />
+                                <Button Content="Exiled Memorial Mob"
+                                        Command="{Binding ExiledMemorialMobCommand}"
+                                        IsEnabled="{Binding AreButtonsEnabled}"
+                                        Margin="3" />
+                                <Button Content="Toxic Memorial Mob"
+                                        Command="{Binding ToxicMemorialMobCommand}"
+                                        IsEnabled="{Binding AreButtonsEnabled}"
+                                        Margin="3" />
+                                <Button Content="Shugendo Memorial Mob"
+                                        Command="{Binding ShugendoMemorialMobCommand}"
+                                        IsEnabled="{Binding AreButtonsEnabled}"
+                                        Margin="3" />
+                                <Button Content="Harunaga"
+                                        Command="{Binding HarunagaCommand}"
+                                        IsEnabled="{Binding AreButtonsEnabled}"
+                                        Margin="3" />
+                                <Button Content="Koremori"
+                                        Command="{Binding KoremoriCommand}"
+                                        IsEnabled="{Binding AreButtonsEnabled}"
+                                        Margin="3" />
+                            </UniformGrid>
 
-                    <WrapPanel HorizontalAlignment="Center">
-                        <Button Content="Handmaid"
-                                IsEnabled="{Binding AreButtonsEnabled}"
-
-                                Height="24"
-                                Width="80"
-                                Margin="3" />
-
-                        <Button Content="Greirat"
-                                IsEnabled="{Binding AreButtonsEnabled}"
-
-                                Height="24"
-                                Width="80"
-                                Margin="3" />
-
-                        <Button Content="Patches"
-                                IsEnabled="{Binding AreButtonsEnabled}"
-
-                                Height="24"
-                                Width="80"
-                                Margin="3" />
-
-                        <Button Content="Orbeck"
-                                IsEnabled="{Binding AreButtonsEnabled}"
-
-                                Height="24"
-                                Width="80"
-                                Margin="3" />
-
-                        <Button Content="Cornyx"
-                                IsEnabled="{Binding AreButtonsEnabled}"
-
-                                Height="24"
-                                Width="80"
-                                Margin="3" />
-
-                        <Button Content="Karla"
-                                IsEnabled="{Binding AreButtonsEnabled}"
-
-                                Height="24"
-                                Width="80"
-                                Margin="3" />
-
-                        <Button Content="Transpose"
-                                IsEnabled="{Binding AreButtonsEnabled}"
-
-                                Height="24"
-                                Width="80"
-                                Margin="3" />
-
-                        <CheckBox Content="Access full shop lineup"
-                                  IsChecked="{Binding IsFullLineUpEnabled}"
-                                  Height="24"
-                                  Width="160"
-                                  Margin="3" />
-                    </WrapPanel>
-                </StackPanel>
+                            <CheckBox Content="Access full shop lineup"
+                                      IsChecked="{Binding IsFullLineUpEnabled}"
+                                      Margin="3,10,3,3" />
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
             </Border>
         </Grid>
     </Grid>

@@ -172,6 +172,13 @@ public static class Patterns
         AddressingMode.Absolute
     );
 
+    public static readonly Pattern OpenRegularShopPatch = new Pattern(
+        new byte[] { 0x48, 0x85, 0xC0, 0x74, 0x09, 0x48, 0x8B, 0x88, 0xD0 },
+        "xxxxxxxxx",
+        -0x5,
+        AddressingMode.Absolute
+    );
+
     #endregion
 
 
