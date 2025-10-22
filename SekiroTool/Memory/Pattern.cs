@@ -248,6 +248,13 @@ public static class Patterns
         AddressingMode.Absolute
     );
 
+    public static readonly Pattern ProcessEsdCommand = new Pattern(
+        new byte[] { 0xFF, 0x50, 0x10, 0x3D, 0x84 },
+        "xxxxx",
+        0,
+        AddressingMode.Absolute
+    );
+
     #endregion
 
 

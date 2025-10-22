@@ -151,4 +151,13 @@ ba ff ff ff ff          mov    edx,0xffffffff
 58                      pop    rax
 e9 00 00 00 00          jmp    26 &lt;exit+0x6&gt;</value>
     </data>
+    <data name="OpenMenuNoParams" xml:space="preserve">
+        <value>48 83 ec 48             sub    rsp,0x48
+48 8d 0c 24             lea    rcx,[rsp]
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+48 83 c4 48             add    rsp,0x48
+c3                      ret</value>
+    </data>
 </root>

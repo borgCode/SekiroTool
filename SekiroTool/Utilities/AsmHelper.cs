@@ -49,5 +49,11 @@
                 Array.Copy(addressBytes, 0, bytes, destinationIndex, 8);
             }
         }
+        
+        public static void WriteAbsoluteAddress(byte[] bytes, long address, int destinationIndex)
+        {
+            var addressBytes = GetAbsAddressBytes(address);
+            Array.Copy(addressBytes, 0, bytes, destinationIndex, 8);
+        }
     }
 }

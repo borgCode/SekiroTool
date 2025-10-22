@@ -234,5 +234,8 @@ public static class Offsets
         public static long ApplySpEffect;
         public static long ItemSpawn;
         public static long GetEnemyInsWithPackedWorldIdAndChrId;
+        public static long OpenRegularShop;
+        public static long OpenSkillMenu;
+        public static long UpgradeProstheticsMenu;
     }
 }

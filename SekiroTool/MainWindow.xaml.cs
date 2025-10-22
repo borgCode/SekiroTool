@@ -46,6 +46,7 @@ public partial class MainWindow : Window
         ITargetService targetService = new TargetService(_memoryService, hookManager);
         IDebugDrawService debugDrawService = new DebugDrawService(_memoryService, _gameStateService, nopManager);
         IEventService eventService = new EventService(_memoryService);
+        IUtilityService utilityService = new UtilityService(_memoryService);
         IItemService itemService = new ItemService(_memoryService);
         ISettingsService settingsService = new SettingsService(_memoryService, nopManager);
         
@@ -56,6 +57,8 @@ public partial class MainWindow : Window
         TargetViewModel targetViewModel =
             new TargetViewModel(_gameStateService, _hotkeyManager, targetService, debugDrawService);
         EventViewModel eventViewModel = new EventViewModel(eventService, _gameStateService, debugDrawService);
+        UtilityViewModel utilityViewModel =
+            new UtilityViewModel(utilityService, _gameStateService, _hotkeyManager, debugDrawService);
         SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, _gameStateService, _hotkeyManager);
 
 
@@ -63,12 +66,14 @@ public partial class MainWindow : Window
         var enemyTab = new EnemyTab(enemyViewModel);
         var targetTab = new TargetTab(targetViewModel);
         var eventTab = new EventTab(eventViewModel);
+        var utilityTab = new UtilityTab(utilityViewModel);
         var settingsTab = new SettingsTab(settingsViewModel);
         
         MainTabControl.Items.Add(new TabItem { Header = "Player", Content = playerTab });
         MainTabControl.Items.Add(new TabItem { Header = "Enemies", Content = enemyTab });
         MainTabControl.Items.Add(new TabItem { Header = "Target", Content = targetTab });
         MainTabControl.Items.Add(new TabItem { Header = "Event", Content = eventTab });
+        MainTabControl.Items.Add(new TabItem { Header = "Utility", Content = utilityTab });
         MainTabControl.Items.Add(new TabItem { Header = "Settings", Content = settingsTab });
         
         settingsViewModel.ApplyStartUpOptions();

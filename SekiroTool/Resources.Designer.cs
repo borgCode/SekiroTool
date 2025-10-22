@@ -206,6 +206,21 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 48 83 ec 48             sub    rsp,0x48
+        ///48 8d 0c 24             lea    rcx,[rsp]
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///ff d0                   call   rax
+        ///48 83 c4 48             add    rsp,0x48
+        ///c3                      ret.
+        /// </summary>
+        internal static string OpenMenuNoParams {
+            get {
+                return ResourceManager.GetString("OpenMenuNoParams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 48 83 ec 28             sub    rsp,0x28
         ///48 b9 00 00 00 00 00    movabs rcx,0x0
         ///00 00 00

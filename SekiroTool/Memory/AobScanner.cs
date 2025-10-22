@@ -33,8 +33,8 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.EventFlagMan.Base = FindAddressByPattern(Patterns.EventFlagMan);
         Offsets.DebugEventMan.Base = FindAddressByPattern(Patterns.DebugEventMan);
         Offsets.SprjFlipperImp.Base = FindAddressByPattern(Patterns.SprjFlipperImp);
-        
-        
+
+
         TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
             addr => Offsets.Hooks.LockedTarget = addr.ToInt64(), saved);
         TryPatternWithFallback("FreezeTargetPosture", Patterns.FreezeTargetPosture,
@@ -53,7 +53,7 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Hooks.PadTriggers = addr.ToInt64(), saved);
         TryPatternWithFallback("KeyBoard", Patterns.KeyBoard,
             addr => Offsets.Hooks.KeyBoard = addr.ToInt64(), saved);
-        
+
         TryPatternWithFallback("NoLogo", Patterns.NoLogo,
             addr => Offsets.Patches.NoLogo = addr, saved);
         TryPatternWithFallback("DebugFont", Patterns.DebugFontPatch,
@@ -68,8 +68,8 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Patches.ShowTutorialText = addr, saved);
         TryPatternWithFallback("SaveInCombat", Patterns.UpdateSaveCoords,
             addr => Offsets.Patches.SaveInCombat = addr, saved);
-        
-      
+
+
         using (var writer = new StreamWriter(savePath))
         {
             foreach (var pair in saved)
@@ -84,7 +84,15 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.Functions.AddExperience = FindAddressByPattern(Patterns.AddExperience).ToInt64();
         Offsets.Functions.ApplySpEffect = FindAddressByPattern(Patterns.ApplySpEffect).ToInt64();
         Offsets.Functions.ItemSpawn = FindAddressByPattern(Patterns.ItemSpawn).ToInt64();
-        Offsets.Functions.GetEnemyInsWithPackedWorldIdAndChrId = FindAddressByPattern(Patterns.GetEnemyInsWithPackedWorldIdAndChrId).ToInt64();
+        Offsets.Functions.GetEnemyInsWithPackedWorldIdAndChrId =
+            FindAddressByPattern(Patterns.GetEnemyInsWithPackedWorldIdAndChrId).ToInt64();
+        
+        FindMultipleCallsInFunction(Patterns.ProcessEsdCommand, new Dictionary<Action<long>, int>
+        {
+            {addr => Offsets.Functions.OpenRegularShop = addr, 0xBCF},
+            {addr => Offsets.Functions.OpenSkillMenu = addr, 0x2A03},
+            {addr => Offsets.Functions.UpgradeProstheticsMenu = addr, 0x29DC},
+        });
 
 #if DEBUG
         Console.WriteLine($"WorldChrMan.Base: 0x{Offsets.WorldChrMan.Base.ToInt64():X}");
@@ -97,7 +105,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"EventFlagMan.Base: 0x{Offsets.EventFlagMan.Base.ToInt64():X}");
         Console.WriteLine($"DebugEventMan.Base: 0x{Offsets.DebugEventMan.Base.ToInt64():X}");
         Console.WriteLine($"SprjFlipperImp.Base: 0x{Offsets.SprjFlipperImp.Base.ToInt64():X}");
-        
+
         Console.WriteLine($"Hooks.LockedTarget: 0x{Offsets.Hooks.LockedTarget:X}");
         Console.WriteLine($"Hooks.FreezeTargetPosture: 0x{Offsets.Hooks.FreezeTargetPosture:X}");
         Console.WriteLine($"Hooks.SetWarpCoordinates: 0x{Offsets.Hooks.SetWarpCoordinates:X}");
@@ -107,8 +115,8 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Hooks.UpdateCoords: 0x{Offsets.Hooks.UpdateCoords:X}");
         Console.WriteLine($"Hooks.PadTriggers: 0x{Offsets.Hooks.PadTriggers:X}");
         Console.WriteLine($"Hooks.KeyBoard: 0x{Offsets.Hooks.KeyBoard:X}");
-        
-        
+
+
         Console.WriteLine($"Patches.NoLogo: 0x{Offsets.Patches.NoLogo.ToInt64():X}");
         Console.WriteLine($"Patches.DebugFont: 0x{Offsets.Patches.DebugFont.ToInt64():X}");
         Console.WriteLine($"Patches.EventView: 0x{Offsets.Patches.EventView.ToInt64():X}");
@@ -116,7 +124,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Patches.ShowSmallHintBox: 0x{Offsets.Patches.ShowSmallHintBox.ToInt64():X}");
         Console.WriteLine($"Patches.ShowTutorialText: 0x{Offsets.Patches.ShowTutorialText.ToInt64():X}");
         Console.WriteLine($"Patches.SaveInCombat: 0x{Offsets.Patches.SaveInCombat.ToInt64():X}");
-        
+
         Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");
         Console.WriteLine($"Functions.Rest: 0x{Offsets.Functions.Rest:X}");
         Console.WriteLine($"Functions.SetEvent: 0x{Offsets.Functions.SetEvent:X}");
@@ -124,7 +132,11 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Functions.Warp: 0x{Offsets.Functions.Warp:X}");
         Console.WriteLine($"Functions.ApplySpEffect: 0x{Offsets.Functions.ApplySpEffect:X}");
         Console.WriteLine($"Functions.ItemSpawn: 0x{Offsets.Functions.ItemSpawn:X}");
-        Console.WriteLine($"Functions.GetEnemyInsWithPackedWorldIdAndChrId: 0x{Offsets.Functions.GetEnemyInsWithPackedWorldIdAndChrId:X}");
+        Console.WriteLine(
+            $"Functions.GetEnemyInsWithPackedWorldIdAndChrId: 0x{Offsets.Functions.GetEnemyInsWithPackedWorldIdAndChrId:X}");
+        Console.WriteLine($"Functions.OpenRegularShop: 0x{Offsets.Functions.OpenRegularShop:X}");
+        Console.WriteLine($"Functions.OpenSkillMenu: 0x{Offsets.Functions.OpenSkillMenu:X}");
+        Console.WriteLine($"Functions.UpgradeProstheticsMenu: 0x{Offsets.Functions.UpgradeProstheticsMenu:X}");
 #endif
     }
 
@@ -218,5 +230,20 @@ public class AoBScanner(IMemoryService memoryService)
         }
 
         return addresses;
+    }
+
+    private void FindMultipleCallsInFunction(Pattern basePattern, Dictionary<Action<long>, int> callMappings)
+    {
+        var baseInstructionAddr = FindAddressByPattern(basePattern);
+
+        foreach (var mapping in callMappings)
+        {
+            var callInstructionAddr = IntPtr.Add(baseInstructionAddr, mapping.Value);
+
+            int callOffset = memoryService.ReadInt32(IntPtr.Add(callInstructionAddr, 1));
+            var callTarget = IntPtr.Add(callInstructionAddr, callOffset + 5);
+
+            mapping.Key(callTarget.ToInt64());
+        }
     }
 }
