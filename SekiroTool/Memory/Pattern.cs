@@ -312,9 +312,9 @@ public static class Patterns
     );
 
     public static readonly Pattern InAirTimer = new Pattern(
-        new byte[] { 0xF3, 0x41, 0x0F, 0x10, 0x46, 0x08, 0xF3, 0x0F, 0x58, 0x86 },
-        "xxxxxxxxxx",
-        0x6,
+        new byte[] { 0xF3, 0x0F, 0x58, 0x87, 0xD0 },
+        "xxxxx",
+        0x0,
         AddressingMode.Absolute
     );
 

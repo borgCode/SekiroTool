@@ -1,4 +1,5 @@
-﻿using SekiroTool.GameIds;
+﻿using System.Collections;
+using SekiroTool.GameIds;
 using SekiroTool.Interfaces;
 using SekiroTool.Memory;
 using SekiroTool.Utilities;
@@ -74,10 +75,9 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
             var worldChrMan = WorldChrMan.Base;
             var inAirTimerHook = Hooks.InAirTimer;
             var bytes = AsmLoader.GetAsmBytes("NoClip_InAirTimer");
-            AsmHelper.WriteRelativeOffsets(bytes, [
-                (inAirTimerCode.ToInt64() + 0x9, worldChrMan.ToInt64(), 7, 0x9 + 3),
-                (inAirTimerCode.ToInt64() + 0x21, inAirTimerHook + 0x8, 5, 0x21 + 1)
-            ]);
+            Array.Copy(BitConverter.GetBytes(worldChrMan.ToInt64()), 0, bytes, 0x9 + 2, 8);
+            var jmpBytes = AsmHelper.GetJmpOriginOffsetBytes(inAirTimerHook, 8, inAirTimerCode + 0x29);
+            Array.Copy(jmpBytes, 0, bytes, 0x24 + 1, 4);
             memoryService.WriteBytes(inAirTimerCode, bytes);
 
             var zDirectionLoc = CodeCaveOffsets.Base + CodeCaveOffsets.ZDirection;
@@ -123,7 +123,7 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
             memoryService.WriteBytes(coordUpdateCode, bytes);
 
             hookManager.InstallHook(inAirTimerCode.ToInt64(), inAirTimerHook,
-                [0xF3, 0x0F, 0x58, 0x86, 0x00, 0x09, 0x00, 0x00]);
+                [0xF3, 0x0F, 0x58, 0x87, 0xD0, 0x08, 0x00, 0x00]);
             hookManager.InstallHook(keyboardCode.ToInt64(), keyboardHook,
                 [0xFF, 0x90, 0xF8, 0x00, 0x00, 0x00]);
             hookManager.InstallHook(triggersCode.ToInt64(), triggersHook,

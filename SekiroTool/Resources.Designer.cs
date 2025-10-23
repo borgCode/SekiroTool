@@ -243,17 +243,18 @@ namespace SekiroTool {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to f3 0f 58 86 00 09 00    addss  xmm0,DWORD PTR [rsi+0x900]
+        ///   Looks up a localized string similar to f3 0f 58 87 d0 08 00    addss  xmm0,DWORD PTR [rdi+0x8d0]
         ///00
         ///50                      push   rax
-        ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 10 &lt;_main+0x10&gt;
+        ///48 a1 00 00 00 00 00    movabs rax,ds:0x0
+        ///00 00 00
         ///48 8b 80 88 00 00 00    mov    rax,QWORD PTR [rax+0x88]
-        ///48 3b 46 08             cmp    rax,QWORD PTR [rsi+0x8]
-        ///75 03                   jne    20 &lt;exit&gt;
+        ///48 3b 47 08             cmp    rax,QWORD PTR [rdi+0x8]
+        ///75 03                   jne    23 &lt;exit&gt;
         ///0f 57 c0                xorps  xmm0,xmm0
-        ///000000000020 &lt;exit&gt;:
+        ///000000000023 &lt;exit&gt;:
         ///58                      pop    rax
-        ///e9 00 00 00 00          jmp    26 &lt;exit+0x6&gt;.
+        ///e9 00 00 00 00          jmp    29 &lt;exit+0x6&gt;.
         /// </summary>
         internal static string NoClip_InAirTimer {
             get {
