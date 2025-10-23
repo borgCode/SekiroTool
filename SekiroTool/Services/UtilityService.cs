@@ -67,7 +67,8 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
         var inAirTimerCode = CodeCaveOffsets.Base + CodeCaveOffsets.InAirTimer;
         var keyboardCode = CodeCaveOffsets.Base + CodeCaveOffsets.KeyboardCheckCode;
         var triggersCode = CodeCaveOffsets.Base + CodeCaveOffsets.TriggersCode;
-        
+        var coordUpdateCode = CodeCaveOffsets.Base + CodeCaveOffsets.CoordsUpdate;
+
         if (isEnabled)
         {
             var worldChrMan = WorldChrMan.Base;
@@ -78,41 +79,64 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
                 (inAirTimerCode.ToInt64() + 0x21, inAirTimerHook + 0x8, 5, 0x21 + 1)
             ]);
             memoryService.WriteBytes(inAirTimerCode, bytes);
-            
+
             var zDirectionLoc = CodeCaveOffsets.Base + CodeCaveOffsets.ZDirection;
             var keyboardHook = Hooks.KeyBoard;
             bytes = AsmLoader.GetAsmBytes("NoClip_Keyboard");
-            AsmHelper.WriteRelativeOffsets(bytes, new []
+            AsmHelper.WriteRelativeOffsets(bytes, new[]
             {
                 (keyboardCode.ToInt64() + 0x18, zDirectionLoc.ToInt64(), 7, 0x18 + 2),
                 (keyboardCode.ToInt64() + 0x23, zDirectionLoc.ToInt64(), 7, 0x23 + 2),
                 (keyboardCode.ToInt64() + 0x2C, keyboardHook + 0x6, 5, 0x2C + 1),
             });
             memoryService.WriteBytes(keyboardCode, bytes);
-            
-            
+
+
             bytes = AsmLoader.GetAsmBytes("NoClip_Triggers");
             var triggersHook = Hooks.PadTriggers;
-            AsmHelper.WriteRelativeOffsets(bytes, new []
+            AsmHelper.WriteRelativeOffsets(bytes, new[]
             {
                 (triggersCode.ToInt64() + 0x11, triggersHook + 0x5, 5, 0x11 + 1),
                 (triggersCode.ToInt64() + 0x16, zDirectionLoc.ToInt64(), 7, 0x16 + 2),
-               (triggersCode.ToInt64() + 0x1E, zDirectionLoc.ToInt64(), 7, 0x1E + 2), 
+                (triggersCode.ToInt64() + 0x1E, zDirectionLoc.ToInt64(), 7, 0x1E + 2),
             });
             memoryService.WriteBytes(triggersCode, bytes);
-            
-            
+
+
+            bytes = AsmLoader.GetAsmBytes("NoClip_CoordsUpdate");
+            var coordsUpdateHook = Hooks.UpdateCoords;
+            var fieldArea = FieldArea.Base;
+            AsmHelper.WriteAbsoluteAddresses(bytes, new[]
+            {
+                (worldChrMan.ToInt64(), 0x1 + 2),
+                (worldChrMan.ToInt64(), 0x26 + 2),
+                (fieldArea.ToInt64(), 0x63 + 2)
+            });
+
+            AsmHelper.WriteRelativeOffsets(bytes, new[]
+            {
+                (coordUpdateCode.ToInt64() + 0xAF, zDirectionLoc.ToInt64(), 6, 0xAF + 2),
+                (coordUpdateCode.ToInt64() + 0xD9, zDirectionLoc.ToInt64(), 7, 0xD9 + 2),
+                (coordUpdateCode.ToInt64() + 0xFC, coordsUpdateHook + 0x7, 5, 0xFC + 1)
+            });
+
+            memoryService.WriteBytes(coordUpdateCode, bytes);
+
             hookManager.InstallHook(inAirTimerCode.ToInt64(), inAirTimerHook,
                 [0xF3, 0x0F, 0x58, 0x86, 0x00, 0x09, 0x00, 0x00]);
             hookManager.InstallHook(keyboardCode.ToInt64(), keyboardHook,
                 [0xFF, 0x90, 0xF8, 0x00, 0x00, 0x00]);
             hookManager.InstallHook(triggersCode.ToInt64(), triggersHook,
                 [0x41, 0x83, 0xF9, 0x0B, 0x74]);
+            hookManager.InstallHook(coordUpdateCode.ToInt64(), coordsUpdateHook,
+                [0x0F, 0x29, 0xB6, 0x80, 0x00, 0x00, 0x00]);
         }
         else
         {
             hookManager.UninstallHook(inAirTimerCode.ToInt64());
             hookManager.UninstallHook(keyboardCode.ToInt64());
+            hookManager.UninstallHook(triggersCode.ToInt64());
+            hookManager.UninstallHook(coordUpdateCode.ToInt64());
         }
     }
 }

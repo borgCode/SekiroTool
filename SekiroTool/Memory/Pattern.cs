@@ -116,6 +116,15 @@ public static class Patterns
         7
     );
 
+    public static readonly Pattern FieldArea = new Pattern(
+        new byte[] { 0x48, 0x8B, 0x1D, 0x00, 0x00, 0x00, 0x00, 0x41, 0x0F, 0xB6, 0xF8, 0x48, 0x85, 0xDB, 0x74, 0x25 },
+        "xxx????xxxxxxxxx",
+        0,
+        AddressingMode.Relative,
+        3,
+        7
+    );
+
     #endregion
 
 
@@ -315,7 +324,6 @@ public static class Patterns
         -0x31,
         AddressingMode.Absolute
     );
-    //TODO hook at start, check previous func in ghidra for codes
 
     public static readonly Pattern KeyBoard = new Pattern(
         new byte[] { 0xFF, 0x90, 0xF8, 0x00, 0x00, 0x00, 0x84, 0xC0, 0x75, 0x1B },

@@ -33,6 +33,7 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.EventFlagMan.Base = FindAddressByPattern(Patterns.EventFlagMan);
         Offsets.DebugEventMan.Base = FindAddressByPattern(Patterns.DebugEventMan);
         Offsets.SprjFlipperImp.Base = FindAddressByPattern(Patterns.SprjFlipperImp);
+        Offsets.FieldArea.Base = FindAddressByPattern(Patterns.FieldArea);
 
 
         TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
@@ -113,6 +114,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"EventFlagMan.Base: 0x{Offsets.EventFlagMan.Base.ToInt64():X}");
         Console.WriteLine($"DebugEventMan.Base: 0x{Offsets.DebugEventMan.Base.ToInt64():X}");
         Console.WriteLine($"SprjFlipperImp.Base: 0x{Offsets.SprjFlipperImp.Base.ToInt64():X}");
+        Console.WriteLine($"FieldArea.Base: 0x{Offsets.FieldArea.Base.ToInt64():X}");
 
         Console.WriteLine($"Hooks.LockedTarget: 0x{Offsets.Hooks.LockedTarget:X}");
         Console.WriteLine($"Hooks.FreezeTargetPosture: 0x{Offsets.Hooks.FreezeTargetPosture:X}");

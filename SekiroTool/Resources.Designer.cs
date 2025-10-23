@@ -222,6 +222,27 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 50                      push   rax
+        ///48 a1 00 00 00 00 00    movabs rax,ds:0x0
+        ///00 00 00
+        ///48 8b 80 88 00 00 00    mov    rax,QWORD PTR [rax+0x88]
+        ///48 3b 46 08             cmp    rax,QWORD PTR [rsi+0x8]
+        ///0f 85 d8 00 00 00       jne    f4 &lt;normal&gt;
+        ///0f 10 b6 80 00 00 00    movups xmm6,XMMWORD PTR [rsi+0x80]
+        ///41 50                   push   r8
+        ///52                      push   rdx
+        ///48 a1 00 00 00 00 00    movabs rax,ds:0x0
+        ///00 00 00
+        ///48 8b 80 88 00 00 00    mov    rax,QWORD PTR [rax+0x88]
+        ///48 8b 50 58             m [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string NoClip_CoordsUpdate {
+            get {
+                return ResourceManager.GetString("NoClip_CoordsUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to f3 0f 58 86 00 09 00    addss  xmm0,DWORD PTR [rsi+0x900]
         ///00
         ///50                      push   rax

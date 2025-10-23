@@ -21,6 +21,7 @@ public static class CodeCaveOffsets
     public const int ZDirection = 0x230;
     public const int KeyboardCheckCode = 0x240;
     public const int TriggersCode = 0x280;
+    public const int CoordsUpdate = 0x300;
 
     public const int InfinitePoise = 0x500;
 

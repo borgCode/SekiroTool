@@ -187,6 +187,12 @@ public static class Offsets
 
     public static class FieldArea
     {
+        public static IntPtr Base;
+        public const int ChrCam = 0x30;
+        public static readonly int[] ChrExFollowCam = [ChrCam, 0x60];
+        // +0x10 yaw
+        //+0x30 pitch
+        
     }
 
     public static class GroupMask
