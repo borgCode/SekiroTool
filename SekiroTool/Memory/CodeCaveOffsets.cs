@@ -23,7 +23,9 @@ public static class CodeCaveOffsets
     public const int TriggersCode = 0x280;
 
     public const int InfinitePoise = 0x500;
-    
+
+    public const int ButterflyNoSummons = 0x540;
+
 
 
 }

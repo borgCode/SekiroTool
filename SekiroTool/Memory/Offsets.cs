@@ -223,6 +223,7 @@ public static class Offsets
         public static long PadTriggers;
         public static long KeyBoard;
         public static long InfinitePoise;
+        public static long AiHasSpEffect;
     }
 
     public static class Functions

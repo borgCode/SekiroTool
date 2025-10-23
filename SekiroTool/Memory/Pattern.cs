@@ -339,5 +339,12 @@ public static class Patterns
         AddressingMode.Absolute
     );
 
+    public static readonly Pattern AiHasSpEffect = new Pattern(
+        new byte[] { 0xFF, 0x90, 0x08, 0x01, 0x00, 0x00, 0x48, 0x85, 0xC0, 0x74, 0x15 },
+        "xxxxxxxxxxx",
+        0,
+        AddressingMode.Absolute
+    );
+
     #endregion
 }

@@ -25,7 +25,9 @@
                                 Margin="3" />
                     </WrapPanel>
                     
-                    
+                    <CheckBox Content="Butterfly No Summons"
+                              IsChecked="{Binding IsNoButterflySummonsEnabled}"
+                              Margin="0,2" />
                     
                 </StackPanel>
             </Border>

@@ -3,4 +3,5 @@
 public interface IEnemyService
 {
     void SkipDragonPhaseOne();
+    void ToggleButterflyNoSummons(bool isEnabled);
 }

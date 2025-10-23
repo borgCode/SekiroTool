@@ -97,22 +97,21 @@ namespace SekiroTool {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 48 89 e0                mov    rax,rsp
-        ///55                      push   rbp
-        ///56                      push   rsi
-        ///50                      push   rax
-        ///48 8b 01                mov    rax,QWORD PTR [rcx]
-        ///81 78 18 21 ac 08 03    cmp    DWORD PTR [rax+0x18],0x308ac21
-        ///75 0e                   jne    20 &lt;exit&gt;
-        ///0f 2f 1d 00 00 00 00    comiss xmm3,DWORD PTR [rip+0x0]        # 19 &lt;_main+0x19&gt;
-        ///75 05                   jne    20 &lt;exit&gt;
-        ///ba ff ff ff ff          mov    edx,0xffffffff
-        ///000000000020 &lt;exit&gt;:
-        ///58             [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to ff 90 08 01 00 00       call   QWORD PTR [rax+0x108]
+        ///81 fb 73 0d 03 00       cmp    ebx,0x30d73
+        ///75 11                   jne    1f &lt;exit&gt;
+        ///53                      push   rbx
+        ///48 8b 18                mov    rbx,QWORD PTR [rax]
+        ///81 7b 68 21 ac 08 03    cmp    DWORD PTR [rbx+0x68],0x308ac21
+        ///5b                      pop    rbx
+        ///75 03                   jne    1f &lt;exit&gt;
+        ///48 31 c0                xor    rax,rax
+        ///00000000001f &lt;exit&gt;:
+        ///e9 00 00 00 00          jmp    24 &lt;exit+0x5&gt;.
         /// </summary>
-        internal static string ButterflyNoSnap {
+        internal static string ButterflyNoSummons {
             get {
-                return ResourceManager.GetString("ButterflyNoSnap", resourceCulture);
+                return ResourceManager.GetString("ButterflyNoSummons", resourceCulture);
             }
         }
         
