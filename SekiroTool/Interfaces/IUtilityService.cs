@@ -9,4 +9,5 @@ public interface IUtilityService
     void OpenRegularShop(ShopLineup shopLineup);
     void OpenScalesShop(ScaleLineup scaleLineup);
     void OpenProstheticsShop(ShopLineup shopLineup);
+    void ToggleNoClip(bool isEnabled);
 }

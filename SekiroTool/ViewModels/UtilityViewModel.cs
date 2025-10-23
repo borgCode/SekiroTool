@@ -74,6 +74,33 @@ public class UtilityViewModel : BaseViewModel
         get => _areOptionsEnabled;
         set => SetProperty(ref _areOptionsEnabled, value);
     }
+    
+    private bool _isNoClipEnabled;
+    public bool IsNoClipEnabled
+    {
+        get => _isNoClipEnabled;
+        set
+        {
+            if (!SetProperty(ref _isNoClipEnabled, value)) return;
+
+            if (_isNoClipEnabled)
+            {
+                _utilityService.ToggleNoClip(_isNoClipEnabled);
+                // _wasNoDeathEnabled = _playerViewModel.IsNoDeathEnabled;
+                // _playerViewModel.IsNoDeathEnabled = true;
+                // _playerViewModel.IsSilentEnabled = true;
+                // _playerViewModel.IsInvisibleEnabled = true;
+            }
+            else
+            {
+                _utilityService.ToggleNoClip(_isNoClipEnabled);
+                // _playerViewModel.IsNoDeathEnabled = _wasNoDeathEnabled;
+                // _playerViewModel.IsSilentEnabled = false;
+                // _playerViewModel.IsInvisibleEnabled = false;
+                // NoClipSpeed = DefaultNoclipMultiplier;
+            }
+        }
+    }
     #endregion
     
     #region Private Methods

@@ -17,4 +17,9 @@ public static class CodeCaveOffsets
     public const int SavePos1 = 0x190;
     public const int SavePos2 = 0x1A0;
 
+    public const int InAirTimer = 0x200;
+    public const int ZDirection = 0x230;
+    public const int KeyboardCheckCode = 0x240;
+
+
 }

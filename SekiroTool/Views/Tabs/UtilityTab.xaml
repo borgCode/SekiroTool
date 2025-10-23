@@ -118,23 +118,6 @@
                 Margin="0,0,0,5">
 
             <StackPanel Margin="10">
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,3" VerticalAlignment="Center">
-                    <CheckBox Content="100% Drop"
-                              IsChecked="{Binding Is100DropEnabled}"
-                              VerticalAlignment="Center"
-                              Margin="0,0,20,0" />
-                    <Button Content="Break Objects"
-
-                            IsEnabled="{Binding AreButtonsEnabled}"
-                            Padding="5,3"
-                            Margin="0,0,20,0" />
-                    <Button Content="Restore Objects"
-
-                            IsEnabled="{Binding AreButtonsEnabled}"
-                            Padding="5,3"
-                            Margin="0,0,20,0" />
-                </StackPanel>
-
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10,0,0">
                     <xctk:DoubleUpDown x:Name="SpeedUpDown"
                                        Value="{Binding GameSpeed}"
@@ -148,23 +131,12 @@
                                        BorderBrush="#3F3F46" />
                     <TextBlock Text="Game Speed" VerticalAlignment="Center" Margin="10,0,0,0" />
                 </StackPanel>
-
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10,0,0">
-                    <CheckBox Content="Unlock Fps"
-                              IsChecked="{Binding IsDbgFpsEnabled}"
-                              VerticalAlignment="Center"
-                              Margin="0,0,20,0" />
-                    <xctk:DoubleUpDown x:Name="FpsUpDown"
-                                       Value="{Binding Fps}"
-                                       TextAlignment="Center"
-                                       Width="80"
-                                       Minimum="5"
-                                       Maximum="140"
-                                       Increment="1"
-                                       FormatString="F0"
-                                       IsEnabled="{Binding IsDbgFpsEnabled}"
-                                       BorderBrush="#3F3F46" />
-                </StackPanel>
+                
+                <CheckBox Content="NoClip" HorizontalAlignment="Right"
+                          IsChecked="{Binding IsNoClipEnabled}"
+                          IsEnabled="{Binding AreButtonsEnabled}"
+                          Margin="0,2" />
+                
             </StackPanel>
 
         </Border>

@@ -318,8 +318,8 @@ public static class Patterns
     //TODO hook at start, check previous func in ghidra for codes
 
     public static readonly Pattern KeyBoard = new Pattern(
-        new byte[] { 0xF6, 0x84, 0x08, 0x98 },
-        "xxxx",
+        new byte[] { 0xFF, 0x90, 0xF8, 0x00, 0x00, 0x00, 0x84, 0xC0, 0x75, 0x1B },
+        "xxxxxxxxxx",
         0,
         AddressingMode.Absolute
     );

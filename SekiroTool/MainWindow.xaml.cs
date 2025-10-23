@@ -46,7 +46,7 @@ public partial class MainWindow : Window
         ITargetService targetService = new TargetService(_memoryService, hookManager);
         IDebugDrawService debugDrawService = new DebugDrawService(_memoryService, _gameStateService, nopManager);
         IEventService eventService = new EventService(_memoryService);
-        IUtilityService utilityService = new UtilityService(_memoryService);
+        IUtilityService utilityService = new UtilityService(_memoryService, hookManager);
         IItemService itemService = new ItemService(_memoryService);
         ISettingsService settingsService = new SettingsService(_memoryService, nopManager);
         

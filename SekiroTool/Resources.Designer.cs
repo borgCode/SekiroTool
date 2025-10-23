@@ -206,6 +206,45 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to f3 0f 58 86 00 09 00    addss  xmm0,DWORD PTR [rsi+0x900]
+        ///00
+        ///50                      push   rax
+        ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 10 &lt;_main+0x10&gt;
+        ///48 8b 80 88 00 00 00    mov    rax,QWORD PTR [rax+0x88]
+        ///48 3b 46 08             cmp    rax,QWORD PTR [rsi+0x8]
+        ///75 03                   jne    20 &lt;exit&gt;
+        ///0f 57 c0                xorps  xmm0,xmm0
+        ///000000000020 &lt;exit&gt;:
+        ///58                      pop    rax
+        ///e9 00 00 00 00          jmp    26 &lt;exit+0x6&gt;.
+        /// </summary>
+        internal static string NoClip_InAirTimer {
+            get {
+                return ResourceManager.GetString("NoClip_InAirTimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ff 90 f8 00 00 00       call   QWORD PTR [rax+0xf8]
+        ///84 c0                   test   al,al
+        ///74 22                   je     2c &lt;exit&gt;
+        ///49 83 fc 62             cmp    r12,0x62
+        ///74 08                   je     18 &lt;set_down&gt;
+        ///49 83 fc 7e             cmp    r12,0x7e
+        ///74 0d                   je     23 &lt;set_up&gt;
+        ///eb 14                   jmp    2c &lt;exit&gt;
+        ///000000000018 &lt;set_down&gt;:
+        ///c6 05 00 00 00 00 01    mov    BYTE PTR [rip+0x0],0x1        # 1f &lt;set_down+0x7&gt;
+        ///30 c0                   xor    al,al
+        ///eb 09               [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string NoClip_Keyboard {
+            get {
+                return ResourceManager.GetString("NoClip_Keyboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 48 83 ec 48             sub    rsp,0x48
         ///48 8d 0c 24             lea    rcx,[rsp]
         ///48 b8 00 00 00 00 00    movabs rax,0x0
