@@ -262,6 +262,27 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 41 83 f9 0b             cmp    r9d,0xb
+        ///74 10                   je     16 &lt;set_down&gt;
+        ///41 83 f9 0c             cmp    r9d,0xc
+        ///74 12                   je     1e &lt;set_up&gt;
+        ///49 89 e3                mov    r11,rsp
+        ///53                      push   rbx
+        ///56                      push   rsi
+        ///e9 00 00 00 00          jmp    16 &lt;set_down&gt;
+        ///000000000016 &lt;set_down&gt;:
+        ///c6 05 00 00 00 00 01    mov    BYTE PTR [rip+0x0],0x1        # 1d &lt;set_down+0x7&gt;
+        ///c3                      ret
+        ///00000000001e &lt;set_up&gt;:
+        ///c6 05 00 00 00 00 02    [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string NoClip_Triggers {
+            get {
+                return ResourceManager.GetString("NoClip_Triggers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 48 83 ec 48             sub    rsp,0x48
         ///48 8d 0c 24             lea    rcx,[rsp]
         ///48 b8 00 00 00 00 00    movabs rax,0x0

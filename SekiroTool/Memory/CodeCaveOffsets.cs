@@ -20,7 +20,7 @@ public static class CodeCaveOffsets
     public const int InAirTimer = 0x200;
     public const int ZDirection = 0x230;
     public const int KeyboardCheckCode = 0x240;
-
+    public const int TriggersCode = 0x280;
 
     public const int InfinitePoise = 0x500;
     
