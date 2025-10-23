@@ -53,6 +53,8 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Hooks.PadTriggers = addr.ToInt64(), saved);
         TryPatternWithFallback("KeyBoard", Patterns.KeyBoard,
             addr => Offsets.Hooks.KeyBoard = addr.ToInt64(), saved);
+        TryPatternWithFallback("InfinitePoise", Patterns.InfinitePoise,
+            addr => Offsets.Hooks.InfinitePoise = addr.ToInt64(), saved);
 
         TryPatternWithFallback("NoLogo", Patterns.NoLogo,
             addr => Offsets.Patches.NoLogo = addr, saved);
@@ -119,6 +121,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Hooks.UpdateCoords: 0x{Offsets.Hooks.UpdateCoords:X}");
         Console.WriteLine($"Hooks.PadTriggers: 0x{Offsets.Hooks.PadTriggers:X}");
         Console.WriteLine($"Hooks.KeyBoard: 0x{Offsets.Hooks.KeyBoard:X}");
+        Console.WriteLine($"Hooks.InfinitePoise: 0x{Offsets.Hooks.InfinitePoise:X}");
 
 
         Console.WriteLine($"Patches.NoLogo: 0x{Offsets.Patches.NoLogo.ToInt64():X}");

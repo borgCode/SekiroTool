@@ -195,6 +195,23 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 50                      push   rax
+        ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;
+        ///48 8b 80 88 00 00 00    mov    rax,QWORD PTR [rax+0x88]
+        ///48 3b 46 08             cmp    rax,QWORD PTR [rsi+0x8]
+        ///58                      pop    rax
+        ///0f 84 00 00 00 00       je     1a &lt;_main+0x1a&gt;
+        ///4c 89 bc 24 a0 00 00    mov    QWORD PTR [rsp+0xa0],r15
+        ///00
+        ///e9 00 00 00 00          jmp    27 &lt;_main+0x27&gt;.
+        /// </summary>
+        internal static string InfinitePoise {
+            get {
+                return ResourceManager.GetString("InfinitePoise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 48 89 05 00 00 00 00    mov    QWORD PTR [rip+0x0],rax        # 7 &lt;_main+0x7&gt;
         ///48 8b 80 f8 1f 00 00    mov    rax,QWORD PTR [rax+0x1ff8]
         ///e9 00 00 00 00          jmp    13 &lt;_main+0x13&gt;.

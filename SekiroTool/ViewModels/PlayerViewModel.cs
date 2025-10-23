@@ -183,6 +183,19 @@ public class PlayerViewModel : BaseViewModel
             }
         }
     }
+
+    private bool _isInfinitePoiseEnabled;
+    public bool IsInfinitePoiseEnabled
+    {
+        get => _isInfinitePoiseEnabled;
+        set
+        {
+            if (SetProperty(ref _isInfinitePoiseEnabled, value))
+            {
+                _playerService.TogglePlayerInfinitePoise(_isInfinitePoiseEnabled);
+            }
+        }
+    }
     
     #endregion
 
@@ -215,6 +228,8 @@ public class PlayerViewModel : BaseViewModel
         if (_isPlayerHideEnabled) _playerService.TogglePlayerHide(true);
         
         if (_isPlayerSilentEnabled) _playerService.TogglePlayerSilent(true);
+        
+        if (_isInfinitePoiseEnabled) _playerService.TogglePlayerInfinitePoise(true);
     }
     
     

@@ -22,4 +22,8 @@ public static class CodeCaveOffsets
     public const int KeyboardCheckCode = 0x240;
 
 
+    public const int InfinitePoise = 0x500;
+    
+
+
 }

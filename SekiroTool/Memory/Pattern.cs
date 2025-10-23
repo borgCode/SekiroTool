@@ -332,5 +332,12 @@ public static class Patterns
         AddressingMode.Absolute
     );
 
+    public static readonly Pattern InfinitePoise = new Pattern(
+        new byte[] { 0x4C, 0x89, 0xBC, 0x24, 0xA0, 0x00, 0x00, 0x00, 0x32 },
+        "xxxxxxxxx",
+        0,
+        AddressingMode.Absolute
+    );
+
     #endregion
 }

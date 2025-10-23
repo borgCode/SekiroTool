@@ -220,4 +220,15 @@ c6 05 00 00 00 00 02    mov    BYTE PTR [rip+0x0],0x2        # 2a &lt;set_up+0x7
 00000000002c &lt;exit&gt;:
 e9 00 00 00 00          jmp    31 &lt;exit+0x5&gt;</value>
     </data>
+    <data name="InfinitePoise" xml:space="preserve">
+        <value>50                      push   rax
+48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;
+48 8b 80 88 00 00 00    mov    rax,QWORD PTR [rax+0x88]
+48 3b 46 08             cmp    rax,QWORD PTR [rsi+0x8]
+58                      pop    rax
+0f 84 00 00 00 00       je     1a &lt;_main+0x1a&gt;
+4c 89 bc 24 a0 00 00    mov    QWORD PTR [rsp+0xa0],r15
+00
+e9 00 00 00 00          jmp    27 &lt;_main+0x27&gt;</value>
+    </data>
 </root>

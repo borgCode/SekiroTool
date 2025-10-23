@@ -5,7 +5,7 @@ using static SekiroTool.Memory.Offsets;
 
 namespace SekiroTool.Services;
 
-public class PlayerService(IMemoryService memoryService) : IPlayerService
+public class PlayerService(IMemoryService memoryService, HookManager hookManager) : IPlayerService
 {
     #region Public Methods
 
@@ -172,6 +172,35 @@ public class PlayerService(IMemoryService memoryService) : IPlayerService
     public void TogglePlayerSilent(bool isEnabled)
     {
         memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerSilent, (byte)(isEnabled ? 1 : 0));
+    }
+
+    public void TogglePlayerInfinitePoise(bool isEnabled)
+    {
+        var code = CodeCaveOffsets.Base + CodeCaveOffsets.InfinitePoise;
+        if (isEnabled)
+        {
+            var worldChrMan = WorldChrMan.Base;
+            var hookLoc = Hooks.InfinitePoise;
+            var skippedStaggerLoc = hookLoc + 0x429;
+
+            var bytes = AsmLoader.GetAsmBytes("InfinitePoise");
+            AsmHelper.WriteRelativeOffsets(bytes, new []
+            {
+                (code.ToInt64() + 0x1, worldChrMan.ToInt64(), 7, 0x1 + 3),
+                (code.ToInt64() + 0x14, skippedStaggerLoc, 6, 0x14 + 2),
+                (code.ToInt64() + 0x22, hookLoc + 8, 5, 0x22 + 1),
+            });
+            
+            
+            memoryService.WriteBytes(code, bytes);
+            hookManager.InstallHook(code.ToInt64(), hookLoc,
+                [0x4C, 0x89, 0xBC, 0x24, 0xA0, 0x00, 0x00, 0x00]);
+          
+        }
+        else
+        {
+            hookManager.UninstallHook(code.ToInt64());
+        }
     }
 
     #endregion

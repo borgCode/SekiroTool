@@ -41,7 +41,7 @@ public partial class MainWindow : Window
         _hotkeyManager = new HotkeyManager(_memoryService);
 
         _gameStateService = new GameStateService(_memoryService);
-        _playerService = new PlayerService(_memoryService);
+        _playerService = new PlayerService(_memoryService, hookManager);
         IEnemyService enemyService = new EnemyService(_memoryService, hookManager);
         ITargetService targetService = new TargetService(_memoryService, hookManager);
         IDebugDrawService debugDrawService = new DebugDrawService(_memoryService, _gameStateService, nopManager);

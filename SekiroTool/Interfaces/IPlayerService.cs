@@ -31,8 +31,9 @@ public interface IPlayerService
     void TogglePlayerNoRevivalConsume(bool isEnabled);
     void TogglePlayerHide(bool isEnabled);
     void TogglePlayerSilent(bool isEnabled);
-    
-    
-    
-    
+    void TogglePlayerInfinitePoise(bool isEnabled);
+
+
+
+
 }
