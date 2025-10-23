@@ -127,7 +127,7 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
             hookManager.InstallHook(keyboardCode.ToInt64(), keyboardHook,
                 [0xFF, 0x90, 0xF8, 0x00, 0x00, 0x00]);
             hookManager.InstallHook(triggersCode.ToInt64(), triggersHook,
-                [0x41, 0x83, 0xF9, 0x0B, 0x74]);
+                [0x4C, 0x8B, 0xDC, 0x53, 0x56]);
             hookManager.InstallHook(coordUpdateCode.ToInt64(), coordsUpdateHook,
                 [0x0F, 0x29, 0xB6, 0x80, 0x00, 0x00, 0x00]);
         }
