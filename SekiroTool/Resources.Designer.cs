@@ -283,6 +283,23 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 80 3d 00 00 00 00 01    cmp    BYTE PTR [rip+0x0],0x1        # 7 &lt;_main+0x7&gt;
+        ///0f 84 f3 00 00 00       je     100 &lt;exit&gt;
+        ///48 8b 0d 00 00 00 00    mov    rcx,QWORD PTR [rip+0x0]        # 14 &lt;_main+0x14&gt;
+        ///48 8b 89 98 00 00 00    mov    rcx,QWORD PTR [rcx+0x98]
+        ///ba 4e 00 00 00          mov    edx,0x4e
+        ///48 8b 3d 00 00 00 00    mov    rdi,QWORD PTR [rip+0x0]        # 27 &lt;_main+0x27&gt;
+        ///4c 8b bf 88 00 00 00    mov    r15,QWORD PTR [rdi+0x88]
+        ///49 8b bf f8 1f 00 00    mov    rdi,QWORD PTR [r15+0x1ff8]
+        ///48 8b 7f 68     [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string NoClip_RayCast {
+            get {
+                return ResourceManager.GetString("NoClip_RayCast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 41 83 f9 0b             cmp    r9d,0xb
         ///74 10                   je     16 &lt;set_down&gt;
         ///41 83 f9 0c             cmp    r9d,0xc

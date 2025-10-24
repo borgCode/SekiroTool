@@ -36,6 +36,8 @@ public interface IMemoryService
     public nint FollowPointers(nint baseAddress, int[] offsets, bool readFinalPtr);
     void AllocateAndExecute(byte[] shellcode);
     void AllocCodeCave();
+
+    public IntPtr GetProcAddress(string moduleName, string procName);
     
     void StartAutoAttach();
 }

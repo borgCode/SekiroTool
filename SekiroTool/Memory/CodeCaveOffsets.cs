@@ -27,6 +27,11 @@ public static class CodeCaveOffsets
 
     public const int ButterflyNoSummons = 0x540;
 
-
-
+    
+    public const int RayCastDistanceMultiplier = 0x600;
+    public const int From = 0x610;
+    public const int To = 0x620;
+    public const int HitEntity = 0x630;
+    public const int ShouldExitFlag = 0x640;
+    public const int RayCastCode = 0x650;
 }

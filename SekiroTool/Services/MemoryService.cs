@@ -226,6 +226,15 @@ public class MemoryService : IMemoryService
             }
         }
     }
+    
+    public IntPtr GetProcAddress(string moduleName, string procName)
+    {
+        IntPtr moduleHandle = Kernel32.GetModuleHandle(moduleName);
+        if (moduleHandle == IntPtr.Zero)
+            return IntPtr.Zero;
+
+        return Kernel32.GetProcAddress(moduleHandle, procName);
+    }
 
     public void StartAutoAttach()
     {

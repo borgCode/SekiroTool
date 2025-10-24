@@ -34,6 +34,7 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.DebugEventMan.Base = FindAddressByPattern(Patterns.DebugEventMan);
         Offsets.SprjFlipperImp.Base = FindAddressByPattern(Patterns.SprjFlipperImp);
         Offsets.FieldArea.Base = FindAddressByPattern(Patterns.FieldArea);
+        Offsets.FrpgHavokMan.Base = FindAddressByPattern(Patterns.FrpgHavokMan);
 
 
         TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
@@ -93,15 +94,17 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.Functions.ItemSpawn = FindAddressByPattern(Patterns.ItemSpawn).ToInt64();
         Offsets.Functions.GetEnemyInsWithPackedWorldIdAndChrId =
             FindAddressByPattern(Patterns.GetEnemyInsWithPackedWorldIdAndChrId).ToInt64();
-        
+
         FindMultipleCallsInFunction(Patterns.ProcessEsdCommand, new Dictionary<Action<long>, int>
         {
-            {addr => Offsets.Functions.OpenRegularShop = addr, 0xBCF},
-            {addr => Offsets.Functions.OpenSkillMenu = addr, 0x2A03},
-            {addr => Offsets.Functions.UpgradeProstheticsMenu = addr, 0x29DC},
-            {addr => Offsets.Functions.OpenScalesShop = addr, 0x29B5},
-            {addr => Offsets.Functions.OpenProstheticsShop = addr, 0x24FA},
+            { addr => Offsets.Functions.OpenRegularShop = addr, 0xBCF },
+            { addr => Offsets.Functions.OpenSkillMenu = addr, 0x2A03 },
+            { addr => Offsets.Functions.UpgradeProstheticsMenu = addr, 0x29DC },
+            { addr => Offsets.Functions.OpenScalesShop = addr, 0x29B5 },
+            { addr => Offsets.Functions.OpenProstheticsShop = addr, 0x24FA },
         });
+
+        Offsets.Functions.FrpgCastRay = FindAddressByPattern(Patterns.FrpgCastRay).ToInt64();
 
 #if DEBUG
         Console.WriteLine($"WorldChrMan.Base: 0x{Offsets.WorldChrMan.Base.ToInt64():X}");
@@ -115,6 +118,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"DebugEventMan.Base: 0x{Offsets.DebugEventMan.Base.ToInt64():X}");
         Console.WriteLine($"SprjFlipperImp.Base: 0x{Offsets.SprjFlipperImp.Base.ToInt64():X}");
         Console.WriteLine($"FieldArea.Base: 0x{Offsets.FieldArea.Base.ToInt64():X}");
+        Console.WriteLine($"FrpgHavokMan.Base: 0x{Offsets.FrpgHavokMan.Base.ToInt64():X}");
 
         Console.WriteLine($"Hooks.LockedTarget: 0x{Offsets.Hooks.LockedTarget:X}");
         Console.WriteLine($"Hooks.FreezeTargetPosture: 0x{Offsets.Hooks.FreezeTargetPosture:X}");
@@ -152,6 +156,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Functions.UpgradeProstheticsMenu: 0x{Offsets.Functions.UpgradeProstheticsMenu:X}");
         Console.WriteLine($"Functions.OpenScalesShop: 0x{Offsets.Functions.OpenScalesShop:X}");
         Console.WriteLine($"Functions.OpenProstheticsShop: 0x{Offsets.Functions.OpenProstheticsShop:X}");
+        Console.WriteLine($"Functions.FrpgCastRay: 0x{Offsets.Functions.FrpgCastRay:X}");
 #endif
     }
 

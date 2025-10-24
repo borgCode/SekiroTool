@@ -50,7 +50,9 @@ public class Kernel32
     [DllImport("kernel32.dll", SetLastError = true)]
     public static extern bool VirtualFreeEx(IntPtr hProcess, IntPtr lpAddress, uint dwSize, uint dwFreeType);
     
-    [DllImport("kernel32.dll")]
-    public static extern int VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress,
-        out MemoryBasicInformation lpBuffer, uint dwLength);
+    [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
+    public static extern IntPtr GetModuleHandle(string lpModuleName);
+
+    [DllImport("kernel32.dll", CharSet = CharSet.Ansi)]
+    public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
 }

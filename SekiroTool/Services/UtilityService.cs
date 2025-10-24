@@ -122,6 +122,8 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
 
             memoryService.WriteBytes(coordUpdateCode, bytes);
 
+            RunRayCast();
+
             hookManager.InstallHook(inAirTimerCode.ToInt64(), inAirTimerHook,
                 [0xF3, 0x0F, 0x58, 0x87, 0xD0, 0x08, 0x00, 0x00]);
             hookManager.InstallHook(keyboardCode.ToInt64(), keyboardHook,
@@ -137,6 +139,57 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
             hookManager.UninstallHook(keyboardCode.ToInt64());
             hookManager.UninstallHook(triggersCode.ToInt64());
             hookManager.UninstallHook(coordUpdateCode.ToInt64());
+            TerminateRayCast();
         }
+    }
+
+    private void RunRayCast()
+    {
+        var havokMan = FrpgHavokMan.Base;
+        var worldChrMan = WorldChrMan.Base;
+        var fieldArea = FieldArea.Base;
+        var sleepAddr = memoryService.GetProcAddress("kernel32.dll", "Sleep");
+        var castRay = Functions.FrpgCastRay;
+
+        var rayCastDistanceMultiplier = CodeCaveOffsets.Base + CodeCaveOffsets.RayCastDistanceMultiplier;
+        var fromLocation = CodeCaveOffsets.Base + CodeCaveOffsets.From;
+        var toLocation = CodeCaveOffsets.Base + CodeCaveOffsets.To;
+        var hitEntityLoc = CodeCaveOffsets.Base + CodeCaveOffsets.HitEntity;
+        var shouldExitFlag = CodeCaveOffsets.Base + CodeCaveOffsets.ShouldExitFlag;
+        var code = CodeCaveOffsets.Base + CodeCaveOffsets.RayCastCode;
+
+        memoryService.WriteFloat(rayCastDistanceMultiplier, 50.0f);
+        memoryService.WriteUInt8(shouldExitFlag, 0);
+        memoryService.WriteBytes(fromLocation, new byte[16]);
+        memoryService.WriteBytes(toLocation, new byte[16]);
+        memoryService.WriteBytes(hitEntityLoc, new byte[16]);
+
+        var bytes = AsmLoader.GetAsmBytes("NoClip_RayCast");
+        AsmHelper.WriteRelativeOffsets(bytes, new []
+        {
+            (code.ToInt64(), shouldExitFlag.ToInt64(), 7, 0x2),
+            (code.ToInt64() + 0xD, havokMan.ToInt64(), 7, 0xD + 3),
+            (code.ToInt64() + 0x20, worldChrMan.ToInt64(), 7, 0x20 + 3),
+            (code.ToInt64() + 0x40, fromLocation.ToInt64(), 7, 0x40 + 3),
+            (code.ToInt64() + 0x47, fromLocation.ToInt64() + 0xC, 7, 0x47 + 2),
+            (code.ToInt64() + 0x51, fromLocation.ToInt64(), 7, 0x51 + 3),
+            (code.ToInt64() + 0x58, fieldArea.ToInt64(), 7, 0x58 + 3),
+            (code.ToInt64() + 0x6B, rayCastDistanceMultiplier.ToInt64(), 7, 0x6B + 3),
+            (code.ToInt64() + 0x75, toLocation.ToInt64(), 7, 0x75 + 3),
+            (code.ToInt64() + 0x7C, toLocation.ToInt64(), 7, 0x7C + 3),
+            (code.ToInt64() + 0x99, hitEntityLoc.ToInt64(), 7, 0x99 + 3),
+            (code.ToInt64() + 0xA5, castRay, 5, 0xA5 + 1),
+            (code.ToInt64() + 0xAE, hitEntityLoc.ToInt64(), 7, 0xAE + 3)
+        });
+        
+        Array.Copy(BitConverter.GetBytes(sleepAddr), 0, bytes, 0xE8 + 2, 8);
+        memoryService.WriteBytes(code, bytes);
+        memoryService.RunThread(code, 0);
+    }
+
+    private void TerminateRayCast()
+    {
+        var shouldExitFlag = CodeCaveOffsets.Base + CodeCaveOffsets.ShouldExitFlag;
+        memoryService.WriteUInt8(shouldExitFlag, 1);
     }
 }

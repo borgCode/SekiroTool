@@ -311,4 +311,61 @@ eb 07                   jmp    fb &lt;skip_normal&gt;
 58                      pop    rax
 e9 00 00 00 00          jmp    101 &lt;skip_normal+0x6&gt;</value>
     </data>
+    <data name="NoClip_RayCast" xml:space="preserve">
+        <value>80 3d 00 00 00 00 01    cmp    BYTE PTR [rip+0x0],0x1        # 7 &lt;_main+0x7&gt;
+0f 84 f3 00 00 00       je     100 &lt;exit&gt;
+48 8b 0d 00 00 00 00    mov    rcx,QWORD PTR [rip+0x0]        # 14 &lt;_main+0x14&gt;
+48 8b 89 98 00 00 00    mov    rcx,QWORD PTR [rcx+0x98]
+ba 4e 00 00 00          mov    edx,0x4e
+48 8b 3d 00 00 00 00    mov    rdi,QWORD PTR [rip+0x0]        # 27 &lt;_main+0x27&gt;
+4c 8b bf 88 00 00 00    mov    r15,QWORD PTR [rdi+0x88]
+49 8b bf f8 1f 00 00    mov    rdi,QWORD PTR [r15+0x1ff8]
+48 8b 7f 68             mov    rdi,QWORD PTR [rdi+0x68]
+0f 10 87 80 00 00 00    movups xmm0,XMMWORD PTR [rdi+0x80]
+0f 11 05 00 00 00 00    movups XMMWORD PTR [rip+0x0],xmm0        # 47 &lt;_main+0x47&gt;
+c7 05 00 00 00 00 00    mov    DWORD PTR [rip+0x0],0x0        # 51 &lt;_main+0x51&gt;
+00 00 00
+4c 8d 05 00 00 00 00    lea    r8,[rip+0x0]        # 58 &lt;_main+0x58&gt;
+48 8b 1d 00 00 00 00    mov    rbx,QWORD PTR [rip+0x0]        # 5f &lt;_main+0x5f&gt;
+48 8b 5b 20             mov    rbx,QWORD PTR [rbx+0x20]
+48 8b 5b 18             mov    rbx,QWORD PTR [rbx+0x18]
+0f 10 43 30             movups xmm0,XMMWORD PTR [rbx+0x30]
+0f 10 0d 00 00 00 00    movups xmm1,XMMWORD PTR [rip+0x0]        # 72 &lt;_main+0x72&gt;
+0f 59 c1                mulps  xmm0,xmm1
+0f 11 05 00 00 00 00    movups XMMWORD PTR [rip+0x0],xmm0        # 7c &lt;_main+0x7c&gt;
+4c 8d 0d 00 00 00 00    lea    r9,[rip+0x0]        # 83 &lt;_main+0x83&gt;
+48 83 ec 48             sub    rsp,0x48
+48 31 c0                xor    rax,rax
+48 89 44 24 20          mov    QWORD PTR [rsp+0x20],rax
+48 89 44 24 28          mov    QWORD PTR [rsp+0x28],rax
+48 89 44 24 30          mov    QWORD PTR [rsp+0x30],rax
+48 8d 05 00 00 00 00    lea    rax,[rip+0x0]        # a0 &lt;_main+0xa0&gt;
+48 89 44 24 38          mov    QWORD PTR [rsp+0x38],rax
+e8 00 00 00 00          call   aa &lt;_main+0xaa&gt;
+48 83 c4 48             add    rsp,0x48
+48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # b5 &lt;_main+0xb5&gt;
+48 85 c0                test   rax,rax
+74 2e                   je     e8 &lt;skip_write&gt;
+48 8b 48 10             mov    rcx,QWORD PTR [rax+0x10]
+48 8b 41 10             mov    rax,QWORD PTR [rcx+0x10]
+48 85 c0                test   rax,rax
+74 21                   je     e8 &lt;skip_write&gt;
+8b 51 68                mov    edx,DWORD PTR [rcx+0x68]
+48 8b 41 58             mov    rax,QWORD PTR [rcx+0x58]
+85 d2                   test   edx,edx
+74 16                   je     e8 &lt;skip_write&gt;
+49 b8 00 00 00 00 f4    movabs r8,0x7ff400000000
+7f 00 00
+4c 39 c0                cmp    rax,r8
+72 07                   jb     e8 &lt;skip_write&gt;
+49 89 8f d8 1a 00 00    mov    QWORD PTR [r15+0x1ad8],rcx
+0000000000e8 &lt;skip_write&gt;:
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+48 c7 c1 e8 03 00 00    mov    rcx,0x3e8
+ff d0                   call   rax
+e9 00 ff ff ff          jmp    0 &lt;_main&gt;
+000000000100 &lt;exit&gt;:
+c3                      ret</value>
+    </data>
 </root>

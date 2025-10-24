@@ -195,8 +195,10 @@ public static class Offsets
         
     }
 
-    public static class GroupMask
+    public static class FrpgHavokMan
     {
+        public static IntPtr Base;
+        public const int FrpgPhysWorld = 0x98;
     }
 
     public static class UserInputManager
@@ -248,5 +250,6 @@ public static class Offsets
         public static long UpgradeProstheticsMenu;
         public static long OpenScalesShop;
         public static long OpenProstheticsShop;
+        public static long FrpgCastRay;
     }
 }
