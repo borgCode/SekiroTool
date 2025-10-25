@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
+using SekiroTool.Core;
 using SekiroTool.Enums;
 using SekiroTool.Interfaces;
 using SekiroTool.Models;
@@ -11,14 +12,15 @@ public class TravelViewModel : BaseViewModel
 {
     private readonly ITravelService _travelService;
     private readonly HotkeyManager _hotkeyManager;
+    private readonly IEventService _eventService;
 
     public TravelViewModel(ITravelService travelService, IGameStateService gameStateService,
-        HotkeyManager hotkeyManager)
+        HotkeyManager hotkeyManager, IEventService eventService)
     {
         _travelService = travelService;
         _hotkeyManager = hotkeyManager;
-
-
+        _eventService = eventService;
+        
         RegisterHotkeys();
 
         gameStateService.Subscribe(GameState.Loaded, OnGameLoaded);
@@ -26,17 +28,22 @@ public class TravelViewModel : BaseViewModel
         
         _mainAreas = new ObservableCollection<string>();
         _warpLocations = new ObservableCollection<Warp>();
-
+        
+        WarpCommand = new DelegateCommand(Warp);
+        UnlockIdolsCommand = new DelegateCommand(UnlockIdols);
+        
         LoadWarps();
-    }
 
+        idolEventIds = DataLoader.GetIdolEventIds();
+    }
+    
     #region Private Fields
 
     private Dictionary<string, List<Warp>> _warpDict;
     private List<Warp> _allWarps;
     private string _preSearchMainArea;
     private readonly ObservableCollection<Warp> _searchResultsCollection = new ObservableCollection<Warp>();
-
+    private List<long> idolEventIds;
     #endregion
 
 
@@ -198,6 +205,9 @@ public class TravelViewModel : BaseViewModel
         WarpLocations = new ObservableCollection<Warp>(_searchResultsCollection);
         SelectedWarpLocation = WarpLocations.FirstOrDefault();
     }
+
+    private void Warp() =>  _ = Task.Run(() => _travelService.Warp(SelectedWarpLocation));
+    private void UnlockIdols() => idolEventIds.ForEach(id => _eventService.SetEvent(id, true));
 
     #endregion
 }

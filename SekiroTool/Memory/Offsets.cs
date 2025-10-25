@@ -111,6 +111,7 @@ public static class Offsets
     {
         public static IntPtr Base;
 
+        public const int IsLoaded = 0x20;
         public const int Quitout = 0x23C;
     }
 

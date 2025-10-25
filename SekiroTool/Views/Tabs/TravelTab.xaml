@@ -66,7 +66,7 @@
             
             <Button Grid.Row="2" 
                     Content="Warp"
-              
+                    Command="{Binding WarpCommand}"
                     IsEnabled="{Binding AreButtonsEnabled}"
                     Height="25"
                     Margin="0,10,0,0" />
@@ -225,7 +225,8 @@
                          <ColumnDefinition Width="*" />
                      </Grid.ColumnDefinitions>
                      
-                     <Button Grid.Column="0" Content="Unlock All Bonfire Warps"
+                     <Button Grid.Column="0" Content="Unlock All Idols"
+                             Command="{Binding UnlockIdolsCommand}"
                              IsEnabled="{Binding AreButtonsEnabled}"
                              Margin="0,2" />
                  </Grid>

@@ -5,5 +5,4 @@ namespace SekiroTool.Interfaces;
 public interface ITravelService
 {
     void Warp(Warp warp);
-    void UnlockAllIdols();
 }

@@ -11,8 +11,7 @@ public class DataLoader
             Dictionary<string, List<Warp>> warpDict = new Dictionary<string, List<Warp>>();
             string csvData = Resources.Warps;
 
-            if (string.IsNullOrWhiteSpace(csvData))
-                return warpDict;
+            if (string.IsNullOrWhiteSpace(csvData)) return warpDict;
 
             using StringReader reader = new StringReader(csvData);
             string line;
@@ -59,4 +58,21 @@ public class DataLoader
 
             return warpDict;
         }
+
+    public static List<long> GetIdolEventIds()
+    {
+        List <long> idolEventIds = new List<long>();
+        string idolIds = Resources.IdolEventFlags;
+        
+        if (string.IsNullOrWhiteSpace(idolIds)) return idolEventIds;
+        
+        using StringReader reader = new StringReader(idolIds);
+        string line;
+        while ((line = reader.ReadLine()) != null)
+        {
+            if (string.IsNullOrWhiteSpace(line)) continue;
+            idolEventIds.Add(long.Parse(line, CultureInfo.InvariantCulture));
+        }
+        return idolEventIds;
+    }
 }

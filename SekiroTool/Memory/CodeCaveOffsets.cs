@@ -36,4 +36,9 @@ public static class CodeCaveOffsets
     public const int HitEntity = 0x630;
     public const int ShouldExitFlag = 0x640;
     public const int RayCastCode = 0x650;
+
+    public const int WarpCoords = 0x800;
+    public const int WarpAngle = 0x810;
+    public const int WarpCoordsCode = 0x820;
+    public const int WarpAngleCode = 0x830;
 }

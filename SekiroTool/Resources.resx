@@ -458,7 +458,7 @@ Boss,Ogre 2,1111951,-112.36|24.58|238.66|1.00,2.05
 Boss,Lone Shadow Duo,1111951,-116.74|40.48|232.51|1.00,-2.44
 Boss,Ungo Headless,1111951,-77.89|0.70|247.75|1.00,2.88
 Boss,Lone Shadow Masanaga (Castle),1111951,46.25|-30.90|314.70|1.00,-3.13
-Boss,Gokan Headless,1111954,-1.51|-70.59|327.95|1.00,2.53
+Boss,Gokan Headless,1701957,-1.51|-70.59|327.95|1.00,2.53
 Boss,Shinobi Hunter Enshin,1001951,36.09|-787.57|296.17|1.00,-1.84
 Boss,Juzou 1,1001953,-43.16|-765.32|448.25|1.00,1.86
 Boss,Lady Butterfly,1001955,-194.88|-785.08|557.78|1.00,1.80
@@ -476,5 +476,86 @@ Boss,Seven Spears 2,1121951,-196.42|-39.87|244.00|1.00,3.08
 Boss,Sword Saint Isshin,1121950,-357.74|-47.81|187.12|1.00,1.62
 Boss,Shigekichi,1101953,124.03|-49.73|205.08|1.00,0.89
 Boss,Demon of Hatred,1101957,-122.84|-71.82|-0.29|1.00,2.92</value>
+    </data>
+    <data name="Warp" xml:space="preserve">
+        <value>48 ba 00 00 00 00 00    movabs rdx,0x0
+00 00 00
+41 b8 00 00 00 00       mov    r8d,0x0
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+48 83 ec 20             sub    rsp,0x20
+ff d0                   call   rax
+48 83 c4 20             add    rsp,0x20
+c3                      ret</value>
+    </data>
+    <data name="WarpCoordWrite" xml:space="preserve">
+        <value>0f 10 05 00 00 00 00    movups xmm0,XMMWORD PTR [rip+0x0]        # 7 &lt;_main+0x7&gt;
+66 0f 7f 80 C0 0a 00    movdqa XMMWORD PTR [rax+0xaC0],xmm0
+00
+c3                      ret</value>
+    </data>
+    <data name="WarpAngleWrite" xml:space="preserve">
+        <value>0f 10 05 00 00 00 00    movups xmm0,XMMWORD PTR [rip+0x0]        # 7 &lt;_main+0x7&gt;
+66 0f 7f 80 D0 0a 00    movdqa XMMWORD PTR [rax+0xaD0],xmm0
+00
+c3                      ret</value>
+    </data>
+    <data name="IdolEventFlags" xml:space="preserve">
+        <value>11100000
+11110003
+12000004
+11000000
+11000001
+11000002
+11000003
+11000005
+11000004
+11100000
+11100006
+11100001
+11100002
+11100003
+11100004
+11100005
+11100007
+11110000
+11110001
+11110007
+11110002
+11110003
+11110006
+11110004
+11110005
+11120001
+11120000
+11300000
+11300001
+11700005
+11700004
+11700006
+11500000
+11500001
+11500002
+11500003
+11700007
+11700000
+11700001
+11700002
+11700008
+11700003
+12000000
+12000001
+12000002
+12000003
+12000004
+12000005
+12000006
+12500000
+12500001
+12500006
+12500002
+12500003
+12500004
+12500007</value>
     </data>
 </root>

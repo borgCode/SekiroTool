@@ -194,6 +194,66 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 11100000
+        ///11110003
+        ///12000004
+        ///11000000
+        ///11000001
+        ///11000002
+        ///11000003
+        ///11000005
+        ///11000004
+        ///11100000
+        ///11100006
+        ///11100001
+        ///11100002
+        ///11100003
+        ///11100004
+        ///11100005
+        ///11100007
+        ///11110000
+        ///11110001
+        ///11110007
+        ///11110002
+        ///11110003
+        ///11110006
+        ///11110004
+        ///11110005
+        ///11120001
+        ///11120000
+        ///11300000
+        ///11300001
+        ///11700005
+        ///11700004
+        ///11700006
+        ///11500000
+        ///11500001
+        ///11500002
+        ///11500003
+        ///11700007
+        ///11700000
+        ///11700001
+        ///11700002
+        ///11700008
+        ///11700003
+        ///12000000
+        ///12000001
+        ///12000002
+        ///12000003
+        ///12000004
+        ///12000005
+        ///12000006
+        ///12500000
+        ///12500001
+        ///12 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string IdolEventFlags {
+            get {
+                return ResourceManager.GetString("IdolEventFlags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 50                      push   rax
         ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;
         ///48 8b 80 88 00 00 00    mov    rax,QWORD PTR [rax+0x88]
@@ -410,6 +470,47 @@ namespace SekiroTool {
         internal static string SetEvent {
             get {
                 return ResourceManager.GetString("SetEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 48 ba 00 00 00 00 00    movabs rdx,0x0
+        ///00 00 00
+        ///41 b8 00 00 00 00       mov    r8d,0x0
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///48 83 ec 20             sub    rsp,0x20
+        ///ff d0                   call   rax
+        ///48 83 c4 20             add    rsp,0x20
+        ///c3                      ret.
+        /// </summary>
+        internal static string Warp {
+            get {
+                return ResourceManager.GetString("Warp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0f 10 05 00 00 00 00    movups xmm0,XMMWORD PTR [rip+0x0]        # 7 &lt;_main+0x7&gt;
+        ///66 0f 7f 80 D0 0a 00    movdqa XMMWORD PTR [rax+0xaD0],xmm0
+        ///00
+        ///c3                      ret.
+        /// </summary>
+        internal static string WarpAngleWrite {
+            get {
+                return ResourceManager.GetString("WarpAngleWrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0f 10 05 00 00 00 00    movups xmm0,XMMWORD PTR [rip+0x0]        # 7 &lt;_main+0x7&gt;
+        ///66 0f 7f 80 C0 0a 00    movdqa XMMWORD PTR [rax+0xaC0],xmm0
+        ///00
+        ///c3                      ret.
+        /// </summary>
+        internal static string WarpCoordWrite {
+            get {
+                return ResourceManager.GetString("WarpCoordWrite", resourceCulture);
             }
         }
         
