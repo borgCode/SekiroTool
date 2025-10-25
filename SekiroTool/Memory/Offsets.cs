@@ -96,7 +96,6 @@ public static class Offsets
         public enum PlayerGameDataOffsets
         {
             AttackPower = 0x48,
-            NewGame = 0x70, //TODO Set to 7 for ng+7
             Experience = 0x160
         }
     }
@@ -202,8 +201,10 @@ public static class Offsets
         public const int FrpgPhysWorld = 0x98;
     }
 
-    public static class UserInputManager
+    public static class GameDataMan
     {
+        public static IntPtr Base;
+        public const int NewGame = 0x70;
     }
     
 

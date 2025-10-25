@@ -134,6 +134,15 @@ public static class Patterns
         7
     );
 
+    public static readonly Pattern GameDataMan = new Pattern(
+        new byte[] { 0x84, 0xC0, 0x74, 0x44, 0x48, 0x8B, 0x05 },
+        "xxxxxxx",
+        0x4,
+        AddressingMode.Relative,
+        3,
+        7
+    );
+
     #endregion
 
 

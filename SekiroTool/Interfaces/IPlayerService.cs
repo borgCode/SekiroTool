@@ -20,6 +20,9 @@ public interface IPlayerService
     
     void SetAttackPower(int attackPower);
 
+    void SetNewGame(int newGameCycle);
+    int GetNewGame();
+
     void AddExperience(int experience);
 
     void TogglePlayerNoDeath(bool isEnabled);
@@ -32,6 +35,7 @@ public interface IPlayerService
     void TogglePlayerHide(bool isEnabled);
     void TogglePlayerSilent(bool isEnabled);
     void TogglePlayerInfinitePoise(bool isEnabled);
+    
 
 
 

@@ -15,6 +15,8 @@ public class PlayerViewModel : BaseViewModel
     private readonly IGameStateService _gameStateService;
 
     private readonly DispatcherTimer _playerTick;
+
+    private bool _pauseUpdates;
     
     public PlayerViewModel(IPlayerService playerService, HotkeyManager hotkeyManager, IGameStateService gameStateService)
     {
@@ -32,9 +34,10 @@ public class PlayerViewModel : BaseViewModel
 
         _playerTick = new DispatcherTimer
         {
-            Interval = TimeSpan.FromSeconds(64)
+            Interval = TimeSpan.FromMilliseconds(64)
         };
         _playerTick.Tick += PlayerTick;
+        
 
     }
     
@@ -55,6 +58,26 @@ public class PlayerViewModel : BaseViewModel
     {
         get => _areOptionsEnabled;
         set => SetProperty(ref _areOptionsEnabled, value);
+    }
+    private float _posX;
+    public float PosX
+    {
+        get => _posX;
+        set => SetProperty(ref _posX, value);
+    }
+    
+    private float _posY;
+    public float PosY
+    {
+        get => _posY;
+        set => SetProperty(ref _posY, value);
+    }
+    
+    private float _posZ;
+    public float PosZ
+    {
+        get => _posZ;
+        set => SetProperty(ref _posZ, value);
     }
     
     private bool _isPos1Saved;
@@ -196,7 +219,27 @@ public class PlayerViewModel : BaseViewModel
             }
         }
     }
+    private int _newGame;
+    public int NewGame
+    {
+        get => _newGame;
+        set
+        {
+            if (SetProperty(ref _newGame, value))
+            {
+                _playerService.SetNewGame(value);
+            }
+        }
+    }
     
+    #endregion
+
+    #region Public Methods
+
+    public void PauseUpdates() => _pauseUpdates = true;
+    public void ResumeUpdates() => _pauseUpdates = false;
+    public void SetNewGame(int newGameCycle) => _playerService.SetNewGame(newGameCycle);
+
     #endregion
 
     #region Private Methods
@@ -230,16 +273,25 @@ public class PlayerViewModel : BaseViewModel
         if (_isPlayerSilentEnabled) _playerService.TogglePlayerSilent(true);
         
         if (_isInfinitePoiseEnabled) _playerService.TogglePlayerInfinitePoise(true);
+        _playerTick.Start();
     }
     
     
     private void OnGameNotLoaded()
     {
         AreOptionsEnabled = false;
+        _playerTick.Stop();
     }
     
     private void PlayerTick(object? sender, EventArgs e)
     {
+        if (_pauseUpdates) return;
+        var coords = _playerService.GetCoords();
+        PosX = coords.x;
+        PosY = coords.y;
+        PosZ = coords.z;
+        NewGame = _playerService.GetNewGame();
+
         // We'll have logic such as reading hp every tick etc, see how it works in targetviewmodel
     }
     
@@ -262,4 +314,5 @@ public class PlayerViewModel : BaseViewModel
     }
 
     #endregion
+    
 }

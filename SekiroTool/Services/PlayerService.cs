@@ -46,8 +46,8 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
     {
         byte[] coordBytes = memoryService.ReadBytes(GetChrPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.X, 12);
         float x = BitConverter.ToSingle(coordBytes, 0);
-        float z = BitConverter.ToSingle(coordBytes, 4);
-        float y = BitConverter.ToSingle(coordBytes, 8);
+        float y = BitConverter.ToSingle(coordBytes, 4);
+        float z = BitConverter.ToSingle(coordBytes, 8);
         return (x, y, z); 
     }
 
@@ -111,6 +111,12 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         memoryService.WriteInt32(attackPowerPointer, attackPower);
     }
 
+    public void SetNewGame(int value) =>
+        memoryService.WriteInt32((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.NewGame, value);
+
+    public int GetNewGame() =>
+        memoryService.ReadInt32((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.NewGame);
+    
     public void AddExperience(int experience)
     {
         var bytes = AsmLoader.GetAsmBytes("AddExperience");
