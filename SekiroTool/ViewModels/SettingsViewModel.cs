@@ -48,9 +48,6 @@ public class SettingsViewModel : BaseViewModel
             // { "RestoreSpellcasts", text => RestoreSpellcastsHotkeyText = text },
             // { "RestoreHumanity", text => RestoreHumanityHotkeyText = text },
             // { "Rest", text => RestHotkeyText = text },
-            // { "ToggleGameSpeed", text => ToggleGameSpeedHotkeyText = text },
-            // { "IncreaseGameSpeed", text => IncreaseGameSpeedHotkeyText = text },
-            // { "DecreaseGameSpeed", text => DecreaseGameSpeedHotkeyText = text },
         
             { HotkeyActions.Quitout.ToString(), text => QuitoutHotkeyText = text },
             // { "ForceSave", text => ForceSaveHotkeyText = text },
@@ -81,6 +78,9 @@ public class SettingsViewModel : BaseViewModel
             // { "AllNoDamage", text => AllNoDamageHotkeyText = text },
             // { "AllRepeatAct", text => AllRepeatActHotkeyText = text },
             
+            { HotkeyActions.ToggleGameSpeed.ToString(), text => ToggleGameSpeedHotkeyText = text },
+            { HotkeyActions.IncreaseGameSpeed.ToString(), text => IncreaseGameSpeedHotkeyText = text },
+            { HotkeyActions.DecreaseGameSpeed.ToString(), text => DecreaseGameSpeedHotkeyText = text },
             { HotkeyActions.NoClip.ToString(), text => NoClipHotkeyText = text },
             { HotkeyActions.IncreaseNoClipSpeed.ToString(), text => IncreaseNoClipSpeedHotkeyText = text },
             { HotkeyActions.DecreaseNoClipSpeed.ToString(), text => DecreaseNoClipSpeedHotkeyText = text },
@@ -378,6 +378,27 @@ public class SettingsViewModel : BaseViewModel
         set => SetProperty(ref _targetTargetingViewHotkeyText, value);
     }
     
+    
+    private string _toggleGameSpeedHotkeyText;
+    public string ToggleGameSpeedHotkeyText
+    {
+        get => _toggleGameSpeedHotkeyText;
+        set => SetProperty(ref _toggleGameSpeedHotkeyText, value);
+    }
+
+    private string _increaseGameSpeedHotkeyText;
+    public string IncreaseGameSpeedHotkeyText
+    {
+        get => _increaseGameSpeedHotkeyText;
+        set => SetProperty(ref _increaseGameSpeedHotkeyText, value);
+    }
+
+    private string _decreaseGameSpeedHotkeyText;
+    public string DecreaseGameSpeedHotkeyText
+    {
+        get => _decreaseGameSpeedHotkeyText;
+        set => SetProperty(ref _decreaseGameSpeedHotkeyText, value);
+    }
     
     private string _noClipHotkeyText;
     public string NoClipHotkeyText

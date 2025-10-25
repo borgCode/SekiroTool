@@ -20,6 +20,10 @@ public partial class UtilityTab : UserControl
     private void InitializeUpDownHelpers()
     {
         _ = new UpDownHelper<double>(
+            GameSpeedUpDown,
+            _utilityViewModel.SetGameSpeed
+        );
+        _ = new UpDownHelper<double>(
             NoClipSpeedUpDown,
             _utilityViewModel.SetNoClipSpeed
         );

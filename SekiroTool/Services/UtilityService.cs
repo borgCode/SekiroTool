@@ -67,6 +67,18 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
         memoryService.AllocateAndExecute(bytes);
     }
 
+    public void SetGameSpeed(float gameSpeed)
+    {
+        var gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeed;
+        memoryService.WriteFloat((IntPtr)gameSpeedPtr, gameSpeed);
+    }
+
+    public float GetGameSpeed()
+    {
+        var gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeed;
+        return memoryService.ReadFloat((IntPtr)gameSpeedPtr);
+    }
+
     public void WriteNoClipSpeed(float speedMultiplier)
     {
         var speedScaleYLoc = CodeCaveOffsets.Base + CodeCaveOffsets.SpeedScaleY;

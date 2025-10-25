@@ -9,6 +9,8 @@ public interface IUtilityService
     void OpenRegularShop(ShopLineup shopLineup);
     void OpenScalesShop(ScaleLineup scaleLineup);
     void OpenProstheticsShop(ShopLineup shopLineup);
+    void SetGameSpeed(float gameSpeed);
+    float GetGameSpeed();
     void WriteNoClipSpeed(float speedMultiplier);
     void ToggleNoClip(bool isEnabled);
 }

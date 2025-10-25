@@ -33,8 +33,9 @@ public enum HotkeyActions
     TargetTargetingView,
     Quitout,
     
-    
-    
+    ToggleGameSpeed,
+    IncreaseGameSpeed,
+    DecreaseGameSpeed,
     NoClip,
     IncreaseNoClipSpeed,
     DecreaseNoClipSpeed,

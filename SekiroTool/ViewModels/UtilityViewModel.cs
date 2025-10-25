@@ -10,7 +10,9 @@ namespace SekiroTool.ViewModels;
 public class UtilityViewModel : BaseViewModel
 {
     private const float DefaultNoclipMultiplier = 1f;
-    
+    private const float DefaultGameSpeed = 1f;
+    private const float Epsilon = 0.0001f;
+
     private readonly IUtilityService _utilityService;
     private readonly HotkeyManager _hotkeyManager;
     private readonly IDebugDrawService _debugDrawService;
@@ -18,6 +20,7 @@ public class UtilityViewModel : BaseViewModel
 
 
     private bool _wasNoDeathEnabled;
+    private float _desiredSpeed;
 
     public UtilityViewModel(IUtilityService utilityService, IGameStateService gameStateService,
         HotkeyManager hotkeyManager, IDebugDrawService debugDrawService, PlayerViewModel playerViewModel)
@@ -31,6 +34,7 @@ public class UtilityViewModel : BaseViewModel
 
         gameStateService.Subscribe(GameState.Loaded, OnGameLoaded);
         gameStateService.Subscribe(GameState.NotLoaded, OnGameNotLoaded);
+        gameStateService.Subscribe(GameState.Detached, OnGameDetached);
 
 
         OpenSkillsCommand = new DelegateCommand(OpenSkillMenu);
@@ -82,8 +86,23 @@ public class UtilityViewModel : BaseViewModel
         get => _areOptionsEnabled;
         set => SetProperty(ref _areOptionsEnabled, value);
     }
-    
+
+    private float _gameSpeed;
+
+    public float GameSpeed
+    {
+        get => _gameSpeed;
+        set
+        {
+            if (SetProperty(ref _gameSpeed, value))
+            {
+                _utilityService.SetGameSpeed(_gameSpeed);
+            }
+        }
+    }
+
     private float _noClipSpeedMultiplier = DefaultNoclipMultiplier;
+
     public float NoClipSpeed
     {
         get => _noClipSpeedMultiplier;
@@ -125,7 +144,8 @@ public class UtilityViewModel : BaseViewModel
 
     #region Public Methods
 
-    public void SetNoClipSpeed(double value) => NoClipSpeed = (float) value;
+    public void SetNoClipSpeed(double value) => NoClipSpeed = (float)value;
+    public void SetGameSpeed(double value) => GameSpeed = (float)value;
 
     #endregion
 
@@ -133,11 +153,18 @@ public class UtilityViewModel : BaseViewModel
 
     private void RegisterHotkeys()
     {
+        _hotkeyManager.RegisterAction(HotkeyActions.ToggleGameSpeed.ToString(), ToggleGameSpeed);
+        _hotkeyManager.RegisterAction(HotkeyActions.IncreaseGameSpeed.ToString(),
+            () => GameSpeed = (Math.Min(10, GameSpeed + 0.50f)));
+        _hotkeyManager.RegisterAction(HotkeyActions.IncreaseGameSpeed.ToString(),
+            () => GameSpeed = (Math.Min(10, GameSpeed + 0.50f)));
+        _hotkeyManager.RegisterAction(HotkeyActions.DecreaseGameSpeed.ToString(),
+            () => GameSpeed = (Math.Max(0, GameSpeed - 0.50f)));
         _hotkeyManager.RegisterAction(HotkeyActions.NoClip.ToString(), () =>
-            {
-                if (!AreOptionsEnabled) return;
-                IsNoClipEnabled = !IsNoClipEnabled;
-            });
+        {
+            if (!AreOptionsEnabled) return;
+            IsNoClipEnabled = !IsNoClipEnabled;
+        });
         _hotkeyManager.RegisterAction(HotkeyActions.IncreaseNoClipSpeed.ToString(), () =>
         {
             if (IsNoClipEnabled) NoClipSpeed = Math.Min(5, NoClipSpeed + 0.50f);
@@ -147,10 +174,11 @@ public class UtilityViewModel : BaseViewModel
             if (IsNoClipEnabled) NoClipSpeed = Math.Max(0.05f, NoClipSpeed - 0.50f);
         });
     }
-
+    
     private void OnGameLoaded()
     {
         AreOptionsEnabled = true;
+        GameSpeed = _utilityService.GetGameSpeed();
     }
 
 
@@ -160,6 +188,25 @@ public class UtilityViewModel : BaseViewModel
         IsNoClipEnabled = false;
     }
 
+    private void OnGameDetached()
+    {
+        _wasNoDeathEnabled = false;
+    }
+    
+    private void ToggleGameSpeed()
+    {
+        if (!IsApproximately(GameSpeed, DefaultGameSpeed))
+        {
+            _desiredSpeed = GameSpeed;
+            GameSpeed = DefaultGameSpeed;
+        } else if (_desiredSpeed >= 0)
+        {
+            GameSpeed = _desiredSpeed;
+        }
+    }
+
+    private bool IsApproximately(float a, float b) =>  Math.Abs(a - b) < Epsilon;
+
     private void OpenSkillMenu() => _utilityService.OpenSkillMenu();
     private void OpenUpgradeProstheticsMenu() => _utilityService.OpenUpgradeProstheticsMenu();
     private void OpenRegularShop(ShopLineup shopLineup) => _utilityService.OpenRegularShop(shopLineup);
@@ -167,6 +214,4 @@ public class UtilityViewModel : BaseViewModel
     private void OpenProstheticsShop(ShopLineup shopLineup) => _utilityService.OpenProstheticsShop(shopLineup);
 
     #endregion
-
-    
 }

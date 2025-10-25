@@ -126,13 +126,12 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-
-                <!-- Row 0: Game Speed -->
+                
                 <StackPanel Grid.Row="0" Grid.Column="0"
                             Orientation="Horizontal"
                             VerticalAlignment="Center"
                             Margin="0,10,0,0">
-                    <xctk:DoubleUpDown x:Name="SpeedUpDown"
+                    <xctk:DoubleUpDown x:Name="GameSpeedUpDown"
                                        Value="{Binding GameSpeed}"
                                        TextAlignment="Center"
                                        Width="80"
