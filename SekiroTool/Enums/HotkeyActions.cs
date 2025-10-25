@@ -31,7 +31,13 @@ public enum HotkeyActions
     TargetNoPostureBuildup,
     TargetNoDeath,
     TargetTargetingView,
-    Quitout
+    Quitout,
+    
+    
+    
+    NoClip,
+    IncreaseNoClipSpeed,
+    DecreaseNoClipSpeed,
     
     
 }

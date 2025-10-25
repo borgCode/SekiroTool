@@ -20,7 +20,7 @@ public partial class TargetTab : UserControl
 
     private void InitializeUpDownHelpers()
     {
-        new UpDownHelper<double>(
+        _ = new UpDownHelper<double>(
             SpeedUpDown,
             _targetViewModel.SetSpeed
         );

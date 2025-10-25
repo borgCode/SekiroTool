@@ -96,6 +96,7 @@ public static class Offsets
         public enum PlayerGameDataOffsets
         {
             AttackPower = 0x48,
+            NewGame = 0x70, //TODO Set to 7 for ng+7
             Experience = 0x160
         }
     }

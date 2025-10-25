@@ -9,19 +9,26 @@ namespace SekiroTool.ViewModels;
 
 public class UtilityViewModel : BaseViewModel
 {
+    private const float DefaultNoclipMultiplier = 1f;
+    
     private readonly IUtilityService _utilityService;
     private readonly HotkeyManager _hotkeyManager;
     private readonly IDebugDrawService _debugDrawService;
+    private readonly PlayerViewModel _playerViewModel;
+
+
+    private bool _wasNoDeathEnabled;
 
     public UtilityViewModel(IUtilityService utilityService, IGameStateService gameStateService,
-        HotkeyManager hotkeyManager, IDebugDrawService debugDrawService)
+        HotkeyManager hotkeyManager, IDebugDrawService debugDrawService, PlayerViewModel playerViewModel)
     {
         _utilityService = utilityService;
         _hotkeyManager = hotkeyManager;
         _debugDrawService = debugDrawService;
-        
+        _playerViewModel = playerViewModel;
+
         RegisterHotkeys();
-        
+
         gameStateService.Subscribe(GameState.Loaded, OnGameLoaded);
         gameStateService.Subscribe(GameState.NotLoaded, OnGameNotLoaded);
 
@@ -44,12 +51,12 @@ public class UtilityViewModel : BaseViewModel
         ProstheticsCommand = new DelegateCommand(() => OpenProstheticsShop(ShopLineup.Prosthetics));
     }
 
-    
+
     #region Commands
-    
+
     public ICommand OpenSkillsCommand { get; set; }
     public ICommand OpenUpgradeProstheticsCommand { get; set; }
-    
+
     public ICommand IdolCommand { get; set; }
     public ICommand CrowsBedMemorialMobCommand { get; set; }
     public ICommand BattlefieldMemorialMobCommand { get; set; }
@@ -63,19 +70,35 @@ public class UtilityViewModel : BaseViewModel
     public ICommand HarunagaCommand { get; set; }
     public ICommand KoremoriCommand { get; set; }
     public ICommand ProstheticsCommand { get; set; }
-    
+
     #endregion
-    
+
     #region Properties
 
     private bool _areOptionsEnabled;
+
     public bool AreOptionsEnabled
     {
         get => _areOptionsEnabled;
         set => SetProperty(ref _areOptionsEnabled, value);
     }
     
+    private float _noClipSpeedMultiplier = DefaultNoclipMultiplier;
+    public float NoClipSpeed
+    {
+        get => _noClipSpeedMultiplier;
+        set
+        {
+            if (SetProperty(ref _noClipSpeedMultiplier, value))
+            {
+                if (!IsNoClipEnabled) return;
+                _utilityService.WriteNoClipSpeed(_noClipSpeedMultiplier);
+            }
+        }
+    }
+
     private bool _isNoClipEnabled;
+
     public bool IsNoClipEnabled
     {
         get => _isNoClipEnabled;
@@ -85,39 +108,56 @@ public class UtilityViewModel : BaseViewModel
 
             if (_isNoClipEnabled)
             {
+                _utilityService.WriteNoClipSpeed(NoClipSpeed);
                 _utilityService.ToggleNoClip(_isNoClipEnabled);
-                // _wasNoDeathEnabled = _playerViewModel.IsNoDeathEnabled;
-                // _playerViewModel.IsNoDeathEnabled = true;
-                // _playerViewModel.IsSilentEnabled = true;
-                // _playerViewModel.IsInvisibleEnabled = true;
+                _wasNoDeathEnabled = _playerViewModel.IsNoDeathEnabled;
+                _playerViewModel.IsNoDeathEnabled = true;
             }
             else
             {
                 _utilityService.ToggleNoClip(_isNoClipEnabled);
-                // _playerViewModel.IsNoDeathEnabled = _wasNoDeathEnabled;
-                // _playerViewModel.IsSilentEnabled = false;
-                // _playerViewModel.IsInvisibleEnabled = false;
-                // NoClipSpeed = DefaultNoclipMultiplier;
+                _playerViewModel.IsNoDeathEnabled = _wasNoDeathEnabled;
             }
         }
     }
+
     #endregion
-    
+
+    #region Public Methods
+
+    public void SetNoClipSpeed(double value) => NoClipSpeed = (float) value;
+
+    #endregion
+
     #region Private Methods
 
     private void RegisterHotkeys()
     {
+        _hotkeyManager.RegisterAction(HotkeyActions.NoClip.ToString(), () =>
+            {
+                if (!AreOptionsEnabled) return;
+                IsNoClipEnabled = !IsNoClipEnabled;
+            });
+        _hotkeyManager.RegisterAction(HotkeyActions.IncreaseNoClipSpeed.ToString(), () =>
+        {
+            if (IsNoClipEnabled) NoClipSpeed = Math.Min(5, NoClipSpeed + 0.50f);
+        });
+        _hotkeyManager.RegisterAction(HotkeyActions.DecreaseNoClipSpeed.ToString(), () =>
+        {
+            if (IsNoClipEnabled) NoClipSpeed = Math.Max(0.05f, NoClipSpeed - 0.50f);
+        });
     }
-    
+
     private void OnGameLoaded()
     {
         AreOptionsEnabled = true;
     }
-    
-    
+
+
     private void OnGameNotLoaded()
     {
         AreOptionsEnabled = false;
+        IsNoClipEnabled = false;
     }
 
     private void OpenSkillMenu() => _utilityService.OpenSkillMenu();
@@ -127,4 +167,6 @@ public class UtilityViewModel : BaseViewModel
     private void OpenProstheticsShop(ShopLineup shopLineup) => _utilityService.OpenProstheticsShop(shopLineup);
 
     #endregion
+
+    
 }

@@ -51,14 +51,13 @@ public class SettingsViewModel : BaseViewModel
             // { "ToggleGameSpeed", text => ToggleGameSpeedHotkeyText = text },
             // { "IncreaseGameSpeed", text => IncreaseGameSpeedHotkeyText = text },
             // { "DecreaseGameSpeed", text => DecreaseGameSpeedHotkeyText = text },
-            // { "NoClip", text => NoClipHotkeyText = text },
+        
             { HotkeyActions.Quitout.ToString(), text => QuitoutHotkeyText = text },
             // { "ForceSave", text => ForceSaveHotkeyText = text },
             // { "EnableFreeCam", text => EnableFreeCamHotkeyText = text },
             // { "MoveCamToPlayer", text => MoveCamToPlayerHotkeyText = text },
             // { "Warp", text => WarpHotkeyText = text },
-            // { "IncreaseNoClipSpeed", text => IncreaseNoClipSpeedHotkeyText = text },
-            // { "DecreaseNoClipSpeed", text => DecreaseNoClipSpeedHotkeyText = text },
+   
             { HotkeyActions.EnableTargetOptions.ToString(), text => EnableTargetOptionsHotkeyText = text },
             { HotkeyActions.FreezeTargetHp.ToString(), text => FreezeHpHotkeyText = text },
             { HotkeyActions.SetTargetOneHp.ToString(), text => SetTargetOneHpHotkeyText = text },
@@ -81,6 +80,10 @@ public class SettingsViewModel : BaseViewModel
             // { "AllNoDeath", text => AllNoDeathHotkeyText = text },
             // { "AllNoDamage", text => AllNoDamageHotkeyText = text },
             // { "AllRepeatAct", text => AllRepeatActHotkeyText = text },
+            
+            { HotkeyActions.NoClip.ToString(), text => NoClipHotkeyText = text },
+            { HotkeyActions.IncreaseNoClipSpeed.ToString(), text => IncreaseNoClipSpeedHotkeyText = text },
+            { HotkeyActions.DecreaseNoClipSpeed.ToString(), text => DecreaseNoClipSpeedHotkeyText = text },
         };
 
         LoadHotkeyDisplays();
@@ -373,6 +376,28 @@ public class SettingsViewModel : BaseViewModel
     {
         get => _targetTargetingViewHotkeyText;
         set => SetProperty(ref _targetTargetingViewHotkeyText, value);
+    }
+    
+    
+    private string _noClipHotkeyText;
+    public string NoClipHotkeyText
+    {
+        get => _noClipHotkeyText;
+        set => SetProperty(ref _noClipHotkeyText, value);
+    }
+    
+    private string _increaseNoClipSpeedHotkeyText;
+    public string IncreaseNoClipSpeedHotkeyText
+    {
+        get => _increaseNoClipSpeedHotkeyText;
+        set => SetProperty(ref _increaseNoClipSpeedHotkeyText, value);
+    }
+    
+    private string _decreaseNoClipSpeedHotkeyText;
+    public string DecreaseNoClipSpeedHotkeyText
+    {
+        get => _decreaseNoClipSpeedHotkeyText;
+        set => SetProperty(ref _decreaseNoClipSpeedHotkeyText, value);
     }
 
     #endregion

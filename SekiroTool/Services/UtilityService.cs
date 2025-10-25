@@ -9,6 +9,10 @@ namespace SekiroTool.Services;
 
 public class UtilityService(IMemoryService memoryService, HookManager hookManager) : IUtilityService
 {
+    private const float DefaultNoClipSpeedScaleY = 0.2f;
+    private const float DefaultNoClipSpeedScaleX = 0.15f;
+
+
     public void OpenSkillMenu()
     {
         var bytes = AsmLoader.GetAsmBytes("OpenMenuNoParams");
@@ -63,6 +67,14 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
         memoryService.AllocateAndExecute(bytes);
     }
 
+    public void WriteNoClipSpeed(float speedMultiplier)
+    {
+        var speedScaleYLoc = CodeCaveOffsets.Base + CodeCaveOffsets.SpeedScaleY;
+        var speedScaleXLoc = CodeCaveOffsets.Base + CodeCaveOffsets.SpeedScaleX;
+        memoryService.WriteFloat(speedScaleYLoc, DefaultNoClipSpeedScaleY * speedMultiplier);
+        memoryService.WriteFloat(speedScaleXLoc, DefaultNoClipSpeedScaleX * speedMultiplier);
+    }
+
     public void ToggleNoClip(bool isEnabled)
     {
         var inAirTimerCode = CodeCaveOffsets.Base + CodeCaveOffsets.InAirTimer;
@@ -106,18 +118,24 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
             bytes = AsmLoader.GetAsmBytes("NoClip_CoordsUpdate");
             var coordsUpdateHook = Hooks.UpdateCoords;
             var fieldArea = FieldArea.Base;
+            var speedScaleYLoc = CodeCaveOffsets.Base + CodeCaveOffsets.SpeedScaleY;
+            var speedScaleXLoc = CodeCaveOffsets.Base + CodeCaveOffsets.SpeedScaleX;
+            
+            
             AsmHelper.WriteAbsoluteAddresses(bytes, new[]
             {
                 (worldChrMan.ToInt64(), 0x1 + 2),
                 (worldChrMan.ToInt64(), 0x26 + 2),
-                (fieldArea.ToInt64(), 0x63 + 2)
+                (fieldArea.ToInt64(), 0x62 + 2)
             });
 
             AsmHelper.WriteRelativeOffsets(bytes, new[]
             {
-                (coordUpdateCode.ToInt64() + 0xAF, zDirectionLoc.ToInt64(), 6, 0xAF + 2),
-                (coordUpdateCode.ToInt64() + 0xD9, zDirectionLoc.ToInt64(), 7, 0xD9 + 2),
-                (coordUpdateCode.ToInt64() + 0xFC, coordsUpdateHook + 0x7, 5, 0xFC + 1)
+                (coordUpdateCode.ToInt64() + 0x50, speedScaleYLoc.ToInt64(), 9, 0x50 + 5),
+                (coordUpdateCode.ToInt64() + 0x92, speedScaleXLoc.ToInt64(), 9, 0x92 + 5),
+                (coordUpdateCode.ToInt64() + 0xAD, zDirectionLoc.ToInt64(), 6, 0xAD + 2),
+                (coordUpdateCode.ToInt64() + 0xD7, zDirectionLoc.ToInt64(), 7, 0xD7 + 2),
+                (coordUpdateCode.ToInt64() + 0xFA, coordsUpdateHook + 0x7, 5, 0xFA + 1)
             });
 
             memoryService.WriteBytes(coordUpdateCode, bytes);

@@ -25,6 +25,7 @@ public partial class MainWindow : Window
 
     private readonly AoBScanner _aobScanner;
     private readonly HotkeyManager _hotkeyManager;
+    private readonly NopManager _nopManager;
 
     private readonly DispatcherTimer _gameLoadedTimer;
 
@@ -37,18 +38,19 @@ public partial class MainWindow : Window
 
         _aobScanner = new AoBScanner(_memoryService);
         var hookManager = new HookManager(_memoryService);
-        NopManager nopManager = new NopManager(_memoryService);
+        
+        _nopManager = new NopManager(_memoryService);
         _hotkeyManager = new HotkeyManager(_memoryService);
 
         _gameStateService = new GameStateService(_memoryService);
         _playerService = new PlayerService(_memoryService, hookManager);
         IEnemyService enemyService = new EnemyService(_memoryService, hookManager);
         ITargetService targetService = new TargetService(_memoryService, hookManager);
-        IDebugDrawService debugDrawService = new DebugDrawService(_memoryService, _gameStateService, nopManager);
+        IDebugDrawService debugDrawService = new DebugDrawService(_memoryService, _gameStateService, _nopManager);
         IEventService eventService = new EventService(_memoryService);
         IUtilityService utilityService = new UtilityService(_memoryService, hookManager);
         IItemService itemService = new ItemService(_memoryService);
-        ISettingsService settingsService = new SettingsService(_memoryService, nopManager);
+        ISettingsService settingsService = new SettingsService(_memoryService, _nopManager);
         
 
 
@@ -58,7 +60,7 @@ public partial class MainWindow : Window
             new TargetViewModel(_gameStateService, _hotkeyManager, targetService, debugDrawService);
         EventViewModel eventViewModel = new EventViewModel(eventService, _gameStateService, debugDrawService);
         UtilityViewModel utilityViewModel =
-            new UtilityViewModel(utilityService, _gameStateService, _hotkeyManager, debugDrawService);
+            new UtilityViewModel(utilityService, _gameStateService, _hotkeyManager, debugDrawService, playerViewModel);
         SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, _gameStateService, _hotkeyManager);
 
 
@@ -158,7 +160,7 @@ public partial class MainWindow : Window
             // DisableFeatures();
             // _settingsViewModel.ResetLoaded();
             // _settingsViewModel.ResetAttached();
-            // _nopManager.ClearRegistry();
+            _nopManager.ClearRegistry();
             // _loaded = false;
             // _hasAllocatedMemory = false;
             // _hasAppliedNoLogo = false;
