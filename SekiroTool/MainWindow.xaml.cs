@@ -63,7 +63,7 @@ public partial class MainWindow : Window
             new UtilityViewModel(utilityService, _gameStateService, _hotkeyManager, debugDrawService, playerViewModel);
         SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, _gameStateService, _hotkeyManager);
 
-
+        DataLoader.GetLocations();
         var playerTab = new PlayerTab(playerViewModel);
         var enemyTab = new EnemyTab(enemyViewModel);
         var targetTab = new TargetTab(targetViewModel);

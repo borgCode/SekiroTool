@@ -412,5 +412,24 @@ namespace SekiroTool {
                 return ResourceManager.GetString("SetEvent", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ashina Outskirts,Dilapidated Temple,1101950
+        ///Ashina Outskirts,Ashina Outskirts,1101956
+        ///Ashina Outskirts,Outskirts Wall - Gate Path,1101951
+        ///Ashina Outskirts,Outskirts Wall - Stairway,1101952
+        ///Ashina Outskirts,Underbridge Valley,1101953
+        ///Ashina Outskirts,Ashina Castle Gate Fortress,1101954
+        ///Ashina Outskirts,Ashina Castle Gate,1101955
+        ///Ashina Outskirts,Flames of Hatred,1101957
+        ///Ashina Castle,Ashina Castle,1111950
+        ///Ashina Castle,Upper Tower - Antechamber,1111951
+        ///Ashina Castle,Upper Tower - Ashina Dojo,111195 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Warps {
+            get {
+                return ResourceManager.GetString("Warps", resourceCulture);
+            }
+        }
     }
 }
