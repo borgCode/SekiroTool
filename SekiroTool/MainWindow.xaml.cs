@@ -44,6 +44,7 @@ public partial class MainWindow : Window
 
         _gameStateService = new GameStateService(_memoryService);
         _playerService = new PlayerService(_memoryService, hookManager);
+        ITravelService travelService = new TravelService(_memoryService, hookManager);
         IEnemyService enemyService = new EnemyService(_memoryService, hookManager);
         ITargetService targetService = new TargetService(_memoryService, hookManager);
         IDebugDrawService debugDrawService = new DebugDrawService(_memoryService, _gameStateService, _nopManager);
@@ -55,6 +56,7 @@ public partial class MainWindow : Window
 
 
         PlayerViewModel playerViewModel = new PlayerViewModel(_playerService, _hotkeyManager, _gameStateService);
+        TravelViewModel travelViewModel = new TravelViewModel(travelService, _gameStateService, _hotkeyManager);
         EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _hotkeyManager, _gameStateService, debugDrawService);
         TargetViewModel targetViewModel =
             new TargetViewModel(_gameStateService, _hotkeyManager, targetService, debugDrawService);
@@ -62,9 +64,9 @@ public partial class MainWindow : Window
         UtilityViewModel utilityViewModel =
             new UtilityViewModel(utilityService, _gameStateService, _hotkeyManager, debugDrawService, playerViewModel);
         SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, _gameStateService, _hotkeyManager);
-
-        DataLoader.GetLocations();
+        
         var playerTab = new PlayerTab(playerViewModel);
+        var travelTab = new TravelTab(travelViewModel);
         var enemyTab = new EnemyTab(enemyViewModel);
         var targetTab = new TargetTab(targetViewModel);
         var eventTab = new EventTab(eventViewModel);
@@ -72,6 +74,7 @@ public partial class MainWindow : Window
         var settingsTab = new SettingsTab(settingsViewModel);
         
         MainTabControl.Items.Add(new TabItem { Header = "Player", Content = playerTab });
+        MainTabControl.Items.Add(new TabItem { Header = "Travel", Content = travelTab });
         MainTabControl.Items.Add(new TabItem { Header = "Enemies", Content = enemyTab });
         MainTabControl.Items.Add(new TabItem { Header = "Target", Content = targetTab });
         MainTabControl.Items.Add(new TabItem { Header = "Event", Content = eventTab });

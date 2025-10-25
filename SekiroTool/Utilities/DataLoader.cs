@@ -6,7 +6,7 @@ namespace SekiroTool.Utilities;
 
 public class DataLoader
 {
-    public static Dictionary<string, List<Warp>> GetLocations()
+    public static Dictionary<string, List<Warp>> GetWarpLocations()
         {
             Dictionary<string, List<Warp>> warpDict = new Dictionary<string, List<Warp>>();
             string csvData = Resources.Warps;
@@ -22,13 +22,13 @@ public class DataLoader
 
                 string[] parts = line.Split(',');
                 string mainAreaName = parts[0].Trim();
-                string idonName = parts[1].Trim();
+                string name = parts[1].Trim();
                 int idolId = int.Parse(parts[2], NumberStyles.Integer, CultureInfo.InvariantCulture);
                 
                 Warp warp = new Warp
                 {
                     MainArea = mainAreaName,
-                    IdolName = idonName,
+                    Name = name,
                     IdolId = idolId,
                 };
 

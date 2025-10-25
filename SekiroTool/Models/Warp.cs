@@ -3,7 +3,7 @@
 public class Warp
 {
     public String MainArea { get; set; }
-    public String IdolName { get; set; }
+    public String Name { get; set; }
     public int IdolId { get; set; }
     public float[] Coords { get; set; }
     public float Angle { get; set; }
