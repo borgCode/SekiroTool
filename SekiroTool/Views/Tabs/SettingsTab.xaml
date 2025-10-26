@@ -29,6 +29,9 @@
                               Margin="0,0,10,0" />
                     <CheckBox Content="Save In Combat"
                               IsChecked="{Binding IsSaveInCombatEnabled}"
+                              Margin="0,0,10,0" />
+                    <CheckBox Content="No Camera Spinning When Tabbing Out"
+                              IsChecked="{Binding IsNoCameraSpinEnabled}"
                               Margin="0,0,0,0" />
                 </StackPanel>
             </StackPanel>

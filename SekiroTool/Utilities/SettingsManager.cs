@@ -13,6 +13,7 @@ public class SettingsManager
     public bool AlwaysOnTop { get; set; }
     public bool NoTutorials { get; set; }
     public bool SaveInCombat { get; set; }
+    public bool NoCameraSpin { get; set; }
 
     private static string SettingsPath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -34,6 +35,7 @@ public class SettingsManager
                 $"AlwaysOnTop={AlwaysOnTop}",
                 $"NoTutorials={NoTutorials}",
                 $"SaveInCombat={SaveInCombat}",
+                $"NoCameraSpin={NoCameraSpin}",
             };
 
             File.WriteAllLines(SettingsPath, lines);
@@ -83,6 +85,10 @@ public class SettingsManager
                             case "AlwaysOnTop":
                                 bool.TryParse(value, out bool aot);
                                 settings.AlwaysOnTop = aot;
+                                break;
+                            case "NoCameraSpin":
+                                bool.TryParse(value, out bool ncp);
+                                settings.AlwaysOnTop = ncp;
                                 break;
                         }
                     }

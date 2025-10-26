@@ -37,6 +37,7 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.FrpgHavokMan.Base = FindAddressByPattern(Patterns.FrpgHavokMan);
         Offsets.GameDataMan.Base = FindAddressByPattern(Patterns.GameDataMan);
         Offsets.PauseRequest.Base = FindAddressByPattern(Patterns.PauseRequest);
+        Offsets.DlUserInputManager.Base = FindAddressByPattern(Patterns.DlUserInputManager);
 
 
         TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
@@ -61,6 +62,8 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Hooks.InfinitePoise = addr.ToInt64(), saved);
         TryPatternWithFallback("AiHasSpEffect", Patterns.AiHasSpEffect,
             addr => Offsets.Hooks.AiHasSpEffect = addr.ToInt64(), saved);
+        TryPatternWithFallback("GetMouseDelta", Patterns.GetMouseDelta,
+            addr => Offsets.Hooks.GetMouseDelta = addr.ToInt64(), saved);
 
         TryPatternWithFallback("NoLogo", Patterns.NoLogo,
             addr => Offsets.Patches.NoLogo = addr, saved);
@@ -123,6 +126,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"FrpgHavokMan.Base: 0x{Offsets.FrpgHavokMan.Base.ToInt64():X}");
         Console.WriteLine($"GameDataMan.Base: 0x{Offsets.GameDataMan.Base.ToInt64():X}");
         Console.WriteLine($"PauseRequest.Base: 0x{Offsets.PauseRequest.Base.ToInt64():X}");
+        Console.WriteLine($"DlUserInputManager.Base: 0x{Offsets.DlUserInputManager.Base.ToInt64():X}");
 
         Console.WriteLine($"Hooks.LockedTarget: 0x{Offsets.Hooks.LockedTarget:X}");
         Console.WriteLine($"Hooks.FreezeTargetPosture: 0x{Offsets.Hooks.FreezeTargetPosture:X}");
@@ -135,6 +139,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Hooks.KeyBoard: 0x{Offsets.Hooks.KeyBoard:X}");
         Console.WriteLine($"Hooks.InfinitePoise: 0x{Offsets.Hooks.InfinitePoise:X}");
         Console.WriteLine($"Hooks.AiHasSpEffect: 0x{Offsets.Hooks.AiHasSpEffect:X}");
+        Console.WriteLine($"Hooks.GetMouseDelta: 0x{Offsets.Hooks.GetMouseDelta:X}");
 
 
         Console.WriteLine($"Patches.NoLogo: 0x{Offsets.Patches.NoLogo.ToInt64():X}");

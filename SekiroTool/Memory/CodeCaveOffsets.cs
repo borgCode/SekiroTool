@@ -41,4 +41,6 @@ public static class CodeCaveOffsets
     public const int WarpAngle = 0x810;
     public const int WarpCoordsCode = 0x820;
     public const int WarpAngleCode = 0x830;
+
+    public const int NoCameraSpin = 0x860;
 }

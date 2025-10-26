@@ -311,6 +311,23 @@ namespace SekiroTool {
         
         /// <summary>
         ///   Looks up a localized string similar to 50                      push   rax
+        ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;
+        ///80 b8 3d 02 00 00 01    cmp    BYTE PTR [rax+0x23d],0x1
+        ///74 03                   je     14 &lt;normal&gt;
+        ///0f 57 c0                xorps  xmm0,xmm0
+        ///000000000014 &lt;normal&gt;:
+        ///0f 29 83 d0 00 00 00    movaps XMMWORD PTR [rbx+0xd0],xmm0
+        ///58                      pop    rax
+        ///e9 00 00 00 00          jmp    21 &lt;normal+0xd&gt;.
+        /// </summary>
+        internal static string NoCameraSpin {
+            get {
+                return ResourceManager.GetString("NoCameraSpin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 50                      push   rax
         ///48 a1 00 00 00 00 00    movabs rax,ds:0x0
         ///00 00 00
         ///48 8b 80 88 00 00 00    mov    rax,QWORD PTR [rax+0x88]

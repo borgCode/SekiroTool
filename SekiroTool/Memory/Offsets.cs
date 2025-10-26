@@ -186,6 +186,12 @@ public static class Offsets
     {
         public static IntPtr Base;
     }
+    
+    public static class DlUserInputManager
+    {
+        public static IntPtr Base;
+        public const int IsGameFocused = 0x23D;
+    }
 
 
     public static class FieldArea
@@ -242,6 +248,7 @@ public static class Offsets
         public static long KeyBoard;
         public static long InfinitePoise;
         public static long AiHasSpEffect;
+        public static long GetMouseDelta;
     }
 
     public static class Functions

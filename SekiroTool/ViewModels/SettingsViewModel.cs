@@ -9,7 +9,6 @@ namespace SekiroTool.ViewModels;
 public class SettingsViewModel : BaseViewModel
 {
     private readonly ISettingsService _settingsService;
-    private readonly IGameStateService _gameStateService;
     private readonly HotkeyManager _hotkeyManager;
 
     private readonly Dictionary<string, Action<string>> _propertySetters;
@@ -22,10 +21,9 @@ public class SettingsViewModel : BaseViewModel
         HotkeyManager hotkeyManager)
     {
         _settingsService = settingsService;
-        _gameStateService = gameStateService;
         _hotkeyManager = hotkeyManager;
 
-        _gameStateService.Subscribe(GameState.Attached, OnGameAttached);
+        gameStateService.Subscribe(GameState.Attached, OnGameAttached);
 
         RegisterHotkeys();
 
@@ -171,6 +169,23 @@ public class SettingsViewModel : BaseViewModel
                 SettingsManager.Default.Save();
 
                 _settingsService.ToggleSaveInCombat(_isSaveInCombatEnabled);
+            }
+        }
+    }
+    
+    private bool _isNoCameraSpinEnabled;
+
+    public bool IsNoCameraSpinEnabled
+    {
+        get => _isNoCameraSpinEnabled;
+        set
+        {
+            if (SetProperty(ref _isNoCameraSpinEnabled, value))
+            {
+                SettingsManager.Default.NoCameraSpin = value;
+                SettingsManager.Default.Save();
+
+                _settingsService.ToggleNoCameraSpin(_isNoCameraSpinEnabled);
             }
         }
     }
@@ -504,6 +519,9 @@ public class SettingsViewModel : BaseViewModel
         
         _isSaveInCombatEnabled = SettingsManager.Default.SaveInCombat;
         OnPropertyChanged(nameof(IsSaveInCombatEnabled));
+        
+        _isNoCameraSpinEnabled = SettingsManager.Default.NoCameraSpin;
+        OnPropertyChanged(nameof(IsNoCameraSpinEnabled));
 
         IsAlwaysOnTopEnabled = SettingsManager.Default.AlwaysOnTop;
     }
@@ -522,6 +540,7 @@ public class SettingsViewModel : BaseViewModel
         if (IsNoLogoEnabled) _settingsService.ToggleNoLogo(true);
         if (IsNoTutorialsEnabled) _settingsService.ToggleNoTutorials(true);
         if (IsSaveInCombatEnabled) _settingsService.ToggleSaveInCombat(true);
+        if (IsNoCameraSpinEnabled) _settingsService.ToggleNoCameraSpin(true);
     }
 
     private void LoadHotkeyDisplays()

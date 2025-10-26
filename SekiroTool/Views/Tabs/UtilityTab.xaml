@@ -55,7 +55,7 @@
 
 
                     <CheckBox Content="Hitbox View"
-                              IsChecked="{Binding IsHitboxEnabled}"
+                              IsChecked="{Binding IsHitBoxViewEnabled}"
                               Grid.Column="0" Grid.Row="0"
                               Margin="0,2" />
 
