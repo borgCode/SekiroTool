@@ -88,7 +88,7 @@ public class SettingsManager
                                 break;
                             case "NoCameraSpin":
                                 bool.TryParse(value, out bool ncp);
-                                settings.AlwaysOnTop = ncp;
+                                settings.NoCameraSpin = ncp;
                                 break;
                         }
                     }
