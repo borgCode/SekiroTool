@@ -37,6 +37,8 @@ public class UtilityViewModel : BaseViewModel
         gameStateService.Subscribe(GameState.Detached, OnGameDetached);
 
 
+        MoveCamToPlayerCommand = new DelegateCommand(MoveCamToPlayer);
+        
         OpenSkillsCommand = new DelegateCommand(OpenSkillMenu);
         OpenUpgradeProstheticsCommand = new DelegateCommand(OpenUpgradeProstheticsMenu);
 
@@ -55,8 +57,9 @@ public class UtilityViewModel : BaseViewModel
         ProstheticsCommand = new DelegateCommand(() => OpenProstheticsShop(ShopLineup.Prosthetics));
     }
 
-
     #region Commands
+    
+    public ICommand MoveCamToPlayerCommand { get; set; }
 
     public ICommand OpenSkillsCommand { get; set; }
     public ICommand OpenUpgradeProstheticsCommand { get; set; }
@@ -245,6 +248,11 @@ public class UtilityViewModel : BaseViewModel
             if (!AreOptionsEnabled) return;
             IsFreeCamEnabled = !IsFreeCamEnabled;
         });
+        _hotkeyManager.RegisterAction(HotkeyActions.MoveCamToPlayer.ToString(), () =>
+        {
+            if (!AreOptionsEnabled || !IsFreeCamEnabled) return;
+            _utilityService.MoveCamToPlayer();
+        });
     }
 
     private void OnGameLoaded()
@@ -280,6 +288,8 @@ public class UtilityViewModel : BaseViewModel
     }
 
     private bool IsApproximately(float a, float b) => Math.Abs(a - b) < Epsilon;
+
+    private void MoveCamToPlayer() => _utilityService.MoveCamToPlayer();
 
     private void OpenSkillMenu() => _utilityService.OpenSkillMenu();
     private void OpenUpgradeProstheticsMenu() => _utilityService.OpenUpgradeProstheticsMenu();

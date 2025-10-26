@@ -16,4 +16,5 @@ public interface IUtilityService
     void ToggleNoClip(bool isEnabled);
     void ToggleFreeCamera(bool isEnabled);
     void SetCameraMode(int mode);
+    void MoveCamToPlayer();
 }

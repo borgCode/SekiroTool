@@ -235,4 +235,18 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
     }
 
     public void SetCameraMode(int mode) => memoryService.WriteUInt8(PauseRequest.Base, mode);
+
+    public void MoveCamToPlayer()
+    {
+        byte[] positionBytes = memoryService.ReadBytes(GetChrPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.X, 12);
+        float y = BitConverter.ToSingle(positionBytes, 4);
+        y += 5f;
+        byte[] modifiedZ = BitConverter.GetBytes(y);
+        Buffer.BlockCopy(modifiedZ, 0, positionBytes, 4, 4);
+        var freeCamCoordsPtr = memoryService.FollowPointers(FieldArea.Base, FieldArea.DebugCamCoords, false);
+        memoryService.WriteBytes(freeCamCoordsPtr, positionBytes);
+    }
+
+    private IntPtr GetChrPhysicsPtr() =>
+        memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrPhysicsModule], true);
 }

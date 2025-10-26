@@ -84,6 +84,7 @@ public class SettingsViewModel : BaseViewModel
             { HotkeyActions.IncreaseNoClipSpeed.ToString(), text => IncreaseNoClipSpeedHotkeyText = text },
             { HotkeyActions.DecreaseNoClipSpeed.ToString(), text => DecreaseNoClipSpeedHotkeyText = text },
             { HotkeyActions.FreeCam.ToString(), text => FreeCamHotkeyText = text },
+            { HotkeyActions.MoveCamToPlayer.ToString(), text => MoveCamToPlayerHotkeyText = text },
         };
 
         LoadHotkeyDisplays();
@@ -426,6 +427,13 @@ public class SettingsViewModel : BaseViewModel
     {
         get => _freeCamHotkeyText;
         set => SetProperty(ref _freeCamHotkeyText, value);
+    }
+    
+    private string _moveCamToPlayerHotkeyText;
+    public string MoveCamToPlayerHotkeyText
+    {
+        get => _moveCamToPlayerHotkeyText;
+        set => SetProperty(ref _moveCamToPlayerHotkeyText, value);
     }
 
     #endregion

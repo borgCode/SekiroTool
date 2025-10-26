@@ -40,7 +40,7 @@ public enum HotkeyActions
     IncreaseNoClipSpeed,
     DecreaseNoClipSpeed,
     FreeCam,
-    
+    MoveCamToPlayer,
     
     
 }

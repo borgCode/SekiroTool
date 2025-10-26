@@ -184,7 +184,7 @@ public static class Offsets
 
     public static class PauseRequest
     {
-        public static IntPtr Base; // 1 To pause 2 to unpause
+        public static IntPtr Base;
     }
 
 
@@ -192,7 +192,9 @@ public static class Offsets
     {
         public static IntPtr Base;
         public const int GameRend = 0x20;
-        public static readonly int[] FreeCamMode = [GameRend, 0xE0]; // 1
+        public static readonly int[] FreeCamMode = [GameRend, 0xE0]; 
+        public const int DebugFreecam = 0xE8;
+        public static readonly int[] DebugCamCoords = [GameRend, DebugFreecam, 0x40];
         
         public const int ChrCam = 0x30;
         public static readonly int[] ChrExFollowCam = [ChrCam, 0x60];
