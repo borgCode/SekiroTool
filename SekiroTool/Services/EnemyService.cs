@@ -1,4 +1,5 @@
-﻿using SekiroTool.Interfaces;
+﻿using System.Diagnostics;
+using SekiroTool.Interfaces;
 using SekiroTool.Memory;
 using SekiroTool.Utilities;
 using static SekiroTool.Memory.Offsets;
@@ -7,6 +8,32 @@ namespace SekiroTool.Services;
 
 public class EnemyService(IMemoryService memoryService, HookManager hookManager) : IEnemyService
 {
+    public void ToggleNoDeath(bool isEnabled) =>
+        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.AllNoDeath, (byte)(isEnabled ? 1 : 0));
+
+    public void ToggleNoDamage(bool isEnabled) =>
+        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.AllNoDamage, (byte)(isEnabled ? 1 : 0));
+
+    public void ToggleNoHit(bool isEnabled) =>
+        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.AllNoHit, (byte)(isEnabled ? 1 : 0));
+
+    public void ToggleNoAttack(bool isEnabled) =>
+        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.AllNoAttack, (byte)(isEnabled ? 1 : 0));
+
+    public void ToggleNoMove(bool isEnabled) =>
+        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.AllNoMove, (byte)(isEnabled ? 1 : 0));
+
+    public void ToggleDisableAi(bool isEnabled) =>
+        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.DisableAi, (byte)(isEnabled ? 1 : 0));
+
+    public void ToggleNoPostureBuildup(bool isEnabled) =>
+        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.AllNoPosture, (byte)(isEnabled ? 1 : 0));
+    
+    public void ToggleTargetingView(bool isEnabled)
+    {
+        throw new NotImplementedException();
+    }
+
     public void SkipDragonPhaseOne()
     {
         var bytes = AsmLoader.GetAsmBytes("DragonSkipPhaseOne");
@@ -37,7 +64,5 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager)
         {
             hookManager.UninstallHook(code.ToInt64());
         }
-       
-        
     }
 }

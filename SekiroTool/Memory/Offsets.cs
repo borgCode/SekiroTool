@@ -152,9 +152,6 @@ public static class Offsets
             AllNoMove = 0xF,
             DisableAi = 0x10,
             AllNoPosture = 0x17,
-            
-            
-            
         }
     }
 
