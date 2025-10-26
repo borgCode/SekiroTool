@@ -48,12 +48,12 @@ public class EventService(IMemoryService memoryService) : IEventService
         }
 
         var ptr = memoryService.ReadInt64(DebugEventMan.Base) + DebugEventMan.DrawAllEvent;
-        memoryService.WriteUInt8((IntPtr)ptr, (byte)(isEnabled ? 1 : 0));
+        memoryService.WriteUInt8((IntPtr)ptr, isEnabled ? 1 : 0);
     }
 
     public void ToggleDisableEvent(bool isEnabled)
     {
         var ptr = memoryService.ReadInt64(DebugEventMan.Base) + DebugEventMan.DisableEvent;
-        memoryService.WriteUInt8((IntPtr)ptr, (byte)(isEnabled ? 1 : 0));
+        memoryService.WriteUInt8((IntPtr)ptr, isEnabled ? 1 : 0);
     }
 }

@@ -51,7 +51,6 @@ public class SettingsViewModel : BaseViewModel
         
             { HotkeyActions.Quitout.ToString(), text => QuitoutHotkeyText = text },
             // { "ForceSave", text => ForceSaveHotkeyText = text },
-            // { "EnableFreeCam", text => EnableFreeCamHotkeyText = text },
             // { "MoveCamToPlayer", text => MoveCamToPlayerHotkeyText = text },
             // { "Warp", text => WarpHotkeyText = text },
    
@@ -84,6 +83,7 @@ public class SettingsViewModel : BaseViewModel
             { HotkeyActions.NoClip.ToString(), text => NoClipHotkeyText = text },
             { HotkeyActions.IncreaseNoClipSpeed.ToString(), text => IncreaseNoClipSpeedHotkeyText = text },
             { HotkeyActions.DecreaseNoClipSpeed.ToString(), text => DecreaseNoClipSpeedHotkeyText = text },
+            { HotkeyActions.FreeCam.ToString(), text => FreeCamHotkeyText = text },
         };
 
         LoadHotkeyDisplays();
@@ -419,6 +419,13 @@ public class SettingsViewModel : BaseViewModel
     {
         get => _decreaseNoClipSpeedHotkeyText;
         set => SetProperty(ref _decreaseNoClipSpeedHotkeyText, value);
+    }
+    
+    private string _freeCamHotkeyText;
+    public string FreeCamHotkeyText
+    {
+        get => _freeCamHotkeyText;
+        set => SetProperty(ref _freeCamHotkeyText, value);
     }
 
     #endregion

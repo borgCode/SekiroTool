@@ -13,16 +13,16 @@ public class MemoryService : IMemoryService
     private const int ProcessVmOperation = 0x0008;
     private const int ProcessQueryInformation = 0x0400;
     private const string ProcessName = "sekiro";
-    
+
     private bool _disposed;
     public bool IsAttached { get; private set; }
     public Process? TargetProcess { get; private set; }
     public nint ProcessHandle { get; private set; } = nint.Zero;
     public nint BaseAddress { get; private set; }
-    
+
     private Timer _autoAttachTimer;
-    
-    
+
+
     public byte ReadUInt8(nint addr)
     {
         var bytes = ReadBytes(addr, 1);
@@ -95,9 +95,9 @@ public class MemoryService : IMemoryService
         return array;
     }
 
-    public void WriteUInt8(IntPtr addr, byte val)
+    public void WriteUInt8(IntPtr addr, int val)
     {
-        var bytes = new[] { val };
+        var bytes = new[] { (byte)val };
         WriteBytes(addr, bytes);
     }
 
@@ -149,7 +149,7 @@ public class MemoryService : IMemoryService
     public bool IsBitSet(IntPtr addr, int flagMask)
     {
         byte currentByte = ReadUInt8(addr);
-            
+
         return (currentByte & flagMask) != 0;
     }
 
@@ -179,18 +179,18 @@ public class MemoryService : IMemoryService
     public IntPtr FollowPointers(IntPtr baseAddress, int[] offsets, bool readFinalPtr)
     {
         ulong ptr = ReadUInt64(baseAddress);
-            
+
         for (int i = 0; i < offsets.Length - 1; i++)
         {
             ptr = ReadUInt64((IntPtr)ptr + offsets[i]);
         }
-            
+
         IntPtr finalAddress = (IntPtr)ptr + offsets[offsets.Length - 1];
-            
-        if (readFinalPtr) 
+
+        if (readFinalPtr)
             return (IntPtr)ReadUInt64(finalAddress);
-    
-            
+
+
         return finalAddress;
     }
 
@@ -226,7 +226,7 @@ public class MemoryService : IMemoryService
             }
         }
     }
-    
+
     public IntPtr GetProcAddress(string moduleName, string procName)
     {
         IntPtr moduleHandle = Kernel32.GetModuleHandle(moduleName);
@@ -240,78 +240,81 @@ public class MemoryService : IMemoryService
     {
         _autoAttachTimer = new Timer(4000);
         _autoAttachTimer.Elapsed += (sender, e) => TryAttachToProcess();
-            
+
         TryAttachToProcess();
-    
+
         _autoAttachTimer.Start();
     }
-    
+
 
     private void TryAttachToProcess()
+    {
+        if (ProcessHandle != IntPtr.Zero)
         {
+            if (TargetProcess == null || TargetProcess.HasExited)
+            {
+                Kernel32.CloseHandle(ProcessHandle);
+                ProcessHandle = IntPtr.Zero;
+                TargetProcess = null;
+                IsAttached = false;
+            }
+
+            return;
+        }
+
+        var processes = Process.GetProcessesByName(ProcessName);
+        if (processes.Length > 0 && !processes[0].HasExited)
+        {
+            TargetProcess = processes[0];
+            ProcessHandle = Kernel32.OpenProcess(
+                ProcessVmRead | ProcessVmWrite | ProcessVmOperation | ProcessQueryInformation,
+                false,
+                TargetProcess.Id);
+
+            if (ProcessHandle == IntPtr.Zero)
+            {
+                TargetProcess = null;
+                IsAttached = false;
+            }
+            else
+            {
+                if (TargetProcess.MainModule != null)
+                {
+                    BaseAddress = TargetProcess.MainModule.BaseAddress;
+                }
+
+                IsAttached = true;
+            }
+        }
+    }
+
+    public void Dispose()
+    {
+        if (!_disposed)
+        {
+            if (_autoAttachTimer != null)
+            {
+                _autoAttachTimer.Stop();
+                _autoAttachTimer.Dispose();
+                _autoAttachTimer = null;
+            }
+
             if (ProcessHandle != IntPtr.Zero)
             {
-                if (TargetProcess == null || TargetProcess.HasExited)
-                {
-                    Kernel32.CloseHandle(ProcessHandle);
-                    ProcessHandle = IntPtr.Zero;
-                    TargetProcess = null;
-                    IsAttached = false;
-                }
-                return; 
+                Kernel32.CloseHandle(ProcessHandle);
+                ProcessHandle = IntPtr.Zero;
+                TargetProcess = null;
+                IsAttached = false;
             }
-    
-            var processes = Process.GetProcessesByName(ProcessName);
-            if (processes.Length > 0 && !processes[0].HasExited)
-            {
-                TargetProcess = processes[0];
-                ProcessHandle = Kernel32.OpenProcess(
-                    ProcessVmRead | ProcessVmWrite | ProcessVmOperation | ProcessQueryInformation,
-                    false,
-                    TargetProcess.Id);
-    
-                if (ProcessHandle == IntPtr.Zero)
-                {
-                    TargetProcess = null;
-                    IsAttached = false;
-                }
-                else
-                {
-                    if (TargetProcess.MainModule != null)
-                    {
-                        BaseAddress = TargetProcess.MainModule.BaseAddress;
-                    }
-                    IsAttached = true;
-                }
-            }
-        }
-        
-        public void Dispose()
-        {
-            if (!_disposed)
-            {
-                if (_autoAttachTimer != null)
-                {
-                    _autoAttachTimer.Stop();
-                    _autoAttachTimer.Dispose();
-                    _autoAttachTimer = null;
-                }
-        
-                if (ProcessHandle != IntPtr.Zero)
-                {
-                    Kernel32.CloseHandle(ProcessHandle);
-                    ProcessHandle = IntPtr.Zero;
-                    TargetProcess = null;
-                    IsAttached = false;
-                }
-                _disposed = true;
-            }
-            GC.SuppressFinalize(this);
+
+            _disposed = true;
         }
 
-        ~MemoryService()
-        {
-            Dispose();
-        }
+        GC.SuppressFinalize(this);
+    }
 
+    ~MemoryService()
+    {
+        Dispose();
+    }
 }

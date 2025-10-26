@@ -226,10 +226,10 @@ public class TargetService(IMemoryService memoryService, HookManager hookManager
         memoryService.ReadUInt8(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.LastKengekiAct);
 
     public void ForceAct(int act) =>
-        memoryService.WriteUInt8(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.ForceAct, (byte)act);
+        memoryService.WriteUInt8(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.ForceAct, act);
 
     public void ForceKengekiAct(int act) =>
-        memoryService.WriteUInt8(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.ForceKengekiAct, (byte)act);
+        memoryService.WriteUInt8(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.ForceKengekiAct, act);
 
     public bool IsTargetRepeating() =>
         memoryService.ReadUInt8(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.ForceAct) != 0;

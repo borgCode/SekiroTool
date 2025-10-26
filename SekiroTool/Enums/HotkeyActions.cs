@@ -39,6 +39,8 @@ public enum HotkeyActions
     NoClip,
     IncreaseNoClipSpeed,
     DecreaseNoClipSpeed,
+    FreeCam,
+    
     
     
 }

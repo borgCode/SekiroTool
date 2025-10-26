@@ -87,6 +87,20 @@ public class UtilityViewModel : BaseViewModel
         set => SetProperty(ref _areOptionsEnabled, value);
     }
 
+    private bool _isHitboxViewEnabled;
+
+    public bool IsHitBoxViewEnabled
+    {
+        get => _isHitboxViewEnabled;
+        set
+        {
+            if (!SetProperty(ref _isHitboxViewEnabled, value)) return; 
+            if (_isHitboxViewEnabled) _debugDrawService.RequestDebugDraw();
+            else _debugDrawService.RequestDebugDraw();
+            _utilityService.ToggleHitboxView(_isHitboxViewEnabled);
+        }
+    }
+
     private float _gameSpeed;
 
     public float GameSpeed
@@ -140,6 +154,59 @@ public class UtilityViewModel : BaseViewModel
         }
     }
 
+    private bool _isFreeCamEnabled; 
+    
+    public bool IsFreeCamEnabled
+    {
+        get => _isFreeCamEnabled;
+        set
+        {
+            if (!SetProperty(ref _isFreeCamEnabled, value)) return; 
+            if (_isFreeCamEnabled)
+            {
+                IsNoClipEnabled = false;
+                _utilityService.ToggleFreeCamera(true);
+                _utilityService.SetCameraMode(FreeCamMode);
+            }
+            else
+            {
+                _utilityService.ToggleFreeCamera(false);
+                _utilityService.SetCameraMode(2);
+            }
+        }
+    }
+
+    private int _freeCamMode = 1;
+    public int FreeCamMode
+    {
+        get => _freeCamMode;
+        set
+        {
+            if (SetProperty(ref _freeCamMode, value) && IsFreeCamEnabled)
+            {
+                _utilityService.SetCameraMode(value);
+            }
+        }
+    }
+
+    public bool IsFreeCamMode1Selected
+    {
+        get => _freeCamMode == 1;
+        set
+        {
+            if (value) FreeCamMode = 1;
+        }
+    }
+
+    public bool IsFreeCamMode2Selected
+    {
+        get => _freeCamMode == 2;
+        set
+        {
+            if (value) FreeCamMode = 2;
+        }
+    }
+
     #endregion
 
     #region Public Methods
@@ -173,12 +240,18 @@ public class UtilityViewModel : BaseViewModel
         {
             if (IsNoClipEnabled) NoClipSpeed = Math.Max(0.05f, NoClipSpeed - 0.50f);
         });
+        _hotkeyManager.RegisterAction(HotkeyActions.FreeCam.ToString(), () =>
+        {
+            if (!AreOptionsEnabled) return;
+            IsFreeCamEnabled = !IsFreeCamEnabled;
+        });
     }
-    
+
     private void OnGameLoaded()
     {
         AreOptionsEnabled = true;
         GameSpeed = _utilityService.GetGameSpeed();
+        if (IsHitBoxViewEnabled) _utilityService.ToggleHitboxView(true);
     }
 
 
@@ -192,20 +265,21 @@ public class UtilityViewModel : BaseViewModel
     {
         _wasNoDeathEnabled = false;
     }
-    
+
     private void ToggleGameSpeed()
     {
         if (!IsApproximately(GameSpeed, DefaultGameSpeed))
         {
             _desiredSpeed = GameSpeed;
             GameSpeed = DefaultGameSpeed;
-        } else if (_desiredSpeed >= 0)
+        }
+        else if (_desiredSpeed >= 0)
         {
             GameSpeed = _desiredSpeed;
         }
     }
 
-    private bool IsApproximately(float a, float b) =>  Math.Abs(a - b) < Epsilon;
+    private bool IsApproximately(float a, float b) => Math.Abs(a - b) < Epsilon;
 
     private void OpenSkillMenu() => _utilityService.OpenSkillMenu();
     private void OpenUpgradeProstheticsMenu() => _utilityService.OpenUpgradeProstheticsMenu();

@@ -134,7 +134,7 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
 
     public void TogglePlayerNoDeath(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoDeath, (byte)(isEnabled ? 1 : 0));
+        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoDeath, isEnabled ? 1 : 0);
     }
 
     public void TogglePlayerNoDamage(bool isEnabled)
@@ -143,41 +143,41 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
 
     public void TogglePlayerOneShotHealth(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerOneShotHealth, (byte)(isEnabled ? 1 : 0));
+        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerOneShotHealth, isEnabled ? 1 : 0);
     }
 
     public void TogglePlayerOneShotPosture(bool isEnabled)
     {
         memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerOneShotPosture,
-            (byte)(isEnabled ? 1 : 0));
+            isEnabled ? 1 : 0);
     }
 
     public void TogglePlayerNoGoodsConsume(bool isEnabled)
     {
         memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoGoodsConsume,
-            (byte)(isEnabled ? 1 : 0));
+            isEnabled ? 1 : 0);
     }
 
     public void TogglePlayerNoEmblemsConsume(bool isEnabled)
     {
         memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoEmblemsConsume,
-            (byte)(isEnabled ? 1 : 0));
+            isEnabled ? 1 : 0);
     }
 
     public void TogglePlayerNoRevivalConsume(bool isEnabled)
     {
         memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoRevivalConsume,
-            (byte)(isEnabled ? 1 : 0));
+            isEnabled ? 1 : 0);
     }
 
     public void TogglePlayerHide(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerHide, (byte)(isEnabled ? 1 : 0));
+        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerHide, isEnabled ? 1 : 0);
     }
 
     public void TogglePlayerSilent(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerSilent, (byte)(isEnabled ? 1 : 0));
+        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerSilent, isEnabled ? 1 : 0);
     }
 
     public void TogglePlayerInfinitePoise(bool isEnabled)

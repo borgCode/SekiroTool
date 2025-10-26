@@ -143,6 +143,14 @@ public static class Patterns
         7
     );
 
+    public static readonly Pattern PauseRequest = new Pattern(
+        new byte[] { 0x0F, 0xB6, 0x05, 0x00, 0x00, 0x00, 0x00, 0x84, 0xC0, 0x74, 0x12 },
+        "xxx????xxxx",
+        0,
+        AddressingMode.Relative,
+        3, 7
+    );
+
     #endregion
 
 

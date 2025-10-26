@@ -182,10 +182,18 @@ public static class Offsets
         public const int GameSpeed = 0x344;
     }
 
+    public static class PauseRequest
+    {
+        public static IntPtr Base; // 1 To pause 2 to unpause
+    }
+
 
     public static class FieldArea
     {
         public static IntPtr Base;
+        public const int GameRend = 0x20;
+        public static readonly int[] FreeCamMode = [GameRend, 0xE0]; // 1
+        
         public const int ChrCam = 0x30;
         public static readonly int[] ChrExFollowCam = [ChrCam, 0x60];
         // +0x10 yaw

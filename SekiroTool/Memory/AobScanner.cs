@@ -36,6 +36,7 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.FieldArea.Base = FindAddressByPattern(Patterns.FieldArea);
         Offsets.FrpgHavokMan.Base = FindAddressByPattern(Patterns.FrpgHavokMan);
         Offsets.GameDataMan.Base = FindAddressByPattern(Patterns.GameDataMan);
+        Offsets.PauseRequest.Base = FindAddressByPattern(Patterns.PauseRequest);
 
 
         TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
@@ -121,6 +122,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"FieldArea.Base: 0x{Offsets.FieldArea.Base.ToInt64():X}");
         Console.WriteLine($"FrpgHavokMan.Base: 0x{Offsets.FrpgHavokMan.Base.ToInt64():X}");
         Console.WriteLine($"GameDataMan.Base: 0x{Offsets.GameDataMan.Base.ToInt64():X}");
+        Console.WriteLine($"PauseRequest.Base: 0x{Offsets.PauseRequest.Base.ToInt64():X}");
 
         Console.WriteLine($"Hooks.LockedTarget: 0x{Offsets.Hooks.LockedTarget:X}");
         Console.WriteLine($"Hooks.FreezeTargetPosture: 0x{Offsets.Hooks.FreezeTargetPosture:X}");

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using SekiroTool.GameIds;
+﻿using SekiroTool.GameIds;
 using SekiroTool.Interfaces;
 using SekiroTool.Memory;
 using SekiroTool.Utilities;
@@ -12,6 +11,12 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
     private const float DefaultNoClipSpeedScaleY = 0.2f;
     private const float DefaultNoClipSpeedScaleX = 0.15f;
 
+
+    public void ToggleHitboxView(bool isEnabled)
+    {
+        var hitboxFlagPtr = (IntPtr)memoryService.ReadInt64(DamageManager.Base) + DamageManager.HitboxView;
+        memoryService.WriteUInt8(hitboxFlagPtr, isEnabled ? 1 : 0);
+    }
 
     public void OpenSkillMenu()
     {
@@ -132,8 +137,8 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
             var fieldArea = FieldArea.Base;
             var speedScaleYLoc = CodeCaveOffsets.Base + CodeCaveOffsets.SpeedScaleY;
             var speedScaleXLoc = CodeCaveOffsets.Base + CodeCaveOffsets.SpeedScaleX;
-            
-            
+
+
             AsmHelper.WriteAbsoluteAddresses(bytes, new[]
             {
                 (worldChrMan.ToInt64(), 0x1 + 2),
@@ -195,7 +200,7 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
         memoryService.WriteBytes(hitEntityLoc, new byte[16]);
 
         var bytes = AsmLoader.GetAsmBytes("NoClip_RayCast");
-        AsmHelper.WriteRelativeOffsets(bytes, new []
+        AsmHelper.WriteRelativeOffsets(bytes, new[]
         {
             (code.ToInt64(), shouldExitFlag.ToInt64(), 7, 0x2),
             (code.ToInt64() + 0xD, havokMan.ToInt64(), 7, 0xD + 3),
@@ -211,7 +216,7 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
             (code.ToInt64() + 0xA5, castRay, 5, 0xA5 + 1),
             (code.ToInt64() + 0xAE, hitEntityLoc.ToInt64(), 7, 0xAE + 3)
         });
-        
+
         Array.Copy(BitConverter.GetBytes(sleepAddr), 0, bytes, 0xE8 + 2, 8);
         memoryService.WriteBytes(code, bytes);
         memoryService.RunThread(code, 0);
@@ -222,4 +227,12 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
         var shouldExitFlag = CodeCaveOffsets.Base + CodeCaveOffsets.ShouldExitFlag;
         memoryService.WriteUInt8(shouldExitFlag, 1);
     }
+
+    public void ToggleFreeCamera(bool isEnabled)
+    {
+        var camModePtr = memoryService.FollowPointers(FieldArea.Base, FieldArea.FreeCamMode, false);
+        memoryService.WriteUInt8(camModePtr, isEnabled ? 1 : 0);
+    }
+
+    public void SetCameraMode(int mode) => memoryService.WriteUInt8(PauseRequest.Base, mode);
 }

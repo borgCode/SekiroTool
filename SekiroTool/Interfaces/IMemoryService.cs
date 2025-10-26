@@ -19,7 +19,7 @@ public interface IMemoryService
     string ReadString(nint addr, int maxLength = 32);
     byte[] ReadBytes(nint addr, int size);
     
-    void WriteUInt8(nint addr, byte val);
+    void WriteUInt8(nint addr, int val);
     void WriteUInt16(nint addr, short val);
     void WriteInt32(nint addr, int val);
     void WriteFloat(nint addr, float val);
