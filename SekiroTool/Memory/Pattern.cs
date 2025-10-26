@@ -223,6 +223,20 @@ public static class Patterns
         AddressingMode.Absolute
     );
 
+    public static readonly Pattern DefaultSoundVolWrite = new Pattern(
+        new byte[] { 0x66, 0xC7, 0x41, 0x04, 0x07 },
+        "xxxxx",
+        0,
+        AddressingMode.Absolute
+    );
+
+    public static readonly Pattern StartMenuMusic = new Pattern(
+        new byte[] { 0x48, 0x8B, 0x01, 0xBA, 0x10, 0x00, 0x10, 0x00, 0x44 },
+        "xxxxxxxxx",
+        0x7F,
+        AddressingMode.Absolute
+    );
+
     #endregion
 
 

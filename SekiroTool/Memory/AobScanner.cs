@@ -81,6 +81,10 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Patches.SaveInCombat = addr, saved);
         TryPatternWithFallback("OpenRegularShopPatch", Patterns.OpenRegularShopPatch,
             addr => Offsets.Patches.OpenRegularShopPatch = addr, saved);
+        TryPatternWithFallback("DefaultSoundVolWrite", Patterns.DefaultSoundVolWrite,
+            addr => Offsets.Patches.DefaultSoundVolWrite = addr, saved);
+        TryPatternWithFallback("StartMenuMusic", Patterns.StartMenuMusic,
+            addr => Offsets.Patches.StartMenuMusic = addr, saved);
 
 
         using (var writer = new StreamWriter(savePath))
@@ -150,6 +154,8 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Patches.ShowTutorialText: 0x{Offsets.Patches.ShowTutorialText.ToInt64():X}");
         Console.WriteLine($"Patches.SaveInCombat: 0x{Offsets.Patches.SaveInCombat.ToInt64():X}");
         Console.WriteLine($"Patches.OpenRegularShopPatch: 0x{Offsets.Patches.OpenRegularShopPatch.ToInt64():X}");
+        Console.WriteLine($"Patches.DefaultSoundVolWrite: 0x{Offsets.Patches.DefaultSoundVolWrite.ToInt64():X}");
+        Console.WriteLine($"Patches.StartMenuMusic: 0x{Offsets.Patches.StartMenuMusic.ToInt64():X}");
 
         Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");
         Console.WriteLine($"Functions.Rest: 0x{Offsets.Functions.Rest:X}");

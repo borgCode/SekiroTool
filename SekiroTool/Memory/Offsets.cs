@@ -232,6 +232,8 @@ public static class Offsets
         public static IntPtr ShowTutorialText;
         public static IntPtr SaveInCombat;
         public static IntPtr OpenRegularShopPatch;
+        public static IntPtr DefaultSoundVolWrite;
+        public static IntPtr StartMenuMusic;
     }
 
 
