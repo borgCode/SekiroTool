@@ -53,8 +53,6 @@ public partial class MainWindow : Window
         IItemService itemService = new ItemService(_memoryService);
         ISettingsService settingsService = new SettingsService(_memoryService, _nopManager);
         
-
-
         PlayerViewModel playerViewModel = new PlayerViewModel(_playerService, _hotkeyManager, _gameStateService);
         TravelViewModel travelViewModel = new TravelViewModel(travelService, _gameStateService, _hotkeyManager, eventService);
         EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _hotkeyManager, _gameStateService, debugDrawService);

@@ -25,8 +25,8 @@ public class ItemService(IMemoryService memoryService) : IItemService
         });
         
         memoryService.WriteInt32(structPtr, 1);
-        memoryService.WriteUInt16(structPtr + 0x4, item.ItemType);
-        memoryService.WriteUInt16(structPtr + 0x6, item.ItemId);
+        memoryService.WriteUInt16(structPtr + 0x4, item.ItemId);
+        memoryService.WriteUInt16(structPtr + 0x6, item.ItemType);
         memoryService.WriteInt32(structPtr + 0x8, quantity);
         memoryService.WriteBytes(code, bytes);
 

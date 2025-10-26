@@ -558,4 +558,428 @@ c3                      ret</value>
 12500004
 12500007</value>
     </data>
+    <data name="Goods" xml:space="preserve">
+        <value>1000,Spirit Emblem,15
+1001,Red Spirit Emblem,5
+1100,Regenerative Power,2
+1101,Regenerative Power Fragment,100
+1110,Temporary Regenerative Power,1
+1200,Skill Point,999
+2000,Resurrection,1
+2100,Bloodsmoke Ninjutsu,1
+2110,Puppeteer Ninjutsu,1
+2120,Bestowai Ninjutsu,1
+2300,Kusabimaru,1
+2310,Shinobi Prosthetic,1
+2390,Night Eye,1
+2400,Mortal Blade,1
+2420,Mibu Breathing Technique,1
+2450,Anti-air Deathblow Text,1
+2460,Dragon Flash,1
+2461,Floating Passage Text,1
+2462,One Mind,1
+2470,Shinobi Medicine Rank 1,1
+2471,Shinobi Medicine Rank 2,1
+2472,Shinobi Medicine Rank 3,1
+2475,A Beast's Karma,1
+2480,Breath of Life: Shadow,1
+2481,Breath of Nature: Shadow,1
+2490,Sakura Dance,1
+2500,Lotus of the Palace,1
+2501,Shelter Stone,1
+2502,Aromatic Branch,1
+2503,Aromatic Flower,1
+2910,Mechanical Barrel,1
+2920,Shinobi Esoteric Text,1
+2921,Prosthetic Esoteric Text,1
+2922,Ashina Esoteric Text,1
+2923,Senpou Esoteric Text,1
+2924,Mushin Esoteric Text,1
+2930,Recovery Charm,1
+3000,Healing Gourd,10
+3001,Healing Gourd,1
+3020,Pellet,3
+3040,Divine Grass,1
+3050,Red Lump,3
+3051,Red Lump,3
+3052,Red Lump,3
+3053,Academics' Red Lump,3
+3060,Sweet Rice Ball,1
+3061,Sweet Rice Ball,1
+3070,Persimmon,3
+3071,Taro Persimmon,3
+3080,Rice,3
+3081,Fine Snow,3
+3200,Antidote Powder,5
+3210,Dousing Powder,5
+3211,Ministry Dousing Powder,5
+3220,Pacifying Agent,5
+3230,Eel Liver,5
+3250,Contact Medicine,3
+3290,Bite Down,3
+3291,Hidden Tooth,1
+3292,Bite Down,3
+3300,Green Mossy Gourd,5
+3301,Green Mossy Gourd,1
+3310,Withered Red Gourd,5
+3311,Withered Red Gourd,1
+3320,Mottled Purple Gourd,5
+3321,Mottled Purple Gourd,1
+3350,Ako's Spiritfall,1
+3360,Yashariku's Spiritfall,1
+3370,Ungo's Spiritfall,1
+3380,Gokan's Spiritfall,1
+3390,Gachiin's Spiritfall,1
+3400,Ako's Sugar,3
+3410,Yashariku's Sugar,3
+3420,Ungo's Sugar,3
+3430,Gokan's Sugar,3
+3440,Gachiin's Sugar,3
+3450,Divine Confetti,5
+3500,Ceramic Shard,10
+3510,Fistful of Ash,10
+3520,Oil,10
+3530,Snap Seed,10
+3580,Five-color Rice,5
+3581,Five-color Rice,1
+3600,Mibu Balloon of Wealth,5
+3610,Mibu Balloon of Soul,5
+3620,Mibu Possession Balloon,5
+3630,Mibu Balloon of Spirit,5
+3640,Mibu Pilgrimage Balloon,1
+3700,Light Coin Purse,99
+3704,Heavy Coin Purse,99
+3708,Bulging Coin Purse,99
+3720,Bundled Jizo Statue,1
+3721,Jinza's Jizo Statue,1
+3730,Bell Demon,1
+3800,Ceremonial Tanto,3
+3801,Ceremonial Tanto,1
+3900,Nightjar Monocular,1
+3980,Homeward Idol,1
+3990,Illusive Hall Bell,1
+4000,Prayer Bead,99
+4100,First Prayer Necklace,1
+4101,Second Prayer Necklace,1
+4102,Third Prayer Necklace,1
+4103,Fourth Prayer Necklace,1
+4104,Fifth Prayer Necklace,1
+4105,Sixth Prayer Necklace,1
+4106,Seventh Prayer Necklace,1
+4107,Eighth Prayer Necklace,1
+4108,Ninth Prayer Necklace,1
+4109,Final Prayer Necklace,1
+4400,Gourd Seed,99
+5100,Memory,98
+5200,Memory: Gyoubu Oniwa,99
+5201,Memory: Lady Butterfly,99
+5202,Memory: Genichiro,99
+5203,Memory: Screen Monkeys,99
+5204,Memory: Guardian Ape,99
+5205,Memory: Corrupted Monk,99
+5206,Memory: Great Shinobi,99
+5207,Memory: Foster Father,99
+5208,Memory: True Monk,99
+5209,Memory: Divine Dragon,99
+5210,Memory: Hatred Demon,99
+5211,Memory: Saint Isshin ,99
+5212,Memory: Isshin Ashina,99
+5213,Memory: Headless Ape,99
+5220,Memory: Inner Genichiro,99
+5221,Memory: Inner Father,99
+5222,Memory: Inner Isshin,99
+5300,Remnant: Gyoubu,99
+5301,Remnant: Lady Butterfly ,99
+5302,Remnant: Genichiro,99
+5303,Remnant: Screen Monkeys,99
+5304,Remnant: Guardian Ape,99
+5305,Remnant: Corrupted Monk,99
+5306,Remnant: Great Shinobi,99
+5307,Remnant: Foster Father,99
+5308,Remnant: True Monk,99
+5309,Remnant: Divine Dragon,99
+5310,Remnant: Hatred Demon,99
+5311,Remnant: Saint Isshin,99
+5312,Remnant: Isshin Ashina,99
+5313,Remnant: Headless Ape,99
+5320,Remnant: Inner Genichiro,99
+5321,Remnant: Inner Father,99
+5322,Remnant: Inner Isshin,99
+5400,Memory,99
+5500,Mask Fragment: Right,1
+5501,Mask Fragment: Left,1
+5502,Mask Fragment: Dragon,1
+5510,Dancing Dragon Mask,1
+5600,Dragon's Blood Droplet,1
+6000,Scrap Iron,99
+6010,Scrap Magnetite,99
+6020,Adamantite Scrap,99
+6100,Black Gunpowder,99
+6200,Yellow Gunpowder,99
+6210,Fulminated Mercury,99
+6300,Lump of Fat Wax,99
+6310,Lump of Grave Wax,99
+6400,Lapis Lazuli,99
+9000,Divine Dragon's Tears,1
+9003,Kuro's Charm,1
+9009,Sakura Droplet,1
+9010,Young Lord's Bell Charm,1
+9011,Father's Bell Charm,1
+9020,Ornamental Letter,1
+9052,Red Carp Eyes,1
+9060,Dragon's Tally Board,1
+9061,Promissory Note,1
+9070,Water of the Palace,1
+9071,Great White Whisker,1
+9080,Red and White Pinwheel,1
+9081,White Pinwheel,1
+9090,Rice for Kuro,1
+9091,Frozen Tears,1
+9100,Ashina Sake,99
+9101,Unrefined Sake,99
+9102,Monkey Booze,99
+9103,Dragonspring Sake,99
+9104,Ashina Sake,99
+9105,Unrefined Sake,99
+9180,Precious Bait,99
+9181,Truly Precious Bait,99
+9182,Truly Precious Bait,99
+9192,Fresh Serpent Viscera,1
+9193,Dried Serpent Viscera,1
+9200,Herb Catalogue Scrap,1
+9205,Dosaku's Note,1
+9206,Rat Description,1
+9207,Surgeon's Bloody Letter,1
+9208,Surgeon's Stained Letter,1
+9209,Holy Chapter: Dragon's Return,1
+9210,Immortal Severance Text,1
+9211,Immortal Severance Scrap,1
+9212,Fragrant Flower Note,1
+9213,Okami's Ancient Text,1
+9214,Page's Diary,1
+9215,Holy Chapter: Infested,1
+9216,Tomoe's Note,1
+9217,Flame Barrel Memo,1
+9218,Nightjar Beacon Memo,1
+9219,Isshin's Letter,1
+9220,Rotting Prisoner's Note,1
+9221,Sabimaru Memo,1
+9222,Sabimaru Memo,1
+9223,Valley Apparitions Memo,1
+9224,Valley Apparitions Memo,1
+9225,Three-story Pagoda Memo,1
+9226,Three-story Pagoda Memo,1
+9227,Black Scroll,1
+9228,Holy Chapter: Infested,1
+9402,Gatehouse Key,1
+9403,Hidden Temple Key,1
+9404,Secret Passage Key,1
+9405,Gun Fort Shrine Key,1
+9500,Rot Essence: Sculptor,1
+9501,Rot Essence: Newcomer,1
+9502,Rot Essence: Black Hat,1
+9503,Rot Essence: Lost Child,1
+9504,Rot Essence: Charmed One,1
+9505,Rot Essence: Surgeons,1
+9510,Rot Essence: Fine Son,1
+9511,Rot Essence: Thirsty One,1
+9515,Rot Essence: Timid Maid,1
+9516,Rot Essence: Faithful One,1
+9520,Rot Essence: Crow Mob,1
+9521,Rot Essence: Wartorn Mob,1
+9522,Rot Essence: Jail Mob,1
+9523,Rot Essence: Toxic Mob,1
+9524,Rot Essence: Pious Mob,1
+9525,Rot Essence: Drunk Mob,1
+9526,Rot Essence: Info Broker,1
+9560,Dragonrot Blood Sample,1
+9700,Shuriken Wheel,1
+9701,Phantom Kunai,1
+9710,Robert's Firecrackers,1
+9720,Flame Barrel,1
+9721,Pine Resin Ember,1
+9730,Shinobi Axe of the Monkey,1
+9740,Mist Raven's Feathers,1
+9750,Sabimaru,1
+9760,Iron Fortress,1
+9770,Large Fan,1
+9780,Gyoubu's Broken Horn,1
+9790,Slender Finger,1
+9791,Malcontent's Ring,1
+9800,Another's Memory: Shura,1
+9810,Another's Memory: Ashina,1
+9820,Another's Memory: Tengu,1
+10000,Treasure Carp Scale,99
+11000,Gyoubu Oniwa,1
+11010,Lady Butterfly,1
+11020,Genichiro Ashina,1
+11030,Folding Screen Monkeys,1
+11040,Guardian Ape,1
+11050,Headless Ape,1
+11060,Corrupted Monk,1
+11070,True Monk,1
+11080,Great Shinobi - Owl,1
+11090,Owl (Father),1
+11100,Divine Dragon,1
+11110,Emma, the Gentle Blade,1
+11120,Isshin Ashina,1
+11130,Isshin, the Sword Saint,1
+11140,Demon of Hatred,1
+11150,Inner Genichiro,1
+11160,Inner Father,1
+11170,Inner Isshin,1
+11180,Genichiro, Way of Tomoe,1</value>
+    </data>
+    <data name="Weapons" xml:space="preserve">
+        <value>5100,Whirlwind Slash
+5200,Nightjar Slash
+5300,Ichimonji
+5400,Dragon Flash
+5500,Ashina Cross
+5600,Floating Passage
+5700,Mortal Draw
+5800,Senpou Leaping Kicks
+5900,Praying Strikes
+6000,Shadowrush
+6100,One Mind
+7000,Nightjar Slash Reversal
+7100,Ichimonji: Double
+7200,Spiral Cloud Passage
+7300,Empowered Mortal Draw
+7400,High Monk
+7500,Praying Strikes - Exorcism
+7600,Shadowfall
+7700,Sakura Dance
+70000,Loaded Shuriken
+70100,Spinning Shuriken
+70200,Gouging Top
+70300,Phantom Kunai
+70400,Sen Throw
+70500,Lazulite Shuriken
+71000,Shinobi Firecracker
+71100,Spring-load Firecracker
+71200,Long Spark
+71300,Purple Fume Spark
+72000,Flame Vent
+72100,Spring-load Flame Vent
+72200,Okinaga's Flame Vent
+72300,Lazulite Sacred Flame
+73000,Loaded Axe
+73100,Spring-load Axe
+73200,Sparking Axe
+73300,Lazulite Axe
+74000,Mist Raven
+74100,Aged Feather Mist Raven
+74200,Great Feather Mist Raven
+75000,Sabimaru
+75100,Improved Sabimaru
+75200,Piercing Sabimaru
+75300,Lazulite Sabimaru
+76000,Loaded Umbrella
+76100,Loaded Umbrella - Magnet
+76200,Suzaku's Lotus Umbrella
+76300,Phoenix's Lilac Umbrella
+77000,Divine Abduction
+77100,Double Divine Abduction
+77200,Golden Vortex
+78000,Loaded Spear
+78100,Loaded Spear Thrust type
+78200,Loaded Spear Cleave type
+78300,Spiral Spear
+78400,Leaping Flame
+79000,Finger Whistle
+79100,Mountain Echo
+79200,Malcontent
+200000,Grappling Hook Attack
+200100,Mid-air Deflection
+200200,Mid-air Prosthetic Tool
+200300,Mikiri Counter
+200400,Run and Slide
+200500,Mid-air Combat Arts
+200600,Vault Over
+210000,Whirlwind Slash
+211000,Shadowrush
+301000,Chasing Slice
+301100,Fang and Blade
+301200,Projected Force
+301300,Living Force
+310000,Nightjar Slash
+310100,Nightjar Slash Reversal
+410000,Ichimonji
+410100,Ichimonji: Double
+411000,Ashina Cross
+510000,Praying Strikes
+510100,Praying Strikes - Exorcism
+511000,Senpou Leaping Kicks
+511100,High Monk
+610100,Shadowfall
+611100,Spiral Cloud Passage
+612100,Empowered Mortal Draw
+620000,Suppress Presence
+620100,Suppress Sound
+630000,Virtuous Deed
+630100,Most Virtuous Deed
+640000,Emma's Medicine: Potency
+640100,Emma's Medicine: Aroma
+640200,Shinobi Medicine Rank 1
+640300,Shinobi Medicine Rank 2
+640400,Shinobi Medicine Rank 3
+650000,A Shinobi's Karma: Body
+650100,A Shinobi's Karma: Mind
+650200,Sculptor's Karma: Blood
+650300,Sculptor's Karma: Scars
+650400,A Beast's Karma
+660000,Breath of Life: Light
+660100,Breath of Life: Shadow
+660200,Breath of Nature: Light
+660300,Breath of Nature: Shadow
+660400,Shinobi Eyes
+660500,Devotion
+660600,Ascending Carp
+660700,Descending Carp
+660800,Flowing Water
+670000,Mortal Draw
+671000,Dragon Flash
+672000,Floating Passage
+673000,One Mind
+674000,Sakura Dance
+680000,Mibu Breathing Technique
+681000,Anti-air Deathblow
+701000,Spinning Shuriken
+702000,Gouging Top
+703000,Phantom Kunai
+704000,Sen Throw
+705000,Lazulite Shuriken
+711000,Spring-load Firecracker
+712000,Long Spark
+713000,Purple Fume Spark
+721000,Spring-load Flame Vent
+722000,Okinaga's Flame Vent
+723000,Lazulite Sacred Flame
+731000,Spring-load Axe
+732000,Sparking Axe
+733000,Lazulite Axe
+741000,Aged Feather Mist Raven
+742000,Great Feather Mist Raven
+751000,Improved Sabimaru
+752000,Piercing Sabimaru
+753000,Lazulite Sabimaru
+761000,Loaded Umbrella - Magnet
+762000,Suzaku's Lotus Umbrella
+763000,Phoenix's Lilac Umbrella
+771000,Double Divine Abduction
+772000,Golden Vortex
+781000,Loaded Spear Thrust type
+782000,Loaded Spear Cleave type
+783000,Spiral Spear
+784000,Leaping Flame
+791000,Mountain Echo
+792000,Malcontent</value>
+    </data>
+    <data name="Protector" xml:space="preserve">
+        <value>103000,Original Memory: Wolf
+303000,Another's Memory: Shura
+403000,Another's Memory: Ashina
+503000,Another's Memory: Tengu</value>
+    </data>
 </root>
