@@ -43,4 +43,6 @@ public static class CodeCaveOffsets
     public const int WarpAngleCode = 0x830;
 
     public const int NoCameraSpin = 0x860;
+
+    public const int NoMenuMusic = 0x900;
 }

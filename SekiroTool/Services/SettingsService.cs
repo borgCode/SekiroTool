@@ -57,5 +57,41 @@ public class SettingsService(IMemoryService memoryService, NopManager nopManager
             hookManager.UninstallHook(code.ToInt64());
         }
     }
+
+    public void ToggleDisableMusic(bool isEnabled)
+    {
+        var code = CodeCaveOffsets.Base + CodeCaveOffsets.NoMenuMusic;
+        if (isEnabled)
+        {
+            StopMusic();
+
+            var hookLoc = Hooks.StartMusic;
+            var bytes = AsmLoader.GetAsmBytes("NoMenuMusic");
+            var jmpBytes = AsmHelper.GetJmpOriginOffsetBytes(hookLoc, 6, code + 0x10);
+            Array.Copy(jmpBytes, 0, bytes, 0xB + 1, jmpBytes.Length);
+            memoryService.WriteBytes(code, bytes);
+            hookManager.InstallHook(code.ToInt64(), hookLoc,
+                [0x40, 0x57, 0x48, 0x83, 0xEC, 0x30]);
+        }
+        else
+        {
+           hookManager.UninstallHook(code.ToInt64());
+        }
+    }
+
+    private void StopMusic()
+    {
+        var bytes = AsmLoader.GetAsmBytes("StopMusic");
+        var funcBytes = BitConverter.GetBytes(Functions.StopMusic);
+        Array.Copy(funcBytes, 0, bytes, 0x4 + 2, 8 );
+        memoryService.AllocateAndExecute(bytes);
+    }
+
+    public void PatchDefaultSound(int defaultSoundVolume)
+    {
+        var defaultSoundWrite = Patches.DefaultSoundVolWrite;
+        memoryService.WriteUInt8(defaultSoundWrite + 0x4, defaultSoundVolume);
+        memoryService.WriteUInt8(defaultSoundWrite + 0x5, defaultSoundVolume);
+    }
 }
 

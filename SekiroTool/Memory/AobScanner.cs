@@ -64,6 +64,8 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Hooks.AiHasSpEffect = addr.ToInt64(), saved);
         TryPatternWithFallback("GetMouseDelta", Patterns.GetMouseDelta,
             addr => Offsets.Hooks.GetMouseDelta = addr.ToInt64(), saved);
+        TryPatternWithFallback("StartMenuMusic", Patterns.StartMusic,
+            addr => Offsets.Hooks.StartMusic = addr, saved);
 
         TryPatternWithFallback("NoLogo", Patterns.NoLogo,
             addr => Offsets.Patches.NoLogo = addr, saved);
@@ -83,8 +85,7 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Patches.OpenRegularShopPatch = addr, saved);
         TryPatternWithFallback("DefaultSoundVolWrite", Patterns.DefaultSoundVolWrite,
             addr => Offsets.Patches.DefaultSoundVolWrite = addr, saved);
-        TryPatternWithFallback("StartMenuMusic", Patterns.StartMenuMusic,
-            addr => Offsets.Patches.StartMenuMusic = addr, saved);
+
 
 
         using (var writer = new StreamWriter(savePath))
@@ -114,6 +115,7 @@ public class AoBScanner(IMemoryService memoryService)
         });
 
         Offsets.Functions.FrpgCastRay = FindAddressByPattern(Patterns.FrpgCastRay).ToInt64();
+        Offsets.Functions.StopMusic = FindAddressByPattern(Patterns.StopMusic).ToInt64();
 
 #if DEBUG
         Console.WriteLine($"WorldChrMan.Base: 0x{Offsets.WorldChrMan.Base.ToInt64():X}");
@@ -144,6 +146,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Hooks.InfinitePoise: 0x{Offsets.Hooks.InfinitePoise:X}");
         Console.WriteLine($"Hooks.AiHasSpEffect: 0x{Offsets.Hooks.AiHasSpEffect:X}");
         Console.WriteLine($"Hooks.GetMouseDelta: 0x{Offsets.Hooks.GetMouseDelta:X}");
+        Console.WriteLine($"Hooks.StartMusic: 0x{Offsets.Hooks.StartMusic:X}");
 
 
         Console.WriteLine($"Patches.NoLogo: 0x{Offsets.Patches.NoLogo.ToInt64():X}");
@@ -155,7 +158,6 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Patches.SaveInCombat: 0x{Offsets.Patches.SaveInCombat.ToInt64():X}");
         Console.WriteLine($"Patches.OpenRegularShopPatch: 0x{Offsets.Patches.OpenRegularShopPatch.ToInt64():X}");
         Console.WriteLine($"Patches.DefaultSoundVolWrite: 0x{Offsets.Patches.DefaultSoundVolWrite.ToInt64():X}");
-        Console.WriteLine($"Patches.StartMenuMusic: 0x{Offsets.Patches.StartMenuMusic.ToInt64():X}");
 
         Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");
         Console.WriteLine($"Functions.Rest: 0x{Offsets.Functions.Rest:X}");
@@ -172,6 +174,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Functions.OpenScalesShop: 0x{Offsets.Functions.OpenScalesShop:X}");
         Console.WriteLine($"Functions.OpenProstheticsShop: 0x{Offsets.Functions.OpenProstheticsShop:X}");
         Console.WriteLine($"Functions.FrpgCastRay: 0x{Offsets.Functions.FrpgCastRay:X}");
+        Console.WriteLine($"Functions.StopMusic: 0x{Offsets.Functions.StopMusic:X}");
 #endif
     }
 

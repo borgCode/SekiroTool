@@ -230,13 +230,6 @@ public static class Patterns
         AddressingMode.Absolute
     );
 
-    public static readonly Pattern StartMenuMusic = new Pattern(
-        new byte[] { 0x48, 0x8B, 0x01, 0xBA, 0x10, 0x00, 0x10, 0x00, 0x44 },
-        "xxxxxxxxx",
-        0x7F,
-        AddressingMode.Absolute
-    );
-
     #endregion
 
 
@@ -329,6 +322,13 @@ public static class Patterns
         5
     );
 
+    public static readonly Pattern StopMusic = new Pattern(
+        new byte[] { 0x48, 0x85, 0xFF, 0x74, 0x2F, 0x48, 0x8D, 0x8F },
+        "xxxxxxxx",
+        -0xD,
+        AddressingMode.Absolute
+    );
+
     #endregion
 
 
@@ -416,6 +416,13 @@ public static class Patterns
         new byte[] { 0xF3, 0x0F, 0x11, 0x45, 0x80, 0xF3, 0x0F, 0x11, 0x75, 0x84, 0x48 },
         "xxxxxxxxxxx",
         22,
+        AddressingMode.Absolute
+    );
+
+    public static readonly Pattern StartMusic = new Pattern(
+        new byte[] { 0x0F, 0x84, 0xC7, 0x00, 0x00, 0x00, 0x39 },
+        "xxxxxxx",
+        -0x28,
         AddressingMode.Absolute
     );
 

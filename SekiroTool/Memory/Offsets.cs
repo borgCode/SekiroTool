@@ -233,7 +233,6 @@ public static class Offsets
         public static IntPtr SaveInCombat;
         public static IntPtr OpenRegularShopPatch;
         public static IntPtr DefaultSoundVolWrite;
-        public static IntPtr StartMenuMusic;
     }
 
 
@@ -251,6 +250,7 @@ public static class Offsets
         public static long InfinitePoise;
         public static long AiHasSpEffect;
         public static long GetMouseDelta;
+        public static long StartMusic;
     }
 
     public static class Functions
@@ -270,5 +270,6 @@ public static class Offsets
         public static long OpenScalesShop;
         public static long OpenProstheticsShop;
         public static long FrpgCastRay;
+        public static long StopMusic;
     }
 }

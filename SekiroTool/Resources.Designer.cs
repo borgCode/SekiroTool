@@ -426,6 +426,21 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 83 fa 01                cmp    edx,0x1
+        ///75 01                   jne    6 &lt;normal&gt;
+        ///c3                      ret
+        ///000000000006 &lt;normal&gt;:
+        ///40 57                      push   rdi
+        ///48 83 ec 30             sub    rsp,0x30
+        ///e9 00 00 00 00          jmp    10 &lt;normal+0xa&gt;.
+        /// </summary>
+        internal static string NoMenuMusic {
+            get {
+                return ResourceManager.GetString("NoMenuMusic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 48 83 ec 48             sub    rsp,0x48
         ///48 8d 0c 24             lea    rcx,[rsp]
         ///48 b8 00 00 00 00 00    movabs rax,0x0
@@ -527,6 +542,20 @@ namespace SekiroTool {
         internal static string SetEvent {
             get {
                 return ResourceManager.GetString("SetEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 48 83 ec 28             sub    rsp,0x28
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///ff d0                   call   rax
+        ///48 83 c4 28             add    rsp,0x28
+        ///c3                      ret.
+        /// </summary>
+        internal static string StopMusic {
+            get {
+                return ResourceManager.GetString("StopMusic", resourceCulture);
             }
         }
         

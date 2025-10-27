@@ -113,6 +113,7 @@ public partial class MainWindow : Window
 
             if (!_hasScanned)
             {
+                _nopManager.ClearRegistry();
                 _aobScanner.Scan();
                 _hasScanned = true;
             }

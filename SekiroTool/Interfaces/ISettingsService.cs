@@ -7,4 +7,6 @@ public interface ISettingsService
     void ToggleNoTutorials(bool isEnabled);
     void ToggleSaveInCombat(bool isEnabled);
     void ToggleNoCameraSpin(bool isEnabled);
+    void ToggleDisableMusic(bool isEnabled);
+    void PatchDefaultSound(int volume);
 }
