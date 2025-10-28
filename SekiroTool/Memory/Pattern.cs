@@ -160,6 +160,15 @@ public static class Patterns
         7
     );
 
+    public static readonly Pattern TargetingView = new Pattern(
+        new byte[] { 0xF6, 0x47, 0x5A, 0x06, 0x74, 0x06, 0x80, 0x7F, 0x5E, 0x02 },
+        "xxxxxxxxxx",
+        0xC,
+        AddressingMode.Relative,
+        3,
+        7
+    );
+
     #endregion
 
 
@@ -325,6 +334,27 @@ public static class Patterns
     public static readonly Pattern StopMusic = new Pattern(
         new byte[] { 0x48, 0x85, 0xFF, 0x74, 0x2F, 0x48, 0x8D, 0x8F },
         "xxxxxxxx",
+        -0xD,
+        AddressingMode.Absolute
+    );
+
+    public static readonly Pattern GetItemSlot = new Pattern(
+        new byte[] { 0x40, 0x56, 0x48, 0x83, 0xEC, 0x20, 0x83, 0xCE },
+        "xxxxxxxx",
+        0,
+        AddressingMode.Absolute
+    );
+
+    public static readonly Pattern GetItemPtrFromSlot = new Pattern(
+        new byte[] { 0xFF, 0xC0, 0x3B, 0xD0, 0x73, 0x37 },
+        "xxxxxx",
+        -0xE,
+        AddressingMode.Absolute
+    );
+
+    public static readonly Pattern EzStateExternalEventTempCtor = new Pattern(
+        new byte[] { 0xC7, 0x41, 0x10, 0x02, 0x00, 0x00, 0x00, 0x89, 0x51 },
+        "xxxxxxxxx",
         -0xD,
         AddressingMode.Absolute
     );
