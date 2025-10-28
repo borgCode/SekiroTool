@@ -496,6 +496,28 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 55                      push   rbp
+        ///48 89 e5                mov    rbp,rsp
+        ///48 81 ec 00 03 00 00    sub    rsp,0x300
+        ///48 8d 8d e0 fd ff ff    lea    rcx,[rbp-0x220]
+        ///ba 11 00 00 00          mov    edx,0x11
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///ff d0                   call   rax
+        ///4c 8d ad e0 fd ff ff    lea    r13,[rbp-0x220]
+        ///4c 8d b5 c0 fd ff ff    lea    r14,[rbp-0x240]
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///4c 8d 20                lea    r12,[rax]
+        ///66 c7 45 fc 0d 10       mov     [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string OpenUpgradePrayerBead {
+            get {
+                return ResourceManager.GetString("OpenUpgradePrayerBead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 103000,Original Memory: Wolf
         ///303000,Another&apos;s Memory: Shura
         ///403000,Another&apos;s Memory: Ashina

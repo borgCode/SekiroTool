@@ -297,6 +297,10 @@
                                     IsEnabled="{Binding AreButtonsEnabled}"
                                     Command="{Binding OpenUpgradeProstheticsCommand}"
                                     Margin="3" />
+                            <Button Content="Upgrade Prayer Bead"
+                                    IsEnabled="{Binding AreButtonsEnabled}"
+                                    Command="{Binding OpenUpgradePrayerBeadCommand}"
+                                    Margin="3" />
                         </UniformGrid>
                     </TabItem>
 

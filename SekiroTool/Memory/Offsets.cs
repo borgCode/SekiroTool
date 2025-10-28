@@ -117,6 +117,7 @@ public static class Offsets
         public const int Quitout = 0x23C;
 
         public const int DialogManager = 0x1FB0;
+        public const int GenericDialogButtonResult = 0x18;
     }
 
     public static class WorldAiMan
@@ -227,6 +228,7 @@ public static class Offsets
     public static class GameDataMan
     {
         public static IntPtr Base;
+        public const int PlayerGameData = 0x8;
         public const int NewGame = 0x70;
     }
     
@@ -286,5 +288,6 @@ public static class Offsets
         public static long AwardItemLot;
         public static long SetMessageTagValue;
         public static long AdjustItemCount;
+        public static long OpenGenericDialog;
     }
 }

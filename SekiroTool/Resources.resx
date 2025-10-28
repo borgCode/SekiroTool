@@ -1010,4 +1010,257 @@ c3                      ret
 48 83 ec 30             sub    rsp,0x30
 e9 00 00 00 00          jmp    10 &lt;normal+0xa&gt;</value>
     </data>
+    <data name="OpenUpgradePrayerBead" xml:space="preserve">
+        <value>55                      push   rbp
+48 89 e5                mov    rbp,rsp
+48 81 ec 00 03 00 00    sub    rsp,0x300
+48 8d 8d e0 fd ff ff    lea    rcx,[rbp-0x220]
+ba 11 00 00 00          mov    edx,0x11
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+4c 8d ad e0 fd ff ff    lea    r13,[rbp-0x220]
+4c 8d b5 c0 fd ff ff    lea    r14,[rbp-0x240]
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+4c 8d 20                lea    r12,[rax]
+66 c7 45 fc 0d 10       mov    WORD PTR [rbp-0x4],0x100d
+66 c7 45 fe 00 40       mov    WORD PTR [rbp-0x2],0x4000
+48 b9 00 00 00 00 00    movabs rcx,0x0
+00 00 00
+48 8d 55 fc             lea    rdx,[rbp-0x4]
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+83 f8 ff                cmp    eax,0xffffffff
+0f 85 1b 03 00 00       jne    388 &lt;handle_already_max&gt;
+66 c7 45 fc a0 0f       mov    WORD PTR [rbp-0x4],0xfa0
+66 c7 45 fe 00 40       mov    WORD PTR [rbp-0x2],0x4000
+48 b9 00 00 00 00 00    movabs rcx,0x0
+00 00 00
+48 8d 55 fc             lea    rdx,[rbp-0x4]
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+83 f8 ff                cmp    eax,0xffffffff
+0f 84 4f 02 00 00       je     2eb &lt;handle_not_enough&gt;
+48 b9 00 00 00 00 00    movabs rcx,0x0
+00 00 00
+89 c2                   mov    edx,eax
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+48 85 c0                test   rax,rax
+0f 84 4c 03 00 00       je     409 &lt;exit&gt;
+8b 40 08                mov    eax,DWORD PTR [rax+0x8]
+83 f8 04                cmp    eax,0x4
+0f 8c 22 02 00 00       jl     2eb &lt;handle_not_enough&gt;
+ba 00 00 00 00          mov    edx,0x0
+41 b8 04 00 00 00       mov    r8d,0x4
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+41 c7 85 00 02 00 00    mov    DWORD PTR [r13+0x200],0x5
+05 00 00 00
+c7 85 80 fd ff ff 08    mov    DWORD PTR [rbp-0x280],0x8
+00 00 00
+c7 85 84 fd ff ff 4b    mov    DWORD PTR [rbp-0x27c],0xc65d4b
+5d c6 00
+c7 85 88 fd ff ff 03    mov    DWORD PTR [rbp-0x278],0x3
+00 00 00
+c7 85 8c fd ff ff 04    mov    DWORD PTR [rbp-0x274],0x4
+00 00 00
+c7 85 90 fd ff ff 02    mov    DWORD PTR [rbp-0x270],0x2
+00 00 00
+31 db                   xor    ebx,ebx
+0000011f &lt;third_dialog_loop&gt;:
+8b 84 9d 80 fd ff ff    mov    eax,DWORD PTR [rbp+rbx*4-0x280]
+41 89 06                mov    DWORD PTR [r14],eax
+41 c7 46 08 02 00 00    mov    DWORD PTR [r14+0x8],0x2
+00
+4d 89 f0                mov    r8,r14
+8d 53 01                lea    edx,[rbx+0x1]
+48 8d 8d e0 fd ff ff    lea    rcx,[rbp-0x220]
+48 8b 01                mov    rax,QWORD PTR [rcx]
+ff 50 08                call   QWORD PTR [rax+0x8]
+ff c3                   inc    ebx
+83 fb 05                cmp    ebx,0x5
+7c d4                   jl     11f &lt;third_dialog_loop&gt;
+49 bf 00 00 00 00 00    movabs r15,0x0
+00 00 00
+41 c7 07 ff ff ff ff    mov    DWORD PTR [r15],0xffffffff
+4c 89 e1                mov    rcx,r12
+48 8d 95 e0 fd ff ff    lea    rdx,[rbp-0x220]
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+ba c8 00 00 00          mov    edx,0xc8
+00000177 &lt;sleep_loop&gt;:
+b9 32 00 00 00          mov    ecx,0x32
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+41 83 3f 01             cmp    DWORD PTR [r15],0x1
+74 0e                   je     19c &lt;handle_yes&gt;
+41 83 3f 02             cmp    DWORD PTR [r15],0x2
+0f 84 71 02 00 00       je     409 &lt;exit&gt;
+ff ca                   dec    edx
+75 db                   jne    177 &lt;sleep_loop&gt;
+0000019c &lt;handle_yes&gt;:
+41 c7 07 ff ff ff ff    mov    DWORD PTR [r15],0xffffffff
+66 c7 45 fc a0 0f       mov    WORD PTR [rbp-0x4],0xfa0
+66 c7 45 fe 00 40       mov    WORD PTR [rbp-0x2],0x4000
+48 b9 00 00 00 00 00    movabs rcx,0x0
+00 00 00
+48 8d 55 fc             lea    rdx,[rbp-0x4]
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+48 b9 00 00 00 00 00    movabs rcx,0x0
+00 00 00
+89 c2                   mov    edx,eax
+41 b8 fc ff ff ff       mov    r8d,0xfffffffc
+41 b9 00 00 00 00       mov    r9d,0x0
+48 83 ec 30             sub    rsp,0x30
+c6 44 24 20 01          mov    BYTE PTR [rsp+0x20],0x1
+c6 44 24 28 01          mov    BYTE PTR [rsp+0x28],0x1
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+48 83 c4 30             add    rsp,0x30
+bb 04 10 00 00          mov    ebx,0x1004
+bf c4 ea 00 00          mov    edi,0xeac4
+00000209 &lt;bead_loop&gt;:
+66 89 5d fc             mov    WORD PTR [rbp-0x4],bx
+66 c7 45 fe 00 40       mov    WORD PTR [rbp-0x2],0x4000
+48 b9 00 00 00 00 00    movabs rcx,0x0
+00 00 00
+48 8d 55 fc             lea    rdx,[rbp-0x4]
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+83 f8 ff                cmp    eax,0xffffffff
+74 15                   je     247 &lt;handle_itemlot&gt;
+83 c7 0a                add    edi,0xa
+ff c3                   inc    ebx
+81 fb 0c 10 00 00       cmp    ebx,0x100c
+7e ca                   jle    209 &lt;bead_loop&gt;
+81 ff 14 eb 00 00       cmp    edi,0xeb14
+7e 1e                   jle    265 &lt;last_dialog&gt;
+00000247 &lt;handle_itemlot&gt;:
+48 b9 00 00 00 00 00    movabs rcx,0x0
+00 00 00
+89 fa                   mov    edx,edi
+41 b8 01 00 00 00       mov    r8d,0x1
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+00000265 &lt;last_dialog&gt;:
+41 c7 85 00 02 00 00    mov    DWORD PTR [r13+0x200],0x5
+05 00 00 00
+c7 85 80 fd ff ff 07    mov    DWORD PTR [rbp-0x280],0x7
+00 00 00
+c7 85 84 fd ff ff 4c    mov    DWORD PTR [rbp-0x27c],0xc65d4c
+5d c6 00
+c7 85 88 fd ff ff 01    mov    DWORD PTR [rbp-0x278],0x1
+00 00 00
+c7 85 8c fd ff ff 00    mov    DWORD PTR [rbp-0x274],0x0
+00 00 00
+c7 85 90 fd ff ff 01    mov    DWORD PTR [rbp-0x270],0x1
+00 00 00
+31 db                   xor    ebx,ebx
+000002a4 &lt;last_dialog_loop&gt;:
+8b 84 9d 80 fd ff ff    mov    eax,DWORD PTR [rbp+rbx*4-0x280]
+41 89 06                mov    DWORD PTR [r14],eax
+41 c7 46 08 02 00 00    mov    DWORD PTR [r14+0x8],0x2
+00
+4d 89 f0                mov    r8,r14
+8d 53 01                lea    edx,[rbx+0x1]
+48 8d 8d e0 fd ff ff    lea    rcx,[rbp-0x220]
+48 8b 01                mov    rax,QWORD PTR [rcx]
+ff 50 08                call   QWORD PTR [rax+0x8]
+ff c3                   inc    ebx
+83 fb 05                cmp    ebx,0x5
+7c d4                   jl     2a4 &lt;last_dialog_loop&gt;
+4c 89 e1                mov    rcx,r12
+48 8d 95 e0 fd ff ff    lea    rdx,[rbp-0x220]
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+e9 1e 01 00 00          jmp    409 &lt;exit&gt;
+000002eb &lt;handle_not_enough&gt;:
+ba 00 00 00 00          mov    edx,0x0
+41 b8 04 00 00 00       mov    r8d,0x4
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+41 c7 85 00 02 00 00    mov    DWORD PTR [r13+0x200],0x5
+05 00 00 00
+c7 85 80 fd ff ff 07    mov    DWORD PTR [rbp-0x280],0x7
+00 00 00
+c7 85 84 fd ff ff 4a    mov    DWORD PTR [rbp-0x27c],0xc65d4a
+5d c6 00
+c7 85 88 fd ff ff 01    mov    DWORD PTR [rbp-0x278],0x1
+00 00 00
+c7 85 8c fd ff ff 00    mov    DWORD PTR [rbp-0x274],0x0
+00 00 00
+c7 85 90 fd ff ff 01    mov    DWORD PTR [rbp-0x270],0x1
+00 00 00
+31 db                   xor    ebx,ebx
+00000341 &lt;second_dialog_loop&gt;:
+8b 84 9d 80 fd ff ff    mov    eax,DWORD PTR [rbp+rbx*4-0x280]
+41 89 06                mov    DWORD PTR [r14],eax
+41 c7 46 08 02 00 00    mov    DWORD PTR [r14+0x8],0x2
+00
+4d 89 f0                mov    r8,r14
+8d 53 01                lea    edx,[rbx+0x1]
+48 8d 8d e0 fd ff ff    lea    rcx,[rbp-0x220]
+48 8b 01                mov    rax,QWORD PTR [rcx]
+ff 50 08                call   QWORD PTR [rax+0x8]
+ff c3                   inc    ebx
+83 fb 05                cmp    ebx,0x5
+7c d4                   jl     341 &lt;second_dialog_loop&gt;
+4c 89 e1                mov    rcx,r12
+48 8d 95 e0 fd ff ff    lea    rdx,[rbp-0x220]
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+e9 81 00 00 00          jmp    409 &lt;exit&gt;
+00000388 &lt;handle_already_max&gt;:
+41 c7 85 00 02 00 00    mov    DWORD PTR [r13+0x200],0x5
+05 00 00 00
+c7 85 80 fd ff ff 07    mov    DWORD PTR [rbp-0x280],0x7
+00 00 00
+c7 85 84 fd ff ff 4d    mov    DWORD PTR [rbp-0x27c],0xc65d4d
+5d c6 00
+c7 85 88 fd ff ff 01    mov    DWORD PTR [rbp-0x278],0x1
+00 00 00
+c7 85 8c fd ff ff 00    mov    DWORD PTR [rbp-0x274],0x0
+00 00 00
+c7 85 90 fd ff ff 01    mov    DWORD PTR [rbp-0x270],0x1
+00 00 00
+31 db                   xor    ebx,ebx
+000003c7 &lt;first_dialog_loop&gt;:
+8b 84 9d 80 fd ff ff    mov    eax,DWORD PTR [rbp+rbx*4-0x280]
+41 89 06                mov    DWORD PTR [r14],eax
+41 c7 46 08 02 00 00    mov    DWORD PTR [r14+0x8],0x2
+00
+4d 89 f0                mov    r8,r14
+8d 53 01                lea    edx,[rbx+0x1]
+48 8d 8d e0 fd ff ff    lea    rcx,[rbp-0x220]
+48 8b 01                mov    rax,QWORD PTR [rcx]
+ff 50 08                call   QWORD PTR [rax+0x8]
+ff c3                   inc    ebx
+83 fb 05                cmp    ebx,0x5
+7c d4                   jl     3c7 &lt;first_dialog_loop&gt;
+4c 89 e1                mov    rcx,r12
+48 8d 95 e0 fd ff ff    lea    rdx,[rbp-0x220]
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+00000409 &lt;exit&gt;:
+48 81 c4 00 03 00 00    add    rsp,0x300
+5d                      pop    rbp
+c3                      ret</value>
+    </data>
 </root>

@@ -193,7 +193,7 @@ public class MemoryService : IMemoryService
 
         return finalAddress;
     }
-
+    
     public void AllocateAndExecute(byte[] shellcode)
     {
         nint allocatedMemory = Kernel32.VirtualAllocEx(ProcessHandle, nint.Zero, (uint)shellcode.Length);

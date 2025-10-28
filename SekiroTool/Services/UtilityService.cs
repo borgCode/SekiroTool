@@ -247,6 +247,64 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
         memoryService.WriteBytes(freeCamCoordsPtr, positionBytes);
     }
 
+    public void OpenUpgradePrayerBead()
+    {
+        var equipInventoryData = memoryService.FollowPointers(GameDataMan.Base, new[]
+        {
+            GameDataMan.PlayerGameData,
+            (int)ChrIns.PlayerGameDataOffsets.EquipInventoryData
+        } ,true);
+        
+        var equipGameData = memoryService.FollowPointers(GameDataMan.Base, new[]
+        {
+            GameDataMan.PlayerGameData,
+            (int)ChrIns.PlayerGameDataOffsets.EquipGameData
+        } ,true);
+        
+        var buttonResult = memoryService.FollowPointers(MenuMan.Base, new[]
+        {
+            MenuMan.DialogManager,
+            MenuMan.GenericDialogButtonResult,
+        } ,false);
+
+        var mapItemMan = memoryService.ReadInt64(MapItemMan.Base);
+        var sleepAddr = memoryService.GetProcAddress("kernel32.dll", "Sleep");
+
+        var menuHandle = CodeCaveOffsets.Base + CodeCaveOffsets.PrayerBeadMenuHandle;
+        
+        
+        var bytes = AsmLoader.GetAsmBytes("OpenUpgradePrayerBead");
+        AsmHelper.WriteAbsoluteAddresses(bytes, new []
+        {
+            (Functions.EzStateExternalEventTempCtor, 0x17 +2),
+            (menuHandle.ToInt64(), 0x31 +2),
+            (equipInventoryData.ToInt64(), 0x4A + 2),
+            (Functions.GetItemSlot, 0x58 + 2),
+            (equipInventoryData.ToInt64(), 0x79 + 2),
+            (Functions.GetItemSlot, 0x87 + 2),
+            (equipInventoryData.ToInt64(), 0x9C + 2 ),
+            (Functions.GetItemPtrFromSlot, 0xA8 + 2),
+            (Functions.SetMessageTagValue, 0xD4 + 2),
+            (buttonResult.ToInt64(), 0x14B + 2),
+            (Functions.OpenGenericDialog, 0x166 + 2),
+            (sleepAddr.ToInt64(), 0x17C + 2),
+            (equipInventoryData.ToInt64(), 0x1AF + 2),
+            (Functions.GetItemSlot, 0x1BD + 2),
+            (equipGameData.ToInt64(), 0x1C9 + 2),
+            (Functions.AdjustItemCount, 0x1EF + 2),
+            (equipInventoryData.ToInt64(), 0x213 + 2),
+            (Functions.GetItemSlot, 0x221 + 2),
+            (mapItemMan, 0x247 + 2),
+            (Functions.AwardItemLot, 0x259 + 2),
+            (Functions.OpenGenericDialog, 0x2DA + 2),
+            (Functions.SetMessageTagValue, 0x2F6 + 2),
+            (Functions.OpenGenericDialog, 0x377 + 2),
+            (Functions.OpenGenericDialog, 0x3FD + 2),
+        });
+        
+        memoryService.AllocateAndExecute(bytes);
+    }
+
     private IntPtr GetChrPhysicsPtr() =>
         memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrPhysicsModule], true);
 }

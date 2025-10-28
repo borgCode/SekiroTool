@@ -41,6 +41,7 @@ public class UtilityViewModel : BaseViewModel
         
         OpenSkillsCommand = new DelegateCommand(OpenSkillMenu);
         OpenUpgradeProstheticsCommand = new DelegateCommand(OpenUpgradeProstheticsMenu);
+        OpenUpgradePrayerBeadCommand = new DelegateCommand(OpenUpgradePrayerBead);
 
         IdolCommand = new DelegateCommand(() => OpenRegularShop(ShopLineup.Idol));
         CrowsBedMemorialMobCommand = new DelegateCommand(() => OpenRegularShop(ShopLineup.CrowsBedMemorialMob));
@@ -56,6 +57,7 @@ public class UtilityViewModel : BaseViewModel
         KoremoriCommand = new DelegateCommand(() => OpenScalesShop(ScaleLineup.Koremori));
         ProstheticsCommand = new DelegateCommand(() => OpenProstheticsShop(ShopLineup.Prosthetics));
     }
+    
 
     #region Commands
     
@@ -63,6 +65,7 @@ public class UtilityViewModel : BaseViewModel
 
     public ICommand OpenSkillsCommand { get; set; }
     public ICommand OpenUpgradeProstheticsCommand { get; set; }
+    public ICommand OpenUpgradePrayerBeadCommand { get; set; }
 
     public ICommand IdolCommand { get; set; }
     public ICommand CrowsBedMemorialMobCommand { get; set; }
@@ -296,6 +299,7 @@ public class UtilityViewModel : BaseViewModel
     private void OpenRegularShop(ShopLineup shopLineup) => _utilityService.OpenRegularShop(shopLineup);
     private void OpenScalesShop(ScaleLineup scaleLineup) => _utilityService.OpenScalesShop(scaleLineup);
     private void OpenProstheticsShop(ShopLineup shopLineup) => _utilityService.OpenProstheticsShop(shopLineup);
+    private void OpenUpgradePrayerBead() => _utilityService.OpenUpgradePrayerBead();
 
     #endregion
 }

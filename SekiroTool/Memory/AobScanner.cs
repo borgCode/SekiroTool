@@ -116,6 +116,7 @@ public class AoBScanner(IMemoryService memoryService)
             { addr => Offsets.Functions.AwardItemLot = addr, 0x228B},
             { addr => Offsets.Functions.SetMessageTagValue = addr, 0x18B4},
             { addr => Offsets.Functions.AdjustItemCount = addr, 0x1548},
+            { addr => Offsets.Functions.OpenGenericDialog = addr, 0x9CC},
         });
 
         Offsets.Functions.FrpgCastRay = FindAddressByPattern(Patterns.FrpgCastRay).ToInt64();
@@ -189,6 +190,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Functions.AwardItemLot: 0x{Offsets.Functions.AwardItemLot:X}");
         Console.WriteLine($"Functions.SetMessageTagValue: 0x{Offsets.Functions.SetMessageTagValue:X}");
         Console.WriteLine($"Functions.AdjustItemCount: 0x{Offsets.Functions.AdjustItemCount:X}");
+        Console.WriteLine($"Functions.OpenGenericDialog: 0x{Offsets.Functions.OpenGenericDialog:X}");
 #endif
     }
 

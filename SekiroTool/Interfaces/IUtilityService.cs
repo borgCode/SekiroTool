@@ -17,4 +17,5 @@ public interface IUtilityService
     void ToggleFreeCamera(bool isEnabled);
     void SetCameraMode(int mode);
     void MoveCamToPlayer();
+    void OpenUpgradePrayerBead();
 }
