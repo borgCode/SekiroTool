@@ -45,6 +45,7 @@ public class EnemyViewModel : BaseViewModel
     }
 
     private bool _isNoDeathEnabled;
+
     public bool IsNoDeathEnabled
     {
         get => _isNoDeathEnabled;
@@ -54,8 +55,9 @@ public class EnemyViewModel : BaseViewModel
             _enemyService.ToggleNoDeath(_isNoDeathEnabled);
         }
     }
-    
+
     private bool _isNoDamageEnabled;
+
     public bool IsNoDamageEnabled
     {
         get => _isNoDamageEnabled;
@@ -67,6 +69,7 @@ public class EnemyViewModel : BaseViewModel
     }
 
     private bool _isNoHitEnabled;
+
     public bool IsNoHitEnabled
     {
         get => _isNoHitEnabled;
@@ -78,6 +81,7 @@ public class EnemyViewModel : BaseViewModel
     }
 
     private bool _isNoAttackEnabled;
+
     public bool IsNoAttackEnabled
     {
         get => _isNoAttackEnabled;
@@ -89,6 +93,7 @@ public class EnemyViewModel : BaseViewModel
     }
 
     private bool _isNoMoveEnabled;
+
     public bool IsNoMoveEnabled
     {
         get => _isNoMoveEnabled;
@@ -100,6 +105,7 @@ public class EnemyViewModel : BaseViewModel
     }
 
     private bool _isDisableAiEnabled;
+
     public bool IsDisableAiEnabled
     {
         get => _isDisableAiEnabled;
@@ -111,6 +117,7 @@ public class EnemyViewModel : BaseViewModel
     }
 
     private bool _isNoPostureBuildupEnabled;
+
     public bool IsNoPostureBuildupEnabled
     {
         get => _isNoPostureBuildupEnabled;
@@ -122,17 +129,21 @@ public class EnemyViewModel : BaseViewModel
     }
 
     private bool _isTargetingViewEnabled;
+
     public bool IsTargetingViewEnabled
     {
         get => _isTargetingViewEnabled;
         set
         {
             SetProperty(ref _isTargetingViewEnabled, value);
+            if (_isTargetingViewEnabled) _debugDrawService.RequestDebugDraw();
+            else _debugDrawService.ReleaseDebugDraw();
             _enemyService.ToggleTargetingView(_isTargetingViewEnabled);
         }
     }
 
     private bool _isNoButterflySummonsEnabled;
+
     public bool IsNoButterflySummonsEnabled
     {
         get => _isNoButterflySummonsEnabled;
@@ -142,7 +153,7 @@ public class EnemyViewModel : BaseViewModel
             _enemyService.ToggleButterflyNoSummons(_isNoButterflySummonsEnabled);
         }
     }
-    
+
     #endregion
 
 
@@ -150,13 +161,23 @@ public class EnemyViewModel : BaseViewModel
 
     private void RegisterHotkeys()
     {
-        
-        
         _hotkeyManager.RegisterAction(HotkeyActions.SkipDragonPhaseOne.ToString(), () =>
         {
             if (!AreOptionsEnabled) return;
             _enemyService.SkipDragonPhaseOne();
         });
+        _hotkeyManager.RegisterAction(HotkeyActions.NoButterflySummons.ToString(),
+            () => { IsNoButterflySummonsEnabled = !IsNoButterflySummonsEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.AllNoDeath.ToString(), () => { IsNoDeathEnabled = !IsNoDeathEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.AllNoDamage.ToString(), () => { IsNoDamageEnabled = !IsNoDamageEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.AllNoHit.ToString(), () => { IsNoHitEnabled = !IsNoHitEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.AllNoAttack.ToString(), () => { IsNoAttackEnabled = !IsNoAttackEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.AllNoMove.ToString(), () => { IsNoMoveEnabled = !IsNoMoveEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.AllDisableAi.ToString(), () => { IsDisableAiEnabled = !IsDisableAiEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.AllNoPostureBuildup.ToString(),
+            () => { IsNoPostureBuildupEnabled = !IsNoPostureBuildupEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.AllTargetingView.ToString(),
+            () => { IsTargetingViewEnabled = !IsTargetingViewEnabled; });
     }
 
     private void OnGameLoaded()
@@ -170,8 +191,6 @@ public class EnemyViewModel : BaseViewModel
         if (IsNoMoveEnabled) _enemyService.ToggleNoMove(true);
         if (IsDisableAiEnabled) _enemyService.ToggleDisableAi(true);
         if (IsNoPostureBuildupEnabled) _enemyService.ToggleNoPostureBuildup(true);
-        if (IsTargetingViewEnabled) _enemyService.ToggleTargetingView(true);
-        
     }
 
     private void OnGameNotLoaded()

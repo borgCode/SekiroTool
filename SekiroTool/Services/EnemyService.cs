@@ -29,10 +29,8 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager)
     public void ToggleNoPostureBuildup(bool isEnabled) =>
         memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.AllNoPosture, isEnabled ? 1 : 0);
     
-    public void ToggleTargetingView(bool isEnabled)
-    {
-        throw new NotImplementedException();
-    }
+    public void ToggleTargetingView(bool isEnabled) =>
+        memoryService.WriteUInt8(TargetingView.Base, isEnabled ? 1 : 0);
 
     public void SkipDragonPhaseOne()
     {

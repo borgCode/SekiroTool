@@ -42,14 +42,20 @@ public class SettingsViewModel : BaseViewModel
             // { "DecreasePlayerSpeed", text => DecreasePlayerSpeedHotkeyText = text },
             // { "DealNoDamage", text => DealNoDamageHotkeyText = text },
             { HotkeyActions.SkipDragonPhaseOne.ToString(), text => SkipDragonPhaseOneHotkeyText = text },
-
+            { HotkeyActions.NoButterflySummons.ToString(), text => NoButterflySummonsHotkeyText = text },
+            { HotkeyActions.AllNoDeath.ToString(), text => AllNoDeathHotkeyText = text },
+            { HotkeyActions.AllNoDamage.ToString(), text => AllNoDamageHotkeyText = text },
+            { HotkeyActions.AllNoHit.ToString(), text => AllNoHitHotkeyText = text },
+            { HotkeyActions.AllNoAttack.ToString(), text => AllNoAttackHotkeyText = text },
+            { HotkeyActions.AllNoMove.ToString(), text => AllNoMoveHotkeyText = text },
+            { HotkeyActions.AllDisableAi.ToString(), text => AllDisableAiHotkeyText = text },
+            { HotkeyActions.AllNoPostureBuildup.ToString(), text => AllNoPostureBuildupHotkeyText = text },
+            { HotkeyActions.AllTargetingView.ToString(), text => AllTargetingViewHotkeyText = text },
             // { "RestoreSpellcasts", text => RestoreSpellcastsHotkeyText = text },
             // { "RestoreHumanity", text => RestoreHumanityHotkeyText = text },
             // { "Rest", text => RestHotkeyText = text },
 
             { HotkeyActions.Quitout.ToString(), text => QuitoutHotkeyText = text },
-            // { "ForceSave", text => ForceSaveHotkeyText = text },
-            // { "MoveCamToPlayer", text => MoveCamToPlayerHotkeyText = text },
             // { "Warp", text => WarpHotkeyText = text },
 
             { HotkeyActions.EnableTargetOptions.ToString(), text => EnableTargetOptionsHotkeyText = text },
@@ -71,10 +77,6 @@ public class SettingsViewModel : BaseViewModel
             { HotkeyActions.TargetNoPostureBuildup.ToString(), text => TargetNoPostureBuildupHotkeyText = text },
             { HotkeyActions.TargetNoDeath.ToString(), text => TargetNoDeathHotkeyText = text },
             { HotkeyActions.TargetTargetingView.ToString(), text => TargetTargetingViewHotkeyText = text },
-            // { "AllNoDeath", text => AllNoDeathHotkeyText = text },
-            // { "AllNoDamage", text => AllNoDamageHotkeyText = text },
-            // { "AllRepeatAct", text => AllRepeatActHotkeyText = text },
-
             { HotkeyActions.ToggleGameSpeed.ToString(), text => ToggleGameSpeedHotkeyText = text },
             { HotkeyActions.IncreaseGameSpeed.ToString(), text => IncreaseGameSpeedHotkeyText = text },
             { HotkeyActions.DecreaseGameSpeed.ToString(), text => DecreaseGameSpeedHotkeyText = text },
@@ -287,6 +289,69 @@ public class SettingsViewModel : BaseViewModel
     {
         get => _skipDragonPhaseOneHotkeyText;
         set => SetProperty(ref _skipDragonPhaseOneHotkeyText, value);
+    }
+    
+    private string _noButterflySummonsHotkeyText;
+    public string NoButterflySummonsHotkeyText
+    {
+        get => _noButterflySummonsHotkeyText;
+        set => SetProperty(ref _noButterflySummonsHotkeyText, value);
+    }
+
+    private string _allNoDeathHotkeyText;
+    public string AllNoDeathHotkeyText
+    {
+        get => _allNoDeathHotkeyText;
+        set => SetProperty(ref _allNoDeathHotkeyText, value);
+    }
+
+    private string _allNoDamageHotkeyText;
+    public string AllNoDamageHotkeyText
+    {
+        get => _allNoDamageHotkeyText;
+        set => SetProperty(ref _allNoDamageHotkeyText, value);
+    }
+
+    private string _allNoHitHotkeyText;
+    public string AllNoHitHotkeyText
+    {
+        get => _allNoHitHotkeyText;
+        set => SetProperty(ref _allNoHitHotkeyText, value);
+    }
+
+    private string _allNoAttackHotkeyText;
+    public string AllNoAttackHotkeyText
+    {
+        get => _allNoAttackHotkeyText;
+        set => SetProperty(ref _allNoAttackHotkeyText, value);
+    }
+
+    private string _allNoMoveHotkeyText;
+    public string AllNoMoveHotkeyText
+    {
+        get => _allNoMoveHotkeyText;
+        set => SetProperty(ref _allNoMoveHotkeyText, value);
+    }
+
+    private string _allDisableAiHotkeyText;
+    public string AllDisableAiHotkeyText
+    {
+        get => _allDisableAiHotkeyText;
+        set => SetProperty(ref _allDisableAiHotkeyText, value);
+    }
+
+    private string _allNoPostureBuildupHotkeyText;
+    public string AllNoPostureBuildupHotkeyText
+    {
+        get => _allNoPostureBuildupHotkeyText;
+        set => SetProperty(ref _allNoPostureBuildupHotkeyText, value);
+    }
+
+    private string _allTargetingViewHotkeyText;
+    public string AllTargetingViewHotkeyText
+    {
+        get => _allTargetingViewHotkeyText;
+        set => SetProperty(ref _allTargetingViewHotkeyText, value);
     }
 
 

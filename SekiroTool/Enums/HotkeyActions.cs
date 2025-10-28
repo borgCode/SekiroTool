@@ -10,7 +10,15 @@ public enum HotkeyActions
     RestorePos2,
     
     SkipDragonPhaseOne,
-    
+    NoButterflySummons,
+    AllNoDeath,
+    AllNoDamage,
+    AllNoHit,
+    AllNoAttack,
+    AllNoMove,
+    AllDisableAi,
+    AllNoPostureBuildup,
+    AllTargetingView,
     
     EnableTargetOptions,
     FreezeTargetHp,
