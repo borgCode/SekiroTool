@@ -141,6 +141,9 @@ public static class Patterns
         AddressingMode.Relative,
         3,
         7
+        
+        
+
     );
 
     #endregion
@@ -378,6 +381,12 @@ public static class Patterns
         new byte[] { 0xFF, 0x90, 0x08, 0x01, 0x00, 0x00, 0x48, 0x85, 0xC0, 0x74, 0x15 },
         "xxxxxxxxxxx",
         0,
+        AddressingMode.Absolute
+        
+    public static readonly Pattern InfiniteConfetti = new Pattern(
+        new byte[] { 0xF3, 0x0F, 0x5C, 0xCF, 0x0F, 0x2F, 0xC1 },
+        "xxxxxxx",
+        0
         AddressingMode.Absolute
     );
 

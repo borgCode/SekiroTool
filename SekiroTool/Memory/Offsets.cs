@@ -235,6 +235,7 @@ public static class Offsets
         public static long KeyBoard;
         public static long InfinitePoise;
         public static long AiHasSpEffect;
+        public static long InfiniteConfetti;
     }
 
     public static class Functions

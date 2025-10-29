@@ -26,6 +26,7 @@ public static class CodeCaveOffsets
     public const int CoordsUpdate = 0x310;
 
     public const int InfinitePoise = 0x500;
+    public const int InfiniteConfetti = 0x1A;
 
     public const int ButterflyNoSummons = 0x540;
 

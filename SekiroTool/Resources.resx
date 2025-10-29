@@ -982,4 +982,14 @@ c3                      ret</value>
 403000,Another's Memory: Ashina
 503000,Another's Memory: Tengu</value>
     </data>
+    <data name="InfiniteConfetti" xml:space="preserve">
+        <value>81 7b 58 7b 0d 00 00    cmp    DWORD PTR [rbx+0x58],0xd7b
+75 08                   jne    11 &lt;originalInstructions&gt;
+0f 2f c1                comiss xmm0,xmm1
+e9 00 00 00 00          jmp    11 &lt;originalInstructions&gt;
+0000000000000011 &lt;originalInstructions&gt;:
+f3 0f 5c cf             subss  xmm1,xmm7
+0f 2f c1                comiss xmm0,xmm1
+e9 00 00 00 00          jmp    1d &lt;originalInstructions+0xc</value>
+    </data>
 </root>

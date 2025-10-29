@@ -209,6 +209,24 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         }
     }
 
+    public void ToggleInfiniteConfetti(bool isEnabled)
+    {
+        var code = CodeCaveOffsets.Base + CodeCaveOffsets.InfiniteConfetti;
+        if (isEnabled)
+        {
+            var hookLoc = Hooks.InfiniteConfetti;
+            var hookRetAddr = hookLoc + 0x7;
+            
+            var bytes = AsmLoader.GetAsmBytes("InfiniteConfetti");
+            AsmHelper.WriteRelativeOffsets(bytes, new []
+            {
+                (code.ToInt64() + 0xc, hookRetAddr, 5, 0xc + 1 ),
+                (code.ToInt64() + 0x18, hookRetAddr,5, 0x18 + 1 )
+            });
+
+        }
+    }
+
     #endregion
 
 

@@ -282,6 +282,22 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 81 7b 58 7b 0d 00 00    cmp    DWORD PTR [rbx+0x58],0xd7b
+        ///75 08                   jne    11 &lt;originalInstructions&gt;
+        ///0f 2f c1                comiss xmm0,xmm1
+        ///e9 00 00 00 00          jmp    11 &lt;originalInstructions&gt;
+        ///0000000000000011 &lt;originalInstructions&gt;:
+        ///f3 0f 5c cf             subss  xmm1,xmm7
+        ///0f 2f c1                comiss xmm0,xmm1
+        ///e9 00 00 00 00          jmp    1d &lt;originalInstructions+0xc.
+        /// </summary>
+        internal static string InfiniteConfetti {
+            get {
+                return ResourceManager.GetString("InfiniteConfetti", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 50                      push   rax
         ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;
         ///48 8b 80 88 00 00 00    mov    rax,QWORD PTR [rax+0x88]
