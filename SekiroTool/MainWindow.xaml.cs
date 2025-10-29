@@ -51,7 +51,7 @@ public partial class MainWindow : Window
         IEventService eventService = new EventService(_memoryService);
         IUtilityService utilityService = new UtilityService(_memoryService, hookManager);
         IItemService itemService = new ItemService(_memoryService);
-        ISettingsService settingsService = new SettingsService(_memoryService, _nopManager);
+        ISettingsService settingsService = new SettingsService(_memoryService, _nopManager, hookManager);
         
         PlayerViewModel playerViewModel = new PlayerViewModel(_playerService, _hotkeyManager, _gameStateService);
         TravelViewModel travelViewModel = new TravelViewModel(travelService, _gameStateService, _hotkeyManager, eventService);
@@ -113,6 +113,7 @@ public partial class MainWindow : Window
 
             if (!_hasScanned)
             {
+                _nopManager.ClearRegistry();
                 _aobScanner.Scan();
                 _hasScanned = true;
             }

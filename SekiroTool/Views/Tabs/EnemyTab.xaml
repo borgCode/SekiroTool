@@ -6,8 +6,102 @@
              xmlns:local="clr-namespace:SekiroTool.Views.Tabs"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Border Grid.Column="0"
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <Border Grid.Row="0"
+                BorderThickness="1"
+                BorderBrush="#333"
+                CornerRadius="3"
+                Margin="0,0,0,5">
+            <StackPanel Margin="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="All Enemies"
+                               Grid.Column="0" />
+                </Grid>
+
+                <Grid Margin="20,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+
+                    <CheckBox Content="No Death"
+                              IsChecked="{Binding IsNoDeathEnabled}"
+                              Grid.Column="0" Grid.Row="0"
+                              Margin="0,2" />
+
+                    <CheckBox Content="No Damage"
+                              IsChecked="{Binding IsNoDamageEnabled}"
+                              Grid.Column="0" Grid.Row="1"
+                              Margin="0,2" />
+                    
+                    <CheckBox Content="No Hit"
+                              IsChecked="{Binding IsNoHitEnabled}"
+                              Grid.Column="0" Grid.Row="2"
+                              Margin="0,2" />
+                    
+                    <CheckBox Content="No Attack"
+                              IsChecked="{Binding IsNoAttackEnabled}"
+                              Grid.Column="0" Grid.Row="3"
+                              Margin="0,2" />
+                    
+                    <CheckBox Content="No Move"
+                              IsChecked="{Binding IsNoMoveEnabled}"
+                              Grid.Column="1" Grid.Row="0"
+                              Margin="0,2" />
+
+                    <CheckBox Content="Disable Ai"
+                              IsChecked="{Binding IsDisableAiEnabled}"
+                              Grid.Column="1" Grid.Row="1"
+                              Margin="0,2" />
+                    
+                    <CheckBox Content="No Posture Buildup"
+                              IsChecked="{Binding IsNoPostureBuildupEnabled}"
+                              Grid.Column="1" Grid.Row="2"
+                              Margin="0,2" />
+                    
+                    <CheckBox Content="Targeting View"
+                              IsChecked="{Binding IsTargetingViewEnabled}"
+                              Grid.Column="1" Grid.Row="3"
+                              Margin="0,2" />
+                    
+                    <!-- <CheckBox Content="Collision Mesh 1" -->
+                    <!--           IsChecked="{Binding IsDrawLowHitEnabled}" -->
+                    <!--           Grid.Column="2" Grid.Row="0" -->
+                    <!--           Margin="0,2" /> -->
+                    <!-- -->
+                    <!-- <CheckBox Content="Collision Mesh 2" -->
+                    <!--           IsChecked="{Binding IsDrawHighHitEnabled}" -->
+                    <!--           Grid.Column="2" Grid.Row="1" -->
+                    <!--           Margin="0,2" /> -->
+                    <!-- -->
+                    <!-- <CheckBox Content="Character Mesh" -->
+                    <!--           IsChecked="{Binding IsDrawChrRagdollEnabled}" -->
+                    <!--           Grid.Column="2" Grid.Row="2" -->
+                    <!--           Margin="0,2" /> -->
+                </Grid>
+            </StackPanel>
+        </Border>
+        
+            <Border Grid.Row="1" Grid.Column="0"
                     BorderThickness="1"
                     BorderBrush="#333"
                     CornerRadius="3"

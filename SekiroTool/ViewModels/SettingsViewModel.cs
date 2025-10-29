@@ -9,7 +9,6 @@ namespace SekiroTool.ViewModels;
 public class SettingsViewModel : BaseViewModel
 {
     private readonly ISettingsService _settingsService;
-    private readonly IGameStateService _gameStateService;
     private readonly HotkeyManager _hotkeyManager;
 
     private readonly Dictionary<string, Action<string>> _propertySetters;
@@ -22,10 +21,9 @@ public class SettingsViewModel : BaseViewModel
         HotkeyManager hotkeyManager)
     {
         _settingsService = settingsService;
-        _gameStateService = gameStateService;
         _hotkeyManager = hotkeyManager;
 
-        _gameStateService.Subscribe(GameState.Attached, OnGameAttached);
+        gameStateService.Subscribe(GameState.Attached, OnGameAttached);
 
         RegisterHotkeys();
 
@@ -44,17 +42,22 @@ public class SettingsViewModel : BaseViewModel
             // { "DecreasePlayerSpeed", text => DecreasePlayerSpeedHotkeyText = text },
             // { "DealNoDamage", text => DealNoDamageHotkeyText = text },
             { HotkeyActions.SkipDragonPhaseOne.ToString(), text => SkipDragonPhaseOneHotkeyText = text },
-
+            { HotkeyActions.NoButterflySummons.ToString(), text => NoButterflySummonsHotkeyText = text },
+            { HotkeyActions.AllNoDeath.ToString(), text => AllNoDeathHotkeyText = text },
+            { HotkeyActions.AllNoDamage.ToString(), text => AllNoDamageHotkeyText = text },
+            { HotkeyActions.AllNoHit.ToString(), text => AllNoHitHotkeyText = text },
+            { HotkeyActions.AllNoAttack.ToString(), text => AllNoAttackHotkeyText = text },
+            { HotkeyActions.AllNoMove.ToString(), text => AllNoMoveHotkeyText = text },
+            { HotkeyActions.AllDisableAi.ToString(), text => AllDisableAiHotkeyText = text },
+            { HotkeyActions.AllNoPostureBuildup.ToString(), text => AllNoPostureBuildupHotkeyText = text },
+            { HotkeyActions.AllTargetingView.ToString(), text => AllTargetingViewHotkeyText = text },
             // { "RestoreSpellcasts", text => RestoreSpellcastsHotkeyText = text },
             // { "RestoreHumanity", text => RestoreHumanityHotkeyText = text },
             // { "Rest", text => RestHotkeyText = text },
-        
+
             { HotkeyActions.Quitout.ToString(), text => QuitoutHotkeyText = text },
-            // { "ForceSave", text => ForceSaveHotkeyText = text },
-            // { "EnableFreeCam", text => EnableFreeCamHotkeyText = text },
-            // { "MoveCamToPlayer", text => MoveCamToPlayerHotkeyText = text },
             // { "Warp", text => WarpHotkeyText = text },
-   
+
             { HotkeyActions.EnableTargetOptions.ToString(), text => EnableTargetOptionsHotkeyText = text },
             { HotkeyActions.FreezeTargetHp.ToString(), text => FreezeHpHotkeyText = text },
             { HotkeyActions.SetTargetOneHp.ToString(), text => SetTargetOneHpHotkeyText = text },
@@ -74,16 +77,14 @@ public class SettingsViewModel : BaseViewModel
             { HotkeyActions.TargetNoPostureBuildup.ToString(), text => TargetNoPostureBuildupHotkeyText = text },
             { HotkeyActions.TargetNoDeath.ToString(), text => TargetNoDeathHotkeyText = text },
             { HotkeyActions.TargetTargetingView.ToString(), text => TargetTargetingViewHotkeyText = text },
-            // { "AllNoDeath", text => AllNoDeathHotkeyText = text },
-            // { "AllNoDamage", text => AllNoDamageHotkeyText = text },
-            // { "AllRepeatAct", text => AllRepeatActHotkeyText = text },
-            
             { HotkeyActions.ToggleGameSpeed.ToString(), text => ToggleGameSpeedHotkeyText = text },
             { HotkeyActions.IncreaseGameSpeed.ToString(), text => IncreaseGameSpeedHotkeyText = text },
             { HotkeyActions.DecreaseGameSpeed.ToString(), text => DecreaseGameSpeedHotkeyText = text },
             { HotkeyActions.NoClip.ToString(), text => NoClipHotkeyText = text },
             { HotkeyActions.IncreaseNoClipSpeed.ToString(), text => IncreaseNoClipSpeedHotkeyText = text },
             { HotkeyActions.DecreaseNoClipSpeed.ToString(), text => DecreaseNoClipSpeedHotkeyText = text },
+            { HotkeyActions.FreeCam.ToString(), text => FreeCamHotkeyText = text },
+            { HotkeyActions.MoveCamToPlayer.ToString(), text => MoveCamToPlayerHotkeyText = text },
         };
 
         LoadHotkeyDisplays();
@@ -139,7 +140,7 @@ public class SettingsViewModel : BaseViewModel
             if (mainWindow != null) mainWindow.Topmost = _isAlwaysOnTopEnabled;
         }
     }
-    
+
     private bool _isNoTutorialsEnabled;
 
     public bool IsNoTutorialsEnabled
@@ -156,7 +157,7 @@ public class SettingsViewModel : BaseViewModel
             }
         }
     }
-    
+
     private bool _isSaveInCombatEnabled;
 
     public bool IsSaveInCombatEnabled
@@ -174,6 +175,63 @@ public class SettingsViewModel : BaseViewModel
         }
     }
 
+    private bool _isNoCameraSpinEnabled;
+
+    public bool IsNoCameraSpinEnabled
+    {
+        get => _isNoCameraSpinEnabled;
+        set
+        {
+            if (SetProperty(ref _isNoCameraSpinEnabled, value))
+            {
+                SettingsManager.Default.NoCameraSpin = value;
+                SettingsManager.Default.Save();
+
+                _settingsService.ToggleNoCameraSpin(_isNoCameraSpinEnabled);
+            }
+        }
+    }
+
+    private bool _isDisableMenuMusicEnabled;
+
+    public bool IsDisableMenuMusicEnabled
+    {
+        get => _isDisableMenuMusicEnabled;
+        set
+        {
+            if (!SetProperty(ref _isDisableMenuMusicEnabled, value)) return;
+            SettingsManager.Default.DisableMenuMusic = value;
+            SettingsManager.Default.Save();
+            _settingsService.ToggleDisableMusic(_isDisableMenuMusicEnabled);
+        }
+    }
+    
+    private bool _isDefaultSoundChangeEnabled;
+
+    public bool IsDefaultSoundChangeEnabled
+    {
+        get => _isDefaultSoundChangeEnabled;
+        set
+        {
+            if (!SetProperty(ref _isDefaultSoundChangeEnabled, value)) return;
+            SettingsManager.Default.DefaultSoundChangeEnabled = value;
+            SettingsManager.Default.Save();
+        }
+    }
+    
+    private int _defaultSoundVolume;
+
+    public int DefaultSoundVolume
+    {
+        get => _defaultSoundVolume;
+        set
+        {
+            if (!SetProperty(ref _defaultSoundVolume, value)) return;
+            if (!IsDefaultSoundChangeEnabled) return;
+            SettingsManager.Default.DefaultSoundVolume = value;
+            SettingsManager.Default.Save();
+        }
+    }
 
     private string _quitoutHotkeyText;
 
@@ -231,6 +289,69 @@ public class SettingsViewModel : BaseViewModel
     {
         get => _skipDragonPhaseOneHotkeyText;
         set => SetProperty(ref _skipDragonPhaseOneHotkeyText, value);
+    }
+    
+    private string _noButterflySummonsHotkeyText;
+    public string NoButterflySummonsHotkeyText
+    {
+        get => _noButterflySummonsHotkeyText;
+        set => SetProperty(ref _noButterflySummonsHotkeyText, value);
+    }
+
+    private string _allNoDeathHotkeyText;
+    public string AllNoDeathHotkeyText
+    {
+        get => _allNoDeathHotkeyText;
+        set => SetProperty(ref _allNoDeathHotkeyText, value);
+    }
+
+    private string _allNoDamageHotkeyText;
+    public string AllNoDamageHotkeyText
+    {
+        get => _allNoDamageHotkeyText;
+        set => SetProperty(ref _allNoDamageHotkeyText, value);
+    }
+
+    private string _allNoHitHotkeyText;
+    public string AllNoHitHotkeyText
+    {
+        get => _allNoHitHotkeyText;
+        set => SetProperty(ref _allNoHitHotkeyText, value);
+    }
+
+    private string _allNoAttackHotkeyText;
+    public string AllNoAttackHotkeyText
+    {
+        get => _allNoAttackHotkeyText;
+        set => SetProperty(ref _allNoAttackHotkeyText, value);
+    }
+
+    private string _allNoMoveHotkeyText;
+    public string AllNoMoveHotkeyText
+    {
+        get => _allNoMoveHotkeyText;
+        set => SetProperty(ref _allNoMoveHotkeyText, value);
+    }
+
+    private string _allDisableAiHotkeyText;
+    public string AllDisableAiHotkeyText
+    {
+        get => _allDisableAiHotkeyText;
+        set => SetProperty(ref _allDisableAiHotkeyText, value);
+    }
+
+    private string _allNoPostureBuildupHotkeyText;
+    public string AllNoPostureBuildupHotkeyText
+    {
+        get => _allNoPostureBuildupHotkeyText;
+        set => SetProperty(ref _allNoPostureBuildupHotkeyText, value);
+    }
+
+    private string _allTargetingViewHotkeyText;
+    public string AllTargetingViewHotkeyText
+    {
+        get => _allTargetingViewHotkeyText;
+        set => SetProperty(ref _allTargetingViewHotkeyText, value);
     }
 
 
@@ -377,9 +498,10 @@ public class SettingsViewModel : BaseViewModel
         get => _targetTargetingViewHotkeyText;
         set => SetProperty(ref _targetTargetingViewHotkeyText, value);
     }
-    
-    
+
+
     private string _toggleGameSpeedHotkeyText;
+
     public string ToggleGameSpeedHotkeyText
     {
         get => _toggleGameSpeedHotkeyText;
@@ -387,6 +509,7 @@ public class SettingsViewModel : BaseViewModel
     }
 
     private string _increaseGameSpeedHotkeyText;
+
     public string IncreaseGameSpeedHotkeyText
     {
         get => _increaseGameSpeedHotkeyText;
@@ -394,31 +517,51 @@ public class SettingsViewModel : BaseViewModel
     }
 
     private string _decreaseGameSpeedHotkeyText;
+
     public string DecreaseGameSpeedHotkeyText
     {
         get => _decreaseGameSpeedHotkeyText;
         set => SetProperty(ref _decreaseGameSpeedHotkeyText, value);
     }
-    
+
     private string _noClipHotkeyText;
+
     public string NoClipHotkeyText
     {
         get => _noClipHotkeyText;
         set => SetProperty(ref _noClipHotkeyText, value);
     }
-    
+
     private string _increaseNoClipSpeedHotkeyText;
+
     public string IncreaseNoClipSpeedHotkeyText
     {
         get => _increaseNoClipSpeedHotkeyText;
         set => SetProperty(ref _increaseNoClipSpeedHotkeyText, value);
     }
-    
+
     private string _decreaseNoClipSpeedHotkeyText;
+
     public string DecreaseNoClipSpeedHotkeyText
     {
         get => _decreaseNoClipSpeedHotkeyText;
         set => SetProperty(ref _decreaseNoClipSpeedHotkeyText, value);
+    }
+
+    private string _freeCamHotkeyText;
+
+    public string FreeCamHotkeyText
+    {
+        get => _freeCamHotkeyText;
+        set => SetProperty(ref _freeCamHotkeyText, value);
+    }
+
+    private string _moveCamToPlayerHotkeyText;
+
+    public string MoveCamToPlayerHotkeyText
+    {
+        get => _moveCamToPlayerHotkeyText;
+        set => SetProperty(ref _moveCamToPlayerHotkeyText, value);
     }
 
     #endregion
@@ -483,12 +626,24 @@ public class SettingsViewModel : BaseViewModel
 
         _isNoLogoEnabled = SettingsManager.Default.NoLogo;
         OnPropertyChanged(nameof(IsNoLogoEnabled));
-        
+
         _isNoTutorialsEnabled = SettingsManager.Default.NoTutorials;
         OnPropertyChanged(nameof(IsNoTutorialsEnabled));
-        
+
         _isSaveInCombatEnabled = SettingsManager.Default.SaveInCombat;
         OnPropertyChanged(nameof(IsSaveInCombatEnabled));
+
+        _isNoCameraSpinEnabled = SettingsManager.Default.NoCameraSpin;
+        OnPropertyChanged(nameof(IsNoCameraSpinEnabled));
+        
+        _isDisableMenuMusicEnabled = SettingsManager.Default.DisableMenuMusic;
+        OnPropertyChanged(nameof(IsDisableMenuMusicEnabled));
+            
+        _isDefaultSoundChangeEnabled = SettingsManager.Default.DefaultSoundChangeEnabled;
+        OnPropertyChanged(nameof(IsDefaultSoundChangeEnabled));
+
+        _defaultSoundVolume = SettingsManager.Default.DefaultSoundVolume;
+        OnPropertyChanged(nameof(DefaultSoundVolume));
 
         IsAlwaysOnTopEnabled = SettingsManager.Default.AlwaysOnTop;
     }
@@ -507,6 +662,9 @@ public class SettingsViewModel : BaseViewModel
         if (IsNoLogoEnabled) _settingsService.ToggleNoLogo(true);
         if (IsNoTutorialsEnabled) _settingsService.ToggleNoTutorials(true);
         if (IsSaveInCombatEnabled) _settingsService.ToggleSaveInCombat(true);
+        if (IsNoCameraSpinEnabled) _settingsService.ToggleNoCameraSpin(true);
+        if (IsDefaultSoundChangeEnabled) _settingsService.PatchDefaultSound(DefaultSoundVolume);
+        if (IsDisableMenuMusicEnabled) _settingsService.ToggleDisableMusic(true);
     }
 
     private void LoadHotkeyDisplays()

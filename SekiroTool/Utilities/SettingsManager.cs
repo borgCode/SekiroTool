@@ -13,7 +13,12 @@ public class SettingsManager
     public bool AlwaysOnTop { get; set; }
     public bool NoTutorials { get; set; }
     public bool SaveInCombat { get; set; }
-
+    public bool NoCameraSpin { get; set; }
+    public bool DisableMenuMusic { get; set; }
+    public bool DefaultSoundChangeEnabled { get; set; }
+    public int DefaultSoundVolume { get; set; } = 3;
+    
+    
     private static string SettingsPath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
         "SekiroTool",
@@ -34,6 +39,10 @@ public class SettingsManager
                 $"AlwaysOnTop={AlwaysOnTop}",
                 $"NoTutorials={NoTutorials}",
                 $"SaveInCombat={SaveInCombat}",
+                $"NoCameraSpin={NoCameraSpin}",
+                $"DisableMenuMusic={DisableMenuMusic}",
+                $"DefaultSoundChangeEnabled={DefaultSoundChangeEnabled}",
+                $"DefaultSoundVolume={DefaultSoundVolume}",
             };
 
             File.WriteAllLines(SettingsPath, lines);
@@ -83,6 +92,22 @@ public class SettingsManager
                             case "AlwaysOnTop":
                                 bool.TryParse(value, out bool aot);
                                 settings.AlwaysOnTop = aot;
+                                break;
+                            case "NoCameraSpin":
+                                bool.TryParse(value, out bool ncp);
+                                settings.NoCameraSpin = ncp;
+                                break;
+                            case "DisableMenuMusic":
+                                bool.TryParse(value, out bool dmm);
+                                settings.DisableMenuMusic = dmm;
+                                break;
+                            case "DefaultSoundChangeEnabled":
+                                bool.TryParse(value, out bool dsce);
+                                settings.DefaultSoundChangeEnabled = dsce;
+                                break;
+                            case "DefaultSoundVolume":
+                                int.TryParse(value, out int dsv);
+                                settings.DefaultSoundVolume = dsv;
                                 break;
                         }
                     }

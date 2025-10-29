@@ -10,10 +10,12 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <converters:BooleanAndConverter x:Key="BooleanAndConverter" />
+        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
 
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -32,7 +34,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="Draw"
+                    <TextBlock Text=""
                                Grid.Column="0" />
                 </Grid>
 
@@ -53,7 +55,7 @@
 
 
                     <CheckBox Content="Hitbox View"
-                              IsChecked="{Binding IsHitboxEnabled}"
+                              IsChecked="{Binding IsHitBoxViewEnabled}"
                               Grid.Column="0" Grid.Row="0"
                               Margin="0,2" />
 
@@ -171,8 +173,112 @@
             </Grid>
 
         </Border>
+        
+        <Border Grid.Row="2"
+                BorderThickness="1"
+                BorderBrush="#333"
+                CornerRadius="3"
+                Margin="0,0,0,5">
 
-        <Grid Grid.Row="2">
+         <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                <CheckBox Content="Free Cam"
+                                          IsChecked="{Binding IsFreeCamEnabled}"
+                                          IsEnabled="{Binding AreButtonsEnabled}"
+                                          Margin="0,0,0,0"
+                                          VerticalAlignment="Center" />
+
+                                <Border
+                                    Background="#3498db"
+                                    CornerRadius="10"
+                                    Width="12"
+                                    Height="12"
+                                    Margin="5,0,10,0"
+                                    VerticalAlignment="Center"
+                                    ToolTip="Only works with controller for now&#x0a;&#x0a;Mode 1: Freezes both the player and enemies&#x0a;Mode 2: Does not freeze"
+                                    ToolTipService.InitialShowDelay='100'>
+                                    <TextBlock Text="i"
+                                               Foreground="White"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               FontWeight="Bold"
+                                               FontSize="10" />
+                                </Border>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal"
+                                        IsEnabled="{Binding IsFreeCamEnabled}"
+                                        VerticalAlignment="Center"
+                                        Margin="20,0,0,5">
+                                <RadioButton Content="Mode 1"
+                                             GroupName="FeatureModes"
+                                             IsChecked="{Binding IsFreeCamMode1Selected}"
+                                             Margin="0,0,10,0" />
+                                <RadioButton Content="Mode 2"
+                                             GroupName="FeatureModes"
+                                             IsChecked="{Binding IsFreeCamMode2Selected}"
+                                             Margin="0,0,10,0" />
+                            </StackPanel>
+
+                            <Button Content="Move Free Cam to Player"
+                                    Command="{Binding MoveCamToPlayerCommand}"
+                                    IsEnabled="{Binding IsFreeCamEnabled}"
+                                    Padding="5,0"
+                                    Margin="20,0,0,5"
+                                    HorizontalAlignment="Left" />
+                            <CheckBox Content="Death Cam"
+                                      IsChecked="{Binding IsDeathCamEnabled}"
+                                      IsEnabled="{Binding AreButtonsEnabled}"
+                                      VerticalAlignment="Center"
+                                      Margin="0,5,0,0" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                            <!-- <CheckBox Content="Increase Camera Vertical limits" -->
+                            <!--           VerticalAlignment="Center" -->
+                            <!--           IsEnabled="{Binding IsFreeCamEnabled, Converter={StaticResource InverseBooleanConverter}}" -->
+                            <!--           IsChecked="{Binding IsCamVertIncreaseEnabled}" -->
+                            <!--           Margin="0,0,0,15" /> -->
+                            <!-- -->
+                            <!-- <StackPanel Orientation="Horizontal" Margin="0,0,0,8" -->
+                            <!--             IsEnabled="{Binding IsFreeCamEnabled, Converter={StaticResource InverseBooleanConverter}}"> -->
+                            <!--     <xctk:IntegerUpDown x:Name="FovUpDown" -->
+                            <!--                         Value="{Binding CameraFov}" -->
+                            <!--                         TextAlignment="Center" -->
+                            <!--                         Width="80" -->
+                            <!--                         Minimum="5" -->
+                            <!--                         Maximum="140" -->
+                            <!--                         Increment="1" -->
+                            <!--                         IsEnabled="{Binding AreButtonsEnabled}" -->
+                            <!--                         BorderBrush="#3F3F46" /> -->
+                            <!--     <TextBlock Text="Field of View" VerticalAlignment="Center" Margin="10,0,0,0" /> -->
+                            <!-- </StackPanel> -->
+                            <!-- -->
+                            <!-- <Button Content="Set Default FOV" -->
+                            <!--    -->
+                            <!--         HorizontalAlignment="Right" -->
+                            <!--         Padding="5,2" -->
+                            <!--         Margin="0,0,0,0" -->
+                            <!--         Width="100"> -->
+                            <!--     <Button.IsEnabled> -->
+                            <!--         <MultiBinding Converter="{StaticResource BooleanAndConverter}"> -->
+                            <!--             <Binding Path="AreButtonsEnabled" /> -->
+                            <!--             <Binding Path="IsFreeCamEnabled" -->
+                            <!--                      Converter="{StaticResource InverseBooleanConverter}" /> -->
+                            <!--         </MultiBinding> -->
+                            <!--     </Button.IsEnabled> -->
+                            <!-- </Button> -->
+                        </StackPanel>
+                    </Grid>
+
+        </Border>
+
+        <Grid Grid.Row="3">
             <Border BorderThickness="1"
                     BorderBrush="#333"
                     CornerRadius="3"
@@ -190,6 +296,10 @@
                             <Button Content="Upgrade Prosthetics"
                                     IsEnabled="{Binding AreButtonsEnabled}"
                                     Command="{Binding OpenUpgradeProstheticsCommand}"
+                                    Margin="3" />
+                            <Button Content="Upgrade Prayer Bead"
+                                    IsEnabled="{Binding AreButtonsEnabled}"
+                                    Command="{Binding OpenUpgradePrayerBeadCommand}"
                                     Margin="3" />
                         </UniformGrid>
                     </TabItem>

@@ -327,6 +327,23 @@ namespace SekiroTool {
         
         /// <summary>
         ///   Looks up a localized string similar to 50                      push   rax
+        ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;
+        ///80 b8 3d 02 00 00 01    cmp    BYTE PTR [rax+0x23d],0x1
+        ///74 03                   je     14 &lt;normal&gt;
+        ///0f 57 c0                xorps  xmm0,xmm0
+        ///000000000014 &lt;normal&gt;:
+        ///0f 29 83 d0 00 00 00    movaps XMMWORD PTR [rbx+0xd0],xmm0
+        ///58                      pop    rax
+        ///e9 00 00 00 00          jmp    21 &lt;normal+0xd&gt;.
+        /// </summary>
+        internal static string NoCameraSpin {
+            get {
+                return ResourceManager.GetString("NoCameraSpin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 50                      push   rax
         ///48 a1 00 00 00 00 00    movabs rax,ds:0x0
         ///00 00 00
         ///48 8b 80 88 00 00 00    mov    rax,QWORD PTR [rax+0x88]
@@ -425,6 +442,21 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 83 fa 01                cmp    edx,0x1
+        ///75 01                   jne    6 &lt;normal&gt;
+        ///c3                      ret
+        ///000000000006 &lt;normal&gt;:
+        ///40 57                      push   rdi
+        ///48 83 ec 30             sub    rsp,0x30
+        ///e9 00 00 00 00          jmp    10 &lt;normal+0xa&gt;.
+        /// </summary>
+        internal static string NoMenuMusic {
+            get {
+                return ResourceManager.GetString("NoMenuMusic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 48 83 ec 48             sub    rsp,0x48
         ///48 8d 0c 24             lea    rcx,[rsp]
         ///48 b8 00 00 00 00 00    movabs rax,0x0
@@ -480,6 +512,28 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 55                      push   rbp
+        ///48 89 e5                mov    rbp,rsp
+        ///48 81 ec 00 03 00 00    sub    rsp,0x300
+        ///48 8d 8d e0 fd ff ff    lea    rcx,[rbp-0x220]
+        ///ba 11 00 00 00          mov    edx,0x11
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///ff d0                   call   rax
+        ///4c 8d ad e0 fd ff ff    lea    r13,[rbp-0x220]
+        ///4c 8d b5 c0 fd ff ff    lea    r14,[rbp-0x240]
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///4c 8d 20                lea    r12,[rax]
+        ///66 c7 45 fc 0d 10       mov     [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string OpenUpgradePrayerBead {
+            get {
+                return ResourceManager.GetString("OpenUpgradePrayerBead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 103000,Original Memory: Wolf
         ///303000,Another&apos;s Memory: Shura
         ///403000,Another&apos;s Memory: Ashina
@@ -526,6 +580,20 @@ namespace SekiroTool {
         internal static string SetEvent {
             get {
                 return ResourceManager.GetString("SetEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 48 83 ec 28             sub    rsp,0x28
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///ff d0                   call   rax
+        ///48 83 c4 28             add    rsp,0x28
+        ///c3                      ret.
+        /// </summary>
+        internal static string StopMusic {
+            get {
+                return ResourceManager.GetString("StopMusic", resourceCulture);
             }
         }
         

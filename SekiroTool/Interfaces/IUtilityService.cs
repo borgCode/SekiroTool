@@ -4,6 +4,7 @@ namespace SekiroTool.Interfaces;
 
 public interface IUtilityService
 {
+    void ToggleHitboxView(bool isEnabled);
     void OpenSkillMenu();
     void OpenUpgradeProstheticsMenu();
     void OpenRegularShop(ShopLineup shopLineup);
@@ -13,4 +14,8 @@ public interface IUtilityService
     float GetGameSpeed();
     void WriteNoClipSpeed(float speedMultiplier);
     void ToggleNoClip(bool isEnabled);
+    void ToggleFreeCamera(bool isEnabled);
+    void SetCameraMode(int mode);
+    void MoveCamToPlayer();
+    void OpenUpgradePrayerBead();
 }

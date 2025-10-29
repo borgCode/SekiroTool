@@ -36,6 +36,9 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.FieldArea.Base = FindAddressByPattern(Patterns.FieldArea);
         Offsets.FrpgHavokMan.Base = FindAddressByPattern(Patterns.FrpgHavokMan);
         Offsets.GameDataMan.Base = FindAddressByPattern(Patterns.GameDataMan);
+        Offsets.PauseRequest.Base = FindAddressByPattern(Patterns.PauseRequest);
+        Offsets.DlUserInputManager.Base = FindAddressByPattern(Patterns.DlUserInputManager);
+        Offsets.TargetingView.Base = FindAddressByPattern(Patterns.TargetingView);
 
 
         TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
@@ -60,6 +63,10 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Hooks.InfinitePoise = addr.ToInt64(), saved);
         TryPatternWithFallback("AiHasSpEffect", Patterns.AiHasSpEffect,
             addr => Offsets.Hooks.AiHasSpEffect = addr.ToInt64(), saved);
+        TryPatternWithFallback("GetMouseDelta", Patterns.GetMouseDelta,
+            addr => Offsets.Hooks.GetMouseDelta = addr.ToInt64(), saved);
+        TryPatternWithFallback("StartMenuMusic", Patterns.StartMusic,
+            addr => Offsets.Hooks.StartMusic = addr, saved);
 
         TryPatternWithFallback("NoLogo", Patterns.NoLogo,
             addr => Offsets.Patches.NoLogo = addr, saved);
@@ -77,6 +84,9 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Patches.SaveInCombat = addr, saved);
         TryPatternWithFallback("OpenRegularShopPatch", Patterns.OpenRegularShopPatch,
             addr => Offsets.Patches.OpenRegularShopPatch = addr, saved);
+        TryPatternWithFallback("DefaultSoundVolWrite", Patterns.DefaultSoundVolWrite,
+            addr => Offsets.Patches.DefaultSoundVolWrite = addr, saved);
+
 
 
         using (var writer = new StreamWriter(savePath))
@@ -103,9 +113,17 @@ public class AoBScanner(IMemoryService memoryService)
             { addr => Offsets.Functions.UpgradeProstheticsMenu = addr, 0x29DC },
             { addr => Offsets.Functions.OpenScalesShop = addr, 0x29B5 },
             { addr => Offsets.Functions.OpenProstheticsShop = addr, 0x24FA },
+            { addr => Offsets.Functions.AwardItemLot = addr, 0x228B},
+            { addr => Offsets.Functions.SetMessageTagValue = addr, 0x18B4},
+            { addr => Offsets.Functions.AdjustItemCount = addr, 0x1548},
+            { addr => Offsets.Functions.OpenGenericDialog = addr, 0x9CC},
         });
 
         Offsets.Functions.FrpgCastRay = FindAddressByPattern(Patterns.FrpgCastRay).ToInt64();
+        Offsets.Functions.StopMusic = FindAddressByPattern(Patterns.StopMusic).ToInt64();
+        Offsets.Functions.GetItemSlot = FindAddressByPattern(Patterns.GetItemSlot).ToInt64();
+        Offsets.Functions.GetItemPtrFromSlot = FindAddressByPattern(Patterns.GetItemPtrFromSlot).ToInt64();
+        Offsets.Functions.EzStateExternalEventTempCtor = FindAddressByPattern(Patterns.EzStateExternalEventTempCtor).ToInt64();
 
 #if DEBUG
         Console.WriteLine($"WorldChrMan.Base: 0x{Offsets.WorldChrMan.Base.ToInt64():X}");
@@ -121,6 +139,9 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"FieldArea.Base: 0x{Offsets.FieldArea.Base.ToInt64():X}");
         Console.WriteLine($"FrpgHavokMan.Base: 0x{Offsets.FrpgHavokMan.Base.ToInt64():X}");
         Console.WriteLine($"GameDataMan.Base: 0x{Offsets.GameDataMan.Base.ToInt64():X}");
+        Console.WriteLine($"PauseRequest.Base: 0x{Offsets.PauseRequest.Base.ToInt64():X}");
+        Console.WriteLine($"DlUserInputManager.Base: 0x{Offsets.DlUserInputManager.Base.ToInt64():X}");
+        Console.WriteLine($"TargetingView.Base: 0x{Offsets.TargetingView.Base.ToInt64():X}");
 
         Console.WriteLine($"Hooks.LockedTarget: 0x{Offsets.Hooks.LockedTarget:X}");
         Console.WriteLine($"Hooks.FreezeTargetPosture: 0x{Offsets.Hooks.FreezeTargetPosture:X}");
@@ -133,6 +154,8 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Hooks.KeyBoard: 0x{Offsets.Hooks.KeyBoard:X}");
         Console.WriteLine($"Hooks.InfinitePoise: 0x{Offsets.Hooks.InfinitePoise:X}");
         Console.WriteLine($"Hooks.AiHasSpEffect: 0x{Offsets.Hooks.AiHasSpEffect:X}");
+        Console.WriteLine($"Hooks.GetMouseDelta: 0x{Offsets.Hooks.GetMouseDelta:X}");
+        Console.WriteLine($"Hooks.StartMusic: 0x{Offsets.Hooks.StartMusic:X}");
 
 
         Console.WriteLine($"Patches.NoLogo: 0x{Offsets.Patches.NoLogo.ToInt64():X}");
@@ -143,6 +166,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Patches.ShowTutorialText: 0x{Offsets.Patches.ShowTutorialText.ToInt64():X}");
         Console.WriteLine($"Patches.SaveInCombat: 0x{Offsets.Patches.SaveInCombat.ToInt64():X}");
         Console.WriteLine($"Patches.OpenRegularShopPatch: 0x{Offsets.Patches.OpenRegularShopPatch.ToInt64():X}");
+        Console.WriteLine($"Patches.DefaultSoundVolWrite: 0x{Offsets.Patches.DefaultSoundVolWrite.ToInt64():X}");
 
         Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");
         Console.WriteLine($"Functions.Rest: 0x{Offsets.Functions.Rest:X}");
@@ -159,6 +183,14 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Functions.OpenScalesShop: 0x{Offsets.Functions.OpenScalesShop:X}");
         Console.WriteLine($"Functions.OpenProstheticsShop: 0x{Offsets.Functions.OpenProstheticsShop:X}");
         Console.WriteLine($"Functions.FrpgCastRay: 0x{Offsets.Functions.FrpgCastRay:X}");
+        Console.WriteLine($"Functions.StopMusic: 0x{Offsets.Functions.StopMusic:X}");
+        Console.WriteLine($"Functions.GetItemSlot: 0x{Offsets.Functions.GetItemSlot:X}");
+        Console.WriteLine($"Functions.GetItemPtrFromSlot: 0x{Offsets.Functions.GetItemPtrFromSlot:X}");
+        Console.WriteLine($"Functions.EzStateExternalEventTempCtor: 0x{Offsets.Functions.EzStateExternalEventTempCtor:X}");
+        Console.WriteLine($"Functions.AwardItemLot: 0x{Offsets.Functions.AwardItemLot:X}");
+        Console.WriteLine($"Functions.SetMessageTagValue: 0x{Offsets.Functions.SetMessageTagValue:X}");
+        Console.WriteLine($"Functions.AdjustItemCount: 0x{Offsets.Functions.AdjustItemCount:X}");
+        Console.WriteLine($"Functions.OpenGenericDialog: 0x{Offsets.Functions.OpenGenericDialog:X}");
 #endif
     }
 

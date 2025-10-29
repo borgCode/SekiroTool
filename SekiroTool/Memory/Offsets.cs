@@ -96,7 +96,9 @@ public static class Offsets
         public enum PlayerGameDataOffsets
         {
             AttackPower = 0x48,
-            Experience = 0x160
+            Experience = 0x160,
+            EquipGameData = 0x518,
+            EquipInventoryData = 0x5B0
         }
     }
 
@@ -113,6 +115,9 @@ public static class Offsets
 
         public const int IsLoaded = 0x20;
         public const int Quitout = 0x23C;
+
+        public const int DialogManager = 0x1FB0;
+        public const int GenericDialogButtonResult = 0x18;
     }
 
     public static class WorldAiMan
@@ -152,9 +157,6 @@ public static class Offsets
             AllNoMove = 0xF,
             DisableAi = 0x10,
             AllNoPosture = 0x17,
-            
-            
-            
         }
     }
 
@@ -185,10 +187,31 @@ public static class Offsets
         public const int GameSpeed = 0x344;
     }
 
+    public static class PauseRequest
+    {
+        public static IntPtr Base;
+    }
+    
+    public static class DlUserInputManager
+    {
+        public static IntPtr Base;
+        public const int IsGameFocused = 0x23D;
+    }
+    
+    public static class TargetingView
+    {
+        public static IntPtr Base;
+    }
+
 
     public static class FieldArea
     {
         public static IntPtr Base;
+        public const int GameRend = 0x20;
+        public static readonly int[] FreeCamMode = [GameRend, 0xE0]; 
+        public const int DebugFreecam = 0xE8;
+        public static readonly int[] DebugCamCoords = [GameRend, DebugFreecam, 0x40];
+        
         public const int ChrCam = 0x30;
         public static readonly int[] ChrExFollowCam = [ChrCam, 0x60];
         // +0x10 yaw
@@ -205,6 +228,7 @@ public static class Offsets
     public static class GameDataMan
     {
         public static IntPtr Base;
+        public const int PlayerGameData = 0x8;
         public const int NewGame = 0x70;
     }
     
@@ -219,6 +243,7 @@ public static class Offsets
         public static IntPtr ShowTutorialText;
         public static IntPtr SaveInCombat;
         public static IntPtr OpenRegularShopPatch;
+        public static IntPtr DefaultSoundVolWrite;
     }
 
 
@@ -235,6 +260,8 @@ public static class Offsets
         public static long KeyBoard;
         public static long InfinitePoise;
         public static long AiHasSpEffect;
+        public static long GetMouseDelta;
+        public static long StartMusic;
         public static long InfiniteConfetti;
     }
 
@@ -255,5 +282,13 @@ public static class Offsets
         public static long OpenScalesShop;
         public static long OpenProstheticsShop;
         public static long FrpgCastRay;
+        public static long StopMusic;
+        public static long GetItemSlot;
+        public static long GetItemPtrFromSlot;
+        public static long EzStateExternalEventTempCtor;
+        public static long AwardItemLot;
+        public static long SetMessageTagValue;
+        public static long AdjustItemCount;
+        public static long OpenGenericDialog;
     }
 }
