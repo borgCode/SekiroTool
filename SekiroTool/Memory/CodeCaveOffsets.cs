@@ -26,7 +26,6 @@ public static class CodeCaveOffsets
     public const int CoordsUpdate = 0x310;
 
     public const int InfinitePoise = 0x500;
-    public const int InfiniteConfetti = 0x1A;
 
     public const int ButterflyNoSummons = 0x540;
 
@@ -48,4 +47,11 @@ public static class CodeCaveOffsets
     public const int NoMenuMusic = 0x900;
 
     public const int PrayerBeadMenuHandle = 0x930;
+    
+    public const int ConfettiFlag = 0x960;
+    
+    public const int GachiinFlag = 0x961;
+    
+    public const int InfiniteConfetti = 0x970;
+    
 }

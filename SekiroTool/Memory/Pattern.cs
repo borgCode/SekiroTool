@@ -141,8 +141,8 @@ public static class Patterns
         AddressingMode.Relative,
         3,
         7
-        
-        
+
+
 
     );
 
@@ -443,11 +443,12 @@ public static class Patterns
         "xxxxxxxxxxx",
         0,
         AddressingMode.Absolute
-        
-    public static readonly Pattern InfiniteConfetti = new Pattern(
+    );
+
+public static readonly Pattern InfiniteConfetti = new Pattern(
         new byte[] { 0xF3, 0x0F, 0x5C, 0xCF, 0x0F, 0x2F, 0xC1 },
         "xxxxxxx",
-        0
+        0,
         AddressingMode.Absolute
     );
 

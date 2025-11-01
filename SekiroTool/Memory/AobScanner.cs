@@ -67,6 +67,8 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Hooks.GetMouseDelta = addr.ToInt64(), saved);
         TryPatternWithFallback("StartMenuMusic", Patterns.StartMusic,
             addr => Offsets.Hooks.StartMusic = addr, saved);
+        TryPatternWithFallback("InfiniteConfetti", Patterns.InfiniteConfetti,
+            addr => Offsets.Hooks.InfiniteConfetti = addr, saved);
 
         TryPatternWithFallback("NoLogo", Patterns.NoLogo,
             addr => Offsets.Patches.NoLogo = addr, saved);
@@ -156,6 +158,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Hooks.AiHasSpEffect: 0x{Offsets.Hooks.AiHasSpEffect:X}");
         Console.WriteLine($"Hooks.GetMouseDelta: 0x{Offsets.Hooks.GetMouseDelta:X}");
         Console.WriteLine($"Hooks.StartMusic: 0x{Offsets.Hooks.StartMusic:X}");
+        Console.WriteLine($"Hooks.InfiniteConfetti: 0x{Offsets.Hooks.InfiniteConfetti:X}");
 
 
         Console.WriteLine($"Patches.NoLogo: 0x{Offsets.Patches.NoLogo.ToInt64():X}");

@@ -5,6 +5,7 @@ using SekiroTool.Core;
 using SekiroTool.Enums;
 using SekiroTool.Interfaces;
 using SekiroTool.Utilities;
+using Xceed.Wpf.Toolkit;
 
 namespace SekiroTool.ViewModels;
 
@@ -219,6 +220,21 @@ public class PlayerViewModel : BaseViewModel
             }
         }
     }
+    
+    private bool _isInfiniteConfettiEnabled;
+
+    public bool IsInfiniteConfettiEnabled
+    {
+        get => _isInfiniteConfettiEnabled;
+        set
+        {
+            if (SetProperty(ref _isInfiniteConfettiEnabled, value))
+            {
+                _playerService.ToggleInfiniteConfetti(_isInfiniteConfettiEnabled);
+            }
+        }
+    }
+    
     private int _newGame;
     public int NewGame
     {
@@ -274,6 +290,12 @@ public class PlayerViewModel : BaseViewModel
         
         if (_isInfinitePoiseEnabled) _playerService.TogglePlayerInfinitePoise(true);
         _playerTick.Start();
+        
+        if (_isInfiniteConfettiEnabled) _playerService.ToggleInfiniteConfetti(true);
+        _playerTick.Start();
+        
+        
+        
     }
     
     

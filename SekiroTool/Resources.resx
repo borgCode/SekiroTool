@@ -1263,4 +1263,27 @@ ff d0                   call   rax
 5d                      pop    rbp
 c3                      ret</value>
     </data>
+    <data name="InfiniteConfetti" xml:space="preserve">
+        <value>81 7b 58 7b 0d 00 00    cmp    DWORD PTR [rbx+0x58],0xd7b
+74 15                   je     1e &lt;CheckConfettiFlag&gt;
+81 7b 58 71 0d 00 00    cmp    DWORD PTR [rbx+0x58],0xd71
+74 1d                   je     2f &lt;CheckGachiinFlag&gt;
+f3 0f 5c cf             subss  xmm1,xmm7
+0f 2f c1                comiss xmm0,xmm1
+e9 00 00 00 00          jmp    1e &lt;CheckConfettiFlag&gt;
+000000000000001e &lt;CheckConfettiFlag&gt;:
+80 3d 00 00 00 00 01    cmp    BYTE PTR [rip+0x0],0x1        
+75 19                   jne    40 &lt;OriginalInstructions&gt;
+0f 2f c1                comiss xmm0,xmm1
+e9 00 00 00 00          jmp    2f &lt;CheckGachiinFlag&gt;
+000000000000002f &lt;CheckGachiinFlag&gt;:
+80 3d 00 00 00 00 01    cmp    BYTE PTR [rip+0x0],0x1        
+75 08                   jne    40 &lt;OriginalInstructions&gt;
+0f 2f c1                comiss xmm0,xmm1
+e9 00 00 00 00          jmp    40 &lt;OriginalInstructions&gt;
+0000000000000040 &lt;OriginalInstructions&gt;:
+f3 0f 5c cf             subss  xmm1,xmm7
+0f 2f c1                comiss xmm0,xmm1
+e9 00 00 00 00          jmp    4c &lt;OriginalInstructions+0xc&gt;</value>
+    </data>
 </root>

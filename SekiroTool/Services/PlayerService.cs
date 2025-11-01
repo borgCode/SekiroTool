@@ -15,12 +15,12 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
 
         byte[] positionBytes = memoryService.ReadBytes(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.X, 12);
         float angle = memoryService.ReadFloat(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.Angle);
-        
+
         byte[] angleBytes = BitConverter.GetBytes(angle);
         byte[] data = new byte[16];
         Buffer.BlockCopy(positionBytes, 0, data, 0, 12);
         Buffer.BlockCopy(angleBytes, 0, data, 12, 4);
-        
+
         if (index == 0) memoryService.WriteBytes(CodeCaveOffsets.Base + CodeCaveOffsets.SavePos1, data);
         else memoryService.WriteBytes(CodeCaveOffsets.Base + CodeCaveOffsets.SavePos2, data);
     }
@@ -32,12 +32,12 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         else positionBytes = memoryService.ReadBytes(CodeCaveOffsets.Base + CodeCaveOffsets.SavePos2, 16);
 
         float angle = BitConverter.ToSingle(positionBytes, 12);
-        
+
         var chrPhysicsPtr = GetChrPhysicsPtr();
-        
+
         byte[] xyzBytes = new byte[12];
         Buffer.BlockCopy(positionBytes, 0, xyzBytes, 0, 12);
-        
+
         memoryService.WriteBytes(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.X, xyzBytes);
         memoryService.WriteFloat(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.Angle, angle);
     }
@@ -48,7 +48,7 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         float x = BitConverter.ToSingle(coordBytes, 0);
         float y = BitConverter.ToSingle(coordBytes, 4);
         float z = BitConverter.ToSingle(coordBytes, 8);
-        return (x, y, z); 
+        return (x, y, z);
     }
 
 
@@ -116,7 +116,7 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
 
     public int GetNewGame() =>
         memoryService.ReadInt32((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.NewGame);
-    
+
     public void AddExperience(int experience)
     {
         var bytes = AsmLoader.GetAsmBytes("AddExperience");
@@ -190,18 +190,17 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
             var skippedStaggerLoc = hookLoc + 0x429;
 
             var bytes = AsmLoader.GetAsmBytes("InfinitePoise");
-            AsmHelper.WriteRelativeOffsets(bytes, new []
+            AsmHelper.WriteRelativeOffsets(bytes, new[]
             {
                 (code.ToInt64() + 0x1, worldChrMan.ToInt64(), 7, 0x1 + 3),
                 (code.ToInt64() + 0x14, skippedStaggerLoc, 6, 0x14 + 2),
                 (code.ToInt64() + 0x22, hookLoc + 8, 5, 0x22 + 1),
             });
-            
-            
+
+
             memoryService.WriteBytes(code, bytes);
             hookManager.InstallHook(code.ToInt64(), hookLoc,
                 [0x4C, 0x89, 0xBC, 0x24, 0xA0, 0x00, 0x00, 0x00]);
-          
         }
         else
         {
@@ -211,19 +210,33 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
 
     public void ToggleInfiniteConfetti(bool isEnabled)
     {
-        var code = CodeCaveOffsets.Base + CodeCaveOffsets.InfiniteConfetti;
+        var infiniteConfettiCaveLoc  = CodeCaveOffsets.Base + CodeCaveOffsets.InfiniteConfetti; //Base = allocated memory
+        var confettiFlag = CodeCaveOffsets.Base + CodeCaveOffsets.ConfettiFlag;
+        var gachiinFlag = CodeCaveOffsets.Base + CodeCaveOffsets.GachiinFlag;
         if (isEnabled)
         {
-            var hookLoc = Hooks.InfiniteConfetti;
-            var hookRetAddr = hookLoc + 0x7;
-            
-            var bytes = AsmLoader.GetAsmBytes("InfiniteConfetti");
-            AsmHelper.WriteRelativeOffsets(bytes, new []
-            {
-                (code.ToInt64() + 0xc, hookRetAddr, 5, 0xc + 1 ),
-                (code.ToInt64() + 0x18, hookRetAddr,5, 0x18 + 1 )
-            });
+            var hookLoc = Hooks.InfiniteConfetti; //140C06BFE
+            var originalRetJmp = hookLoc + 0x7;  //movss in og code
 
+            var bytes = AsmLoader.GetAsmBytes("InfiniteConfetti");
+            AsmHelper.WriteRelativeOffsets(bytes, new[]
+            {
+                (infiniteConfettiCaveLoc.ToInt64() + 0x19, originalRetJmp, 5, 0x19 + 1),  //jmp return 1
+                (infiniteConfettiCaveLoc.ToInt64() + 0x1e, confettiFlag.ToInt64(), 7, 0x1e + 2), //cmp byte     
+                (infiniteConfettiCaveLoc.ToInt64() + 0x2a, originalRetJmp, 5, 0x2a + 1),
+                (infiniteConfettiCaveLoc.ToInt64() + 0x2f, gachiinFlag.ToInt64(), 7, 0x2f + 2),
+                (infiniteConfettiCaveLoc.ToInt64() + 0x3b, originalRetJmp, 5, 0x3b + 1),  
+                (infiniteConfettiCaveLoc.ToInt64() + 0x47, originalRetJmp, 5, 0x47 + 1),  
+            });
+            memoryService.WriteBytes(infiniteConfettiCaveLoc, bytes);
+            memoryService.WriteUInt8(confettiFlag, 1); //write 1s as bytes
+            memoryService.WriteUInt8(gachiinFlag, 1);
+            hookManager.InstallHook(infiniteConfettiCaveLoc.ToInt64(), hookLoc,
+                [0xf3, 0x0f, 0x5c, 0xcf, 0x0f, 0x2f, 0xc1]);
+        }
+        else
+        {
+            hookManager.UninstallHook(infiniteConfettiCaveLoc.ToInt64());
         }
     }
 

@@ -211,8 +211,10 @@
                               IsChecked="{Binding IsDealNoDamageEnabled}"
                               Margin="0,2" />
                     <CheckBox Content="Infinite Poise"
-                              IsChecked="{Binding IsInfinitePoiseEnabled}"
-                              Margin="0,2" />
+                              IsChecked="{Binding IsInfinitePoiseEnabled}"/>
+                    <CheckBox Content="Infinite Confetti"
+                              IsChecked="{Binding IsInfiniteConfettiEnabled}"          
+                              Margin="0,2"/>
                     <CheckBox Content="Silent"
                               IsChecked="{Binding IsSilentEnabled}"
                               Margin="0,2" />
@@ -263,8 +265,8 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <xctk:IntegerUpDown x:Name="VigorUpDown"
-                                            Value="{Binding Vigor}"
+                        <xctk:IntegerUpDown x:Name="ExperienceUpDown"
+                                            Value="{Binding Experience}"
                                             TextAlignment="Center"
                                             Width="80"
                                             Minimum="1"
@@ -273,163 +275,11 @@
 
                                             IsEnabled="{Binding AreOptionsEnabled}"
                                             BorderBrush="#3F3F46"
-                                            Tag="Vigor" />
-                        <TextBlock Text="Vigor" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0" />
+                                            Tag="Experience" />
+                        <TextBlock Text="Experience" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0" />
                     </Grid>
 
-                    <Grid Margin="0,2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <xctk:IntegerUpDown x:Name="EnduranceUpDown"
-                                            Value="{Binding Endurance}"
-                                            TextAlignment="Center"
-                                            Width="80"
-                                            Minimum="1"
-                                            Maximum="99"
-                                            Grid.Column="0"
-
-                                            Tag="Endurance"
-                                            IsEnabled="{Binding AreOptionsEnabled}"
-                                            BorderBrush="#3F3F46" />
-                        <TextBlock Text="Endurance" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0" />
-                    </Grid>
-
-                    <Grid Margin="0,2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <xctk:IntegerUpDown x:Name="VitalityUpDown"
-                                            Value="{Binding Vitality}"
-                                            TextAlignment="Center"
-                                            Width="80"
-                                            Minimum="1"
-                                            Maximum="99"
-                                            Grid.Column="0"
-
-                                            Tag="Vitality"
-                                            IsEnabled="{Binding AreOptionsEnabled}"
-                                            BorderBrush="#3F3F46" />
-                        <TextBlock Text="Vitality" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0" />
-                    </Grid>
-                    <Grid Margin="0,2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <xctk:IntegerUpDown x:Name="AttunementUpDown"
-                                            Value="{Binding Attunement}"
-                                            TextAlignment="Center"
-                                            Width="80"
-                                            Minimum="1"
-                                            Maximum="99"
-                                            Grid.Column="0"
-
-                                            Tag="Attunement"
-                                            IsEnabled="{Binding AreOptionsEnabled}"
-                                            BorderBrush="#3F3F46" />
-                        <TextBlock Text="Attunement" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0" />
-                    </Grid>
-
-                    <Grid Margin="0,2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <xctk:IntegerUpDown x:Name="StrengthUpDown"
-                                            Value="{Binding Strength}"
-                                            TextAlignment="Center"
-                                            Width="80"
-                                            Minimum="1"
-                                            Maximum="99"
-                                            Grid.Column="0"
-
-                                            Tag="Strength"
-                                            IsEnabled="{Binding AreOptionsEnabled}"
-                                            BorderBrush="#3F3F46" />
-                        <TextBlock Text="Strength" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0" />
-                    </Grid>
-
-                </StackPanel>
-                <StackPanel Grid.Column="1">
-
-                    <Grid Margin="0,2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <xctk:IntegerUpDown x:Name="DexterityUpDown"
-                                            Value="{Binding Dexterity}"
-                                            TextAlignment="Center"
-                                            Width="80"
-                                            Minimum="1"
-                                            Maximum="99"
-                                            Grid.Column="0"
-
-                                            Tag="Dexterity"
-                                            IsEnabled="{Binding AreOptionsEnabled}"
-                                            BorderBrush="#3F3F46" />
-                        <TextBlock Text="Dexterity" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0" />
-                    </Grid>
-
-
-                    <Grid Margin="0,2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <xctk:IntegerUpDown x:Name="AdpUpDown"
-                                            Value="{Binding Adp}"
-                                            TextAlignment="Center"
-                                            Width="80"
-                                            Minimum="1"
-                                            Maximum="99"
-                                            Grid.Column="0"
-
-                                            Tag="Adp"
-                                            IsEnabled="{Binding AreOptionsEnabled}"
-                                            BorderBrush="#3F3F46" />
-                        <TextBlock Text="Adaptability" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0" />
-                    </Grid>
-                    <Grid Margin="0,2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <xctk:IntegerUpDown x:Name="IntelligenceUpDown"
-                                            Value="{Binding Intelligence}"
-                                            TextAlignment="Center"
-                                            Width="80"
-                                            Minimum="1"
-                                            Maximum="99"
-                                            Grid.Column="0"
-
-                                            Tag="Intelligence"
-                                            IsEnabled="{Binding AreOptionsEnabled}"
-                                            BorderBrush="#3F3F46" />
-                        <TextBlock Text="Intelligence" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0" />
-                    </Grid>
-
-                    <Grid Margin="0,2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <xctk:IntegerUpDown x:Name="FaithUpDown"
-                                            Value="{Binding Faith}"
-                                            TextAlignment="Center"
-                                            Width="80"
-                                            Minimum="1"
-                                            Maximum="99"
-                                            Grid.Column="0"
-
-                                            Tag="Faith"
-                                            IsEnabled="{Binding AreOptionsEnabled}"
-                                            BorderBrush="#3F3F46" />
-                        <TextBlock Text="Faith" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0" />
-                    </Grid>
+                    
 
 
                 </StackPanel>

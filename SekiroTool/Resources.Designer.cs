@@ -130,7 +130,7 @@ namespace SekiroTool {
         ///48 8b 00                mov    rax,QWORD PTR [rax]
         ///48 89 c3                mov    rbx,rax
         ///48 8b 40 58             mov    rax,QWORD PTR [rax+0x58]
-        ///48 83  [rest of string was truncated]&quot;;.
+        ///48 83 b8 40 03 00 00 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string DragonSkipPhaseOne {
             get {
@@ -213,7 +213,8 @@ namespace SekiroTool {
         ///2460,Dragon Flash,1
         ///2461,Floating Passage Text,1
         ///2462,One Mind,1
-        ///2470,Shinobi Medici [rest of string was truncated]&quot;;.
+        ///2470,Shinobi Medicine Rank 1,1
+        ///2471,Sh [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Goods {
             get {
@@ -273,7 +274,11 @@ namespace SekiroTool {
         ///12000006
         ///12500000
         ///12500001
-        ///12 [rest of string was truncated]&quot;;.
+        ///12500006
+        ///12500002
+        ///12500003
+        ///12500004
+        ///12500007.
         /// </summary>
         internal static string IdolEventFlags {
             get {
@@ -283,13 +288,15 @@ namespace SekiroTool {
         
         /// <summary>
         ///   Looks up a localized string similar to 81 7b 58 7b 0d 00 00    cmp    DWORD PTR [rbx+0x58],0xd7b
-        ///75 08                   jne    11 &lt;originalInstructions&gt;
-        ///0f 2f c1                comiss xmm0,xmm1
-        ///e9 00 00 00 00          jmp    11 &lt;originalInstructions&gt;
-        ///0000000000000011 &lt;originalInstructions&gt;:
+        ///74 15                   je     1e &lt;CheckConfettiFlag&gt;
+        ///81 7b 58 71 0d 00 00    cmp    DWORD PTR [rbx+0x58],0xd71
+        ///74 1d                   je     2f &lt;CheckGachiinFlag&gt;
         ///f3 0f 5c cf             subss  xmm1,xmm7
         ///0f 2f c1                comiss xmm0,xmm1
-        ///e9 00 00 00 00          jmp    1d &lt;originalInstructions+0xc.
+        ///e9 00 00 00 00          jmp    1e &lt;CheckConfettiFlag&gt;
+        ///000000000000001e &lt;CheckConfettiFlag&gt;:
+        ///80 3d 00 00 00 00 01    cmp    BYTE PTR [rip+0x0],0x1        
+        ///75 19                   jne    40 &lt;OriginalInstructio [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string InfiniteConfetti {
             get {
@@ -355,7 +362,7 @@ namespace SekiroTool {
         ///48 a1 00 00 00 00 00    movabs rax,ds:0x0
         ///00 00 00
         ///48 8b 80 88 00 00 00    mov    rax,QWORD PTR [rax+0x88]
-        ///48 8b 50 58             m [rest of string was truncated]&quot;;.
+        ///48 8b 50 58             mov    rdx,QW [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string NoClip_CoordsUpdate {
             get {
@@ -395,7 +402,7 @@ namespace SekiroTool {
         ///000000000018 &lt;set_down&gt;:
         ///c6 05 00 00 00 00 01    mov    BYTE PTR [rip+0x0],0x1        # 1f &lt;set_down+0x7&gt;
         ///30 c0                   xor    al,al
-        ///eb 09               [rest of string was truncated]&quot;;.
+        ///eb 09                   jmp    [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string NoClip_Keyboard {
             get {
@@ -412,7 +419,7 @@ namespace SekiroTool {
         ///48 8b 3d 00 00 00 00    mov    rdi,QWORD PTR [rip+0x0]        # 27 &lt;_main+0x27&gt;
         ///4c 8b bf 88 00 00 00    mov    r15,QWORD PTR [rdi+0x88]
         ///49 8b bf f8 1f 00 00    mov    rdi,QWORD PTR [r15+0x1ff8]
-        ///48 8b 7f 68     [rest of string was truncated]&quot;;.
+        ///48 8b 7f 68             [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string NoClip_RayCast {
             get {
@@ -433,7 +440,7 @@ namespace SekiroTool {
         ///c6 05 00 00 00 00 01    mov    BYTE PTR [rip+0x0],0x1        # 1d &lt;set_down+0x7&gt;
         ///c3                      ret
         ///00000000001e &lt;set_up&gt;:
-        ///c6 05 00 00 00 00 02    [rest of string was truncated]&quot;;.
+        ///c6 05 00 00 00 00 02    mov    BYTE [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string NoClip_Triggers {
             get {
@@ -525,7 +532,7 @@ namespace SekiroTool {
         ///48 b8 00 00 00 00 00    movabs rax,0x0
         ///00 00 00
         ///4c 8d 20                lea    r12,[rax]
-        ///66 c7 45 fc 0d 10       mov     [rest of string was truncated]&quot;;.
+        ///66 c7 45 fc 0d 10       mov    WORD PTR [rbp [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string OpenUpgradePrayerBead {
             get {
@@ -649,7 +656,8 @@ namespace SekiroTool {
         ///Ashina Outskirts,Flames of Hatred,1101957
         ///Ashina Castle,Ashina Castle,1111950
         ///Ashina Castle,Upper Tower - Antechamber,1111951
-        ///Ashina Castle,Upper Tower - Ashina Dojo,111195 [rest of string was truncated]&quot;;.
+        ///Ashina Castle,Upper Tower - Ashina Dojo,1111957
+        ///Ashina C [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Warps {
             get {
@@ -681,7 +689,8 @@ namespace SekiroTool {
         ///70100,Spinning Shuriken
         ///70200,Gouging Top
         ///70300,Phantom Kunai
-        ///70400,Sen T [rest of string was truncated]&quot;;.
+        ///70400,Sen Throw
+        ///70500,Lazulite Shu [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Weapons {
             get {
