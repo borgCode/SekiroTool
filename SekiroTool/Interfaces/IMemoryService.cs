@@ -25,7 +25,7 @@ public interface IMemoryService
     void WriteFloat(nint addr, float val);
     void WriteDouble(nint addr, double val);
     void WriteString(nint addr, string value, int maxLength = 32);
-    void WriteBytes(nint addr, byte[] val);
+    void WriteBytes(IntPtr addr, byte[] val);
 
     void SetBitValue(nint addr, int flagMask, bool setValue);
     bool IsBitSet(nint addr, int flagMask);

@@ -33,6 +33,8 @@ public class PlayerViewModel : BaseViewModel
         SavePositionCommand = new DelegateCommand(SavePosition);
         RestorePositionCommand = new DelegateCommand(RestorePosition);
 
+        SetMaxHpCommand = new DelegateCommand(SetMaxHp);
+
         _playerTick = new DispatcherTimer
         {
             Interval = TimeSpan.FromMilliseconds(64)
@@ -41,13 +43,19 @@ public class PlayerViewModel : BaseViewModel
         
 
     }
+
     
+
     #region Commands
     
     public ICommand SavePositionCommand { get; set; }
     public ICommand RestorePositionCommand { get; set; }
+    
+    public ICommand SetMaxHpCommand { get; set; }
 
     // Check TargetViewModel for examples of commands when you need to implement that
+    
+    
 
     #endregion
 
@@ -232,8 +240,24 @@ public class PlayerViewModel : BaseViewModel
             {
                 _playerService.ToggleInfiniteConfetti(_isInfiniteConfettiEnabled);
             }
+           
         }
     }
+
+    private bool _isConfettiFlagEnabled;
+
+    public bool IsConfettiFlagEnabled
+    {
+        get => _isConfettiFlagEnabled;
+        set
+        {
+            if (SetProperty(ref _isConfettiFlagEnabled, value))
+            {
+                _playerService.ToggleInfiniteConfetti(_isConfettiFlagEnabled);
+            }
+        }
+    }
+    
     
     private int _newGame;
     public int NewGame
@@ -247,7 +271,23 @@ public class PlayerViewModel : BaseViewModel
             }
         }
     }
+
+    private int _currentHealth;
+
+    public int CurrentHealth
+    {
+        get => _currentHealth;
+        set => SetProperty(ref _currentHealth, value);
+        
+    }
     
+    private int _maxHealth;
+
+    public int MaxHealth
+    {
+        get => _maxHealth;
+        set => SetProperty(ref _maxHealth, value);
+    }
     #endregion
 
     #region Public Methods
@@ -294,8 +334,10 @@ public class PlayerViewModel : BaseViewModel
         if (_isInfiniteConfettiEnabled) _playerService.ToggleInfiniteConfetti(true);
         _playerTick.Start();
         
+        if (_isConfettiFlagEnabled) _playerService.ToggleConfettiFlag(true);
+
         
-        
+
     }
     
     
@@ -313,6 +355,10 @@ public class PlayerViewModel : BaseViewModel
         PosY = coords.y;
         PosZ = coords.z;
         NewGame = _playerService.GetNewGame();
+        
+        CurrentHealth = _playerService.GetCurrentHp(); // binding for UI
+        MaxHealth = _playerService.GetMaxHp();
+        
 
         // We'll have logic such as reading hp every tick etc, see how it works in targetviewmodel
     }
@@ -335,6 +381,11 @@ public class PlayerViewModel : BaseViewModel
         //TODO include state
     }
 
+    private void SetMaxHp()
+    {
+        _playerService.SetHp(MaxHealth);
+    }
+    
     #endregion
     
 }

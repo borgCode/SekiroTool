@@ -41,7 +41,7 @@ public class TargetService(IMemoryService memoryService, HookManager hookManager
 
     public int GetCurrentHp() =>
         memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Hp);
-
+    
     public int GetMaxHp() =>
         memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.MaxHp);
 

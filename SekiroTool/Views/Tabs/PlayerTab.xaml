@@ -32,45 +32,21 @@
                 <TextBlock Text="Health:" Grid.Column="0" VerticalAlignment="Center" />
                 <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="5,0,0,0">
                     <xctk:IntegerUpDown x:Name="HealthUpDown"
-                                        Value="{Binding CurrentHp}"
+                                        Value="{Binding CurrentHealth}"
                                         TextAlignment="Center"
                                         Width="100"
                                         IsEnabled="{Binding AreOptionsEnabled}"
                                         BorderBrush="#3F3F46" />
-                    <TextBlock Text="{Binding CurrentMaxHp, StringFormat=Max: {0}}"
+                    <TextBlock Text="{Binding MaxHealth, StringFormat=Max: {0}}"
                                VerticalAlignment="Center"
                                Margin="10,0,0,0" />
-                    <Button
-                        Content="RTSR"
-                        IsEnabled="{Binding AreOptionsEnabled}"
-                        Margin="10,0,0,0"
-                        Width="60" />
+                   
                     <Button
                         Content="Max Hp"
-                        IsEnabled="{Binding AreOptionsEnabled}"
+                        Command="{Binding SetMaxHpCommand}"
                         Margin="10,0,0,0"
                         Width="60" />
-
-                    <CheckBox Content="Health Overlay"
-                              IsChecked="{Binding IsHealthWindowOpen}"
-                              Margin="10,0, 0,2" />
-
-                    <Border
-                        Background="#3498db"
-                        CornerRadius="10"
-                        Width="12"
-                        Height="12"
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        ToolTip="Will only stay on top of game in windowed mode"
-                        ToolTipService.InitialShowDelay='100'>
-                        <TextBlock Text="i"
-                                   Foreground="White"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   FontWeight="Bold"
-                                   FontSize="10" />
-                    </Border>
+                    
                 </StackPanel>
             </Grid>
 
@@ -215,6 +191,13 @@
                     <CheckBox Content="Infinite Confetti"
                               IsChecked="{Binding IsInfiniteConfettiEnabled}"          
                               Margin="0,2"/>
+                    <CheckBox Content="Confetti Flag"
+                              IsChecked="{Binding IsConfettiFlagEnabled}"
+                              Margin="20,2,0,2"
+                              Visibility="{Binding IsInfiniteConfettiEnabled, 
+                       Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    
+                    
                     <CheckBox Content="Silent"
                               IsChecked="{Binding IsSilentEnabled}"
                               Margin="0,2" />

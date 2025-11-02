@@ -229,7 +229,7 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
                 (infiniteConfettiCaveLoc.ToInt64() + 0x47, originalRetJmp, 5, 0x47 + 1),  
             });
             memoryService.WriteBytes(infiniteConfettiCaveLoc, bytes);
-            memoryService.WriteUInt8(confettiFlag, 1); //write 1s as bytes
+            memoryService.WriteUInt8(confettiFlag, 1);
             memoryService.WriteUInt8(gachiinFlag, 1);
             hookManager.InstallHook(infiniteConfettiCaveLoc.ToInt64(), hookLoc,
                 [0xf3, 0x0f, 0x5c, 0xcf, 0x0f, 0x2f, 0xc1]);
@@ -238,6 +238,11 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         {
             hookManager.UninstallHook(infiniteConfettiCaveLoc.ToInt64());
         }
+    }
+
+    public void ToggleConfettiFlag(bool isEnabled)
+    {
+        throw new NotImplementedException();
     }
 
     #endregion

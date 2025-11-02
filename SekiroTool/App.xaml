@@ -1,6 +1,7 @@
 ﻿<Application x:Class="SekiroTool.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
              StartupUri="MainWindow.xaml">
 
     <Application.Resources>
@@ -626,5 +627,6 @@
             <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
             <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
         </Style>
+        <xcad:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </Application.Resources>
 </Application>
