@@ -188,11 +188,16 @@
                               Margin="0,2" />
                     <CheckBox Content="Infinite Poise"
                               IsChecked="{Binding IsInfinitePoiseEnabled}"/>
-                    <CheckBox Content="Infinite Confetti"
+                    <CheckBox Content="Infinite Buffs"
                               IsChecked="{Binding IsInfiniteConfettiEnabled}"          
                               Margin="0,2"/>
                     <CheckBox Content="Confetti Flag"
                               IsChecked="{Binding IsConfettiFlagEnabled}"
+                              Margin="20,2,0,2"
+                              Visibility="{Binding IsInfiniteConfettiEnabled, 
+                       Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <CheckBox Content="Gachiin Flag"
+                              IsChecked="{Binding IsGachiinFlagEnabled}"
                               Margin="20,2,0,2"
                               Visibility="{Binding IsInfiniteConfettiEnabled, 
                        Converter={StaticResource BoolToVisibilityConverter}}"/>

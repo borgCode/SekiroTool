@@ -236,11 +236,18 @@ public class PlayerViewModel : BaseViewModel
         get => _isInfiniteConfettiEnabled;
         set
         {
-            if (SetProperty(ref _isInfiniteConfettiEnabled, value))
-            {
-                _playerService.ToggleInfiniteConfetti(_isInfiniteConfettiEnabled);
-            }
-           
+         if (!SetProperty(ref _isInfiniteConfettiEnabled, value)) return;
+             IsConfettiFlagEnabled = _isConfettiFlagEnabled;
+             IsGachiinFlagEnabled = _isGachiinFlagEnabled;
+
+             if (!_isInfiniteConfettiEnabled) 
+             {
+                 IsConfettiFlagEnabled = false;
+                 IsGachiinFlagEnabled = false; 
+             }
+                 
+
+
         }
     }
 
@@ -253,11 +260,24 @@ public class PlayerViewModel : BaseViewModel
         {
             if (SetProperty(ref _isConfettiFlagEnabled, value))
             {
-                _playerService.ToggleInfiniteConfetti(_isConfettiFlagEnabled);
+                _playerService.ToggleConfettiFlag(_isConfettiFlagEnabled);
             }
         }
     }
-    
+
+    private bool _isGachiinFlagEnabled;
+
+    public bool IsGachiinFlagEnabled
+    {
+        get => _isGachiinFlagEnabled;
+        set
+        {
+            if (SetProperty(ref _isGachiinFlagEnabled, value))
+            {
+                _playerService.ToggleGachiinFlag(_isGachiinFlagEnabled);
+            }
+        }
+    }
     
     private int _newGame;
     public int NewGame

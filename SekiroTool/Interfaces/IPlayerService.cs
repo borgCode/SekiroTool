@@ -37,6 +37,7 @@ public interface IPlayerService
     void TogglePlayerInfinitePoise(bool isEnabled);
     void ToggleInfiniteConfetti(bool isEnabled);
     void ToggleConfettiFlag(bool isEnabled);
+    void ToggleGachiinFlag(bool isEnabled);
 
 
 

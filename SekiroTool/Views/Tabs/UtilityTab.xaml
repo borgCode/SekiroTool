@@ -367,7 +367,7 @@
 
                             <CheckBox Content="Access full shop lineup"
                                       IsChecked="{Binding IsFullLineUpEnabled}"
-                                      Margin="3,10,3,3" />
+                                      Margin="3,2,3,3" />
                         </StackPanel>
                     </TabItem>
                 </TabControl>
