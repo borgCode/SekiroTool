@@ -18,18 +18,19 @@ public class PlayerViewModel : BaseViewModel
     private readonly DispatcherTimer _playerTick;
 
     private bool _pauseUpdates;
-    
-    public PlayerViewModel(IPlayerService playerService, HotkeyManager hotkeyManager, IGameStateService gameStateService)
+
+    public PlayerViewModel(IPlayerService playerService, HotkeyManager hotkeyManager,
+        IGameStateService gameStateService)
     {
         _playerService = playerService;
         _hotkeyManager = hotkeyManager;
         _gameStateService = gameStateService;
 
         RegisterHotkeys();
-        
+
         gameStateService.Subscribe(GameState.Loaded, OnGameLoaded);
         gameStateService.Subscribe(GameState.NotLoaded, OnGameNotLoaded);
-        
+
         SavePositionCommand = new DelegateCommand(SavePosition);
         RestorePositionCommand = new DelegateCommand(RestorePosition);
 
@@ -40,22 +41,17 @@ public class PlayerViewModel : BaseViewModel
             Interval = TimeSpan.FromMilliseconds(64)
         };
         _playerTick.Tick += PlayerTick;
-        
-
     }
 
-    
 
     #region Commands
-    
+
     public ICommand SavePositionCommand { get; set; }
     public ICommand RestorePositionCommand { get; set; }
-    
+
     public ICommand SetMaxHpCommand { get; set; }
 
     // Check TargetViewModel for examples of commands when you need to implement that
-    
-    
 
     #endregion
 
@@ -63,33 +59,39 @@ public class PlayerViewModel : BaseViewModel
     #region Properties
 
     private bool _areOptionsEnabled;
+
     public bool AreOptionsEnabled
     {
         get => _areOptionsEnabled;
         set => SetProperty(ref _areOptionsEnabled, value);
     }
+
     private float _posX;
+
     public float PosX
     {
         get => _posX;
         set => SetProperty(ref _posX, value);
     }
-    
+
     private float _posY;
+
     public float PosY
     {
         get => _posY;
         set => SetProperty(ref _posY, value);
     }
-    
+
     private float _posZ;
+
     public float PosZ
     {
         get => _posZ;
         set => SetProperty(ref _posZ, value);
     }
-    
+
     private bool _isPos1Saved;
+
     public bool IsPos1Saved
     {
         get => _isPos1Saved;
@@ -97,6 +99,7 @@ public class PlayerViewModel : BaseViewModel
     }
 
     private bool _isPos2Saved;
+
     public bool IsPos2Saved
     {
         get => _isPos2Saved;
@@ -104,6 +107,7 @@ public class PlayerViewModel : BaseViewModel
     }
 
     private bool _isNoDeathEnabled;
+
     public bool IsNoDeathEnabled
     {
         get => _isNoDeathEnabled;
@@ -115,9 +119,9 @@ public class PlayerViewModel : BaseViewModel
             }
         }
     }
-    
+
     // TODO PlayerNoDamage
-    
+
     private bool _isOneShotEnabled;
 
     public bool IsOneShotEnabled
@@ -128,10 +132,10 @@ public class PlayerViewModel : BaseViewModel
             if (SetProperty(ref _isOneShotEnabled, value))
             {
                 _playerService.TogglePlayerOneShotHealth(_isOneShotEnabled);
-            }    
+            }
         }
     }
-    
+
     private bool _isOneShotPostureEnabled;
 
     public bool IsOneShotPostureEnabled
@@ -145,7 +149,7 @@ public class PlayerViewModel : BaseViewModel
             }
         }
     }
-    
+
     private bool _isNoGoodsConsumeEnabled;
 
     public bool IsNoGoodsConsumeEnabled
@@ -159,7 +163,7 @@ public class PlayerViewModel : BaseViewModel
             }
         }
     }
-    
+
     private bool _isNoEmblemConsumeEnabled;
 
     public bool IsNoEmblemConsumeEnabled
@@ -173,7 +177,7 @@ public class PlayerViewModel : BaseViewModel
             }
         }
     }
-    
+
     private bool _isNoRevivalConsumeEnabled;
 
     public bool IsNoRevivalConsumeEnabled
@@ -183,11 +187,11 @@ public class PlayerViewModel : BaseViewModel
         {
             if (SetProperty(ref _isNoRevivalConsumeEnabled, value))
             {
-                _playerService.TogglePlayerNoRevivalConsume(_isNoRevivalConsumeEnabled);    
+                _playerService.TogglePlayerNoRevivalConsume(_isNoRevivalConsumeEnabled);
             }
         }
     }
-    
+
     private bool _isPlayerHideEnabled;
 
     public bool IsPlayerHideEnabled
@@ -201,7 +205,7 @@ public class PlayerViewModel : BaseViewModel
             }
         }
     }
-    
+
     private bool _isPlayerSilentEnabled;
 
     public bool IsPlayerSilentEnabled
@@ -217,6 +221,7 @@ public class PlayerViewModel : BaseViewModel
     }
 
     private bool _isInfinitePoiseEnabled;
+
     public bool IsInfinitePoiseEnabled
     {
         get => _isInfinitePoiseEnabled;
@@ -228,7 +233,7 @@ public class PlayerViewModel : BaseViewModel
             }
         }
     }
-    
+
     private bool _isInfiniteConfettiEnabled;
 
     public bool IsInfiniteConfettiEnabled
@@ -236,18 +241,16 @@ public class PlayerViewModel : BaseViewModel
         get => _isInfiniteConfettiEnabled;
         set
         {
-         if (!SetProperty(ref _isInfiniteConfettiEnabled, value)) return;
-             IsConfettiFlagEnabled = _isConfettiFlagEnabled;
-             IsGachiinFlagEnabled = _isGachiinFlagEnabled;
+            if (SetProperty(ref _isInfiniteConfettiEnabled, value))
+            {
+                _playerService.ToggleInfiniteConfetti(_isInfiniteConfettiEnabled);
 
-             if (!_isInfiniteConfettiEnabled) 
-             {
-                 IsConfettiFlagEnabled = false;
-                 IsGachiinFlagEnabled = false; 
-             }
-                 
-
-
+                if (!_isInfiniteConfettiEnabled)
+                {
+                    IsConfettiFlagEnabled = false;
+                    IsGachiinFlagEnabled = false;
+                }
+            }
         }
     }
 
@@ -278,8 +281,9 @@ public class PlayerViewModel : BaseViewModel
             }
         }
     }
-    
+
     private int _newGame;
+
     public int NewGame
     {
         get => _newGame;
@@ -298,9 +302,8 @@ public class PlayerViewModel : BaseViewModel
     {
         get => _currentHealth;
         set => SetProperty(ref _currentHealth, value);
-        
     }
-    
+
     private int _maxHealth;
 
     public int MaxHealth
@@ -308,6 +311,7 @@ public class PlayerViewModel : BaseViewModel
         get => _maxHealth;
         set => SetProperty(ref _maxHealth, value);
     }
+
     #endregion
 
     #region Public Methods
@@ -327,46 +331,43 @@ public class PlayerViewModel : BaseViewModel
         _hotkeyManager.RegisterAction(HotkeyActions.RestorePos1.ToString(), () => RestorePosition(0));
         _hotkeyManager.RegisterAction(HotkeyActions.RestorePos2.ToString(), () => RestorePosition(1));
     }
-    
+
     private void OnGameLoaded()
     {
         AreOptionsEnabled = true;
-        if (IsNoDeathEnabled) _playerService.TogglePlayerNoDeath(true); 
+        if (IsNoDeathEnabled) _playerService.TogglePlayerNoDeath(true);
         //TODO No Damage
-        
+
         if (IsOneShotEnabled) _playerService.TogglePlayerOneShotHealth(true);
-        
+
         if (IsOneShotPostureEnabled) _playerService.TogglePlayerOneShotPosture(true);
 
         if (IsNoGoodsConsumeEnabled) _playerService.TogglePlayerNoGoodsConsume(true);
 
         if (IsNoEmblemConsumeEnabled) _playerService.TogglePlayerNoGoodsConsume(true);
-        
+
         if (_isNoRevivalConsumeEnabled) _playerService.TogglePlayerNoRevivalConsume(true);
-        
+
         if (_isPlayerHideEnabled) _playerService.TogglePlayerHide(true);
-        
+
         if (_isPlayerSilentEnabled) _playerService.TogglePlayerSilent(true);
-        
+
         if (_isInfinitePoiseEnabled) _playerService.TogglePlayerInfinitePoise(true);
         _playerTick.Start();
-        
+
         if (_isInfiniteConfettiEnabled) _playerService.ToggleInfiniteConfetti(true);
         _playerTick.Start();
-        
+
         if (_isConfettiFlagEnabled) _playerService.ToggleConfettiFlag(true);
-
-        
-
     }
-    
-    
+
+
     private void OnGameNotLoaded()
     {
         AreOptionsEnabled = false;
         _playerTick.Stop();
     }
-    
+
     private void PlayerTick(object? sender, EventArgs e)
     {
         if (_pauseUpdates) return;
@@ -375,22 +376,22 @@ public class PlayerViewModel : BaseViewModel
         PosY = coords.y;
         PosZ = coords.z;
         NewGame = _playerService.GetNewGame();
-        
+
         CurrentHealth = _playerService.GetCurrentHp(); // binding for UI
         MaxHealth = _playerService.GetMaxHp();
-        
+
 
         // We'll have logic such as reading hp every tick etc, see how it works in targetviewmodel
     }
-    
-    
+
+
     private void SavePosition(object parameter)
     {
         int index = Convert.ToInt32(parameter);
         if (index == 0) IsPos1Saved = true;
         else IsPos2Saved = true;
         //TODO include state
-        
+
         _playerService.SavePos(index);
     }
 
@@ -405,7 +406,6 @@ public class PlayerViewModel : BaseViewModel
     {
         _playerService.SetHp(MaxHealth);
     }
-    
+
     #endregion
-    
 }
