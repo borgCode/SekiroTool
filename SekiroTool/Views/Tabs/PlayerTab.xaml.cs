@@ -24,5 +24,13 @@ public partial class PlayerTab : UserControl
             _playerViewModel.PauseUpdates,
             _playerViewModel.ResumeUpdates
         );
-    }
+        _ = new UpDownHelper<int>(
+            HealthUpDown,
+            _playerViewModel.SetHp,
+            _playerViewModel.PauseUpdates,
+            _playerViewModel.ResumeUpdates
+        );
+                
+            
+    }   
 }

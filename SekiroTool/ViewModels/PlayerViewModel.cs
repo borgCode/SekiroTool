@@ -319,6 +319,7 @@ public class PlayerViewModel : BaseViewModel
     public void PauseUpdates() => _pauseUpdates = true;
     public void ResumeUpdates() => _pauseUpdates = false;
     public void SetNewGame(int newGameCycle) => _playerService.SetNewGame(newGameCycle);
+    public void SetHp(int health) => _playerService.SetHp(health);
 
     #endregion
 
