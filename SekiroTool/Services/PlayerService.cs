@@ -15,12 +15,12 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
 
         byte[] positionBytes = memoryService.ReadBytes(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.X, 12);
         float angle = memoryService.ReadFloat(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.Angle);
-        
+
         byte[] angleBytes = BitConverter.GetBytes(angle);
         byte[] data = new byte[16];
         Buffer.BlockCopy(positionBytes, 0, data, 0, 12);
         Buffer.BlockCopy(angleBytes, 0, data, 12, 4);
-        
+
         if (index == 0) memoryService.WriteBytes(CodeCaveOffsets.Base + CodeCaveOffsets.SavePos1, data);
         else memoryService.WriteBytes(CodeCaveOffsets.Base + CodeCaveOffsets.SavePos2, data);
     }
@@ -32,12 +32,12 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         else positionBytes = memoryService.ReadBytes(CodeCaveOffsets.Base + CodeCaveOffsets.SavePos2, 16);
 
         float angle = BitConverter.ToSingle(positionBytes, 12);
-        
+
         var chrPhysicsPtr = GetChrPhysicsPtr();
-        
+
         byte[] xyzBytes = new byte[12];
         Buffer.BlockCopy(positionBytes, 0, xyzBytes, 0, 12);
-        
+
         memoryService.WriteBytes(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.X, xyzBytes);
         memoryService.WriteFloat(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.Angle, angle);
     }
@@ -48,7 +48,7 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         float x = BitConverter.ToSingle(coordBytes, 0);
         float y = BitConverter.ToSingle(coordBytes, 4);
         float z = BitConverter.ToSingle(coordBytes, 8);
-        return (x, y, z); 
+        return (x, y, z);
     }
 
 
@@ -116,7 +116,7 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
 
     public int GetNewGame() =>
         memoryService.ReadInt32((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.NewGame);
-    
+
     public void AddExperience(int experience)
     {
         var bytes = AsmLoader.GetAsmBytes("AddExperience");
@@ -135,6 +135,27 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
     public void TogglePlayerNoDeath(bool isEnabled)
     {
         memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoDeath, isEnabled ? 1 : 0);
+    }
+
+    public void TogglePlayerNoDeathWithoutKillbox(bool isNoDeathEnabledWithoutKillbox)
+    {
+        var code = CodeCaveOffsets.Base + CodeCaveOffsets.NoDeathWithoutKillbox;
+        if (isNoDeathEnabledWithoutKillbox)
+        {
+            var bytes = AsmLoader.GetAsmBytes("NoDeath");
+            AsmHelper.WriteRelativeOffsets(bytes, [
+                (code.ToInt64() + 0x1, WorldChrMan.Base.ToInt64(), 7, 0x1 + 3),
+                (code.ToInt64() + 0x37, Hooks.HpWrite + 0x6, 5, 0x37 + 1)
+            ]);
+            memoryService.WriteBytes(code, bytes);
+
+            hookManager.InstallHook(code.ToInt64(), Hooks.HpWrite,
+                [0x89, 0x83, 0x30, 0x01, 0x00, 0x00]);
+        }
+        else
+        {
+            hookManager.UninstallHook(code.ToInt64());
+        }
     }
 
     public void TogglePlayerNoDamage(bool isEnabled)
@@ -190,18 +211,17 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
             var skippedStaggerLoc = hookLoc + 0x429;
 
             var bytes = AsmLoader.GetAsmBytes("InfinitePoise");
-            AsmHelper.WriteRelativeOffsets(bytes, new []
+            AsmHelper.WriteRelativeOffsets(bytes, new[]
             {
                 (code.ToInt64() + 0x1, worldChrMan.ToInt64(), 7, 0x1 + 3),
                 (code.ToInt64() + 0x14, skippedStaggerLoc, 6, 0x14 + 2),
                 (code.ToInt64() + 0x22, hookLoc + 8, 5, 0x22 + 1),
             });
-            
-            
+
+
             memoryService.WriteBytes(code, bytes);
             hookManager.InstallHook(code.ToInt64(), hookLoc,
                 [0x4C, 0x89, 0xBC, 0x24, 0xA0, 0x00, 0x00, 0x00]);
-          
         }
         else
         {
