@@ -449,6 +449,25 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 52                      push   rdx
+        ///48 8b 15 00 00 00 00    mov    rdx,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;
+        ///48 8b 92 88 00 00 00    mov    rdx,QWORD PTR [rdx+0x88]
+        ///48 85 d2                test   rdx,rdx
+        ///74 1c                   je     30 &lt;normal&gt;
+        ///48 8b 92 f8 1f 00 00    mov    rdx,QWORD PTR [rdx+0x1ff8]
+        ///48 85 d2                test   rdx,rdx
+        ///74 10                   je     30 &lt;normal&gt;
+        ///48 3b 5a 18             cmp    rbx,QWORD PTR [rdx+0x18]
+        ///75 0a                   jne    30 &lt;normal&gt;
+        ///83 f8 00     [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string NoDeath {
+            get {
+                return ResourceManager.GetString("NoDeath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 83 fa 01                cmp    edx,0x1
         ///75 01                   jne    6 &lt;normal&gt;
         ///c3                      ret

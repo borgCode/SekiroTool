@@ -121,7 +121,20 @@ public class PlayerViewModel : BaseViewModel
             }
         }
     }
-
+    
+    private bool _isNoDeathEnabledWithoutKillbox;
+    public bool IsNoDeathEnabledWithoutKillbox
+    {
+        get => _isNoDeathEnabledWithoutKillbox;
+        set
+        {
+            if (SetProperty(ref _isNoDeathEnabledWithoutKillbox, value))
+            {
+                _playerService.TogglePlayerNoDeathWithoutKillbox(_isNoDeathEnabledWithoutKillbox);
+            }
+        }
+    }
+    
     // TODO PlayerNoDamage
 
     private bool _isOneShotEnabled;
@@ -341,12 +354,15 @@ public class PlayerViewModel : BaseViewModel
         _hotkeyManager.RegisterAction(HotkeyActions.SavePos2.ToString(), () => SavePosition(1));
         _hotkeyManager.RegisterAction(HotkeyActions.RestorePos1.ToString(), () => RestorePosition(0));
         _hotkeyManager.RegisterAction(HotkeyActions.RestorePos2.ToString(), () => RestorePosition(1));
+        
+        
     }
 
     private void OnGameLoaded()
     {
         AreOptionsEnabled = true;
-        if (IsNoDeathEnabled) _playerService.TogglePlayerNoDeath(true);
+        if (IsNoDeathEnabled) _playerService.TogglePlayerNoDeath(true); 
+        if (IsNoDeathEnabledWithoutKillbox) _playerService.TogglePlayerNoDeathWithoutKillbox(true); 
         //TODO No Damage
 
         if (IsOneShotEnabled) _playerService.TogglePlayerOneShotHealth(true);
@@ -388,9 +404,9 @@ public class PlayerViewModel : BaseViewModel
         PosZ = coords.z;
         NewGame = _playerService.GetNewGame();
 
-        CurrentHealth = _playerService.GetCurrentHp(); // binding for UI
+        CurrentHealth = _playerService.GetCurrentHp();
         MaxHealth = _playerService.GetMaxHp();
-        RequestRespawn = _playerService.RequestRespawn();
+       
 
 
         // We'll have logic such as reading hp every tick etc, see how it works in targetviewmodel

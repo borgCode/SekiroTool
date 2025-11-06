@@ -54,4 +54,6 @@ public static class CodeCaveOffsets
     
     public const int InfiniteConfetti = 0x970;
     
+
+    public const int NoDeathWithoutKillbox = 0x1200;
 }

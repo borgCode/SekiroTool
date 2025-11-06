@@ -137,6 +137,27 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoDeath, isEnabled ? 1 : 0);
     }
 
+    public void TogglePlayerNoDeathWithoutKillbox(bool isNoDeathEnabledWithoutKillbox)
+    {
+        var code = CodeCaveOffsets.Base + CodeCaveOffsets.NoDeathWithoutKillbox;
+        if (isNoDeathEnabledWithoutKillbox)
+        {
+            var bytes = AsmLoader.GetAsmBytes("NoDeath");
+            AsmHelper.WriteRelativeOffsets(bytes, [
+                (code.ToInt64() + 0x1, WorldChrMan.Base.ToInt64(), 7, 0x1 + 3),
+                (code.ToInt64() + 0x37, Hooks.HpWrite + 0x6, 5, 0x37 + 1)
+            ]);
+            memoryService.WriteBytes(code, bytes);
+
+            hookManager.InstallHook(code.ToInt64(), Hooks.HpWrite,
+                [0x89, 0x83, 0x30, 0x01, 0x00, 0x00]);
+        }
+        else
+        {
+            hookManager.UninstallHook(code.ToInt64());
+        }
+    }
+
     public void TogglePlayerNoDamage(bool isEnabled)
     {
     }

@@ -205,6 +205,11 @@ public static class Offsets
     {
         public static IntPtr Base;
     }
+    
+    public static class IdolRequests
+    {
+        public static IntPtr Base;
+    }
 
 
     public static class FieldArea
@@ -270,6 +275,7 @@ public static class Offsets
         public static long AiHasSpEffect;
         public static long GetMouseDelta;
         public static long StartMusic;
+        public static long HpWrite;
         public static long InfiniteConfetti;
     }
 
