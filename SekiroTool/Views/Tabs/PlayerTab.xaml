@@ -220,6 +220,9 @@
                     <CheckBox Content="No Soul Loss on Death"
                               IsChecked="{Binding IsNoSoulLossEnabled}"
                               Margin="0,2" />
+                    <CheckBox Content="Respawn"
+                              IsChecked="{Binding RequestRespawn}"
+                              Margin="0,2" />
                 </StackPanel>
             </Grid>
 

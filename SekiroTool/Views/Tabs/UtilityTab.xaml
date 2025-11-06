@@ -137,7 +137,7 @@
                                        Value="{Binding GameSpeed}"
                                        TextAlignment="Center"
                                        Width="80"
-                                       Minimum="0"
+                                       Minimum="0.25"
                                        Maximum="10"
                                        Increment="0.50"
                                        FormatString="F2"

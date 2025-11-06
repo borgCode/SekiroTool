@@ -38,4 +38,5 @@ public interface IPlayerService
     void ToggleInfiniteConfetti(bool isEnabled);
     void ToggleConfettiFlag(bool isEnabled);
     void ToggleGachiinFlag(bool isEnabled);
+    int RequestRespawn();
 }

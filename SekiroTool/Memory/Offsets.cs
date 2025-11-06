@@ -7,6 +7,9 @@ public static class Offsets
         public static IntPtr Base;
         public const int PlayerIns = 0x88;
         public const int PlayerGameData = 0x2000;
+        public const int WorldBlockInfo = 0x20;
+        public const int WorldBlockId = 0x8;
+
     }
 
     public static class ChrIns
@@ -230,6 +233,11 @@ public static class Offsets
         public static IntPtr Base;
         public const int PlayerGameData = 0x8;
         public const int NewGame = 0x70;
+    }
+
+    public static class RequestRespawnGlobal
+    {
+        public static IntPtr Base;
     }
     
 

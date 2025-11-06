@@ -1286,4 +1286,14 @@ f3 0f 5c cf             subss  xmm1,xmm7
 0f 2f c1                comiss xmm0,xmm1
 e9 00 00 00 00          jmp    4c &lt;OriginalInstructions+0xc&gt;</value>
     </data>
+    <data name="RequestRespawnHashMap" xml:space="preserve">
+        <value>184549376,1101950
+184614912,1121951
+218103808,1111955
+335544320,2001950
+285212672,1701956
+251658240,1501951
+419430400,2501950
+167772160,1001950</value>
+    </data>
 </root>

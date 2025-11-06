@@ -219,6 +219,7 @@ public class UtilityViewModel : BaseViewModel
 
     public void SetNoClipSpeed(double value) => NoClipSpeed = (float)value;
     public void SetGameSpeed(double value) => GameSpeed = (float)value;
+    
 
     #endregion
 

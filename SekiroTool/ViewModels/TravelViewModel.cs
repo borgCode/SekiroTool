@@ -33,6 +33,7 @@ public class TravelViewModel : BaseViewModel
         UnlockIdolsCommand = new DelegateCommand(UnlockIdols);
         
         LoadWarps();
+        
 
         idolEventIds = DataLoader.GetIdolEventIds();
     }

@@ -131,7 +131,7 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         ]);
         memoryService.AllocateAndExecute(bytes);
     }
-
+    
     public void TogglePlayerNoDeath(bool isEnabled)
     {
         memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoDeath, isEnabled ? 1 : 0);
@@ -266,6 +266,23 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         }
     }
 
+    
+    
+
+    public int RequestRespawn()
+    {
+        var worldBlockIdPtr = memoryService.FollowPointers(WorldChrMan.Base, [
+            WorldChrMan.WorldBlockInfo, 
+            WorldChrMan.WorldBlockId], false);
+        var requestRespawnAddr = RequestRespawnGlobal.Base;
+        var addr = (IntPtr)0x143afeba0;
+        var worldblockid = memoryService.ReadInt32(worldBlockIdPtr);
+        memoryService.WriteInt32(addr, 1101950);
+
+        return 0;
+    }
+
+    
     #endregion
 
 

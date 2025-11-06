@@ -142,8 +142,6 @@ public static class Patterns
         3,
         7
 
-
-
     );
 
     public static readonly Pattern PauseRequest = new Pattern(
@@ -171,7 +169,13 @@ public static class Patterns
         3,
         7
     );
-
+    
+    public static readonly Pattern RequestRespawn = new Pattern(
+        new byte[] { 0x8B, 0x05, 0x86, 0xFB },
+        "xxxx",
+        0,
+        AddressingMode.Absolute
+    );
     #endregion
 
 
@@ -241,6 +245,7 @@ public static class Patterns
         0,
         AddressingMode.Absolute
     );
+    
 
     #endregion
 
@@ -361,7 +366,11 @@ public static class Patterns
         -0xD,
         AddressingMode.Absolute
     );
+        
+    
 
+    
+    
     #endregion
 
 

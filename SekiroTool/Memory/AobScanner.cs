@@ -39,7 +39,7 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.PauseRequest.Base = FindAddressByPattern(Patterns.PauseRequest);
         Offsets.DlUserInputManager.Base = FindAddressByPattern(Patterns.DlUserInputManager);
         Offsets.TargetingView.Base = FindAddressByPattern(Patterns.TargetingView);
-
+        Offsets.RequestRespawnGlobal.Base = FindAddressByPattern(Patterns.RequestRespawn);
 
         TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
             addr => Offsets.Hooks.LockedTarget = addr.ToInt64(), saved);
@@ -88,7 +88,7 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Patches.OpenRegularShopPatch = addr, saved);
         TryPatternWithFallback("DefaultSoundVolWrite", Patterns.DefaultSoundVolWrite,
             addr => Offsets.Patches.DefaultSoundVolWrite = addr, saved);
-
+        
 
 
         using (var writer = new StreamWriter(savePath))
@@ -105,8 +105,7 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.Functions.AddExperience = FindAddressByPattern(Patterns.AddExperience).ToInt64();
         Offsets.Functions.ApplySpEffect = FindAddressByPattern(Patterns.ApplySpEffect).ToInt64();
         Offsets.Functions.ItemSpawn = FindAddressByPattern(Patterns.ItemSpawn).ToInt64();
-        Offsets.Functions.GetEnemyInsWithPackedWorldIdAndChrId =
-            FindAddressByPattern(Patterns.GetEnemyInsWithPackedWorldIdAndChrId).ToInt64();
+        Offsets.Functions.GetEnemyInsWithPackedWorldIdAndChrId = FindAddressByPattern(Patterns.GetEnemyInsWithPackedWorldIdAndChrId).ToInt64();
 
         FindMultipleCallsInFunction(Patterns.ProcessEsdCommand, new Dictionary<Action<long>, int>
         {

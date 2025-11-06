@@ -59,6 +59,34 @@ public class DataLoader
             return warpDict;
         }
 
+    public static Dictionary<uint, uint> RequestRespawnHash()
+    {
+        Dictionary<uint, uint> respawnHash = new Dictionary<uint, uint>();
+        string csvData = Resources.RequestRespawnHashMap;
+
+        using StringReader reader = new StringReader(csvData);
+        string line;
+        while ((line = reader.ReadLine()) != null)
+        {
+            string[] parts = line.Split(',');
+            uint mapId = uint.Parse(parts[0], NumberStyles.Integer, CultureInfo.InvariantCulture);
+            uint idolId = uint.Parse(parts[1], NumberStyles.Integer, CultureInfo.InvariantCulture);
+            
+            respawnHash.Add((mapId), idolId);
+    
+        }
+        
+        foreach (var kvp in respawnHash)
+        {
+            Console.WriteLine($"{kvp.Key}: {kvp.Value}");
+        }
+        return respawnHash;
+
+        
+
+    }
+        
+
     public static List<long> GetIdolEventIds()
     {
         List <long> idolEventIds = new List<long>();
@@ -75,4 +103,5 @@ public class DataLoader
         }
         return idolEventIds;
     }
+    
 }

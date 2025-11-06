@@ -41,6 +41,8 @@ public class PlayerViewModel : BaseViewModel
             Interval = TimeSpan.FromMilliseconds(64)
         };
         _playerTick.Tick += PlayerTick;
+
+        DataLoader.RequestRespawnHash();
     }
 
 
@@ -312,6 +314,14 @@ public class PlayerViewModel : BaseViewModel
         set => SetProperty(ref _maxHealth, value);
     }
 
+    private int _requestRespawn;
+
+    public int RequestRespawn
+    {
+        get => _requestRespawn;
+        set => SetProperty(ref _requestRespawn, value);
+    }
+    
     #endregion
 
     #region Public Methods
@@ -380,6 +390,7 @@ public class PlayerViewModel : BaseViewModel
 
         CurrentHealth = _playerService.GetCurrentHp(); // binding for UI
         MaxHealth = _playerService.GetMaxHp();
+        RequestRespawn = _playerService.RequestRespawn();
 
 
         // We'll have logic such as reading hp every tick etc, see how it works in targetviewmodel

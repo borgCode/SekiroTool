@@ -553,6 +553,22 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 184549376,1101950
+        ///184614912,1121951
+        ///218103808,1111955
+        ///335544320,2001950
+        ///285212672,1701956
+        ///251658240,1501951
+        ///419430400,2501950
+        ///167772160,1001950.
+        /// </summary>
+        internal static string RequestRespawnHashMap {
+            get {
+                return ResourceManager.GetString("RequestRespawnHashMap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 48 83 ec 28             sub    rsp,0x28
         ///48 b9 00 00 00 00 00    movabs rcx,0x0
         ///00 00 00
