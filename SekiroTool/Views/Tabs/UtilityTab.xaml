@@ -63,17 +63,7 @@
                               IsChecked="{Binding IsSoundViewEnabled}"
                               Grid.Column="0" Grid.Row="1"
                               Margin="0,2" />
-
-                    <CheckBox Content="Draw Events"
-                              IsChecked="{Binding IsDrawEventEnabled}"
-                              Grid.Column="0" Grid.Row="2"
-                              Margin="0,2" />
-
-                    <CheckBox Content="Enemy Targeting View"
-                              IsChecked="{Binding IsTargetingViewEnabled}"
-                              Grid.Column="0" Grid.Row="3"
-                              Margin="0,2" />
-
+                    
 
                     <CheckBox Content="Hide Map"
                               IsChecked="{Binding IsHideMapEnabled}"
@@ -232,11 +222,6 @@
                                     Padding="5,0"
                                     Margin="20,0,0,5"
                                     HorizontalAlignment="Left" />
-                            <CheckBox Content="Death Cam"
-                                      IsChecked="{Binding IsDeathCamEnabled}"
-                                      IsEnabled="{Binding AreButtonsEnabled}"
-                                      VerticalAlignment="Center"
-                                      Margin="0,5,0,0" />
                         </StackPanel>
                         <StackPanel Grid.Column="1" HorizontalAlignment="Right">
                             <!-- <CheckBox Content="Increase Camera Vertical limits" -->
