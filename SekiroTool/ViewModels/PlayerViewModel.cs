@@ -263,6 +263,8 @@ public class PlayerViewModel : BaseViewModel
         _hotkeyManager.RegisterAction(HotkeyActions.SavePos2.ToString(), () => SavePosition(1));
         _hotkeyManager.RegisterAction(HotkeyActions.RestorePos1.ToString(), () => RestorePosition(0));
         _hotkeyManager.RegisterAction(HotkeyActions.RestorePos2.ToString(), () => RestorePosition(1));
+        
+        
     }
     
     private void OnGameLoaded()
