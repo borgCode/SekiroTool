@@ -180,6 +180,9 @@
                     <CheckBox Content="No Death"
                               IsChecked="{Binding IsNoDeathEnabled}"
                               Margin="0,2" />
+                    <CheckBox Content="No Death (Except Killbox)"
+                              IsChecked="{Binding IsNoDeathEnabledWithoutKillbox}"
+                              Margin="0,2" />
                     <!-- <CheckBox Content="No Damage" -->
                     <!--           IsChecked="{Binding IsNoDamageEnabled}" -->
                     <!--           Margin="0,2" /> -->
@@ -195,29 +198,22 @@
                     <CheckBox Content="No Emblem Consume"
                               IsChecked="{Binding IsNoEmblemConsumeEnabled}"
                               Margin="0,2" />
+                
+                  
+                </StackPanel>
+
+                <StackPanel Grid.Column="1">
                     <CheckBox Content="Infinite Revival"
                               IsChecked="{Binding IsNoRevivalConsumeEnabled}"
                               Margin="0,2" />
                     <CheckBox Content="Player Hide"
                               IsChecked="{Binding IsPlayerHideEnabled}"
                               Margin="0,2" />
-                </StackPanel>
-
-                <StackPanel Grid.Column="1">
                     <CheckBox Content="Player Silent"
                               IsChecked="{Binding IsPlayerSilentEnabled}"
                               Margin="0,2" />
-                    <CheckBox Content="Deal No Damage"
-                              IsChecked="{Binding IsDealNoDamageEnabled}"
-                              Margin="0,2" />
                     <CheckBox Content="Infinite Poise"
                               IsChecked="{Binding IsInfinitePoiseEnabled}"
-                              Margin="0,2" />
-                    <CheckBox Content="Silent"
-                              IsChecked="{Binding IsSilentEnabled}"
-                              Margin="0,2" />
-                    <CheckBox Content="Hidden"
-                              IsChecked="{Binding IsHiddenEnabled}"
                               Margin="0,2" />
                 </StackPanel>
                 <StackPanel Grid.Column="2" Margin="10, 0, 0, 0">

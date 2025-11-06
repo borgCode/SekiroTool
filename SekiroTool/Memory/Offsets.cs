@@ -267,6 +267,7 @@ public static class Offsets
         public static long AiHasSpEffect;
         public static long GetMouseDelta;
         public static long StartMusic;
+        public static long HpWrite;
     }
 
     public static class Functions

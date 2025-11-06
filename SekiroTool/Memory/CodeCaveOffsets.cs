@@ -47,4 +47,6 @@ public static class CodeCaveOffsets
     public const int NoMenuMusic = 0x900;
 
     public const int PrayerBeadMenuHandle = 0x930;
+
+    public const int NoDeathWithoutKillbox = 0x1200;
 }

@@ -26,6 +26,7 @@ public interface IPlayerService
     void AddExperience(int experience);
 
     void TogglePlayerNoDeath(bool isEnabled);
+    void TogglePlayerNoDeathWithoutKillbox(bool isNoDeathEnabledWithoutKillbox);
     void TogglePlayerNoDamage(bool isEnabled);
     void TogglePlayerOneShotHealth(bool isEnabled);
     void TogglePlayerOneShotPosture(bool isEnabled);
@@ -35,9 +36,4 @@ public interface IPlayerService
     void TogglePlayerHide(bool isEnabled);
     void TogglePlayerSilent(bool isEnabled);
     void TogglePlayerInfinitePoise(bool isEnabled);
-    
-
-
-
-
 }

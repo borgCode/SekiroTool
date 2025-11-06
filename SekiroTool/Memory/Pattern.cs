@@ -463,5 +463,12 @@ public static class Patterns
         AddressingMode.Absolute
     );
 
+    public static readonly Pattern HpWrite = new Pattern(
+        new byte[] { 0x48, 0x0F, 0x4F, 0xC1, 0x8B, 0x00, 0x89, 0x83, 0x30 },
+        "xxxxxxxxx",
+        6,
+        AddressingMode.Absolute
+    );
+
     #endregion
 }

@@ -107,6 +107,19 @@ public class PlayerViewModel : BaseViewModel
         }
     }
     
+    private bool _isNoDeathEnabledWithoutKillbox;
+    public bool IsNoDeathEnabledWithoutKillbox
+    {
+        get => _isNoDeathEnabledWithoutKillbox;
+        set
+        {
+            if (SetProperty(ref _isNoDeathEnabledWithoutKillbox, value))
+            {
+                _playerService.TogglePlayerNoDeathWithoutKillbox(_isNoDeathEnabledWithoutKillbox);
+            }
+        }
+    }
+    
     // TODO PlayerNoDamage
     
     private bool _isOneShotEnabled;
@@ -256,6 +269,7 @@ public class PlayerViewModel : BaseViewModel
     {
         AreOptionsEnabled = true;
         if (IsNoDeathEnabled) _playerService.TogglePlayerNoDeath(true); 
+        if (IsNoDeathEnabledWithoutKillbox) _playerService.TogglePlayerNoDeathWithoutKillbox(true); 
         //TODO No Damage
         
         if (IsOneShotEnabled) _playerService.TogglePlayerOneShotHealth(true);
