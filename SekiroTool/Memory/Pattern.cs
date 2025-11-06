@@ -169,6 +169,13 @@ public static class Patterns
         7
     );
 
+    public static readonly Pattern IdolRequests = new Pattern(
+        new byte[] { 0xE8, 0x00, 0x00, 0x00, 0x00, 0x0F, 0x28, 0xCE, 0x48, 0x8B, 0x8B, 0xC8 },
+        "x????xxxxxxx",
+        0,
+        AddressingMode.Absolute
+    );
+
     #endregion
 
 

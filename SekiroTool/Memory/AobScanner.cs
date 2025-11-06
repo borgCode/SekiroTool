@@ -39,6 +39,12 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.PauseRequest.Base = FindAddressByPattern(Patterns.PauseRequest);
         Offsets.DlUserInputManager.Base = FindAddressByPattern(Patterns.DlUserInputManager);
         Offsets.TargetingView.Base = FindAddressByPattern(Patterns.TargetingView);
+        
+        Offsets.IdolRequests.Base = FindAddressByRelativeChain(
+            Patterns.IdolRequests,
+            0, 1, 5, 
+            0, 2, 6  
+        );
 
 
         TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
@@ -142,6 +148,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"PauseRequest.Base: 0x{Offsets.PauseRequest.Base.ToInt64():X}");
         Console.WriteLine($"DlUserInputManager.Base: 0x{Offsets.DlUserInputManager.Base.ToInt64():X}");
         Console.WriteLine($"TargetingView.Base: 0x{Offsets.TargetingView.Base.ToInt64():X}");
+        Console.WriteLine($"IdolRequests.Base: 0x{Offsets.IdolRequests.Base.ToInt64():X}");
 
         Console.WriteLine($"Hooks.LockedTarget: 0x{Offsets.Hooks.LockedTarget:X}");
         Console.WriteLine($"Hooks.FreezeTargetPosture: 0x{Offsets.Hooks.FreezeTargetPosture:X}");
@@ -299,5 +306,32 @@ public class AoBScanner(IMemoryService memoryService)
 
             mapping.Key(callTarget.ToInt64());
         }
+    }
+    
+    public IntPtr FindAddressByRelativeChain(Pattern pattern, params int[] chain)
+    {
+        var baseAddress = FindAddressByPattern(pattern);
+        if (baseAddress == IntPtr.Zero)
+            return IntPtr.Zero;
+    
+        return FollowRelativeChain(baseAddress, chain);
+    }
+
+    private IntPtr FollowRelativeChain(IntPtr baseAddress, params int[] chain)
+    {
+        IntPtr currentAddress = baseAddress;
+    
+        for (int i = 0; i < chain.Length; i += 3)
+        {
+            int offset = chain[i];
+            int relativeOffsetPos = chain[i + 1];
+            int instructionLength = chain[i + 2];
+        
+            IntPtr instructionAddress = IntPtr.Add(currentAddress, offset);
+            int relativeOffset = memoryService.ReadInt32(IntPtr.Add(instructionAddress, relativeOffsetPos));
+            currentAddress = IntPtr.Add(instructionAddress, relativeOffset + instructionLength);
+        }
+    
+        return currentAddress;
     }
 }

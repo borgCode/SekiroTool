@@ -202,6 +202,11 @@ public static class Offsets
     {
         public static IntPtr Base;
     }
+    
+    public static class IdolRequests
+    {
+        public static IntPtr Base;
+    }
 
 
     public static class FieldArea
