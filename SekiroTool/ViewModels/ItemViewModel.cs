@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
+using SekiroTool.Core;
 using SekiroTool.Enums;
 using SekiroTool.Interfaces;
 using SekiroTool.Models;
@@ -27,6 +28,8 @@ public class ItemViewModel : BaseViewModel
 
         gameStateService.Subscribe(GameState.Loaded, OnGameLoaded);
         gameStateService.Subscribe(GameState.NotLoaded, OnGameNotLoaded);
+
+        SpawnCommand = new DelegateCommand(SpawnItem);
     }
 
     private void LoadItems()
@@ -37,8 +40,8 @@ public class ItemViewModel : BaseViewModel
 
         _itemsByCategory.Add("Goods",
             new ObservableCollection<Item>(DataLoader.GetItemList("Goods", (short)ItemType.Goods)));
-        // _itemsByCategory.Add("Weapons",
-        //     new ObservableCollection<Item>(DataLoader.GetItemList("Weapons", (short)ItemType.Weapons)));
+        _itemsByCategory.Add("Weapons",
+            new ObservableCollection<Item>(DataLoader.GetItemList("Weapons", (short)ItemType.Weapons)));
         // _itemsByCategory.Add("Protector",
         //     new ObservableCollection<Item>(DataLoader.GetItemList("Protector", (short)ItemType.Protector)));
         
@@ -50,7 +53,7 @@ public class ItemViewModel : BaseViewModel
 
     #region Commands
 
-    public ICommand SetEventCommand { get; set; }
+    public ICommand SpawnCommand { get; set; }
 
     #endregion
 
@@ -226,6 +229,11 @@ public class ItemViewModel : BaseViewModel
     private void OnGameNotLoaded()
     {
         AreOptionsEnabled = false;
+    }
+    
+    private void SpawnItem()
+    {
+        _itemService.SpawnItem(SelectedItem, 1);
     }
 
     #endregion

@@ -133,17 +133,10 @@ public partial class MainWindow : Window
                 if (_loaded) return;
                 _loaded = true;
                 _gameStateService.Publish(GameState.Loaded);
-            
-                // TryEnableFeatures();
-                // TrySetGameStartPrefs();
-                // if (_appliedOneTimeFeatures) return;
-                // ApplyOneTimeFeatures();
-                // _appliedOneTimeFeatures = true;
             }
             else if (_loaded)
             {
                 _gameStateService.Publish(GameState.NotLoaded);
-                // DisableFeatures();
                 // _debugDrawService.Reset();
                 _loaded = false;
              
@@ -166,11 +159,6 @@ public partial class MainWindow : Window
             // _settingsViewModel.ResetLoaded();
             // _settingsViewModel.ResetAttached();
             _nopManager.ClearRegistry();
-            // _loaded = false;
-            // _hasAllocatedMemory = false;
-            // _hasAppliedNoLogo = false;
-            // _appliedOneTimeFeatures = false;
-            // _hasAppliedAttachedFeatures = false;
             IsAttachedText.Text = "Not attached";
             IsAttachedText.Foreground = (SolidColorBrush)Application.Current.Resources["NotAttachedBrush"];
             // LaunchGameButton.IsEnabled = true;
