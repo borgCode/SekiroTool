@@ -35,6 +35,7 @@ public class PlayerViewModel : BaseViewModel
         RestorePositionCommand = new DelegateCommand(RestorePosition);
 
         SetMaxHpCommand = new DelegateCommand(SetMaxHp);
+        SetMaxPostureCommand = new DelegateCommand(SetMaxPosture);
 
         _playerTick = new DispatcherTimer
         {
@@ -52,6 +53,8 @@ public class PlayerViewModel : BaseViewModel
     public ICommand RestorePositionCommand { get; set; }
 
     public ICommand SetMaxHpCommand { get; set; }
+    
+    public ICommand SetMaxPostureCommand { get; set; }
 
     // Check TargetViewModel for examples of commands when you need to implement that
 
@@ -118,7 +121,14 @@ public class PlayerViewModel : BaseViewModel
             if (SetProperty(ref _isNoDeathEnabled, value))
             {
                 _playerService.TogglePlayerNoDeath(_isNoDeathEnabled);
+
+                if (_isNoDeathEnabledWithoutKillbox && _isNoDeathEnabled)
+                {
+                    SetProperty(ref _isNoDeathEnabled, false);
+                    _playerService.TogglePlayerNoDeathWithoutKillbox(_isNoDeathEnabledWithoutKillbox);
+                }
             }
+            
         }
     }
     
@@ -126,12 +136,19 @@ public class PlayerViewModel : BaseViewModel
     public bool IsNoDeathEnabledWithoutKillbox
     {
         get => _isNoDeathEnabledWithoutKillbox;
-        set
+        set 
         {
-            if (SetProperty(ref _isNoDeathEnabledWithoutKillbox, value))
+            if (SetProperty(ref _isNoDeathEnabled, value))
             {
                 _playerService.TogglePlayerNoDeathWithoutKillbox(_isNoDeathEnabledWithoutKillbox);
+
+                if (_isNoDeathEnabledWithoutKillbox && _isNoDeathEnabled)
+                {
+                    SetProperty(ref _isNoDeathEnabledWithoutKillbox, false);
+                    _playerService.TogglePlayerNoDeathWithoutKillbox(_isNoDeathEnabledWithoutKillbox);
+                }
             }
+                
         }
     }
     
@@ -327,6 +344,22 @@ public class PlayerViewModel : BaseViewModel
         set => SetProperty(ref _maxHealth, value);
     }
 
+    private int _maxPosture;
+
+    public int MaxPosture
+    {
+        get => _maxPosture;
+        set => SetProperty(ref _maxPosture, value);
+    }
+    
+    private int _currentPosture;
+
+    public int CurrentPosture
+    {
+        get => _currentPosture;
+        set => SetProperty(ref _currentPosture, value);
+    }
+    
     private int _requestRespawn;
 
     public int RequestRespawn
@@ -343,7 +376,9 @@ public class PlayerViewModel : BaseViewModel
     public void ResumeUpdates() => _pauseUpdates = false;
     public void SetNewGame(int newGameCycle) => _playerService.SetNewGame(newGameCycle);
     public void SetHp(int health) => _playerService.SetHp(health);
+    public void SetPosture(int posture) => _playerService.SetPosture(posture);
 
+    
     #endregion
 
     #region Private Methods
@@ -406,6 +441,8 @@ public class PlayerViewModel : BaseViewModel
 
         CurrentHealth = _playerService.GetCurrentHp();
         MaxHealth = _playerService.GetMaxHp();
+        CurrentPosture = _playerService.GetCurrentPosture();
+        MaxPosture = _playerService.GetMaxPosture();
        
 
 
@@ -433,6 +470,11 @@ public class PlayerViewModel : BaseViewModel
     private void SetMaxHp()
     {
         _playerService.SetHp(MaxHealth);
+    }
+
+    private void SetMaxPosture()
+    {
+        _playerService.SetPosture(MaxPosture);
     }
 
     #endregion

@@ -30,7 +30,12 @@ public partial class PlayerTab : UserControl
             _playerViewModel.PauseUpdates,
             _playerViewModel.ResumeUpdates
         );
-                
-            
+
+         _ = new UpDownHelper<int>(
+             PostureUpDown,
+             _playerViewModel.SetPosture,
+             _playerViewModel.PauseUpdates,
+             _playerViewModel.ResumeUpdates
+         );
     }   
 }
