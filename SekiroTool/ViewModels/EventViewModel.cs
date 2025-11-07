@@ -22,12 +22,19 @@ public class EventViewModel : BaseViewModel
         
         SetEventCommand = new DelegateCommand(SetEvent);
         GetEventCommand = new DelegateCommand(GetEvent);
+        SetDemonBellCommand = new DelegateCommand(SetDemonBell);
+        SetNoKurosCharmCommand = new DelegateCommand(SetNoKurosCharm);
+        MoveIsshinCommand = new DelegateCommand(MoveIsshinToCastle);
     }
     
+
     #region Commands
 
     public ICommand SetEventCommand { get; set; }
     public ICommand GetEventCommand { get; set; }
+    public ICommand SetDemonBellCommand { get; set; }
+    public ICommand SetNoKurosCharmCommand { get; set; }
+    public ICommand MoveIsshinCommand { get; set; }
 
     #endregion
     
@@ -151,6 +158,17 @@ public class EventViewModel : BaseViewModel
             EventStatusText = "False";
             EventStatusColor = Brushes.Red;
         }
+    }
+
+    private void SetDemonBell(object parameter) =>
+        _eventService.SetEvent(GameIds.GameEvent.IsDemonBellActivated, Convert.ToBoolean(parameter));
+
+    private void SetNoKurosCharm(object parameter) =>
+        _eventService.SetEvent(GameIds.GameEvent.IsNoKurosCharm, Convert.ToBoolean(parameter));
+    
+    private void MoveIsshinToCastle()
+    {
+        throw new NotImplementedException();
     }
 
     #endregion

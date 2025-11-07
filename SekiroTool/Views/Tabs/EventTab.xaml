@@ -108,20 +108,36 @@
 
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <!-- -->
-                    <!-- <Button x:Name="UnlockMidirButton" Content="Unlock Midir" -->
-                    <!--         Click="UnlockMidir_Click" -->
-                    <!--         IsEnabled="{Binding AreButtonsEnabled}" -->
-                    <!--         Height="20" -->
-                    <!--         Margin="0,5" /> -->
+                    <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="5">
+                        <TextBlock Text="Demon Bell:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <Button 
+                            CommandParameter="True"
+                            Command="{Binding SetDemonBellCommand}"
+                            Content="On" Width="45" Margin="0,0,5,0"/>
+                        <Button 
+                            CommandParameter="False"
+                            Command="{Binding SetDemonBellCommand}"
+                            Content="Off" Width="45"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="5">
+                        <TextBlock Text="No Kuro's Charm:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <Button 
+                            CommandParameter="True"
+                            Command="{Binding SetNoKurosCharmCommand}"
+                            Content="On" Width="45" Margin="0,0,5,0"/>
+                        <Button 
+                            CommandParameter="False"
+                            Command="{Binding SetNoKurosCharmCommand}"
+                            Content="Off" Width="45"/>
+                    </StackPanel>
                 </Grid>
             </StackPanel>
         </Border>
