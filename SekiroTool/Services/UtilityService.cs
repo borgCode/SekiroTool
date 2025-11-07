@@ -156,7 +156,7 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
             });
 
             memoryService.WriteBytes(coordUpdateCode, bytes);
-
+            
             RunRayCast();
 
             hookManager.InstallHook(inAirTimerCode.ToInt64(), inAirTimerHook,

@@ -101,7 +101,32 @@ public class DataLoader
             if (string.IsNullOrWhiteSpace(line)) continue;
             idolEventIds.Add(long.Parse(line, CultureInfo.InvariantCulture));
         }
+
         return idolEventIds;
     }
-    
+
+    public static List<Item> GetItemList(string listName, short itemType)
+    {
+        List<Item> itemList = new List<Item>();
+
+        string? csvData = Resources.ResourceManager.GetString(listName);
+
+        if (string.IsNullOrWhiteSpace(csvData)) return itemList;
+
+        using StringReader reader = new StringReader(csvData);
+        string line;
+        while ((line = reader.ReadLine()) != null)
+        {
+            if (string.IsNullOrWhiteSpace(line)) continue;
+
+            string[] parts = line.Split(',');
+            short id = short.Parse(parts[0], CultureInfo.InvariantCulture);
+            string name = parts[1].Trim();
+            int stackSize = parts.Length > 2 ? int.Parse(parts[2]) : 0;
+
+            itemList.Add(new Item(name, id, itemType, stackSize, listName));
+        }
+
+        return itemList;
+    }
 }

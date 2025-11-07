@@ -23,11 +23,13 @@ public class DebugDrawService : IDebugDrawService
     {
         if (_clientCount == 0) ToggleDebugDraw(true);
         _clientCount++;
+        Console.WriteLine($"ClientCount after request: {_clientCount}");
     }
 
     public void ReleaseDebugDraw()
     {
         _clientCount--;
+        Console.WriteLine($"ClientCount after release: {_clientCount}");
         
         if (_clientCount == 0) ToggleDebugDraw(false);
         
@@ -42,10 +44,17 @@ public class DebugDrawService : IDebugDrawService
 
     private void ToggleDebugDraw(bool isEnabled)
     {
-        if (isEnabled) _nopManager.InstallNop(Patches.DebugFont, 5);
-        else _nopManager.RestoreNop(Patches.DebugFont);
         
         var flagPtr = _memoryService.ReadInt64(WorldChrManDbg.Base) + WorldChrManDbg.EnableDebugDraw;
-        _memoryService.WriteUInt8((IntPtr)flagPtr, (byte)(isEnabled ? 1 : 0));
+        if (isEnabled)
+        {
+            _nopManager.InstallNop(Patches.DebugFont, 5);
+            _memoryService.WriteUInt8((IntPtr)flagPtr, 1);
+        }
+        else
+        {
+            _memoryService.WriteUInt8((IntPtr)flagPtr, 0);
+       
+        }
     }
 }

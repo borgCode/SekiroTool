@@ -279,27 +279,27 @@
                         <TextBlock Grid.Row="0" Text="Show:" Margin="0,0,0,5" />
 
                         <StackPanel Grid.Row="0" HorizontalAlignment="Right" Orientation="Horizontal">
-                            <CheckBox Content="Pop out Resistances"
-                                      IsEnabled="{Binding IsTargetOptionsEnabled}"
-                                      IsChecked="{Binding IsResistancesWindowOpen}"
-                                      Margin="0,2" />
-
-                            <Border
-                                Background="#3498db"
-                                CornerRadius="10"
-                                Width="12"
-                                Height="12"
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                ToolTip="Will only stay on top of game in windowed mode"
-                                ToolTipService.InitialShowDelay='100'>
-                                <TextBlock Text="i"
-                                           Foreground="White"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           FontWeight="Bold"
-                                           FontSize="10" />
-                            </Border>
+                            <!-- <CheckBox Content="Pop out Resistances" -->
+                            <!--           IsEnabled="{Binding IsTargetOptionsEnabled}" -->
+                            <!--           IsChecked="{Binding IsResistancesWindowOpen}" -->
+                            <!--           Margin="0,2" /> -->
+                            <!-- -->
+                            <!-- <Border -->
+                            <!--     Background="#3498db" -->
+                            <!--     CornerRadius="10" -->
+                            <!--     Width="12" -->
+                            <!--     Height="12" -->
+                            <!--     Margin="5,0,0,0" -->
+                            <!--     VerticalAlignment="Center" -->
+                            <!--     ToolTip="Will only stay on top of game in windowed mode" -->
+                            <!--     ToolTipService.InitialShowDelay='100'> -->
+                            <!--     <TextBlock Text="i" -->
+                            <!--                Foreground="White" -->
+                            <!--                HorizontalAlignment="Center" -->
+                            <!--                VerticalAlignment="Center" -->
+                            <!--                FontWeight="Bold" -->
+                            <!--                FontSize="10" /> -->
+                            <!-- </Border> -->
                         </StackPanel>
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
