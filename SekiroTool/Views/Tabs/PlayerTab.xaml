@@ -34,18 +34,27 @@
                     <xctk:IntegerUpDown x:Name="HealthUpDown"
                                         Value="{Binding CurrentHealth}"
                                         TextAlignment="Center"
-                                        Width="100"
+                                        Width="70"
                                         IsEnabled="{Binding AreOptionsEnabled}"
                                         BorderBrush="#3F3F46" />
                     <TextBlock Text="{Binding MaxHealth, StringFormat=Max: {0}}"
                                VerticalAlignment="Center"
-                               Margin="10,0,0,0" />
-                   
+                               Margin="10,0,10,0" />
                     <Button
-                        Content="Max Hp"
+                        Content="Max HP"
                         Command="{Binding SetMaxHpCommand}"
-                        Margin="10,0,0,0"
+                        Margin="0,0,60,0"
                         Width="60" />
+                    <TextBlock Text="Posture:" VerticalAlignment="Center" Margin="0,0,5,0" />
+                    <xctk:IntegerUpDown x:Name="PostureUpDown"
+                                        Value="{Binding CurrentPosture}"
+                                        TextAlignment="Center"
+                                        Width="70"
+                                        IsEnabled="{Binding AreOptionsEnabled}"
+                                        BorderBrush="#3F3F46" />
+                    <TextBlock Text="{Binding MaxPosture, StringFormat=Max: {0}}"
+                               VerticalAlignment="Center"
+                               Margin="10,0,0,0" />
                     
                 </StackPanel>
             </Grid>
