@@ -120,13 +120,11 @@ public class PlayerViewModel : BaseViewModel
         {
             if (SetProperty(ref _isNoDeathEnabled, value))
             {
-                _playerService.TogglePlayerNoDeath(_isNoDeathEnabled);
-
-                if (_isNoDeathEnabledWithoutKillbox && _isNoDeathEnabled)
+                if (IsNoDeathEnabledWithoutKillbox && _isNoDeathEnabled)
                 {
-                    SetProperty(ref _isNoDeathEnabled, false);
-                    _playerService.TogglePlayerNoDeathWithoutKillbox(_isNoDeathEnabledWithoutKillbox);
+                   IsNoDeathEnabledWithoutKillbox = false; 
                 }
+                _playerService.TogglePlayerNoDeath(_isNoDeathEnabled);
             }
             
         }
@@ -137,18 +135,15 @@ public class PlayerViewModel : BaseViewModel
     {
         get => _isNoDeathEnabledWithoutKillbox;
         set 
-        {
-            if (SetProperty(ref _isNoDeathEnabled, value))
+        { 
+            if (SetProperty(ref _isNoDeathEnabledWithoutKillbox, value))
             {
-                _playerService.TogglePlayerNoDeathWithoutKillbox(_isNoDeathEnabledWithoutKillbox);
-
-                if (_isNoDeathEnabledWithoutKillbox && _isNoDeathEnabled)
+                if (IsNoDeathEnabled && _isNoDeathEnabledWithoutKillbox)
                 {
-                    SetProperty(ref _isNoDeathEnabledWithoutKillbox, false);
-                    _playerService.TogglePlayerNoDeathWithoutKillbox(_isNoDeathEnabledWithoutKillbox);
+                    IsNoDeathEnabled = false; 
                 }
+                _playerService.TogglePlayerNoDeathWithoutKillbox(_isNoDeathEnabledWithoutKillbox); 
             }
-                
         }
     }
     
