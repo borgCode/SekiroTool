@@ -304,5 +304,7 @@ public static class Offsets
         public static long SetMessageTagValue;
         public static long AdjustItemCount;
         public static long OpenGenericDialog;
+        public static long RemoveItem;
+        public static long GiveSkillAndPros;
     }
 }

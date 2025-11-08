@@ -76,10 +76,6 @@ public class DataLoader
     
         }
         
-        foreach (var kvp in respawnHash)
-        {
-            Console.WriteLine($"{kvp.Key}: {kvp.Value}");
-        }
         return respawnHash;
 
         
@@ -118,9 +114,9 @@ public class DataLoader
         while ((line = reader.ReadLine()) != null)
         {
             if (string.IsNullOrWhiteSpace(line)) continue;
-
+            
             string[] parts = line.Split(',');
-            short id = short.Parse(parts[0], CultureInfo.InvariantCulture);
+            int id = int.Parse(parts[0], CultureInfo.InvariantCulture);
             string name = parts[1].Trim();
             int stackSize = parts.Length > 2 ? int.Parse(parts[2]) : 0;
 

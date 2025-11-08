@@ -5,4 +5,5 @@ namespace SekiroTool.Interfaces;
 public interface IItemService
 {
     void SpawnItem(Item item, int quantity);
+    void SpawnProsthetic(int id);
 }

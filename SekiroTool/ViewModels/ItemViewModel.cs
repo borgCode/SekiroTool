@@ -35,13 +35,13 @@ public class ItemViewModel : BaseViewModel
     private void LoadItems()
     {
         Categories.Add("Goods");
-        Categories.Add("Weapons");
+        Categories.Add("Prosthetics");
         Categories.Add("Protector");
 
         _itemsByCategory.Add("Goods",
             new ObservableCollection<Item>(DataLoader.GetItemList("Goods", (short)ItemType.Goods)));
-        _itemsByCategory.Add("Weapons",
-            new ObservableCollection<Item>(DataLoader.GetItemList("Weapons", (short)ItemType.Weapons)));
+        _itemsByCategory.Add("Prosthetics",
+            new ObservableCollection<Item>(DataLoader.GetItemList("Prosthetics", (short)ItemType.Weapons)));
         // _itemsByCategory.Add("Protector",
         //     new ObservableCollection<Item>(DataLoader.GetItemList("Protector", (short)ItemType.Protector)));
         
@@ -233,7 +233,16 @@ public class ItemViewModel : BaseViewModel
     
     private void SpawnItem()
     {
-        _itemService.SpawnItem(SelectedItem, 1);
+        if (SelectedItem.ItemType == (short) ItemType.Weapons)
+        {
+            _itemService.SpawnProsthetic(SelectedItem.ItemId);
+        }
+        else
+        {
+            
+            _itemService.SpawnItem(SelectedItem, 1);
+        }
+     
     }
 
     #endregion

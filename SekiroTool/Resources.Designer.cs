@@ -194,6 +194,25 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 48 83 ec 28             sub    rsp,0x28
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///89 04 24                mov    DWORD PTR [rsp],eax
+        ///48 8d 0c 24             lea    rcx,[rsp]
+        ///ba 01 00 00 00          mov    edx,0x1
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///ff d0                   call   rax
+        ///48 83 c4 28             add    rsp,0x28
+        ///c3                      ret.
+        /// </summary>
+        internal static string GiveSkillsAndPros {
+            get {
+                return ResourceManager.GetString("GiveSkillsAndPros", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 1000,Spirit Emblem,15
         ///1001,Red Spirit Emblem,5
         ///1100,Regenerative Power,2
@@ -555,6 +574,36 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 70000,Loaded Shuriken
+        ///70100,Spinning Shuriken
+        ///70200,Gouging Top
+        ///70300,Phantom Kunai
+        ///70400,Sen Throw
+        ///70500,Lazulite Shuriken
+        ///71000,Shinobi Firecracker
+        ///71100,Spring-load Firecracker
+        ///71200,Long Spark
+        ///71300,Purple Fume Spark
+        ///72000,Flame Vent
+        ///72100,Spring-load Flame Vent
+        ///72200,Okinaga&apos;s Flame Vent
+        ///72300,Lazulite Sacred Flame
+        ///73000,Loaded Axe
+        ///73100,Spring-load Axe
+        ///73200,Sparking Axe
+        ///73300,Lazulite Axe
+        ///74000,Mist Raven
+        ///74100,Aged Feather Mist Raven
+        ///74200,Great Feather Mist Raven
+        ///75000,Sabimaru [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Prosthetics {
+            get {
+                return ResourceManager.GetString("Prosthetics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 103000,Original Memory: Wolf
         ///303000,Another&apos;s Memory: Shura
         ///403000,Another&apos;s Memory: Ashina
@@ -617,6 +666,35 @@ namespace SekiroTool {
         internal static string SetEvent {
             get {
                 return ResourceManager.GetString("SetEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 200000,Grappling Hook Attack
+        ///200100,Mid-air Deflection
+        ///200200,Mid-air Prosthetic Tool
+        ///200300,Mikiri Counter
+        ///200400,Run and Slide
+        ///200500,Mid-air Combat Arts
+        ///200600,Vault Over
+        ///210000,Whirlwind Slash
+        ///211000,Shadowrush
+        ///301000,Chasing Slice
+        ///301100,Fang and Blade
+        ///301200,Projected Force
+        ///301300,Living Force
+        ///310000,Nightjar Slash
+        ///310100,Nightjar Slash Reversal
+        ///410000,Ichimonji
+        ///410100,Ichimonji: Double
+        ///411000,Ashina Cross
+        ///510000,Praying Strikes
+        ///510100,Praying Strikes - Exorcism
+        ///511000,Senpou Leapi [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Skills {
+            get {
+                return ResourceManager.GetString("Skills", resourceCulture);
             }
         }
         
@@ -691,33 +769,6 @@ namespace SekiroTool {
         internal static string Warps {
             get {
                 return ResourceManager.GetString("Warps", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 5100,Whirlwind Slash
-        ///5200,Nightjar Slash
-        ///5300,Ichimonji
-        ///5400,Dragon Flash
-        ///5500,Ashina Cross
-        ///5600,Floating Passage
-        ///5700,Mortal Draw
-        ///5800,Senpou Leaping Kicks
-        ///5900,Praying Strikes
-        ///6000,Shadowrush
-        ///6100,One Mind
-        ///7000,Nightjar Slash Reversal
-        ///7100,Ichimonji: Double
-        ///7200,Spiral Cloud Passage
-        ///7300,Empowered Mortal Draw
-        ///7400,High Monk
-        ///7500,Praying Strikes - Exorcism
-        ///7600,Shadowfall
-        ///7700,Sakura Dance.
-        /// </summary>
-        internal static string Weapons {
-            get {
-                return ResourceManager.GetString("Weapons", resourceCulture);
             }
         }
     }

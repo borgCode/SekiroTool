@@ -133,6 +133,8 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.Functions.GetItemSlot = FindAddressByPattern(Patterns.GetItemSlot).ToInt64();
         Offsets.Functions.GetItemPtrFromSlot = FindAddressByPattern(Patterns.GetItemPtrFromSlot).ToInt64();
         Offsets.Functions.EzStateExternalEventTempCtor = FindAddressByPattern(Patterns.EzStateExternalEventTempCtor).ToInt64();
+        Offsets.Functions.RemoveItem = FindAddressByPattern(Patterns.RemoveItem).ToInt64();
+        Offsets.Functions.GiveSkillAndPros = FindAddressByPattern(Patterns.GiveSkillAndPros).ToInt64();
 
 #if DEBUG
         Console.WriteLine($"WorldChrMan.Base: 0x{Offsets.WorldChrMan.Base.ToInt64():X}");
@@ -203,6 +205,8 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Functions.SetMessageTagValue: 0x{Offsets.Functions.SetMessageTagValue:X}");
         Console.WriteLine($"Functions.AdjustItemCount: 0x{Offsets.Functions.AdjustItemCount:X}");
         Console.WriteLine($"Functions.OpenGenericDialog: 0x{Offsets.Functions.OpenGenericDialog:X}");
+        Console.WriteLine($"Functions.RemoveItem: 0x{Offsets.Functions.RemoveItem:X}");
+        Console.WriteLine($"Functions.GiveSkillAndPros: 0x{Offsets.Functions.GiveSkillAndPros:X}");
 #endif
     }
 
