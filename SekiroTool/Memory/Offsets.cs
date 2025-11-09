@@ -173,8 +173,8 @@ public static class Offsets
         public static IntPtr Base;
         public const int ShowMap = 0x0;
         public const int ShowObj = 0x1;
-        public const int ShowChr = 0x3;
-        public const int ShowSfx = 0x4;
+        public const int ShowChr = 0x2;
+        public const int ShowSfx = 0x3;
         public const int ShowGrass = 0x6;
     }
 

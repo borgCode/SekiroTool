@@ -3,6 +3,7 @@ using SekiroTool.Core;
 using SekiroTool.Enums;
 using SekiroTool.GameIds;
 using SekiroTool.Interfaces;
+using SekiroTool.Memory;
 using SekiroTool.Utilities;
 
 namespace SekiroTool.ViewModels;
@@ -118,6 +119,67 @@ public class UtilityViewModel : BaseViewModel
             if (_isSoundViewEnabled) _debugDrawService.RequestDebugDraw();
             else _debugDrawService.RequestDebugDraw();
             _utilityService.TogglePlayerSoundView(_isSoundViewEnabled);
+        }
+    }
+    
+    private bool _isHideMapEnabled;
+    
+    public bool IsHideMapEnabled
+    {
+        get => _isHideMapEnabled;
+        set
+        {
+            if (!SetProperty(ref _isHideMapEnabled, value)) return; 
+            _utilityService.ToggleGameRendFlag(Offsets.GameRendFlags.ShowMap, _isHideMapEnabled);
+        }
+    }
+    
+    private bool _isHideObjEnabled;
+    
+    public bool IsHideObjEnabled
+    {
+        get => _isHideObjEnabled;
+        set
+        {
+            if (!SetProperty(ref _isHideObjEnabled, value)) return; 
+            _utilityService.ToggleGameRendFlag(Offsets.GameRendFlags.ShowObj, _isHideObjEnabled);
+        }
+    }
+    
+    private bool _isHideChrEnabled;
+    
+    public bool IsHideChrEnabled
+    {
+        get => _isHideChrEnabled;
+        set
+        {
+            if (!SetProperty(ref _isHideChrEnabled, value)) return; 
+            _utilityService.ToggleGameRendFlag(Offsets.GameRendFlags.ShowChr, _isHideChrEnabled);
+        }
+    }
+    
+    
+    private bool _isHideSfxEnabled;
+    
+    public bool IsHideSfxEnabled
+    {
+        get => _isHideSfxEnabled;
+        set
+        {
+            if (!SetProperty(ref _isHideSfxEnabled, value)) return; 
+            _utilityService.ToggleGameRendFlag(Offsets.GameRendFlags.ShowSfx, _isHideSfxEnabled);
+        }
+    }
+    
+    private bool _isHideGrassEnabled;
+    
+    public bool IsHideGrassEnabled
+    {
+        get => _isHideGrassEnabled;
+        set
+        {
+            if (!SetProperty(ref _isHideGrassEnabled, value)) return; 
+            _utilityService.ToggleGameRendFlag(Offsets.GameRendFlags.ShowGrass, _isHideGrassEnabled);
         }
     }
 

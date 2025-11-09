@@ -23,7 +23,8 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
 
     public void ToggleGameRendFlag(int offset, bool isEnabled)
     {
-        throw new NotImplementedException();
+        var flagPtr = GameRendFlags.Base + offset;
+        memoryService.WriteUInt8(flagPtr, isEnabled ? 0 : 1);
     }
 
     public void OpenSkillMenu()
