@@ -887,12 +887,6 @@ c3                      ret</value>
 680000,Mibu Breathing Technique
 681000,Anti-air Deathblow</value>
     </data>
-    <data name="Protector" xml:space="preserve">
-        <value>103000,Original Memory: Wolf
-303000,Another's Memory: Shura
-403000,Another's Memory: Ashina
-503000,Another's Memory: Tengu</value>
-    </data>
     <data name="NoCameraSpin" xml:space="preserve">
         <value>50                      push   rax
 48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;

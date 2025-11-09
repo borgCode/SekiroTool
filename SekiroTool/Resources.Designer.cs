@@ -604,18 +604,6 @@ namespace SekiroTool {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 103000,Original Memory: Wolf
-        ///303000,Another&apos;s Memory: Shura
-        ///403000,Another&apos;s Memory: Ashina
-        ///503000,Another&apos;s Memory: Tengu.
-        /// </summary>
-        internal static string Protector {
-            get {
-                return ResourceManager.GetString("Protector", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 48 a1 00 00 00 00 00    movabs rax,ds:0x0
         ///00 00 00
         ///48 8b 40 08             mov    rax,QWORD PTR [rax+0x8]

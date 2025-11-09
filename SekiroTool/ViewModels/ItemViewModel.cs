@@ -275,14 +275,11 @@ public class ItemViewModel : BaseViewModel
     {
         Categories.Add("Goods");
         Categories.Add("Prosthetics");
-        Categories.Add("Protector");
 
         _itemsByCategory.Add("Goods",
             new ObservableCollection<Item>(DataLoader.GetItemList("Goods", (short)ItemType.Goods)));
         _itemsByCategory.Add("Prosthetics",
             new ObservableCollection<Item>(DataLoader.GetItemList("Prosthetics", (short)ItemType.Weapons)));
-        // _itemsByCategory.Add("Protector",
-        //     new ObservableCollection<Item>(DataLoader.GetItemList("Protector", (short)ItemType.Protector)));
         
         _allItems = _itemsByCategory.Values.SelectMany(x => x).ToLookup(i => i.Name);
         

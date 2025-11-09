@@ -143,7 +143,6 @@ public class DataLoader
             string[] parts = line.Split(',');
             int id = int.Parse(parts[0], CultureInfo.InvariantCulture);
             string name = parts[1].Trim();
-            Console.WriteLine(line);
             skillList.Add(new Skill(name, id));
         }
 
