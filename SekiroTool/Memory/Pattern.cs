@@ -176,6 +176,15 @@ public static class Patterns
         AddressingMode.Absolute
     );
 
+    public static readonly Pattern GameRendFlags = new Pattern(
+        new byte[] { 0x74, 0x0E, 0x80, 0x7B, 0x06 },
+        "xxxxx",
+        -0x11,
+        AddressingMode.Relative,
+        2,
+        7
+    );
+
     #endregion
 
 
@@ -245,6 +254,14 @@ public static class Patterns
         0,
         AddressingMode.Absolute
     );
+
+    public static readonly Pattern PlayerSoundView = new Pattern(
+        new byte[] { 0x80, 0x79, 0x20, 0x00, 0x48, 0x8B, 0xF2, 0x74 },
+        "xxxxxxxx",
+        0x7,
+        AddressingMode.Absolute
+    );
+
 
     #endregion
 

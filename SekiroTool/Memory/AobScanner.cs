@@ -39,6 +39,7 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.PauseRequest.Base = FindAddressByPattern(Patterns.PauseRequest);
         Offsets.DlUserInputManager.Base = FindAddressByPattern(Patterns.DlUserInputManager);
         Offsets.TargetingView.Base = FindAddressByPattern(Patterns.TargetingView);
+        Offsets.GameRendFlags.Base = FindAddressByPattern(Patterns.GameRendFlags);
         
         Offsets.IdolRequests.Base = FindAddressByRelativeChain(
             Patterns.IdolRequests,
@@ -96,6 +97,8 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Patches.OpenRegularShopPatch = addr, saved);
         TryPatternWithFallback("DefaultSoundVolWrite", Patterns.DefaultSoundVolWrite,
             addr => Offsets.Patches.DefaultSoundVolWrite = addr, saved);
+        TryPatternWithFallback("PlayerSoundView", Patterns.PlayerSoundView,
+            addr => Offsets.Patches.PlayerSoundView = addr, saved);
         
 
 
@@ -154,6 +157,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"DlUserInputManager.Base: 0x{Offsets.DlUserInputManager.Base.ToInt64():X}");
         Console.WriteLine($"TargetingView.Base: 0x{Offsets.TargetingView.Base.ToInt64():X}");
         Console.WriteLine($"IdolRequests.Base: 0x{Offsets.IdolRequests.Base.ToInt64():X}");
+        Console.WriteLine($"GameRendFlags.Base: 0x{Offsets.GameRendFlags.Base.ToInt64():X}");
 
         Console.WriteLine($"Hooks.LockedTarget: 0x{Offsets.Hooks.LockedTarget:X}");
         Console.WriteLine($"Hooks.FreezeTargetPosture: 0x{Offsets.Hooks.FreezeTargetPosture:X}");
@@ -181,6 +185,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Patches.SaveInCombat: 0x{Offsets.Patches.SaveInCombat.ToInt64():X}");
         Console.WriteLine($"Patches.OpenRegularShopPatch: 0x{Offsets.Patches.OpenRegularShopPatch.ToInt64():X}");
         Console.WriteLine($"Patches.DefaultSoundVolWrite: 0x{Offsets.Patches.DefaultSoundVolWrite.ToInt64():X}");
+        Console.WriteLine($"Patches.PlayerSoundView: 0x{Offsets.Patches.PlayerSoundView.ToInt64():X}");
 
         Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");
         Console.WriteLine($"Functions.Rest: 0x{Offsets.Functions.Rest:X}");

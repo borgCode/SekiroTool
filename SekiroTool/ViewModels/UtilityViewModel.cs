@@ -106,6 +106,20 @@ public class UtilityViewModel : BaseViewModel
             _utilityService.ToggleHitboxView(_isHitboxViewEnabled);
         }
     }
+    
+    private bool _isSoundViewEnabled;
+    
+    public bool IsSoundViewEnabled
+    {
+        get => _isSoundViewEnabled;
+        set
+        {
+            if (!SetProperty(ref _isSoundViewEnabled, value)) return; 
+            if (_isSoundViewEnabled) _debugDrawService.RequestDebugDraw();
+            else _debugDrawService.RequestDebugDraw();
+            _utilityService.TogglePlayerSoundView(_isSoundViewEnabled);
+        }
+    }
 
     private float _gameSpeed;
 
@@ -264,6 +278,13 @@ public class UtilityViewModel : BaseViewModel
         AreOptionsEnabled = true;
         GameSpeed = _utilityService.GetGameSpeed();
         if (IsHitBoxViewEnabled) _utilityService.ToggleHitboxView(true);
+        if (IsSoundViewEnabled) EnableDrawFeature(() => _utilityService.TogglePlayerSoundView(true));
+    }
+
+    private void EnableDrawFeature(Action action)
+    {
+        if (_debugDrawService.GetCount() < 1) _debugDrawService.RequestDebugDraw();
+        action.Invoke();
     }
 
 

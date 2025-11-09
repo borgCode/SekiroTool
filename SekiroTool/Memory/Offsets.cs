@@ -167,6 +167,16 @@ public static class Offsets
     {
         public static IntPtr Base;
     }
+    
+    public static class GameRendFlags
+    {
+        public static IntPtr Base;
+        public const int ShowMap = 0x0;
+        public const int ShowObj = 0x1;
+        public const int ShowChr = 0x3;
+        public const int ShowSfx = 0x4;
+        public const int ShowGrass = 0x6;
+    }
 
 
     public static class EventFlagMan
@@ -257,6 +267,7 @@ public static class Offsets
         public static IntPtr SaveInCombat;
         public static IntPtr OpenRegularShopPatch;
         public static IntPtr DefaultSoundVolWrite;
+        public static IntPtr PlayerSoundView;
     }
 
 
