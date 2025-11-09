@@ -19,41 +19,30 @@ public class ItemViewModel : BaseViewModel
     private readonly ObservableCollection<Item> _searchResultsCollection = new ObservableCollection<Item>();
     private string _preSearchCategory;
     
+    private readonly ObservableCollection<Skill> _skillSearchResults = new ObservableCollection<Skill>();
+    private ObservableCollection<Skill> _allSkills;
 
     public ItemViewModel(IItemService itemService, IGameStateService gameStateService)
     {
         _itemService = itemService;
 
         LoadItems();
+        LoadSkills();
 
         gameStateService.Subscribe(GameState.Loaded, OnGameLoaded);
         gameStateService.Subscribe(GameState.NotLoaded, OnGameNotLoaded);
 
         SpawnCommand = new DelegateCommand(SpawnItem);
+        LearnSkillCommand = new DelegateCommand(LearnSkill);
+        UnlearnSkillCommand = new DelegateCommand(UnlearnSkill);
     }
 
-    private void LoadItems()
-    {
-        Categories.Add("Goods");
-        Categories.Add("Prosthetics");
-        Categories.Add("Protector");
-
-        _itemsByCategory.Add("Goods",
-            new ObservableCollection<Item>(DataLoader.GetItemList("Goods", (short)ItemType.Goods)));
-        _itemsByCategory.Add("Prosthetics",
-            new ObservableCollection<Item>(DataLoader.GetItemList("Prosthetics", (short)ItemType.Weapons)));
-        // _itemsByCategory.Add("Protector",
-        //     new ObservableCollection<Item>(DataLoader.GetItemList("Protector", (short)ItemType.Protector)));
-        
-        _allItems = _itemsByCategory.Values.SelectMany(x => x).ToLookup(i => i.Name);
-        
-        SelectedCategory = Categories.FirstOrDefault();
-    }
-
-
+    
     #region Commands
 
     public ICommand SpawnCommand { get; set; }
+    public ICommand LearnSkillCommand { get; set; }
+    public ICommand UnlearnSkillCommand { get; set; }
 
     #endregion
 
@@ -216,6 +205,57 @@ public class ItemViewModel : BaseViewModel
           
         }
     }
+    
+    private string _skillSearchText = string.Empty;
+
+    public string SkillSearchText
+    {
+        get => _skillSearchText;
+        set
+        {
+            if (!SetProperty(ref _skillSearchText, value))
+                return;
+
+            if (string.IsNullOrEmpty(value))
+            {
+                Skills = _allSkills;
+            }
+            else
+            {
+                ApplySkillFilter();
+            }
+        }
+    }
+    private void ApplySkillFilter()
+    {
+        _skillSearchResults.Clear();
+        var searchTextLower = SkillSearchText.ToLower();
+
+        foreach (var skill in _allSkills)
+        {
+            if (skill.Name.ToLower().Contains(searchTextLower))
+            {
+                _skillSearchResults.Add(skill);
+            }
+        }
+    
+        Skills = _skillSearchResults;
+    }
+    
+    private Skill _selectedSkill;
+
+    public Skill SelectedSkill
+    {
+        get => _selectedSkill;
+        set => SetProperty(ref _selectedSkill, value);
+    }
+    
+    private ObservableCollection<Skill> _skills = new ObservableCollection<Skill>();
+    public ObservableCollection<Skill> Skills
+    {
+        get => _skills;
+        set => SetProperty(ref _skills, value);
+    }
 
     #endregion
 
@@ -231,11 +271,35 @@ public class ItemViewModel : BaseViewModel
         AreOptionsEnabled = false;
     }
     
+    private void LoadItems()
+    {
+        Categories.Add("Goods");
+        Categories.Add("Prosthetics");
+        Categories.Add("Protector");
+
+        _itemsByCategory.Add("Goods",
+            new ObservableCollection<Item>(DataLoader.GetItemList("Goods", (short)ItemType.Goods)));
+        _itemsByCategory.Add("Prosthetics",
+            new ObservableCollection<Item>(DataLoader.GetItemList("Prosthetics", (short)ItemType.Weapons)));
+        // _itemsByCategory.Add("Protector",
+        //     new ObservableCollection<Item>(DataLoader.GetItemList("Protector", (short)ItemType.Protector)));
+        
+        _allItems = _itemsByCategory.Values.SelectMany(x => x).ToLookup(i => i.Name);
+        
+        SelectedCategory = Categories.FirstOrDefault();
+    }
+    
+    private void LoadSkills()
+    {
+        _allSkills = new ObservableCollection<Skill>(DataLoader.GetSkillList());
+        Skills = _allSkills;
+    }
+    
     private void SpawnItem()
     {
         if (SelectedItem.ItemType == (short) ItemType.Weapons)
         {
-            _itemService.SpawnProsthetic(SelectedItem.ItemId);
+            _itemService.GiveSkillOrPros(SelectedItem.ItemId);
         }
         else
         {
@@ -243,6 +307,16 @@ public class ItemViewModel : BaseViewModel
             _itemService.SpawnItem(SelectedItem, 1);
         }
      
+    }
+    
+    private void LearnSkill()
+    {
+        _itemService.GiveSkillOrPros(SelectedSkill.Id);
+    }
+
+    private void UnlearnSkill()
+    {
+        _itemService.RemoveItem(SelectedSkill.Id);
     }
 
     #endregion

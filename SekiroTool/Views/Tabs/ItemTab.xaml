@@ -7,253 +7,57 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:converters="clr-namespace:SekiroTool.Converters"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
-     <UserControl.Resources>
+             d:DesignHeight="700" d:DesignWidth="300">
+    <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:StringToVisibilityConverter x:Key="NullToVisibilityConverter" />
     </UserControl.Resources>
 
 
-    <Grid Margin="10">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="170" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Grid.RowSpan="3">
+
+        <Grid Row="0" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="250" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <TextBlock Grid.Row="0" Text="Categories" Margin="0,0,0,5" />
-
-            <ListBox Grid.Row="1"
-                     ItemsSource="{Binding Categories}"
-                     SelectedItem="{Binding SelectedCategory}"
-                     BorderThickness="1"
-                     BorderBrush="#333">
-                <ListBox.ItemContainerStyle>
-                    <Style TargetType="ListBoxItem">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="ListBoxItem">
-                                    <Border x:Name="Border"
-                                            Background="Transparent"
-                                            Padding="8,4">
-                                        <ContentPresenter />
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="Border" Property="Background"
-                                                    Value="{StaticResource AccentBrush}" />
-                                        </Trigger>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter TargetName="Border" Property="Background"
-                                                    Value="{StaticResource HoverBrush}" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListBox.ItemContainerStyle>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}" />
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-
-            <Grid Grid.Row="2" Margin="0,5,0,5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="Quantity:"
-                           VerticalAlignment="Center"
-                           Margin="0,0,5,0" />
-                <xctk:IntegerUpDown Grid.Column="1"
-                                    Value="{Binding SelectedQuantity}"
-                                    Minimum="1"
-                                    Maximum="{Binding MaxQuantity}"
-                                    IsEnabled="{Binding QuantityEnabled}"
-                                    Margin="0,5"
-                                    Increment="1" />
-            </Grid>
-
-            <Grid Grid.Row="3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="Upgrade:"
-                           VerticalAlignment="Center"
-                           Margin="0,0,5,0" />
-                <xctk:IntegerUpDown Grid.Column="1"
-                                    Value="{Binding SelectedUpgrade}"
-                                    Minimum="0"
-                                    Maximum="{Binding MaxUpgradeLevel}"
-                                    IsEnabled="{Binding CanUpgrade}"
-                                    Margin="0,5"
-                                    Increment="1" />
-            </Grid>
-
-            <StackPanel Grid.Row="4" Margin="0,5,0,0">
-                <TextBlock Text="Infusion:" Margin="0,0,0,5" />
-                <ComboBox ItemsSource="{Binding AvailableInfusions}"
-                          SelectedItem="{Binding SelectedInfusionType}"
-                          IsEnabled="{Binding CanInfuse}"
-                          Margin="0,0,0,15" />
-
-                <Button Content="Spawn"
-                        Command="{Binding SpawnCommand}"
-                        IsEnabled="{Binding AreOptionsEnabled}"
-                        Height="25" />
-            </StackPanel>
-            <StackPanel Grid.Row="5" Margin="0,15,0,0">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <CheckBox Grid.Column="0"
-                              Content="Spawn weapon at start"
-                              IsChecked="{Binding AutoSpawnEnabled}"
-                              VerticalAlignment="Center" />
-
-                    <Border Grid.Column="1"
-                            Background="#3498db"
-                            CornerRadius="10"
-                            Width="12"
-                            Height="12"
-                            Margin="5,0,0,0"
-                            VerticalAlignment="Center"
-                            ToolTip="Start with the selected weapon when starting a new game"
-                            ToolTipService.InitialShowDelay='100'>
-                        <TextBlock Text="i"
-                                   Foreground="White"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   FontWeight="Bold"
-                                   FontSize="10" />
-                    </Border>
-                </Grid>
-            </StackPanel>
-        </Grid>
-
-        <TextBox Grid.Row="0" Grid.Column="1"
-                 Name="SearchBox"
-                 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
-                 HorizontalAlignment="Right"
-                 Width="150"
-                 Height="25"
-                 VerticalAlignment="Center"
-                 Margin="0,0,0,5">
-            <TextBox.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="3" />
-                </Style>
-            </TextBox.Resources>
-
-            <TextBox.Template>
-                <ControlTemplate TargetType="TextBox">
-                    <Border x:Name="border"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="3">
-                        <Grid>
-                            <ScrollViewer x:Name="PART_ContentHost"
-                                          Focusable="false"
-                                          HorizontalScrollBarVisibility="Hidden"
-                                          VerticalScrollBarVisibility="Hidden"
-                                          VerticalAlignment="Center"
-                                          Margin="5,0,0,0" />
-                            <TextBlock x:Name="placeholderText"
-                                       Text="Search items..."
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Left"
-                                       Margin="5,0,0,0"
-                                       Foreground="Gray"
-                                       IsHitTestVisible="False">
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                        <Style.Triggers>
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition
-                                                        Binding="{Binding Path=Text, RelativeSource={RelativeSource AncestorType=TextBox}}"
-                                                        Value="" />
-                                                    <Condition
-                                                        Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource AncestorType=TextBox}}"
-                                                        Value="False" />
-                                                </MultiDataTrigger.Conditions>
-                                                <Setter Property="Visibility" Value="Visible" />
-                                            </MultiDataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsKeyboardFocused" Value="True">
-                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
-                            <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </TextBox.Template>
-        </TextBox>
-
-        <Grid Grid.Row="1" Grid.Column="1" Margin="10,0,0,0">
-            <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Border Grid.Row="0"
-                    BorderThickness="1"
-                    BorderBrush="#333">
-                <ListView ItemsSource="{Binding Items}"
-                          SelectedItem="{Binding SelectedItem}"
-                          VirtualizingPanel.IsVirtualizing="True"
-                          VirtualizingPanel.VirtualizationMode="Recycling"
-                          ScrollViewer.VerticalScrollBarVisibility="Auto"
-                          BorderThickness="0">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                            <Setter Property="Padding" Value="8,4" />
-                            <Setter Property="Background" Value="Transparent" />
-                            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
-                            <Setter Property="BorderThickness" Value="0" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="170" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Grid.RowSpan="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="250" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="Categories" Margin="0,0,0,5" />
+
+                <ListBox Grid.Row="1"
+                         ItemsSource="{Binding Categories}"
+                         SelectedItem="{Binding SelectedCategory}"
+                         BorderThickness="1"
+                         BorderBrush="#333">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
                             <Setter Property="Template">
                                 <Setter.Value>
-                                    <ControlTemplate TargetType="ListViewItem">
+                                    <ControlTemplate TargetType="ListBoxItem">
                                         <Border x:Name="Border"
-                                                Background="{TemplateBinding Background}"
-                                                BorderBrush="{TemplateBinding BorderBrush}"
-                                                BorderThickness="{TemplateBinding BorderThickness}"
-                                                SnapsToDevicePixels="true">
-                                            <ContentPresenter
-                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                Margin="{TemplateBinding Padding}"
-                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                Background="Transparent"
+                                                Padding="8,4">
+                                            <ContentPresenter />
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
@@ -269,48 +73,331 @@
                                 </Setter.Value>
                             </Setter>
                         </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.ItemTemplate>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
-                                <TextBlock Grid.Column="1"
-                                           Text="{Binding CategoryName}"
-                                           Foreground="#888888"
-                                           FontStyle="Italic"
-                                           Margin="10,0,0,0"
-                                           Visibility="{Binding DataContext.IsSearchActive, 
-                                 RelativeSource={RelativeSource AncestorType=UserControl}, 
-                                 Converter={StaticResource BooleanToVisibilityConverter}}" />
-                            </Grid>
+                            <TextBlock Text="{Binding}" />
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Border>
+                    </ListBox.ItemTemplate>
+                </ListBox>
 
-            <Border Grid.Row="1"
-                    BorderThickness="1"
-                    BorderBrush="#333"
-                    CornerRadius="3"
-                    Margin="0,10,0,0"
-                    Padding="10">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
+                <Grid Grid.Row="2" Margin="0,5,0,5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    
-                    
+                    <TextBlock Text="Quantity:"
+                               VerticalAlignment="Center"
+                               Margin="0,0,5,0" />
+                    <xctk:IntegerUpDown Grid.Column="1"
+                                        Value="{Binding SelectedQuantity}"
+                                        Minimum="1"
+                                        Maximum="{Binding MaxQuantity}"
+                                        IsEnabled="{Binding QuantityEnabled}"
+                                        Margin="0,5"
+                                        Increment="1" />
                 </Grid>
-            </Border>
+                <StackPanel Grid.Row="3" Margin="0,5,0,0">
+
+                    <Button Content="Spawn"
+                            Command="{Binding SpawnCommand}"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Height="25" />
+                </StackPanel>
+            </Grid>
+
+            <TextBox Grid.Row="0" Grid.Column="1"
+                     Name="SearchBox"
+                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                     HorizontalAlignment="Right"
+                     Width="150"
+                     Height="25"
+                     VerticalAlignment="Center"
+                     Margin="0,0,0,5">
+                <TextBox.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="3" />
+                    </Style>
+                </TextBox.Resources>
+
+                <TextBox.Template>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="3">
+                            <Grid>
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                              Focusable="false"
+                                              HorizontalScrollBarVisibility="Hidden"
+                                              VerticalScrollBarVisibility="Hidden"
+                                              VerticalAlignment="Center"
+                                              Margin="5,0,0,0" />
+                                <TextBlock x:Name="placeholderText"
+                                           Text="Search items..."
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Left"
+                                           Margin="5,0,0,0"
+                                           Foreground="Gray"
+                                           IsHitTestVisible="False">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition
+                                                            Binding="{Binding Path=Text, RelativeSource={RelativeSource AncestorType=TextBox}}"
+                                                            Value="" />
+                                                        <Condition
+                                                            Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource AncestorType=TextBox}}"
+                                                            Value="False" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                                <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </TextBox.Template>
+            </TextBox>
+
+            <Grid Grid.Row="1" Grid.Column="1" Margin="10,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="310" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0"
+                        BorderThickness="1"
+                        BorderBrush="#333">
+                    <ListView ItemsSource="{Binding Items}"
+                              SelectedItem="{Binding SelectedItem}"
+                              VirtualizingPanel.IsVirtualizing="True"
+                              VirtualizingPanel.VirtualizationMode="Recycling"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              BorderThickness="0">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="Padding" Value="8,4" />
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+                                <Setter Property="BorderThickness" Value="0" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewItem">
+                                            <Border x:Name="Border"
+                                                    Background="{TemplateBinding Background}"
+                                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                                    SnapsToDevicePixels="true">
+                                                <ContentPresenter
+                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                    Margin="{TemplateBinding Padding}"
+                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="Border" Property="Background"
+                                                            Value="{StaticResource AccentBrush}" />
+                                                </Trigger>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter TargetName="Border" Property="Background"
+                                                            Value="{StaticResource HoverBrush}" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                                    <TextBlock Grid.Column="1"
+                                               Text="{Binding CategoryName}"
+                                               Foreground="#888888"
+                                               FontStyle="Italic"
+                                               Margin="10,0,0,0"
+                                               Visibility="{Binding DataContext.IsSearchActive, 
+                                 RelativeSource={RelativeSource AncestorType=UserControl}, 
+                                 Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Border>
+            </Grid>
+        </Grid>
+        
+        <Grid Row="1" Margin="10,0,10,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="170" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
+            <Grid Grid.Column="0" Grid.RowSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                
+                <StackPanel Grid.Row="1" Margin="0, 40, 0, 0">
+                <Button 
+                        Content="Learn Skill"
+                        Command="{Binding LearnSkillCommand}"
+                        Height="30"
+                        Margin="0,0,0,5" />
+                <Button 
+                        Content="Unlearn Skill"
+                        Command="{Binding UnlearnSkillCommand}"
+                        Height="30" />
+                </StackPanel>
+            </Grid>
+
+            <TextBox Grid.Row="0" Grid.Column="1"
+                     Name="SearchBox2"
+                     Text="{Binding SkillSearchText, UpdateSourceTrigger=PropertyChanged}"
+                     HorizontalAlignment="Right"
+                     Width="150"
+                     Height="25"
+                     VerticalAlignment="Center"
+                     Margin="0,0,0,5">
+                <TextBox.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="3" />
+                    </Style>
+                </TextBox.Resources>
+
+                <TextBox.Template>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="3">
+                            <Grid>
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                              Focusable="false"
+                                              HorizontalScrollBarVisibility="Hidden"
+                                              VerticalScrollBarVisibility="Hidden"
+                                              VerticalAlignment="Center"
+                                              Margin="5,0,0,0" />
+                                <TextBlock x:Name="placeholderText"
+                                           Text="Search skills..."
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Left"
+                                           Margin="5,0,0,0"
+                                           Foreground="Gray"
+                                           IsHitTestVisible="False">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition
+                                                            Binding="{Binding Path=Text, RelativeSource={RelativeSource AncestorType=TextBox}}"
+                                                            Value="" />
+                                                        <Condition
+                                                            Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource AncestorType=TextBox}}"
+                                                            Value="False" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                                <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </TextBox.Template>
+            </TextBox>
+            
+            <Grid Grid.Row="1" Grid.Column="1" Margin="10,0,0,0">
+                <Border BorderThickness="1"
+                        BorderBrush="#333"
+                        Height="150">
+                    <ListView ItemsSource="{Binding Skills}"
+                              SelectedItem="{Binding SelectedSkill}"
+                              VirtualizingPanel.IsVirtualizing="True"
+                              VirtualizingPanel.VirtualizationMode="Recycling"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              BorderThickness="0">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="Padding" Value="8,4" />
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+                                <Setter Property="BorderThickness" Value="0" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewItem">
+                                            <Border x:Name="Border"
+                                                    Background="{TemplateBinding Background}"
+                                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                                    SnapsToDevicePixels="true">
+                                                <ContentPresenter
+                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                    Margin="{TemplateBinding Padding}"
+                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="Border" Property="Background"
+                                                            Value="{StaticResource AccentBrush}" />
+                                                </Trigger>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter TargetName="Border" Property="Background"
+                                                            Value="{StaticResource HoverBrush}" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Border>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

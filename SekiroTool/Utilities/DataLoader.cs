@@ -125,4 +125,28 @@ public class DataLoader
 
         return itemList;
     }
+    
+    public static List<Skill> GetSkillList()
+    {
+        List<Skill> skillList = new List<Skill>();
+
+        string? csvData = Resources.Skills;
+
+        if (string.IsNullOrWhiteSpace(csvData)) return skillList;
+
+        using StringReader reader = new StringReader(csvData);
+        string line;
+        while ((line = reader.ReadLine()) != null)
+        {
+            if (string.IsNullOrWhiteSpace(line)) continue;
+            
+            string[] parts = line.Split(',');
+            int id = int.Parse(parts[0], CultureInfo.InvariantCulture);
+            string name = parts[1].Trim();
+            Console.WriteLine(line);
+            skillList.Add(new Skill(name, id));
+        }
+
+        return skillList;
+    }
 }

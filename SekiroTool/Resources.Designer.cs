@@ -616,6 +616,28 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 48 a1 00 00 00 00 00    movabs rax,ds:0x0
+        ///00 00 00
+        ///48 8b 40 08             mov    rax,QWORD PTR [rax+0x8]
+        ///48 8b 98 b0 05 00 00    mov    rbx,QWORD PTR [rax+0x5b0]
+        ///48 89 d9                mov    rcx,rbx
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///48 83 ec 38             sub    rsp,0x38
+        ///89 44 24 10             mov    DWORD PTR [rsp+0x10],eax
+        ///48 8d 54 24 10          lea    rdx,[rsp+0x10]
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///ff d0                   call   rax
+        ///89 c2                    [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string RemoveItem {
+            get {
+                return ResourceManager.GetString("RemoveItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 184549376,1101950
         ///184614912,1121951
         ///218103808,1111955
