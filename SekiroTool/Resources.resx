@@ -830,32 +830,62 @@ c3                      ret</value>
 11170,Inner Isshin,1
 11180,Genichiro Way of Tomoe,1</value>
     </data>
-    <data name="Weapons" xml:space="preserve">
-        <value>5100,Whirlwind Slash
-5200,Nightjar Slash
-5300,Ichimonji
-5400,Dragon Flash
-5500,Ashina Cross
-5600,Floating Passage
-5700,Mortal Draw
-5800,Senpou Leaping Kicks
-5900,Praying Strikes
-6000,Shadowrush
-6100,One Mind
-7000,Nightjar Slash Reversal
-7100,Ichimonji: Double
-7200,Spiral Cloud Passage
-7300,Empowered Mortal Draw
-7400,High Monk
-7500,Praying Strikes - Exorcism
-7600,Shadowfall
-7700,Sakura Dance</value>
-    </data>
-    <data name="Protector" xml:space="preserve">
-        <value>103000,Original Memory: Wolf
-303000,Another's Memory: Shura
-403000,Another's Memory: Ashina
-503000,Another's Memory: Tengu</value>
+    <data name="Skills" xml:space="preserve">
+        <value>200000,Grappling Hook Attack
+200100,Mid-air Deflection
+200200,Mid-air Prosthetic Tool
+200300,Mikiri Counter
+200400,Run and Slide
+200500,Mid-air Combat Arts
+200600,Vault Over
+210000,Whirlwind Slash
+211000,Shadowrush
+301000,Chasing Slice
+301100,Fang and Blade
+301200,Projected Force
+301300,Living Force
+310000,Nightjar Slash
+310100,Nightjar Slash Reversal
+410000,Ichimonji
+410100,Ichimonji: Double
+411000,Ashina Cross
+510000,Praying Strikes
+510100,Praying Strikes - Exorcism
+511000,Senpou Leaping Kicks
+511100,High Monk
+610100,Shadowfall
+611100,Spiral Cloud Passage
+612100,Empowered Mortal Draw
+620000,Suppress Presence
+620100,Suppress Sound
+630000,Virtuous Deed
+630100,Most Virtuous Deed
+640000,Emma's Medicine: Potency
+640100,Emma's Medicine: Aroma
+640200,Shinobi Medicine Rank 1
+640300,Shinobi Medicine Rank 2
+640400,Shinobi Medicine Rank 3
+650000,A Shinobi's Karma: Body
+650100,A Shinobi's Karma: Mind
+650200,Sculptor's Karma: Blood
+650300,Sculptor's Karma: Scars
+650400,A Beast's Karma
+660000,Breath of Life: Light
+660100,Breath of Life: Shadow
+660200,Breath of Nature: Light
+660300,Breath of Nature: Shadow
+660400,Shinobi Eyes
+660500,Devotion
+660600,Ascending Carp
+660700,Descending Carp
+660800,Flowing Water
+670000,Mortal Draw
+671000,Dragon Flash
+672000,Floating Passage
+673000,One Mind
+674000,Sakura Dance
+680000,Mibu Breathing Technique
+681000,Anti-air Deathblow</value>
     </data>
     <data name="NoCameraSpin" xml:space="preserve">
         <value>50                      push   rax
@@ -1189,5 +1219,84 @@ b8 18 00 00 00          mov    eax,0x18
 89 83 30 01 00 00       mov    DWORD PTR [rbx+0x130],eax
 5a                      pop    rdx
 e9 00 00 00 00          jmp    3c &lt;normal+0xc&gt;</value>
+    </data>
+    <data name="Prosthetics" xml:space="preserve">
+        <value>70000,Loaded Shuriken
+70100,Spinning Shuriken
+70200,Gouging Top
+70300,Phantom Kunai
+70400,Sen Throw
+70500,Lazulite Shuriken
+71000,Shinobi Firecracker
+71100,Spring-load Firecracker
+71200,Long Spark
+71300,Purple Fume Spark
+72000,Flame Vent
+72100,Spring-load Flame Vent
+72200,Okinaga's Flame Vent
+72300,Lazulite Sacred Flame
+73000,Loaded Axe
+73100,Spring-load Axe
+73200,Sparking Axe
+73300,Lazulite Axe
+74000,Mist Raven
+74100,Aged Feather Mist Raven
+74200,Great Feather Mist Raven
+75000,Sabimaru
+75100,Improved Sabimaru
+75200,Piercing Sabimaru
+75300,Lazulite Sabimaru
+76000,Loaded Umbrella
+76100,Loaded Umbrella - Magnet
+76200,Suzaku's Lotus Umbrella
+76300,Phoenix's Lilac Umbrella
+77000,Divine Abduction
+77100,Double Divine Abduction
+77200,Golden Vortex
+78000,Loaded Spear
+78100,Loaded Spear Thrust type
+78200,Loaded Spear Cleave type
+78300,Spiral Spear
+78400,Leaping Flame
+79000,Finger Whistle
+79100,Mountain Echo
+79200,Malcontent</value>
+    </data>
+    <data name="GiveSkillsAndPros" xml:space="preserve">
+        <value>48 83 ec 28             sub    rsp,0x28
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+89 04 24                mov    DWORD PTR [rsp],eax
+48 8d 0c 24             lea    rcx,[rsp]
+ba 01 00 00 00          mov    edx,0x1
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+48 83 c4 28             add    rsp,0x28
+c3                      ret</value>
+    </data>
+    <data name="RemoveItem" xml:space="preserve">
+        <value>48 a1 00 00 00 00 00    movabs rax,ds:0x0
+00 00 00
+48 8b 40 08             mov    rax,QWORD PTR [rax+0x8]
+48 8b 98 b0 05 00 00    mov    rbx,QWORD PTR [rax+0x5b0]
+48 89 d9                mov    rcx,rbx
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+48 83 ec 38             sub    rsp,0x38
+89 44 24 10             mov    DWORD PTR [rsp+0x10],eax
+48 8d 54 24 10          lea    rdx,[rsp+0x10]
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+89 c2                   mov    edx,eax
+48 8b 8b 38 01 00 00    mov    rcx,QWORD PTR [rbx+0x138]
+41 b8 01 00 00 00       mov    r8d,0x1
+41 b9 01 00 00 00       mov    r9d,0x1
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+ff d0                   call   rax
+48 83 c4 38             add    rsp,0x38
+c3                      ret</value>
     </data>
 </root>

@@ -25,11 +25,36 @@ public class ItemService(IMemoryService memoryService) : IItemService
         });
         
         memoryService.WriteInt32(structPtr, 1);
-        memoryService.WriteUInt16(structPtr + 0x4, item.ItemId);
+        memoryService.WriteUInt16(structPtr + 0x4, (short) item.ItemId);
         memoryService.WriteUInt16(structPtr + 0x6, item.ItemType);
         memoryService.WriteInt32(structPtr + 0x8, quantity);
         memoryService.WriteBytes(code, bytes);
 
         memoryService.RunThread(code);
+    }
+
+    public void GiveSkillOrPros(int id)
+    {
+        var bytes = AsmLoader.GetAsmBytes("GiveSkillsAndPros");
+        AsmHelper.WriteAbsoluteAddresses(bytes, new []
+        {
+            ((long) id, 0x4 + 2),
+            (Functions.GiveSkillAndPros, 0x1A + 2)
+        });
+        
+        memoryService.AllocateAndExecute(bytes);
+    }
+
+    public void RemoveItem(int id)
+    {
+        var bytes = AsmLoader.GetAsmBytes("RemoveItem");
+        AsmHelper.WriteAbsoluteAddresses(bytes, new []
+        {
+            (GameDataMan.Base.ToInt64(), 0x0 + 2),
+            (id, 0x18 + 2),
+            (Functions.GetItemSlot, 0x2F + 2),
+            (Functions.RemoveItem, 0x50 + 2)
+        });
+        memoryService.AllocateAndExecute(bytes);
     }
 }
