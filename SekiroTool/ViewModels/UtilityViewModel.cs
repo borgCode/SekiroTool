@@ -341,6 +341,11 @@ public class UtilityViewModel : BaseViewModel
         GameSpeed = _utilityService.GetGameSpeed();
         if (IsHitBoxViewEnabled) _utilityService.ToggleHitboxView(true);
         if (IsSoundViewEnabled) EnableDrawFeature(() => _utilityService.TogglePlayerSoundView(true));
+        if (IsHideMapEnabled) _utilityService.ToggleGameRendFlag(Offsets.GameRendFlags.ShowMap, true);
+        if (IsHideObjEnabled) _utilityService.ToggleGameRendFlag(Offsets.GameRendFlags.ShowObj, true);
+        if (IsHideChrEnabled) _utilityService.ToggleGameRendFlag(Offsets.GameRendFlags.ShowChr, true);
+        if (IsHideSfxEnabled) _utilityService.ToggleGameRendFlag(Offsets.GameRendFlags.ShowSfx, true);
+        if (IsHideGrassEnabled) _utilityService.ToggleGameRendFlag(Offsets.GameRendFlags.ShowGrass, true);
     }
 
     private void EnableDrawFeature(Action action)
