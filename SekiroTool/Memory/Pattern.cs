@@ -185,6 +185,15 @@ public static class Patterns
         7
     );
 
+    public static readonly Pattern MeshBase = new Pattern(
+        new byte[] { 0x88, 0x43, 0x08, 0x48, 0x8B, 0xC3, 0x85 },
+        "xxxxxxx",
+        0x1A,
+        AddressingMode.Relative,
+        2,
+        7
+    );
+
     #endregion
 
 
@@ -261,7 +270,6 @@ public static class Patterns
         0x7,
         AddressingMode.Absolute
     );
-
 
     #endregion
 

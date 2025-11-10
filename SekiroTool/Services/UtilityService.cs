@@ -27,6 +27,12 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
         memoryService.WriteUInt8(flagPtr, isEnabled ? 0 : 1);
     }
 
+    public void ToggleMeshFlag(int offset, bool isEnabled)
+    {
+        var flagPtr = MeshBase.Base + offset;
+        memoryService.WriteUInt8(flagPtr, isEnabled ? 1 : 0);
+    }
+
     public void OpenSkillMenu()
     {
         var bytes = AsmLoader.GetAsmBytes("OpenMenuNoParams");

@@ -7,6 +7,7 @@ public interface IUtilityService
     void ToggleHitboxView(bool isEnabled);
     void TogglePlayerSoundView(bool isEnabled);
     void ToggleGameRendFlag(int offset, bool isEnabled);
+    void ToggleMeshFlag(int offset, bool isEnabled);
     void OpenSkillMenu();
     void OpenUpgradeProstheticsMenu();
     void OpenRegularShop(ShopLineup shopLineup);

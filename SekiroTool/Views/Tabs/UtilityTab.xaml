@@ -91,20 +91,25 @@
                               Grid.Column="1" Grid.Row="4"
                               Margin="0,2" />
 
-                    <!-- <CheckBox Content="Collision Mesh 1" -->
-                    <!--           IsChecked="{Binding IsDrawLowHitEnabled}" -->
-                    <!--           Grid.Column="2" Grid.Row="0" -->
-                    <!--           Margin="0,2" /> -->
-                    <!-- -->
-                    <!-- <CheckBox Content="Collision Mesh 2" -->
-                    <!--           IsChecked="{Binding IsDrawHighHitEnabled}" -->
-                    <!--           Grid.Column="2" Grid.Row="1" -->
-                    <!--           Margin="0,2" /> -->
-                    <!-- -->
-                    <!-- <CheckBox Content="Character Mesh" -->
-                    <!--           IsChecked="{Binding IsDrawChrRagdollEnabled}" -->
-                    <!--           Grid.Column="2" Grid.Row="2" -->
-                    <!--           Margin="0,2" /> -->
+                    <CheckBox Content="Collision Mesh 1"
+                              IsChecked="{Binding IsDrawLowHitEnabled}"
+                              Grid.Column="2" Grid.Row="0"
+                              Margin="0,2" />
+                    
+                    <CheckBox Content="Collision Mesh 2"
+                              IsChecked="{Binding IsDrawHighHitEnabled}"
+                              Grid.Column="2" Grid.Row="1"
+                              Margin="0,2" />
+                    
+                    <CheckBox Content="Object Mesh"
+                              IsChecked="{Binding IsDrawObjMeshEnabled}"
+                              Grid.Column="2" Grid.Row="2"
+                              Margin="0,2" />
+                    
+                    <CheckBox Content="Character Mesh"
+                              IsChecked="{Binding IsDrawChrRagdollEnabled}"
+                              Grid.Column="2" Grid.Row="3"
+                              Margin="0,2" />
                 </Grid>
             </StackPanel>
         </Border>

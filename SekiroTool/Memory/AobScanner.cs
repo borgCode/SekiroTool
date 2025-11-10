@@ -40,6 +40,7 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.DlUserInputManager.Base = FindAddressByPattern(Patterns.DlUserInputManager);
         Offsets.TargetingView.Base = FindAddressByPattern(Patterns.TargetingView);
         Offsets.GameRendFlags.Base = FindAddressByPattern(Patterns.GameRendFlags);
+        Offsets.MeshBase.Base = FindAddressByPattern(Patterns.MeshBase);
         
         Offsets.IdolRequests.Base = FindAddressByRelativeChain(
             Patterns.IdolRequests,

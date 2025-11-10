@@ -177,6 +177,15 @@ public static class Offsets
         public const int ShowSfx = 0x3;
         public const int ShowGrass = 0x6;
     }
+    
+    public static class MeshBase
+    {
+        public static IntPtr Base;
+        public const int LowHit = 0x0;
+        public const int HighHit = 0x1;
+        public const int Objects = 0x2;
+        public const int Chr = 0x3;
+    }
 
 
     public static class EventFlagMan
