@@ -42,7 +42,7 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager)
 
         memoryService.AllocateAndExecute(bytes);
     }
-
+    
     public void ToggleButterflyNoSummons(bool isEnabled)
     {
         var code = CodeCaveOffsets.Base + CodeCaveOffsets.ButterflyNoSummons;

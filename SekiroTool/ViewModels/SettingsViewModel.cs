@@ -42,6 +42,7 @@ public class SettingsViewModel : BaseViewModel
             // { "DecreasePlayerSpeed", text => DecreasePlayerSpeedHotkeyText = text },
             // { "DealNoDamage", text => DealNoDamageHotkeyText = text },
             { HotkeyActions.SkipDragonPhaseOne.ToString(), text => SkipDragonPhaseOneHotkeyText = text },
+            { HotkeyActions.TriggerDragonFinalAttack.ToString(), text => TriggerDragonFinalAttackHotkeyText = text },
             { HotkeyActions.NoButterflySummons.ToString(), text => NoButterflySummonsHotkeyText = text },
             { HotkeyActions.AllNoDeath.ToString(), text => AllNoDeathHotkeyText = text },
             { HotkeyActions.AllNoDamage.ToString(), text => AllNoDamageHotkeyText = text },
@@ -289,6 +290,14 @@ public class SettingsViewModel : BaseViewModel
     {
         get => _skipDragonPhaseOneHotkeyText;
         set => SetProperty(ref _skipDragonPhaseOneHotkeyText, value);
+    }
+    
+    private string _triggerDragonFinalAttackHotkeyText;
+
+    public string TriggerDragonFinalAttackHotkeyText
+    {
+        get => _triggerDragonFinalAttackHotkeyText;
+        set => SetProperty(ref _triggerDragonFinalAttackHotkeyText, value);
     }
     
     private string _noButterflySummonsHotkeyText;

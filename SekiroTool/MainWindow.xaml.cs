@@ -55,7 +55,7 @@ public partial class MainWindow : Window
         
         PlayerViewModel playerViewModel = new PlayerViewModel(_playerService, _hotkeyManager, _gameStateService);
         TravelViewModel travelViewModel = new TravelViewModel(travelService, _gameStateService, _hotkeyManager, eventService);
-        EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _hotkeyManager, _gameStateService, debugDrawService);
+        EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _hotkeyManager, _gameStateService, debugDrawService, eventService);
         TargetViewModel targetViewModel =
             new TargetViewModel(_gameStateService, _hotkeyManager, targetService, debugDrawService);
         UtilityViewModel utilityViewModel =

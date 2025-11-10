@@ -1,6 +1,7 @@
 ﻿using System.Windows.Input;
 using SekiroTool.Core;
 using SekiroTool.Enums;
+using SekiroTool.GameIds;
 using SekiroTool.Interfaces;
 using SekiroTool.Utilities;
 
@@ -11,13 +12,15 @@ public class EnemyViewModel : BaseViewModel
     private readonly IEnemyService _enemyService;
     private readonly HotkeyManager _hotkeyManager;
     private readonly IDebugDrawService _debugDrawService;
+    private readonly IEventService _eventService;
 
     public EnemyViewModel(IEnemyService enemyService, HotkeyManager hotkeyManager, IGameStateService gameStateService,
-        IDebugDrawService debugDrawService)
+        IDebugDrawService debugDrawService, IEventService eventService)
     {
         _enemyService = enemyService;
         _hotkeyManager = hotkeyManager;
         _debugDrawService = debugDrawService;
+        _eventService = eventService;
 
         RegisterHotkeys();
 
@@ -25,13 +28,15 @@ public class EnemyViewModel : BaseViewModel
         gameStateService.Subscribe(GameState.NotLoaded, OnGameNotLoaded);
 
         SkipDragonPhaseOneCommand = new DelegateCommand(SkipDragonPhaseOne);
+        TriggerDragonFinalAttackCommand = new DelegateCommand(TriggerFinalDragonAttack);
     }
 
-
+    
     #region Commands
 
     public ICommand SkipDragonPhaseOneCommand { get; set; }
-
+    public ICommand TriggerDragonFinalAttackCommand { get; set; }
+    
     #endregion
 
     #region Properties
@@ -166,6 +171,12 @@ public class EnemyViewModel : BaseViewModel
             if (!AreOptionsEnabled) return;
             _enemyService.SkipDragonPhaseOne();
         });
+        _hotkeyManager.RegisterAction(HotkeyActions.TriggerDragonFinalAttack.ToString(), () =>
+        {
+            if (!AreOptionsEnabled) return;
+            TriggerFinalDragonAttack();
+        });
+        
         _hotkeyManager.RegisterAction(HotkeyActions.NoButterflySummons.ToString(),
             () => { IsNoButterflySummonsEnabled = !IsNoButterflySummonsEnabled; });
         _hotkeyManager.RegisterAction(HotkeyActions.AllNoDeath.ToString(), () => { IsNoDeathEnabled = !IsNoDeathEnabled; });
@@ -199,6 +210,12 @@ public class EnemyViewModel : BaseViewModel
     }
 
     private void SkipDragonPhaseOne() => _enemyService.SkipDragonPhaseOne();
+    
+    private void TriggerFinalDragonAttack()
+    {
+        if (!_eventService.GetEvent(GameEvent.HasDragonPhase2TreesSpawned)) return;
+        _eventService.SetEvent(GameEvent.TriggerFinalDragonAttack, true);
+    }
 
     #endregion
 }
