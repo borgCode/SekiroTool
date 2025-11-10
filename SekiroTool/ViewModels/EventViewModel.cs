@@ -2,6 +2,7 @@
 using System.Windows.Media;
 using SekiroTool.Core;
 using SekiroTool.Enums;
+using SekiroTool.GameIds;
 using SekiroTool.Interfaces;
 
 namespace SekiroTool.ViewModels;
@@ -161,15 +162,12 @@ public class EventViewModel : BaseViewModel
     }
 
     private void SetDemonBell(object parameter) =>
-        _eventService.SetEvent(GameIds.GameEvent.IsDemonBellActivated, Convert.ToBoolean(parameter));
+        _eventService.SetEvent(GameEvent.IsDemonBellActivated, Convert.ToBoolean(parameter));
 
     private void SetNoKurosCharm(object parameter) =>
-        _eventService.SetEvent(GameIds.GameEvent.IsNoKurosCharm, Convert.ToBoolean(parameter));
-    
-    private void MoveIsshinToCastle()
-    {
-        throw new NotImplementedException();
-    }
+        _eventService.SetEvent(GameEvent.IsNoKurosCharm, Convert.ToBoolean(parameter));
+
+    private void MoveIsshinToCastle() => _eventService.SetEvent(GameEvent.HasIsshinMovedToCastle, true);
 
     #endregion
 }
