@@ -214,17 +214,6 @@
                        Converter={StaticResource BoolToVisibilityConverter}}"/>
                     
                 </StackPanel>
-                <StackPanel Grid.Column="2" Margin="10, 0, 0, 0">
-                    <CheckBox Content="No Souls from Enemies"
-                              IsChecked="{Binding IsNoSoulGainEnabled}"
-                              Margin="0,2" />
-                    <CheckBox Content="No Hollowing on Death"
-                              IsChecked="{Binding IsNoHollowingEnabled}"
-                              Margin="0,2" />
-                    <CheckBox Content="No Soul Loss on Death"
-                              IsChecked="{Binding IsNoSoulLossEnabled}"
-                              Margin="0,2" />
-                </StackPanel>
             </Grid>
 
             <Grid Grid.Row="3" Margin="0,0,0,5">
@@ -233,16 +222,6 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-
-                <TextBlock Grid.Column="0" Text="{Binding SoulLevel, StringFormat='Soul Level: {0}'}" FontWeight="Bold" />
-                <TextBlock Grid.Column="1" Text="{Binding SoulMemory, StringFormat='Soul Memory: {0}'}"
-                           FontWeight="Bold" Margin="15,0,0,0" />
-
-                <CheckBox Grid.Column="2"
-                          IsChecked="{Binding IsDisableSoulMemWriteEnabled}"
-                          Content="Exclude Soul Memory when stat editing"
-                          VerticalAlignment="Center"
-                          Margin="25,0,5,0" />
 
             </Grid>
             <Grid Grid.Row="4">
@@ -276,18 +255,6 @@
 
                 </StackPanel>
                 <StackPanel Grid.Column="2">
-                    <Button Content="Restore Spellcasts"
-                            Width="150"
-                            Margin="0, 15, 0,0"
-
-                            IsEnabled="{Binding AreOptionsEnabled}">
-                    </Button>
-                    <Button Content="Restore Humanity"
-                            Width="150"
-                            Margin="0, 15, 0,0"
-
-                            IsEnabled="{Binding AreOptionsEnabled}">
-                    </Button>
                     <Button Content="Rest"
                             Width="150"
                             Margin="0, 15, 0,0"
@@ -303,7 +270,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="Souls to give:" VerticalAlignment="Center" />
+                <TextBlock Grid.Column="0" Text="Sen to give?" VerticalAlignment="Center" />
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="10,0,0,0">
                     <xctk:IntegerUpDown
@@ -317,7 +284,7 @@
                         IsEnabled="{Binding AreOptionsEnabled}"
                         BorderBrush="#3F3F46" />
 
-                    <Button Content="Give Souls"
+                    <Button Content="Give Sen?"
 
                             IsEnabled="{Binding AreOptionsEnabled}"
                             Margin="10,0,0,0"
@@ -406,10 +373,6 @@
                                                    FontSize="10" />
                                     </Border>
                                 </StackPanel>
-
-                                <!-- <CheckBox Content="Disable Roll" -->
-                                <!--           IsChecked="{Binding IsNoRollEnabled}" -->
-                                <!--           Margin="0,2" /> -->
 
                             </StackPanel>
 
