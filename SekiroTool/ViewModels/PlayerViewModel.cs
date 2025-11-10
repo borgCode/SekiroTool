@@ -30,6 +30,7 @@ public class PlayerViewModel : BaseViewModel
 
         gameStateService.Subscribe(GameState.Loaded, OnGameLoaded);
         gameStateService.Subscribe(GameState.NotLoaded, OnGameNotLoaded);
+        gameStateService.Subscribe(GameState.GameStart, OnGameStart);
 
         SavePositionCommand = new DelegateCommand(SavePosition);
         RestorePositionCommand = new DelegateCommand(RestorePosition);
@@ -45,6 +46,8 @@ public class PlayerViewModel : BaseViewModel
 
         DataLoader.RequestRespawnHash();
     }
+
+    
 
 
     #region Commands
@@ -323,6 +326,14 @@ public class PlayerViewModel : BaseViewModel
         }
     }
 
+    private bool _isAutoSetNewGameSevenEnabled;
+    
+    public bool IsAutoSetNewGameSevenEnabled
+    {
+        get => _isAutoSetNewGameSevenEnabled;
+        set => SetProperty(ref _isAutoSetNewGameSevenEnabled, value);
+    }
+
     private int _currentHealth;
 
     public int CurrentHealth
@@ -416,6 +427,8 @@ public class PlayerViewModel : BaseViewModel
         _playerTick.Start();
 
         if (_isConfettiFlagEnabled) _playerService.ToggleConfettiFlag(true);
+        
+        NewGame = _playerService.GetNewGame();
     }
 
 
@@ -423,6 +436,13 @@ public class PlayerViewModel : BaseViewModel
     {
         AreOptionsEnabled = false;
         _playerTick.Stop();
+    }
+    
+    private void OnGameStart()
+    {
+        if (!IsAutoSetNewGameSevenEnabled) return;
+        _playerService.SetNewGame(7);
+        NewGame = _playerService.GetNewGame();
     }
 
     private void PlayerTick(object? sender, EventArgs e)
@@ -432,8 +452,7 @@ public class PlayerViewModel : BaseViewModel
         PosX = coords.x;
         PosY = coords.y;
         PosZ = coords.z;
-        NewGame = _playerService.GetNewGame();
-
+        
         CurrentHealth = _playerService.GetCurrentHp();
         MaxHealth = _playerService.GetMaxHp();
         CurrentPosture = _playerService.GetCurrentPosture();

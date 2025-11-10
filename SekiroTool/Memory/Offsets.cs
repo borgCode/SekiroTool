@@ -257,6 +257,7 @@ public static class Offsets
         public static IntPtr Base;
         public const int PlayerGameData = 0x8;
         public const int NewGame = 0x70;
+        public const int IGT = 0x9C;
     }
 
     public static class RequestRespawnGlobal
