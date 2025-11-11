@@ -298,6 +298,7 @@ public static class Offsets
         public static long StartMusic;
         public static long HpWrite;
         public static long InfiniteConfetti;
+        public static long SetLastAct;
     }
 
     public static class Functions

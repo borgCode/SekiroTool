@@ -10,6 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Border Grid.Row="0"
@@ -87,51 +88,137 @@
             </StackPanel>
         </Border>
 
-        <Border Grid.Row="1" Grid.Column="0"
+        <Border Grid.Row="1"
                 BorderThickness="1"
                 BorderBrush="#333"
                 CornerRadius="3"
-                Margin="0,0,5,0">
+                Margin="0,0,0,5">
             <StackPanel Margin="10">
-                <TextBlock Text=""
-                           FontWeight="Bold"
+                <TextBlock Text="Divine Dragon"
                            Margin="0,0,0,10" />
 
-                <WrapPanel HorizontalAlignment="Center">
-                    <Button Content="Skip Dragon Phase 1"
-                            IsEnabled="{Binding AreOptionsEnabled}"
-                            Command="{Binding SkipDragonPhaseOneCommand}"
-                            Height="24"
-                            Margin="3" />
-                    <StackPanel Orientation="Horizontal">
-                        <Button Content="Trigger Dragon Phase 2 Final Attack"
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                        <Button Content="Skip Dragon Phase 1"
                                 IsEnabled="{Binding AreOptionsEnabled}"
-                                Command="{Binding TriggerDragonFinalAttackCommand}"
+                                Command="{Binding SkipDragonPhaseOneCommand}"
                                 Height="24"
-                                Margin="3" />
-                        <Border
-                            Background="#3498db"
-                            CornerRadius="10"
-                            Width="12"
-                            Height="12"
-                            Margin="5,0,10,0"
-                            VerticalAlignment="Center"
-                            ToolTip="Will work after the first 5 trees spawn"
-                            ToolTipService.InitialShowDelay='100'>
-                            <TextBlock Text="i"
-                                       Foreground="White"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontWeight="Bold"
-                                       FontSize="10" />
-                        </Border>
+                                Margin="0,0,0,5" />
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Trigger Dragon Phase 2 Final Attack"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Command="{Binding TriggerDragonFinalAttackCommand}"
+                                    Height="24" />
+                            <Border
+                                Background="#3498db"
+                                CornerRadius="10"
+                                Width="12"
+                                Height="12"
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                ToolTip="Will work after the first 5 trees spawn"
+                                ToolTipService.InitialShowDelay='100'>
+                                <TextBlock Text="i"
+                                           Foreground="White"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontWeight="Bold"
+                                           FontSize="10" />
+                            </Border>
+                        </StackPanel>
                     </StackPanel>
-                </WrapPanel>
+                    
+                    <StackPanel Grid.Column="1" Margin="40,0,0,5" >
+                        <TextBlock Text="Force Phase 2 starting combo"
+                                   Margin="0,0,0,5" />
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox Content="Combo 1"
+                                      IsChecked="{Binding IsDragonCombo1Enabled}"
+                                      Margin="0,2" />
+                            <Border
+                                Background="#3498db"
+                                CornerRadius="10"
+                                Width="12"
+                                Height="12"
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                ToolTip="Kanji Swipe -> Vertical Slams -> Neck Swim"
+                                ToolTipService.InitialShowDelay='100'>
+                                <TextBlock Text="i"
+                                           Foreground="White"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontWeight="Bold"
+                                           FontSize="10" />
+                            </Border>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox Content="Combo 2"
+                                      IsChecked="{Binding IsDragonCombo2Enabled}"
+                                      Margin="0,2" />
+                            <Border
+                                Background="#3498db"
+                                CornerRadius="10"
+                                Width="12"
+                                Height="12"
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                ToolTip="Vertical slams -> Neck Swim"
+                                ToolTipService.InitialShowDelay='100'>
+                                <TextBlock Text="i"
+                                           Foreground="White"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontWeight="Bold"
+                                           FontSize="10" />
+                            </Border>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox Content="Combo 3"
+                                      IsChecked="{Binding IsDragonCombo3Enabled}"
+                                      Margin="0,2" />
+                            <Border
+                                Background="#3498db"
+                                CornerRadius="10"
+                                Width="12"
+                                Height="12"
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                ToolTip="Kanji Swipe -> Neck Swim -> Vertical Slams"
+                                ToolTipService.InitialShowDelay='100'>
+                                <TextBlock Text="i"
+                                           Foreground="White"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontWeight="Bold"
+                                           FontSize="10" />
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="2"
+                BorderThickness="1"
+                BorderBrush="#333"
+                CornerRadius="3">
+            <StackPanel Margin="10">
+                <TextBlock Text="Butterfly"
+                           Margin="0,0,0,10" />
 
                 <CheckBox Content="Butterfly No Summons"
                           IsChecked="{Binding IsNoButterflySummonsEnabled}"
                           Margin="0,2" />
-
             </StackPanel>
         </Border>
     </Grid>

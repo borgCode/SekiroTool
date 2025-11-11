@@ -79,6 +79,8 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Hooks.InfiniteConfetti = addr, saved);
         TryPatternWithFallback("HpWrite", Patterns.HpWrite,
             addr => Offsets.Hooks.HpWrite = addr, saved);
+        TryPatternWithFallback("SetLastAct", Patterns.SetLastAct,
+            addr => Offsets.Hooks.SetLastAct = addr, saved);
 
         TryPatternWithFallback("NoLogo", Patterns.NoLogo,
             addr => Offsets.Patches.NoLogo = addr, saved);
@@ -175,6 +177,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Hooks.StartMusic: 0x{Offsets.Hooks.StartMusic:X}");
         Console.WriteLine($"Hooks.HpWrite: 0x{Offsets.Hooks.HpWrite:X}");
         Console.WriteLine($"Hooks.InfiniteConfetti: 0x{Offsets.Hooks.InfiniteConfetti:X}");
+        Console.WriteLine($"Hooks.SetLastAct: 0x{Offsets.Hooks.SetLastAct:X}");
 
 
         Console.WriteLine($"Patches.NoLogo: 0x{Offsets.Patches.NoLogo.ToInt64():X}");

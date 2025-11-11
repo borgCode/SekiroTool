@@ -146,6 +146,57 @@ public class EnemyViewModel : BaseViewModel
             _enemyService.ToggleTargetingView(_isTargetingViewEnabled);
         }
     }
+    
+    private bool _isDragonCombo1Enabled;
+
+    public bool IsDragonCombo1Enabled
+    {
+        get => _isDragonCombo1Enabled;
+        set
+        {
+            SetProperty(ref _isDragonCombo1Enabled, value);
+            if (_isDragonCombo1Enabled)
+            {
+                IsDragonCombo2Enabled = false;
+                IsDragonCombo3Enabled = false;
+            }
+            _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo1, _isDragonCombo1Enabled);
+        }
+    }
+    
+    private bool _isDragonCombo2Enabled;
+
+    public bool IsDragonCombo2Enabled
+    {
+        get => _isDragonCombo2Enabled;
+        set
+        {
+            SetProperty(ref _isDragonCombo2Enabled, value);
+            if (_isDragonCombo2Enabled)
+            {
+                IsDragonCombo1Enabled = false;
+                IsDragonCombo3Enabled = false;
+            }
+            _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo2, _isDragonCombo2Enabled);
+        }
+    }
+    
+    private bool _isDragonCombo3Enabled;
+
+    public bool IsDragonCombo3Enabled
+    {
+        get => _isDragonCombo3Enabled;
+        set
+        {
+            SetProperty(ref _isDragonCombo3Enabled, value);
+            if (_isDragonCombo3Enabled)
+            {
+                IsDragonCombo1Enabled = false;
+                IsDragonCombo2Enabled = false;
+            }
+            _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo3, _isDragonCombo3Enabled);
+        }
+    }
 
     private bool _isNoButterflySummonsEnabled;
 
@@ -202,6 +253,9 @@ public class EnemyViewModel : BaseViewModel
         if (IsNoMoveEnabled) _enemyService.ToggleNoMove(true);
         if (IsDisableAiEnabled) _enemyService.ToggleDisableAi(true);
         if (IsNoPostureBuildupEnabled) _enemyService.ToggleNoPostureBuildup(true);
+        if (IsDragonCombo1Enabled) _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo1, true);
+        if (IsDragonCombo2Enabled) _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo2, true);
+        if (IsDragonCombo3Enabled) _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo3, true);
     }
 
     private void OnGameNotLoaded()

@@ -42,7 +42,46 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager)
 
         memoryService.AllocateAndExecute(bytes);
     }
-    
+
+    public void ToggleDragonActCombo(byte[] actArray, bool isEnabled)
+    {
+
+        var code = CodeCaveOffsets.Base + CodeCaveOffsets.DragonActCombosCode;
+        
+        if (isEnabled)
+        {
+            var stage = CodeCaveOffsets.Base + CodeCaveOffsets.DragonActCombosStage;
+            var attackBeforeManipCount = CodeCaveOffsets.Base + CodeCaveOffsets.AttacksBeforeManipCount;
+            memoryService.WriteUInt8(stage, 0);
+            memoryService.WriteUInt8(attackBeforeManipCount, 0);
+            var hookLoc = Hooks.SetLastAct;
+            
+            var bytes = AsmLoader.GetAsmBytes("DragonActCombo");
+            AsmHelper.WriteRelativeOffsets(bytes, new []
+            {
+                (code.ToInt64() + 0x10, stage.ToInt64(), 7, 0x10 + 3),
+                (code.ToInt64() + 0x21, attackBeforeManipCount.ToInt64(), 6, 0x21 + 2),
+                (code.ToInt64() + 0x27, attackBeforeManipCount.ToInt64(), 7, 0x27 + 2),
+                (code.ToInt64() + 0x69, hookLoc + 0x6, 5, 0x69 + 1)
+            });
+            
+            int[] patchOffsets = { 0x36, 0x47, 0x58 };
+        
+            for (int i = 0; i < Math.Min(actArray.Length, 3); i++)
+            {
+                bytes[patchOffsets[i]] = actArray[i];
+            }
+            
+            memoryService.WriteBytes(code, bytes);
+            hookManager.InstallHook(code.ToInt64(), hookLoc,
+                [0x88, 0x98, 0x42, 0xB7, 0x00, 0x00]);
+        }
+        else
+        {
+            hookManager.UninstallHook(code.ToInt64());
+        }
+    }
+
     public void ToggleButterflyNoSummons(bool isEnabled)
     {
         var code = CodeCaveOffsets.Base + CodeCaveOffsets.ButterflyNoSummons;

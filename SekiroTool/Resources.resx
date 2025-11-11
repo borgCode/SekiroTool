@@ -1299,4 +1299,40 @@ ff d0                   call   rax
 48 83 c4 38             add    rsp,0x38
 c3                      ret</value>
     </data>
+    <data name="DragonActCombo" xml:space="preserve">
+        <value>88 98 42 b7 00 00       mov    BYTE PTR [rax+0xb742],bl
+81 78 18 00 75 19 03    cmp    DWORD PTR [rax+0x18],0x3197500
+75 5a                   jne    69 &lt;normal&gt;
+57                      push   rdi
+48 8d 3d 00 00 00 00    lea    rdi,[rip+0x0]        # 17 &lt;_main+0x17&gt;
+80 3f 04                cmp    BYTE PTR [rdi],0x4
+74 4c                   je     68 &lt;exit&gt;
+80 3f 00                cmp    BYTE PTR [rdi],0x0
+75 1b                   jne    3c &lt;check_stage_1&gt;
+fe 05 00 00 00 00       inc    BYTE PTR [rip+0x0]        # 27 &lt;_main+0x27&gt;
+80 3d 00 00 00 00 03    cmp    BYTE PTR [rip+0x0],0x3        # 2e &lt;_main+0x2e&gt;
+75 38                   jne    68 &lt;exit&gt;
+c6 80 41 b7 00 00 00    mov    BYTE PTR [rax+0xb741],0x0
+c6 07 01                mov    BYTE PTR [rdi],0x1
+eb 2c                   jmp    68 &lt;exit&gt;
+00000000003c &lt;check_stage_1&gt;:
+80 3f 01                cmp    BYTE PTR [rdi],0x1
+75 0c                   jne    4d &lt;check_stage_2&gt;
+c6 80 41 b7 00 00 00    mov    BYTE PTR [rax+0xb741],0x0
+c6 07 02                mov    BYTE PTR [rdi],0x2
+eb 1b                   jmp    68 &lt;exit&gt;
+00000000004d &lt;check_stage_2&gt;:
+80 3f 02                cmp    BYTE PTR [rdi],0x2
+75 0c                   jne    5e &lt;check_stage_3&gt;
+c6 80 41 b7 00 00 00    mov    BYTE PTR [rax+0xb741],0x0
+c6 07 03                mov    BYTE PTR [rdi],0x3
+eb 0a                   jmp    68 &lt;exit&gt;
+00000000005e &lt;check_stage_3&gt;:
+c6 80 41 b7 00 00 00    mov    BYTE PTR [rax+0xb741],0x0
+c6 07 04                mov    BYTE PTR [rdi],0x4
+000000000068 &lt;exit&gt;:
+5f                      pop    rdi
+000000000069 &lt;normal&gt;:
+e9 00 00 00 00          jmp    6e &lt;normal+0x5&gt;</value>
+    </data>
 </root>

@@ -518,5 +518,12 @@ public static class Patterns
         AddressingMode.Absolute
     );
 
+    public static readonly Pattern SetLastAct = new Pattern(
+        new byte[] { 0x88, 0x98, 0x42, 0xB7 },
+        "xxxx",
+        0,
+        AddressingMode.Absolute
+    );
+
     #endregion
 }
