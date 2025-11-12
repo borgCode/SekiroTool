@@ -118,14 +118,14 @@ namespace SekiroTool {
         /// <summary>
         ///   Looks up a localized string similar to 88 98 42 b7 00 00       mov    BYTE PTR [rax+0xb742],bl
         ///81 78 18 00 75 19 03    cmp    DWORD PTR [rax+0x18],0x3197500
-        ///75 5a                   jne    69 &lt;normal&gt;
+        ///0f 85 01 01 00 00       jne    114 &lt;normal&gt;
         ///57                      push   rdi
-        ///48 8d 3d 00 00 00 00    lea    rdi,[rip+0x0]        # 17 &lt;_main+0x17&gt;
+        ///48 8d 3d 00 00 00 00    lea    rdi,[rip+0x0]        # 1b &lt;_main+0x1b&gt;
         ///80 3f 04                cmp    BYTE PTR [rdi],0x4
-        ///74 4c                   je     68 &lt;exit&gt;
+        ///0f 84 ef 00 00 00       je     113 &lt;exit&gt;
         ///80 3f 00                cmp    BYTE PTR [rdi],0x0
-        ///75 1b                   jne    3c &lt;check_stage_1&gt;
-        ///fe 05 00 00 00 00       inc    BYTE PTR [rip+0 [rest of string was truncated]&quot;;.
+        ///75 22                   jne    4b &lt;check_stage_1&gt;
+        ///fe 05 00 00 00 00       inc    BYTE PTR [rip [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string DragonActCombo {
             get {

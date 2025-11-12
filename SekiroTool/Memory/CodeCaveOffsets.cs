@@ -59,5 +59,6 @@ public static class CodeCaveOffsets
 
     public const int DragonActCombosStage = 0x1250;
     public const int AttacksBeforeManipCount = 0x1251;
+    public const int StaggerCmpValue = 0x1254;
     public const int DragonActCombosCode = 0x1260;
 }

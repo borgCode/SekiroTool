@@ -1302,37 +1302,86 @@ c3                      ret</value>
     <data name="DragonActCombo" xml:space="preserve">
         <value>88 98 42 b7 00 00       mov    BYTE PTR [rax+0xb742],bl
 81 78 18 00 75 19 03    cmp    DWORD PTR [rax+0x18],0x3197500
-75 5a                   jne    69 &lt;normal&gt;
+0f 85 01 01 00 00       jne    114 &lt;normal&gt;
 57                      push   rdi
-48 8d 3d 00 00 00 00    lea    rdi,[rip+0x0]        # 17 &lt;_main+0x17&gt;
+48 8d 3d 00 00 00 00    lea    rdi,[rip+0x0]        # 1b &lt;_main+0x1b&gt;
 80 3f 04                cmp    BYTE PTR [rdi],0x4
-74 4c                   je     68 &lt;exit&gt;
+0f 84 ef 00 00 00       je     113 &lt;exit&gt;
 80 3f 00                cmp    BYTE PTR [rdi],0x0
-75 1b                   jne    3c &lt;check_stage_1&gt;
-fe 05 00 00 00 00       inc    BYTE PTR [rip+0x0]        # 27 &lt;_main+0x27&gt;
-80 3d 00 00 00 00 03    cmp    BYTE PTR [rip+0x0],0x3        # 2e &lt;_main+0x2e&gt;
-75 38                   jne    68 &lt;exit&gt;
+75 22                   jne    4b &lt;check_stage_1&gt;
+fe 05 00 00 00 00       inc    BYTE PTR [rip+0x0]        # 2f &lt;_main+0x2f&gt;
+80 3d 00 00 00 00 03    cmp    BYTE PTR [rip+0x0],0x3        # 36 &lt;_main+0x36&gt;
+0f 85 d7 00 00 00       jne    113 &lt;exit&gt;
 c6 80 41 b7 00 00 00    mov    BYTE PTR [rax+0xb741],0x0
 c6 07 01                mov    BYTE PTR [rdi],0x1
-eb 2c                   jmp    68 &lt;exit&gt;
-00000000003c &lt;check_stage_1&gt;:
+e9 c8 00 00 00          jmp    113 &lt;exit&gt;
+00000000004b &lt;check_stage_1&gt;:
 80 3f 01                cmp    BYTE PTR [rdi],0x1
-75 0c                   jne    4d &lt;check_stage_2&gt;
+75 0f                   jne    5f &lt;check_stage_2&gt;
 c6 80 41 b7 00 00 00    mov    BYTE PTR [rax+0xb741],0x0
 c6 07 02                mov    BYTE PTR [rdi],0x2
-eb 1b                   jmp    68 &lt;exit&gt;
-00000000004d &lt;check_stage_2&gt;:
+e9 b4 00 00 00          jmp    113 &lt;exit&gt;
+00000000005f &lt;check_stage_2&gt;:
 80 3f 02                cmp    BYTE PTR [rdi],0x2
-75 0c                   jne    5e &lt;check_stage_3&gt;
+0f 85 a1 00 00 00       jne    109 &lt;check_stage_3&gt;
+51                      push   rcx
+52                      push   rdx
+41 50                   push   r8
+41 51                   push   r9
+56                      push   rsi
+4c 8b 00                mov    r8,QWORD PTR [rax]
+4d 8b 40 10             mov    r8,QWORD PTR [r8+0x10]
+4d 8b 40 10             mov    r8,QWORD PTR [r8+0x10]
+4d 8b 80 f8 1f 00 00    mov    r8,QWORD PTR [r8+0x1ff8]
+4d 8b 40 28             mov    r8,QWORD PTR [r8+0x28]
+4d 8b 40 10             mov    r8,QWORD PTR [r8+0x10]
+4d 8b 40 28             mov    r8,QWORD PTR [r8+0x28]
+4d 8b 80 98 00 00 00    mov    r8,QWORD PTR [r8+0x98]
+4d 8b 80 e0 00 00 00    mov    r8,QWORD PTR [r8+0xe0]
+41 8b 50 08             mov    edx,DWORD PTR [r8+0x8]
+4d 8b 00                mov    r8,QWORD PTR [r8]
+48 31 c9                xor    rcx,rcx
+0000000000a5 &lt;loop_start&gt;:
+39 d1                   cmp    ecx,edx
+74 4d                   je     f6 &lt;proceed&gt;
+4d 8b 0c c8             mov    r9,QWORD PTR [r8+rcx*8]
+4d 8b 49 08             mov    r9,QWORD PTR [r9+0x8]
+41 80 79 53 04          cmp    BYTE PTR [r9+0x53],0x4
+75 30                   jne    e8 &lt;skip&gt;
+49 8b b1 98 00 00 00    mov    rsi,QWORD PTR [r9+0x98]
+81 3e 30 30 30 5f       cmp    DWORD PTR [rsi],0x5f303030
+75 21                   jne    e8 &lt;skip&gt;
+66 81 7e 04 30 32       cmp    WORD PTR [rsi+0x4],0x3230
+75 19                   jne    e8 &lt;skip&gt;
+f3 45 0f 10 b9 40 01    movss  xmm15,DWORD PTR [r9+0x140]
+00 00
+44 0f 2f 3d 00 00 00    comiss xmm15,DWORD PTR [rip+0x0]        # e0 &lt;loop_start+0x3b&gt;
+00
+45 0f 57 ff             xorps  xmm15,xmm15
+72 07                   jb     ed &lt;keep_writing&gt;
+eb 0e                   jmp    f6 &lt;proceed&gt;
+0000000000e8 &lt;skip&gt;:
+48 ff c1                inc    rcx
+eb b8                   jmp    a5 &lt;loop_start&gt;
+0000000000ed &lt;keep_writing&gt;:
+c6 80 41 b7 00 00 00    mov    BYTE PTR [rax+0xb741],0x0
+eb 0a                   jmp    100 &lt;clean_up&gt;
+0000000000f6 &lt;proceed&gt;:
 c6 80 41 b7 00 00 00    mov    BYTE PTR [rax+0xb741],0x0
 c6 07 03                mov    BYTE PTR [rdi],0x3
-eb 0a                   jmp    68 &lt;exit&gt;
-00000000005e &lt;check_stage_3&gt;:
+00000100 &lt;clean_up&gt;:
+5e                      pop    rsi
+41 59                   pop    r9
+41 58                   pop    r8
+5a                      pop    rdx
+59                      pop    rcx
+eb 0a                   jmp    113 &lt;exit&gt;
+00000109 &lt;check_stage_3&gt;:
 c6 80 41 b7 00 00 00    mov    BYTE PTR [rax+0xb741],0x0
 c6 07 04                mov    BYTE PTR [rdi],0x4
-000000000068 &lt;exit&gt;:
+00000113 &lt;exit&gt;:
 5f                      pop    rdi
-000000000069 &lt;normal&gt;:
-e9 00 00 00 00          jmp    6e &lt;normal+0x5&gt;</value>
+00000114 &lt;normal&gt;:
+e9 00 00 00 00          jmp    119 &lt;normal+0x5&gt;</value>
     </data>
 </root>

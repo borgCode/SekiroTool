@@ -1,9 +1,9 @@
 ﻿namespace SekiroTool.GameIds;
 
-public class AiActs
+public static class AiActs
 {
 
-    public class Dragon
+    public static class Dragon
     {
         public enum DragonActs
         {
@@ -15,6 +15,7 @@ public class AiActs
         public static readonly byte[] Combo1 = 
         [
             (byte)DragonActs.KanjiSwipe,
+            (byte)DragonActs.VerticalSlams,
             (byte)DragonActs.VerticalSlams,
             (byte)DragonActs.SlowNeckSwim
         ];
@@ -28,6 +29,7 @@ public class AiActs
         public static readonly byte[] Combo3 = 
         [
             (byte)DragonActs.KanjiSwipe,
+            (byte)DragonActs.SlowNeckSwim,
             (byte)DragonActs.SlowNeckSwim,
             (byte)DragonActs.VerticalSlams
         ];

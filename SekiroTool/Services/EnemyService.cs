@@ -52,22 +52,25 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager)
         {
             var stage = CodeCaveOffsets.Base + CodeCaveOffsets.DragonActCombosStage;
             var attackBeforeManipCount = CodeCaveOffsets.Base + CodeCaveOffsets.AttacksBeforeManipCount;
+            var staggerDurationCmpVal = CodeCaveOffsets.Base + CodeCaveOffsets.StaggerCmpValue;
             memoryService.WriteUInt8(stage, 0);
             memoryService.WriteUInt8(attackBeforeManipCount, 0);
+            memoryService.WriteFloat(staggerDurationCmpVal, 3.9f);
             var hookLoc = Hooks.SetLastAct;
             
             var bytes = AsmLoader.GetAsmBytes("DragonActCombo");
             AsmHelper.WriteRelativeOffsets(bytes, new []
             {
-                (code.ToInt64() + 0x10, stage.ToInt64(), 7, 0x10 + 3),
-                (code.ToInt64() + 0x21, attackBeforeManipCount.ToInt64(), 6, 0x21 + 2),
-                (code.ToInt64() + 0x27, attackBeforeManipCount.ToInt64(), 7, 0x27 + 2),
-                (code.ToInt64() + 0x69, hookLoc + 0x6, 5, 0x69 + 1)
+                (code.ToInt64() + 0x14, stage.ToInt64(), 7, 0x14 + 3),
+                (code.ToInt64() + 0x29, attackBeforeManipCount.ToInt64(), 6, 0x29 + 2),
+                (code.ToInt64() + 0x2F, attackBeforeManipCount.ToInt64(), 7, 0x2F + 2),
+                (code.ToInt64() + 0xD8, staggerDurationCmpVal.ToInt64(), 8, 0xD8 + 4),
+                (code.ToInt64() + 0x114, hookLoc + 0x6, 5, 0x114 + 1)
             });
             
-            int[] patchOffsets = { 0x36, 0x47, 0x58 };
-        
-            for (int i = 0; i < Math.Min(actArray.Length, 3); i++)
+            int[] patchOffsets = { 0x42, 0x56, 0xf3, 0xfc };
+
+            for (int i = 0; i < Math.Min(actArray.Length, patchOffsets.Length); i++)
             {
                 bytes[patchOffsets[i]] = actArray[i];
             }
