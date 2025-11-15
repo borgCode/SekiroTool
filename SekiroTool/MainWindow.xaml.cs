@@ -11,6 +11,7 @@ using SekiroTool.Services;
 using SekiroTool.Utilities;
 using SekiroTool.ViewModels;
 using SekiroTool.Views.Tabs;
+using static SekiroTool.Memory.Offsets;
 
 namespace SekiroTool;
 
@@ -38,7 +39,7 @@ public partial class MainWindow : Window
 
         _aobScanner = new AoBScanner(_memoryService);
         var hookManager = new HookManager(_memoryService);
-        
+
         _nopManager = new NopManager(_memoryService);
         _hotkeyManager = new HotkeyManager(_memoryService);
 
@@ -52,10 +53,12 @@ public partial class MainWindow : Window
         IUtilityService utilityService = new UtilityService(_memoryService, hookManager);
         IItemService itemService = new ItemService(_memoryService);
         ISettingsService settingsService = new SettingsService(_memoryService, _nopManager, hookManager);
-        
+
         PlayerViewModel playerViewModel = new PlayerViewModel(_playerService, _hotkeyManager, _gameStateService);
-        TravelViewModel travelViewModel = new TravelViewModel(travelService, _gameStateService, _hotkeyManager, eventService);
-        EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _hotkeyManager, _gameStateService, debugDrawService);
+        TravelViewModel travelViewModel =
+            new TravelViewModel(travelService, _gameStateService, _hotkeyManager, eventService);
+        EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _hotkeyManager, _gameStateService,
+            debugDrawService, eventService);
         TargetViewModel targetViewModel =
             new TargetViewModel(_gameStateService, _hotkeyManager, targetService, debugDrawService);
         UtilityViewModel utilityViewModel =
@@ -63,7 +66,7 @@ public partial class MainWindow : Window
         ItemViewModel itemViewModel = new ItemViewModel(itemService, _gameStateService);
         EventViewModel eventViewModel = new EventViewModel(eventService, _gameStateService, debugDrawService);
         SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, _gameStateService, _hotkeyManager);
-        
+
         var playerTab = new PlayerTab(playerViewModel);
         var travelTab = new TravelTab(travelViewModel);
         var enemyTab = new EnemyTab(enemyViewModel);
@@ -72,7 +75,7 @@ public partial class MainWindow : Window
         var itemTab = new ItemTab(itemViewModel);
         var eventTab = new EventTab(eventViewModel);
         var settingsTab = new SettingsTab(settingsViewModel);
-        
+
         MainTabControl.Items.Add(new TabItem { Header = "Player", Content = playerTab });
         MainTabControl.Items.Add(new TabItem { Header = "Travel", Content = travelTab });
         MainTabControl.Items.Add(new TabItem { Header = "Enemies", Content = enemyTab });
@@ -81,9 +84,9 @@ public partial class MainWindow : Window
         MainTabControl.Items.Add(new TabItem { Header = "Items", Content = itemTab });
         MainTabControl.Items.Add(new TabItem { Header = "Event", Content = eventTab });
         MainTabControl.Items.Add(new TabItem { Header = "Settings", Content = settingsTab });
-        
+
         settingsViewModel.ApplyStartUpOptions();
-        
+
         _gameLoadedTimer = new DispatcherTimer
         {
             Interval = TimeSpan.FromMilliseconds(25)
@@ -98,10 +101,10 @@ public partial class MainWindow : Window
     private bool _hasScanned;
 
     private bool _hasAllocatedMemory;
-    
+
 
     private bool _appliedOneTimeFeatures;
-    
+
 
     private void Timer_Tick(object sender, EventArgs e)
     {
@@ -117,14 +120,13 @@ public partial class MainWindow : Window
                 _aobScanner.Scan();
                 _hasScanned = true;
             }
-            
+
             if (!_hasAllocatedMemory)
             {
                 _memoryService.AllocCodeCave();
                 Console.WriteLine($"Code cave: 0x{CodeCaveOffsets.Base.ToInt64():X}");
                 _hasAllocatedMemory = true;
                 _gameStateService.Publish(GameState.Attached);
-            
             }
 
 
@@ -133,13 +135,13 @@ public partial class MainWindow : Window
                 if (_loaded) return;
                 _loaded = true;
                 _gameStateService.Publish(GameState.Loaded);
+                TrySetGameStartPrefs();
             }
             else if (_loaded)
             {
                 _gameStateService.Publish(GameState.NotLoaded);
                 // _debugDrawService.Reset();
                 _loaded = false;
-             
             }
         }
         else
@@ -147,7 +149,6 @@ public partial class MainWindow : Window
             if (_memoryService.IsAttached)
             {
                 _gameStateService.Publish(GameState.Detached);
-        
             }
 
             _loaded = false;
@@ -163,6 +164,13 @@ public partial class MainWindow : Window
             IsAttachedText.Foreground = (SolidColorBrush)Application.Current.Resources["NotAttachedBrush"];
             // LaunchGameButton.IsEnabled = true;
         }
+    }
+
+    private void TrySetGameStartPrefs()
+    {
+        var igtPtr = _memoryService.ReadInt64((IntPtr)_memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.IGT);
+        long gameTimeMs = _memoryService.ReadInt64((IntPtr)igtPtr);
+        if (gameTimeMs < 5000) _gameStateService.Publish(GameState.GameStart);
     }
 
     private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

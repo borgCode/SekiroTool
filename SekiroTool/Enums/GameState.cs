@@ -5,5 +5,6 @@ public enum GameState
     Attached,
     Detached,
     Loaded,
-    NotLoaded
+    NotLoaded,
+    GameStart
 }

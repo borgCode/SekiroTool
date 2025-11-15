@@ -3,6 +3,7 @@ using SekiroTool.Core;
 using SekiroTool.Enums;
 using SekiroTool.GameIds;
 using SekiroTool.Interfaces;
+using SekiroTool.Memory;
 using SekiroTool.Utilities;
 
 namespace SekiroTool.ViewModels;
@@ -38,7 +39,7 @@ public class UtilityViewModel : BaseViewModel
 
 
         MoveCamToPlayerCommand = new DelegateCommand(MoveCamToPlayer);
-        
+
         OpenSkillsCommand = new DelegateCommand(OpenSkillMenu);
         OpenUpgradeProstheticsCommand = new DelegateCommand(OpenUpgradeProstheticsMenu);
         OpenUpgradePrayerBeadCommand = new DelegateCommand(OpenUpgradePrayerBead);
@@ -57,10 +58,10 @@ public class UtilityViewModel : BaseViewModel
         KoremoriCommand = new DelegateCommand(() => OpenScalesShop(ScaleLineup.Koremori));
         ProstheticsCommand = new DelegateCommand(() => OpenProstheticsShop(ShopLineup.Prosthetics));
     }
-    
+
 
     #region Commands
-    
+
     public ICommand MoveCamToPlayerCommand { get; set; }
 
     public ICommand OpenSkillsCommand { get; set; }
@@ -100,12 +101,138 @@ public class UtilityViewModel : BaseViewModel
         get => _isHitboxViewEnabled;
         set
         {
-            if (!SetProperty(ref _isHitboxViewEnabled, value)) return; 
+            if (!SetProperty(ref _isHitboxViewEnabled, value)) return;
             if (_isHitboxViewEnabled) _debugDrawService.RequestDebugDraw();
             else _debugDrawService.RequestDebugDraw();
             _utilityService.ToggleHitboxView(_isHitboxViewEnabled);
         }
     }
+
+    private bool _isSoundViewEnabled;
+
+    public bool IsSoundViewEnabled
+    {
+        get => _isSoundViewEnabled;
+        set
+        {
+            if (!SetProperty(ref _isSoundViewEnabled, value)) return;
+            if (_isSoundViewEnabled) _debugDrawService.RequestDebugDraw();
+            else _debugDrawService.RequestDebugDraw();
+            _utilityService.TogglePlayerSoundView(_isSoundViewEnabled);
+        }
+    }
+
+    private bool _isHideMapEnabled;
+
+    public bool IsHideMapEnabled
+    {
+        get => _isHideMapEnabled;
+        set
+        {
+            if (!SetProperty(ref _isHideMapEnabled, value)) return;
+            _utilityService.ToggleGameRendFlag(Offsets.GameRendFlags.ShowMap, _isHideMapEnabled);
+        }
+    }
+
+    private bool _isHideObjEnabled;
+
+    public bool IsHideObjEnabled
+    {
+        get => _isHideObjEnabled;
+        set
+        {
+            if (!SetProperty(ref _isHideObjEnabled, value)) return;
+            _utilityService.ToggleGameRendFlag(Offsets.GameRendFlags.ShowObj, _isHideObjEnabled);
+        }
+    }
+
+    private bool _isHideChrEnabled;
+
+    public bool IsHideChrEnabled
+    {
+        get => _isHideChrEnabled;
+        set
+        {
+            if (!SetProperty(ref _isHideChrEnabled, value)) return;
+            _utilityService.ToggleGameRendFlag(Offsets.GameRendFlags.ShowChr, _isHideChrEnabled);
+        }
+    }
+
+
+    private bool _isHideSfxEnabled;
+
+    public bool IsHideSfxEnabled
+    {
+        get => _isHideSfxEnabled;
+        set
+        {
+            if (!SetProperty(ref _isHideSfxEnabled, value)) return;
+            _utilityService.ToggleGameRendFlag(Offsets.GameRendFlags.ShowSfx, _isHideSfxEnabled);
+        }
+    }
+
+    private bool _isHideGrassEnabled;
+
+    public bool IsHideGrassEnabled
+    {
+        get => _isHideGrassEnabled;
+        set
+        {
+            if (!SetProperty(ref _isHideGrassEnabled, value)) return;
+            _utilityService.ToggleGameRendFlag(Offsets.GameRendFlags.ShowGrass, _isHideGrassEnabled);
+        }
+    }
+
+    private bool _isDrawLowHitEnabled;
+
+    public bool IsDrawLowHitEnabled
+    {
+        get => _isDrawLowHitEnabled;
+        set
+        {
+            if (!SetProperty(ref _isDrawLowHitEnabled, value)) return;
+            _utilityService.ToggleMeshFlag(Offsets.MeshBase.LowHit, _isDrawLowHitEnabled);
+        }
+    }
+
+    private bool _isDrawHighHitEnabled;
+
+    public bool IsDrawHighHitEnabled
+    {
+        get => _isDrawHighHitEnabled;
+        set
+        {
+            if (!SetProperty(ref _isDrawHighHitEnabled, value)) return;
+            _utilityService.ToggleMeshFlag(Offsets.MeshBase.HighHit, _isDrawHighHitEnabled);
+        }
+    }
+
+    private bool _isDrawObjMeshEnabled;
+
+    public bool IsDrawObjMeshEnabled
+    {
+        get => _isDrawObjMeshEnabled;
+        set
+        {
+            if (!SetProperty(ref _isDrawObjMeshEnabled, value)) return;
+            _utilityService.ToggleMeshFlag(Offsets.MeshBase.Objects, _isDrawObjMeshEnabled);
+        }
+    }
+
+    private bool _isDrawChrRagdollEnabled;
+
+    public bool IsDrawChrRagdollEnabled
+    {
+        get => _isDrawChrRagdollEnabled;
+        set
+        {
+            if (!SetProperty(ref _isDrawChrRagdollEnabled, value)) return;
+            if (_isDrawChrRagdollEnabled) _debugDrawService.RequestDebugDraw();
+            else _debugDrawService.RequestDebugDraw();
+            _utilityService.ToggleMeshFlag(Offsets.MeshBase.Chr, _isDrawChrRagdollEnabled);
+        }
+    }
+
 
     private float _gameSpeed;
 
@@ -160,14 +287,14 @@ public class UtilityViewModel : BaseViewModel
         }
     }
 
-    private bool _isFreeCamEnabled; 
-    
+    private bool _isFreeCamEnabled;
+
     public bool IsFreeCamEnabled
     {
         get => _isFreeCamEnabled;
         set
         {
-            if (!SetProperty(ref _isFreeCamEnabled, value)) return; 
+            if (!SetProperty(ref _isFreeCamEnabled, value)) return;
             if (_isFreeCamEnabled)
             {
                 IsNoClipEnabled = false;
@@ -183,6 +310,7 @@ public class UtilityViewModel : BaseViewModel
     }
 
     private int _freeCamMode = 1;
+
     public int FreeCamMode
     {
         get => _freeCamMode;
@@ -219,7 +347,6 @@ public class UtilityViewModel : BaseViewModel
 
     public void SetNoClipSpeed(double value) => NoClipSpeed = (float)value;
     public void SetGameSpeed(double value) => GameSpeed = (float)value;
-    
 
     #endregion
 
@@ -264,6 +391,22 @@ public class UtilityViewModel : BaseViewModel
         AreOptionsEnabled = true;
         GameSpeed = _utilityService.GetGameSpeed();
         if (IsHitBoxViewEnabled) _utilityService.ToggleHitboxView(true);
+        if (IsSoundViewEnabled) EnableDrawFeature(() => _utilityService.TogglePlayerSoundView(true));
+        if (IsHideMapEnabled) _utilityService.ToggleGameRendFlag(Offsets.GameRendFlags.ShowMap, true);
+        if (IsHideObjEnabled) _utilityService.ToggleGameRendFlag(Offsets.GameRendFlags.ShowObj, true);
+        if (IsHideChrEnabled) _utilityService.ToggleGameRendFlag(Offsets.GameRendFlags.ShowChr, true);
+        if (IsHideSfxEnabled) _utilityService.ToggleGameRendFlag(Offsets.GameRendFlags.ShowSfx, true);
+        if (IsHideGrassEnabled) _utilityService.ToggleGameRendFlag(Offsets.GameRendFlags.ShowGrass, true);
+        if (IsDrawLowHitEnabled) _utilityService.ToggleMeshFlag(Offsets.MeshBase.LowHit, true);
+        if (IsDrawHighHitEnabled) _utilityService.ToggleMeshFlag(Offsets.MeshBase.HighHit, true);
+        if (IsDrawObjMeshEnabled) _utilityService.ToggleMeshFlag(Offsets.MeshBase.Objects, true);
+        if (IsDrawChrRagdollEnabled) EnableDrawFeature(() => _utilityService.ToggleMeshFlag(Offsets.MeshBase.Chr, true));
+    }
+
+    private void EnableDrawFeature(Action action)
+    {
+        if (_debugDrawService.GetCount() < 1) _debugDrawService.RequestDebugDraw();
+        action.Invoke();
     }
 
 

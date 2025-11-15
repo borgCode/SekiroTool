@@ -18,6 +18,21 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
         memoryService.WriteUInt8(hitboxFlagPtr, isEnabled ? 1 : 0);
     }
 
+    public void TogglePlayerSoundView(bool isEnabled) =>
+        memoryService.WriteUInt8(Patches.PlayerSoundView, isEnabled ? 0x75 : 0x74);
+
+    public void ToggleGameRendFlag(int offset, bool isEnabled)
+    {
+        var flagPtr = GameRendFlags.Base + offset;
+        memoryService.WriteUInt8(flagPtr, isEnabled ? 0 : 1);
+    }
+
+    public void ToggleMeshFlag(int offset, bool isEnabled)
+    {
+        var flagPtr = MeshBase.Base + offset;
+        memoryService.WriteUInt8(flagPtr, isEnabled ? 1 : 0);
+    }
+
     public void OpenSkillMenu()
     {
         var bytes = AsmLoader.GetAsmBytes("OpenMenuNoParams");
@@ -156,7 +171,7 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
             });
 
             memoryService.WriteBytes(coordUpdateCode, bytes);
-            
+
             RunRayCast();
 
             hookManager.InstallHook(inAirTimerCode.ToInt64(), inAirTimerHook,
@@ -253,36 +268,36 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
         {
             GameDataMan.PlayerGameData,
             (int)ChrIns.PlayerGameDataOffsets.EquipInventoryData
-        } ,true);
-        
+        }, true);
+
         var equipGameData = memoryService.FollowPointers(GameDataMan.Base, new[]
         {
             GameDataMan.PlayerGameData,
             (int)ChrIns.PlayerGameDataOffsets.EquipGameData
-        } ,true);
-        
+        }, true);
+
         var buttonResult = memoryService.FollowPointers(MenuMan.Base, new[]
         {
             MenuMan.DialogManager,
             MenuMan.GenericDialogButtonResult,
-        } ,false);
+        }, false);
 
         var mapItemMan = memoryService.ReadInt64(MapItemMan.Base);
         var sleepAddr = memoryService.GetProcAddress("kernel32.dll", "Sleep");
 
         var menuHandle = CodeCaveOffsets.Base + CodeCaveOffsets.PrayerBeadMenuHandle;
-        
-        
+
+
         var bytes = AsmLoader.GetAsmBytes("OpenUpgradePrayerBead");
-        AsmHelper.WriteAbsoluteAddresses(bytes, new []
+        AsmHelper.WriteAbsoluteAddresses(bytes, new[]
         {
-            (Functions.EzStateExternalEventTempCtor, 0x17 +2),
-            (menuHandle.ToInt64(), 0x31 +2),
+            (Functions.EzStateExternalEventTempCtor, 0x17 + 2),
+            (menuHandle.ToInt64(), 0x31 + 2),
             (equipInventoryData.ToInt64(), 0x4A + 2),
             (Functions.GetItemSlot, 0x58 + 2),
             (equipInventoryData.ToInt64(), 0x79 + 2),
             (Functions.GetItemSlot, 0x87 + 2),
-            (equipInventoryData.ToInt64(), 0x9C + 2 ),
+            (equipInventoryData.ToInt64(), 0x9C + 2),
             (Functions.GetItemPtrFromSlot, 0xA8 + 2),
             (Functions.SetMessageTagValue, 0xD4 + 2),
             (buttonResult.ToInt64(), 0x14B + 2),
@@ -301,7 +316,7 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
             (Functions.OpenGenericDialog, 0x377 + 2),
             (Functions.OpenGenericDialog, 0x3FD + 2),
         });
-        
+
         memoryService.AllocateAndExecute(bytes);
     }
 

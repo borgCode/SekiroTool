@@ -43,6 +43,48 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager)
         memoryService.AllocateAndExecute(bytes);
     }
 
+    public void ToggleDragonActCombo(byte[] actArray, bool isEnabled)
+    {
+
+        var code = CodeCaveOffsets.Base + CodeCaveOffsets.DragonActCombosCode;
+        
+        if (isEnabled)
+        {
+            var stage = CodeCaveOffsets.Base + CodeCaveOffsets.DragonActCombosStage;
+            var attackBeforeManipCount = CodeCaveOffsets.Base + CodeCaveOffsets.AttacksBeforeManipCount;
+            var staggerDurationCmpVal = CodeCaveOffsets.Base + CodeCaveOffsets.StaggerCmpValue;
+            memoryService.WriteUInt8(stage, 0);
+            memoryService.WriteUInt8(attackBeforeManipCount, 0);
+            memoryService.WriteFloat(staggerDurationCmpVal, 3.9f);
+            var hookLoc = Hooks.SetLastAct;
+            
+            var bytes = AsmLoader.GetAsmBytes("DragonActCombo");
+            AsmHelper.WriteRelativeOffsets(bytes, new []
+            {
+                (code.ToInt64() + 0x14, stage.ToInt64(), 7, 0x14 + 3),
+                (code.ToInt64() + 0x29, attackBeforeManipCount.ToInt64(), 6, 0x29 + 2),
+                (code.ToInt64() + 0x2F, attackBeforeManipCount.ToInt64(), 7, 0x2F + 2),
+                (code.ToInt64() + 0xD8, staggerDurationCmpVal.ToInt64(), 8, 0xD8 + 4),
+                (code.ToInt64() + 0x114, hookLoc + 0x6, 5, 0x114 + 1)
+            });
+            
+            int[] patchOffsets = { 0x42, 0x56, 0xf3, 0xfc };
+
+            for (int i = 0; i < Math.Min(actArray.Length, patchOffsets.Length); i++)
+            {
+                bytes[patchOffsets[i]] = actArray[i];
+            }
+            
+            memoryService.WriteBytes(code, bytes);
+            hookManager.InstallHook(code.ToInt64(), hookLoc,
+                [0x88, 0x98, 0x42, 0xB7, 0x00, 0x00]);
+        }
+        else
+        {
+            hookManager.UninstallHook(code.ToInt64());
+        }
+    }
+
     public void ToggleButterflyNoSummons(bool isEnabled)
     {
         var code = CodeCaveOffsets.Base + CodeCaveOffsets.ButterflyNoSummons;

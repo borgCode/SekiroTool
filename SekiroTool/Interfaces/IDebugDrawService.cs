@@ -4,4 +4,5 @@ public interface IDebugDrawService
 {
     void RequestDebugDraw();
     void ReleaseDebugDraw();
+    int GetCount();
 }

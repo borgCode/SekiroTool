@@ -104,14 +104,6 @@ public static class Offsets
             EquipGameData = 0x518,
             EquipInventoryData = 0x5B0
         }
-
-        public enum PlayerIns
-        {
-            SpecialEffect = 0x58, 
-        }
-        
-        
-            
     }
 
     public static class WorldChrManDbg
@@ -175,6 +167,25 @@ public static class Offsets
     public static class MapItemMan
     {
         public static IntPtr Base;
+    }
+    
+    public static class GameRendFlags
+    {
+        public static IntPtr Base;
+        public const int ShowMap = 0x0;
+        public const int ShowObj = 0x1;
+        public const int ShowChr = 0x2;
+        public const int ShowSfx = 0x3;
+        public const int ShowGrass = 0x6;
+    }
+    
+    public static class MeshBase
+    {
+        public static IntPtr Base;
+        public const int LowHit = 0x0;
+        public const int HighHit = 0x1;
+        public const int Objects = 0x2;
+        public const int Chr = 0x3;
     }
 
 
@@ -247,6 +258,7 @@ public static class Offsets
         public static IntPtr Base;
         public const int PlayerGameData = 0x8;
         public const int NewGame = 0x70;
+        public const int IGT = 0x9C;
     }
 
     public static class RequestRespawnGlobal
@@ -266,6 +278,7 @@ public static class Offsets
         public static IntPtr SaveInCombat;
         public static IntPtr OpenRegularShopPatch;
         public static IntPtr DefaultSoundVolWrite;
+        public static IntPtr PlayerSoundView;
     }
 
 
@@ -286,6 +299,7 @@ public static class Offsets
         public static long StartMusic;
         public static long HpWrite;
         public static long InfiniteConfetti;
+        public static long SetLastAct;
     }
 
     public static class Functions
@@ -314,5 +328,7 @@ public static class Offsets
         public static long AdjustItemCount;
         public static long OpenGenericDialog;
         public static long RemoveSpEffect;
+        public static long RemoveItem;
+        public static long GiveSkillAndPros;
     }
 }

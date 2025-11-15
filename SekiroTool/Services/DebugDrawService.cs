@@ -16,25 +16,25 @@ public class DebugDrawService : IDebugDrawService
     {
         _memoryService = memoryService;
         _nopManager = nopManager;
-        gameStateService.Subscribe(GameState.Detached, Reset);
+        gameStateService.Subscribe(GameState.Attached, Reset);
     }
 
     public void RequestDebugDraw()
     {
         if (_clientCount == 0) ToggleDebugDraw(true);
         _clientCount++;
-        Console.WriteLine($"ClientCount after request: {_clientCount}");
     }
 
     public void ReleaseDebugDraw()
     {
         _clientCount--;
-        Console.WriteLine($"ClientCount after release: {_clientCount}");
         
         if (_clientCount == 0) ToggleDebugDraw(false);
         
         if (_clientCount < 0) _clientCount = 0;
     }
+
+    public int GetCount() => _clientCount;
 
     private void Reset()
     {

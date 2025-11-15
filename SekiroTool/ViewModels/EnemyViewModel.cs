@@ -1,6 +1,7 @@
 ﻿using System.Windows.Input;
 using SekiroTool.Core;
 using SekiroTool.Enums;
+using SekiroTool.GameIds;
 using SekiroTool.Interfaces;
 using SekiroTool.Utilities;
 
@@ -11,13 +12,15 @@ public class EnemyViewModel : BaseViewModel
     private readonly IEnemyService _enemyService;
     private readonly HotkeyManager _hotkeyManager;
     private readonly IDebugDrawService _debugDrawService;
+    private readonly IEventService _eventService;
 
     public EnemyViewModel(IEnemyService enemyService, HotkeyManager hotkeyManager, IGameStateService gameStateService,
-        IDebugDrawService debugDrawService)
+        IDebugDrawService debugDrawService, IEventService eventService)
     {
         _enemyService = enemyService;
         _hotkeyManager = hotkeyManager;
         _debugDrawService = debugDrawService;
+        _eventService = eventService;
 
         RegisterHotkeys();
 
@@ -25,13 +28,15 @@ public class EnemyViewModel : BaseViewModel
         gameStateService.Subscribe(GameState.NotLoaded, OnGameNotLoaded);
 
         SkipDragonPhaseOneCommand = new DelegateCommand(SkipDragonPhaseOne);
+        TriggerDragonFinalAttackCommand = new DelegateCommand(TriggerFinalDragonAttack);
     }
 
-
+    
     #region Commands
 
     public ICommand SkipDragonPhaseOneCommand { get; set; }
-
+    public ICommand TriggerDragonFinalAttackCommand { get; set; }
+    
     #endregion
 
     #region Properties
@@ -141,6 +146,57 @@ public class EnemyViewModel : BaseViewModel
             _enemyService.ToggleTargetingView(_isTargetingViewEnabled);
         }
     }
+    
+    private bool _isDragonCombo1Enabled;
+
+    public bool IsDragonCombo1Enabled
+    {
+        get => _isDragonCombo1Enabled;
+        set
+        {
+            SetProperty(ref _isDragonCombo1Enabled, value);
+            if (_isDragonCombo1Enabled)
+            {
+                IsDragonCombo2Enabled = false;
+                IsDragonCombo3Enabled = false;
+            }
+            _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo1, _isDragonCombo1Enabled);
+        }
+    }
+    
+    private bool _isDragonCombo2Enabled;
+
+    public bool IsDragonCombo2Enabled
+    {
+        get => _isDragonCombo2Enabled;
+        set
+        {
+            SetProperty(ref _isDragonCombo2Enabled, value);
+            if (_isDragonCombo2Enabled)
+            {
+                IsDragonCombo1Enabled = false;
+                IsDragonCombo3Enabled = false;
+            }
+            _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo2, _isDragonCombo2Enabled);
+        }
+    }
+    
+    private bool _isDragonCombo3Enabled;
+
+    public bool IsDragonCombo3Enabled
+    {
+        get => _isDragonCombo3Enabled;
+        set
+        {
+            SetProperty(ref _isDragonCombo3Enabled, value);
+            if (_isDragonCombo3Enabled)
+            {
+                IsDragonCombo1Enabled = false;
+                IsDragonCombo2Enabled = false;
+            }
+            _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo3, _isDragonCombo3Enabled);
+        }
+    }
 
     private bool _isNoButterflySummonsEnabled;
 
@@ -166,6 +222,12 @@ public class EnemyViewModel : BaseViewModel
             if (!AreOptionsEnabled) return;
             _enemyService.SkipDragonPhaseOne();
         });
+        _hotkeyManager.RegisterAction(HotkeyActions.TriggerDragonFinalAttack.ToString(), () =>
+        {
+            if (!AreOptionsEnabled) return;
+            TriggerFinalDragonAttack();
+        });
+        
         _hotkeyManager.RegisterAction(HotkeyActions.NoButterflySummons.ToString(),
             () => { IsNoButterflySummonsEnabled = !IsNoButterflySummonsEnabled; });
         _hotkeyManager.RegisterAction(HotkeyActions.AllNoDeath.ToString(), () => { IsNoDeathEnabled = !IsNoDeathEnabled; });
@@ -191,6 +253,9 @@ public class EnemyViewModel : BaseViewModel
         if (IsNoMoveEnabled) _enemyService.ToggleNoMove(true);
         if (IsDisableAiEnabled) _enemyService.ToggleDisableAi(true);
         if (IsNoPostureBuildupEnabled) _enemyService.ToggleNoPostureBuildup(true);
+        if (IsDragonCombo1Enabled) _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo1, true);
+        if (IsDragonCombo2Enabled) _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo2, true);
+        if (IsDragonCombo3Enabled) _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo3, true);
     }
 
     private void OnGameNotLoaded()
@@ -199,6 +264,12 @@ public class EnemyViewModel : BaseViewModel
     }
 
     private void SkipDragonPhaseOne() => _enemyService.SkipDragonPhaseOne();
+    
+    private void TriggerFinalDragonAttack()
+    {
+        if (!_eventService.GetEvent(GameEvent.HasDragonPhase2TreesSpawned)) return;
+        _eventService.SetEvent(GameEvent.TriggerFinalDragonAttack, true);
+    }
 
     #endregion
 }

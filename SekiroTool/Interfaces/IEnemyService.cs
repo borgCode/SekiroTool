@@ -1,4 +1,6 @@
-﻿namespace SekiroTool.Interfaces;
+﻿using SekiroTool.GameIds;
+
+namespace SekiroTool.Interfaces;
 
 public interface IEnemyService
 {
@@ -11,5 +13,6 @@ public interface IEnemyService
     void ToggleNoPostureBuildup(bool isEnabled);
     void ToggleTargetingView(bool isEnabled);
     void SkipDragonPhaseOne();
+    void ToggleDragonActCombo(byte[] actArray, bool isEnabled);
     void ToggleButterflyNoSummons(bool isEnabled);
 }

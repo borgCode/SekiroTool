@@ -39,6 +39,8 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.PauseRequest.Base = FindAddressByPattern(Patterns.PauseRequest);
         Offsets.DlUserInputManager.Base = FindAddressByPattern(Patterns.DlUserInputManager);
         Offsets.TargetingView.Base = FindAddressByPattern(Patterns.TargetingView);
+        Offsets.GameRendFlags.Base = FindAddressByPattern(Patterns.GameRendFlags);
+        Offsets.MeshBase.Base = FindAddressByPattern(Patterns.MeshBase);
         
         Offsets.IdolRequests.Base = FindAddressByRelativeChain(
             Patterns.IdolRequests,
@@ -77,6 +79,8 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Hooks.InfiniteConfetti = addr, saved);
         TryPatternWithFallback("HpWrite", Patterns.HpWrite,
             addr => Offsets.Hooks.HpWrite = addr, saved);
+        TryPatternWithFallback("SetLastAct", Patterns.SetLastAct,
+            addr => Offsets.Hooks.SetLastAct = addr, saved);
 
         TryPatternWithFallback("NoLogo", Patterns.NoLogo,
             addr => Offsets.Patches.NoLogo = addr, saved);
@@ -96,6 +100,8 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Patches.OpenRegularShopPatch = addr, saved);
         TryPatternWithFallback("DefaultSoundVolWrite", Patterns.DefaultSoundVolWrite,
             addr => Offsets.Patches.DefaultSoundVolWrite = addr, saved);
+        TryPatternWithFallback("PlayerSoundView", Patterns.PlayerSoundView,
+            addr => Offsets.Patches.PlayerSoundView = addr, saved);
         
 
 
@@ -134,6 +140,8 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.Functions.GetItemSlot = FindAddressByPattern(Patterns.GetItemSlot).ToInt64();
         Offsets.Functions.GetItemPtrFromSlot = FindAddressByPattern(Patterns.GetItemPtrFromSlot).ToInt64();
         Offsets.Functions.EzStateExternalEventTempCtor = FindAddressByPattern(Patterns.EzStateExternalEventTempCtor).ToInt64();
+        Offsets.Functions.RemoveItem = FindAddressByPattern(Patterns.RemoveItem).ToInt64();
+        Offsets.Functions.GiveSkillAndPros = FindAddressByPattern(Patterns.GiveSkillAndPros).ToInt64();
 
 #if DEBUG
         Console.WriteLine($"WorldChrMan.Base: 0x{Offsets.WorldChrMan.Base.ToInt64():X}");
@@ -153,6 +161,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"DlUserInputManager.Base: 0x{Offsets.DlUserInputManager.Base.ToInt64():X}");
         Console.WriteLine($"TargetingView.Base: 0x{Offsets.TargetingView.Base.ToInt64():X}");
         Console.WriteLine($"IdolRequests.Base: 0x{Offsets.IdolRequests.Base.ToInt64():X}");
+        Console.WriteLine($"GameRendFlags.Base: 0x{Offsets.GameRendFlags.Base.ToInt64():X}");
 
         Console.WriteLine($"Hooks.LockedTarget: 0x{Offsets.Hooks.LockedTarget:X}");
         Console.WriteLine($"Hooks.FreezeTargetPosture: 0x{Offsets.Hooks.FreezeTargetPosture:X}");
@@ -169,6 +178,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Hooks.StartMusic: 0x{Offsets.Hooks.StartMusic:X}");
         Console.WriteLine($"Hooks.HpWrite: 0x{Offsets.Hooks.HpWrite:X}");
         Console.WriteLine($"Hooks.InfiniteConfetti: 0x{Offsets.Hooks.InfiniteConfetti:X}");
+        Console.WriteLine($"Hooks.SetLastAct: 0x{Offsets.Hooks.SetLastAct:X}");
 
 
         Console.WriteLine($"Patches.NoLogo: 0x{Offsets.Patches.NoLogo.ToInt64():X}");
@@ -180,6 +190,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Patches.SaveInCombat: 0x{Offsets.Patches.SaveInCombat.ToInt64():X}");
         Console.WriteLine($"Patches.OpenRegularShopPatch: 0x{Offsets.Patches.OpenRegularShopPatch.ToInt64():X}");
         Console.WriteLine($"Patches.DefaultSoundVolWrite: 0x{Offsets.Patches.DefaultSoundVolWrite.ToInt64():X}");
+        Console.WriteLine($"Patches.PlayerSoundView: 0x{Offsets.Patches.PlayerSoundView.ToInt64():X}");
 
         Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");
         Console.WriteLine($"Functions.Rest: 0x{Offsets.Functions.Rest:X}");
@@ -204,6 +215,8 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Functions.SetMessageTagValue: 0x{Offsets.Functions.SetMessageTagValue:X}");
         Console.WriteLine($"Functions.AdjustItemCount: 0x{Offsets.Functions.AdjustItemCount:X}");
         Console.WriteLine($"Functions.OpenGenericDialog: 0x{Offsets.Functions.OpenGenericDialog:X}");
+        Console.WriteLine($"Functions.RemoveItem: 0x{Offsets.Functions.RemoveItem:X}");
+        Console.WriteLine($"Functions.GiveSkillAndPros: 0x{Offsets.Functions.GiveSkillAndPros:X}");
 #endif
     }
 

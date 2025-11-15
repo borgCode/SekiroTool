@@ -22,6 +22,7 @@ public enum HotkeyActions
     InfinitePoise,
     
     SkipDragonPhaseOne,
+    TriggerDragonFinalAttack,
     NoButterflySummons,
     AllNoDeath,
     AllNoDamage,

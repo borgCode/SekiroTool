@@ -177,6 +177,24 @@ public static class Patterns
         AddressingMode.Absolute
     );
 
+    public static readonly Pattern GameRendFlags = new Pattern(
+        new byte[] { 0x74, 0x0E, 0x80, 0x7B, 0x06 },
+        "xxxxx",
+        -0x11,
+        AddressingMode.Relative,
+        2,
+        7
+    );
+
+    public static readonly Pattern MeshBase = new Pattern(
+        new byte[] { 0x88, 0x43, 0x08, 0x48, 0x8B, 0xC3, 0x85 },
+        "xxxxxxx",
+        0x1A,
+        AddressingMode.Relative,
+        2,
+        7
+    );
+
     #endregion
 
 
@@ -246,7 +264,13 @@ public static class Patterns
         0,
         AddressingMode.Absolute
     );
-    
+
+    public static readonly Pattern PlayerSoundView = new Pattern(
+        new byte[] { 0x80, 0x79, 0x20, 0x00, 0x48, 0x8B, 0xF2, 0x74 },
+        "xxxxxxxx",
+        0x7,
+        AddressingMode.Absolute
+    );
 
     #endregion
 
@@ -367,6 +391,22 @@ public static class Patterns
         -0xD,
         AddressingMode.Absolute
     );
+
+    public static readonly Pattern RemoveItem = new Pattern(
+        new byte[] { 0x78, 0x15, 0x41, 0xB1 },
+        "xxxx",
+        0x12,
+        AddressingMode.Relative,
+        1,
+        5
+    );
+
+    public static readonly Pattern GiveSkillAndPros = new Pattern(
+        new byte[] { 0x25, 0x00, 0x00, 0x00, 0xF0, 0x85 },
+        "xxxxxx",
+        -0xCF,
+        AddressingMode.Absolute
+    );
         
     public static readonly Pattern RemoveEffect = new Pattern(
         new byte[] { 0x48, 0x83, 0xEC, 0x28, 0x8B, 0xC2, 0x48, 0x8B },
@@ -463,7 +503,7 @@ public static class Patterns
         AddressingMode.Absolute
     );
 
-public static readonly Pattern InfiniteConfetti = new Pattern(
+    public static readonly Pattern InfiniteConfetti = new Pattern(
         new byte[] { 0xF3, 0x0F, 0x5C, 0xCF, 0x0F, 0x2F, 0xC1 },
         "xxxxxxx",
         0,
@@ -488,6 +528,13 @@ public static readonly Pattern InfiniteConfetti = new Pattern(
         new byte[] { 0x48, 0x0F, 0x4F, 0xC1, 0x8B, 0x00, 0x89, 0x83, 0x30 },
         "xxxxxxxxx",
         6,
+        AddressingMode.Absolute
+    );
+
+    public static readonly Pattern SetLastAct = new Pattern(
+        new byte[] { 0x88, 0x98, 0x42, 0xB7 },
+        "xxxx",
+        0,
         AddressingMode.Absolute
     );
 

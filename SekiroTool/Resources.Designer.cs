@@ -116,6 +116,24 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 88 98 42 b7 00 00       mov    BYTE PTR [rax+0xb742],bl
+        ///81 78 18 00 75 19 03    cmp    DWORD PTR [rax+0x18],0x3197500
+        ///0f 85 01 01 00 00       jne    114 &lt;normal&gt;
+        ///57                      push   rdi
+        ///48 8d 3d 00 00 00 00    lea    rdi,[rip+0x0]        # 1b &lt;_main+0x1b&gt;
+        ///80 3f 04                cmp    BYTE PTR [rdi],0x4
+        ///0f 84 ef 00 00 00       je     113 &lt;exit&gt;
+        ///80 3f 00                cmp    BYTE PTR [rdi],0x0
+        ///75 22                   jne    4b &lt;check_stage_1&gt;
+        ///fe 05 00 00 00 00       inc    BYTE PTR [rip [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string DragonActCombo {
+            get {
+                return ResourceManager.GetString("DragonActCombo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 48 b9 00 00 00 00 00    movabs rcx,0x0
         ///00 00 00
         ///48 ba ba 00 03 10 00    movabs rdx,0x100300ba
@@ -190,6 +208,25 @@ namespace SekiroTool {
         internal static string GiveItem {
             get {
                 return ResourceManager.GetString("GiveItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 48 83 ec 28             sub    rsp,0x28
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///89 04 24                mov    DWORD PTR [rsp],eax
+        ///48 8d 0c 24             lea    rcx,[rsp]
+        ///ba 01 00 00 00          mov    edx,0x1
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///ff d0                   call   rax
+        ///48 83 c4 28             add    rsp,0x28
+        ///c3                      ret.
+        /// </summary>
+        internal static string GiveSkillsAndPros {
+            get {
+                return ResourceManager.GetString("GiveSkillsAndPros", resourceCulture);
             }
         }
         
@@ -555,14 +592,54 @@ namespace SekiroTool {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 103000,Original Memory: Wolf
-        ///303000,Another&apos;s Memory: Shura
-        ///403000,Another&apos;s Memory: Ashina
-        ///503000,Another&apos;s Memory: Tengu.
+        ///   Looks up a localized string similar to 70000,Loaded Shuriken
+        ///70100,Spinning Shuriken
+        ///70200,Gouging Top
+        ///70300,Phantom Kunai
+        ///70400,Sen Throw
+        ///70500,Lazulite Shuriken
+        ///71000,Shinobi Firecracker
+        ///71100,Spring-load Firecracker
+        ///71200,Long Spark
+        ///71300,Purple Fume Spark
+        ///72000,Flame Vent
+        ///72100,Spring-load Flame Vent
+        ///72200,Okinaga&apos;s Flame Vent
+        ///72300,Lazulite Sacred Flame
+        ///73000,Loaded Axe
+        ///73100,Spring-load Axe
+        ///73200,Sparking Axe
+        ///73300,Lazulite Axe
+        ///74000,Mist Raven
+        ///74100,Aged Feather Mist Raven
+        ///74200,Great Feather Mist Raven
+        ///75000,Sabimaru [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Protector {
+        internal static string Prosthetics {
             get {
-                return ResourceManager.GetString("Protector", resourceCulture);
+                return ResourceManager.GetString("Prosthetics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 48 a1 00 00 00 00 00    movabs rax,ds:0x0
+        ///00 00 00
+        ///48 8b 40 08             mov    rax,QWORD PTR [rax+0x8]
+        ///48 8b 98 b0 05 00 00    mov    rbx,QWORD PTR [rax+0x5b0]
+        ///48 89 d9                mov    rcx,rbx
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///48 83 ec 38             sub    rsp,0x38
+        ///89 44 24 10             mov    DWORD PTR [rsp+0x10],eax
+        ///48 8d 54 24 10          lea    rdx,[rsp+0x10]
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///ff d0                   call   rax
+        ///89 c2                    [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string RemoveItem {
+            get {
+                return ResourceManager.GetString("RemoveItem", resourceCulture);
             }
         }
         
@@ -639,6 +716,35 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 200000,Grappling Hook Attack
+        ///200100,Mid-air Deflection
+        ///200200,Mid-air Prosthetic Tool
+        ///200300,Mikiri Counter
+        ///200400,Run and Slide
+        ///200500,Mid-air Combat Arts
+        ///200600,Vault Over
+        ///210000,Whirlwind Slash
+        ///211000,Shadowrush
+        ///301000,Chasing Slice
+        ///301100,Fang and Blade
+        ///301200,Projected Force
+        ///301300,Living Force
+        ///310000,Nightjar Slash
+        ///310100,Nightjar Slash Reversal
+        ///410000,Ichimonji
+        ///410100,Ichimonji: Double
+        ///411000,Ashina Cross
+        ///510000,Praying Strikes
+        ///510100,Praying Strikes - Exorcism
+        ///511000,Senpou Leapi [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Skills {
+            get {
+                return ResourceManager.GetString("Skills", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 48 83 ec 28             sub    rsp,0x28
         ///48 b8 00 00 00 00 00    movabs rax,0x0
         ///00 00 00
@@ -709,33 +815,6 @@ namespace SekiroTool {
         internal static string Warps {
             get {
                 return ResourceManager.GetString("Warps", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 5100,Whirlwind Slash
-        ///5200,Nightjar Slash
-        ///5300,Ichimonji
-        ///5400,Dragon Flash
-        ///5500,Ashina Cross
-        ///5600,Floating Passage
-        ///5700,Mortal Draw
-        ///5800,Senpou Leaping Kicks
-        ///5900,Praying Strikes
-        ///6000,Shadowrush
-        ///6100,One Mind
-        ///7000,Nightjar Slash Reversal
-        ///7100,Ichimonji: Double
-        ///7200,Spiral Cloud Passage
-        ///7300,Empowered Mortal Draw
-        ///7400,High Monk
-        ///7500,Praying Strikes - Exorcism
-        ///7600,Shadowfall
-        ///7700,Sakura Dance.
-        /// </summary>
-        internal static string Weapons {
-            get {
-                return ResourceManager.GetString("Weapons", resourceCulture);
             }
         }
     }
