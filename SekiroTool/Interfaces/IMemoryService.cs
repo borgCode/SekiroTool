@@ -39,5 +39,4 @@ public interface IMemoryService
 
     public IntPtr GetProcAddress(string moduleName, string procName);
     
-    void StartAutoAttach();
-}
+    void StartAutoAttach(); }

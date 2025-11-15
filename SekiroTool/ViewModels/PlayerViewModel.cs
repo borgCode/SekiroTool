@@ -3,6 +3,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using SekiroTool.Core;
 using SekiroTool.Enums;
+using SekiroTool.GameIds;
 using SekiroTool.Interfaces;
 using SekiroTool.Utilities;
 using Xceed.Wpf.Toolkit;
@@ -36,6 +37,7 @@ public class PlayerViewModel : BaseViewModel
 
         SetMaxHpCommand = new DelegateCommand(SetMaxHp);
         SetMaxPostureCommand = new DelegateCommand(SetMaxPosture);
+        RemoveConfettiCommand = new DelegateCommand(SetRemoveConfetti);
 
         _playerTick = new DispatcherTimer
         {
@@ -55,6 +57,9 @@ public class PlayerViewModel : BaseViewModel
     public ICommand SetMaxHpCommand { get; set; }
     
     public ICommand SetMaxPostureCommand { get; set; }
+    
+    public 
+        ICommand RemoveConfettiCommand { get; set; }
 
     // Check TargetViewModel for examples of commands when you need to implement that
 
@@ -472,5 +477,10 @@ public class PlayerViewModel : BaseViewModel
         _playerService.SetPosture(MaxPosture);
     }
 
+    private void SetRemoveConfetti()
+    {
+        _playerService.RemoveConfetti(SpecialEffect.Confetti);
+    }
+    
     #endregion
 }

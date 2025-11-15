@@ -22,6 +22,7 @@ public static class Offsets
         public static readonly BitFlag FreezeAi = new(0x1, 1 << 4);
         public static readonly BitFlag NoGoodsConsume = new(0x2, 1 << 4);
         public static readonly BitFlag NoEmblemsConsume = new(0x3, 1 << 0);
+        public const int SpEffectManager = 0x11d0;
 
 
         public const int Modules = 0x1FF8;
@@ -103,6 +104,14 @@ public static class Offsets
             EquipGameData = 0x518,
             EquipInventoryData = 0x5B0
         }
+
+        public enum PlayerIns
+        {
+            SpecialEffect = 0x58, 
+        }
+        
+        
+            
     }
 
     public static class WorldChrManDbg
@@ -304,5 +313,6 @@ public static class Offsets
         public static long SetMessageTagValue;
         public static long AdjustItemCount;
         public static long OpenGenericDialog;
+        public static long RemoveSpEffect;
     }
 }

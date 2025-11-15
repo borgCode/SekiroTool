@@ -224,6 +224,7 @@
                     <CheckBox Content="No Soul Loss on Death"
                               IsChecked="{Binding IsNoSoulLossEnabled}"
                               Margin="0,2" />
+                       
                 </StackPanel>
             </Grid>
 

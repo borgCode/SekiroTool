@@ -1,4 +1,5 @@
-﻿using SekiroTool.Interfaces;
+﻿using System.Runtime.InteropServices.JavaScript;
+using SekiroTool.Interfaces;
 using SekiroTool.Memory;
 using SekiroTool.Utilities;
 using static SekiroTool.Memory.Offsets;
@@ -303,7 +304,19 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         return 0;
     }
 
-    
+    public void RemoveConfetti(int spEffect)
+    {
+        var bytes = AsmLoader.GetAsmBytes("RemoveSpecialEffect");
+        var spEffectPtr = memoryService.FollowPointers(WorldChrMan.Base, [
+            WorldChrMan.PlayerIns,
+            ChrIns.SpEffectManager],true);
+        AsmHelper.WriteAbsoluteAddresses(bytes, [
+            (spEffectPtr.ToInt64(), 0x4 + 2),
+            (spEffect, 0xE + 2),
+            (Functions.RemoveSpEffect, 0x18 + 2)
+        ]);
+        memoryService.AllocateAndExecute(bytes);
+    }
     #endregion
 
 

@@ -368,6 +368,14 @@ public static class Patterns
         AddressingMode.Absolute
     );
         
+    public static readonly Pattern RemoveEffect = new Pattern(
+        new byte[] { 0x48, 0x83, 0xEC, 0x28, 0x8B, 0xC2, 0x48, 0x8B },
+        "xxxxxxxx",
+        0,
+        AddressingMode.Absolute
+
+    );
+        
     
 
     

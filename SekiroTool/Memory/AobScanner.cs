@@ -114,6 +114,7 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.Functions.ApplySpEffect = FindAddressByPattern(Patterns.ApplySpEffect).ToInt64();
         Offsets.Functions.ItemSpawn = FindAddressByPattern(Patterns.ItemSpawn).ToInt64();
         Offsets.Functions.GetEnemyInsWithPackedWorldIdAndChrId = FindAddressByPattern(Patterns.GetEnemyInsWithPackedWorldIdAndChrId).ToInt64();
+        Offsets.Functions.RemoveSpEffect = FindAddressByPattern(Patterns.RemoveEffect).ToInt64();
 
         FindMultipleCallsInFunction(Patterns.ProcessEsdCommand, new Dictionary<Action<long>, int>
         {
