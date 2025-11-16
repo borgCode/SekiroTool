@@ -97,6 +97,24 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 48 83 ec 28             sub    rsp,0x28
+        ///48 b9 00 00 00 00 00    movabs rcx,0x0
+        ///00 00 00
+        ///48 ba 00 00 00 00 00    movabs rdx,0x0
+        ///00 00 00
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///ff d0                   call   rax
+        ///48 83 c4 28             add    rsp,0x28
+        ///c3                      ret.
+        /// </summary>
+        internal static string ApplySpecialEffect {
+            get {
+                return ResourceManager.GetString("ApplySpecialEffect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ff 90 08 01 00 00       call   QWORD PTR [rax+0x108]
         ///81 fb 73 0d 03 00       cmp    ebx,0x30d73
         ///75 11                   jne    1f &lt;exit&gt;

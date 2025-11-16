@@ -212,7 +212,7 @@
                               Margin="20,2,0,2"
                               Visibility="{Binding IsInfiniteConfettiEnabled, 
                        Converter={StaticResource BoolToVisibilityConverter}}"/>
-                        
+                   
                     
                     
                     
@@ -261,8 +261,8 @@
                     <Button Content="Rest"
                             Width="150"
                             Margin="0, 15, 0,0"
-
-                            IsEnabled="{Binding AreOptionsEnabled}">
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Command="{Binding SetRestCommand}">
                     </Button>
                 </StackPanel>
             </Grid>

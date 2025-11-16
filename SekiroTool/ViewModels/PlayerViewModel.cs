@@ -40,6 +40,9 @@ public class PlayerViewModel : BaseViewModel
         SetMaxPostureCommand = new DelegateCommand(SetMaxPosture);
         RemoveConfettiCommand = new DelegateCommand(SetRemoveConfetti);
         RemoveGachiinCommand = new DelegateCommand(SetRemoveGachiin);
+        SetRestCommand = new DelegateCommand(Rest);
+        SetApplyConfettiCommand = new DelegateCommand(SetApplyConfetti);
+        SetApplyGachiinCommand = new DelegateCommand(SetApplyGachiin);
 
         _playerTick = new DispatcherTimer
         {
@@ -62,11 +65,15 @@ public class PlayerViewModel : BaseViewModel
     
     public ICommand SetMaxPostureCommand { get; set; }
     
-    public 
-        ICommand RemoveConfettiCommand { get; set; }
+    public ICommand RemoveConfettiCommand { get; set; }
     
     public ICommand RemoveGachiinCommand { get; set; }
+    
+    public ICommand SetRestCommand { get; set; }
 
+    public ICommand SetApplyConfettiCommand {  get; set; }
+    
+    public ICommand SetApplyGachiinCommand {  get; set; }
     // Check TargetViewModel for examples of commands when you need to implement that
 
     #endregion
@@ -501,12 +508,28 @@ public class PlayerViewModel : BaseViewModel
 
     private void SetRemoveConfetti()
     {
-        _playerService.RemoveConfetti(SpecialEffect.Confetti);
+        _playerService.RemoveSpecialEffect(SpecialEffect.Confetti);
     }
 
     private void SetRemoveGachiin()
     {
-        _playerService.RemoveGachiin(SpecialEffect.Gachiin);
+        _playerService.RemoveSpecialEffect(SpecialEffect.Gachiin);
     }
+
+    private void SetApplyConfetti()
+    {
+        _playerService.ApplySpecialEffect(SpecialEffect.Confetti);
+    }
+    
+    private void SetApplyGachiin()
+    {
+        _playerService.ApplySpecialEffect(SpecialEffect.Gachiin);
+    }
+    
+    private void Rest()
+    {
+        _playerService.Rest();
+    }
+    
     #endregion
 }

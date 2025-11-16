@@ -304,7 +304,7 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         return 0;
     }
 
-    public void RemoveConfetti(int spEffect)
+    public void RemoveSpecialEffect(int spEffect)
     {
         var bytes = AsmLoader.GetAsmBytes("RemoveSpecialEffect");
         var spEffectPtr = memoryService.FollowPointers(WorldChrMan.Base, [
@@ -318,23 +318,22 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         memoryService.AllocateAndExecute(bytes);
         
         
+        
     }
-    
-    public void RemoveGachiin(int spEffect)
+
+    public void ApplySpecialEffect(int spEffect)
     {
-        var bytes = AsmLoader.GetAsmBytes("RemoveSpecialEffect");
+        var bytes = AsmLoader.GetAsmBytes("ApplySpecialEffect");
         var spEffectPtr = memoryService.FollowPointers(WorldChrMan.Base, [
-            WorldChrMan.PlayerIns,
-            ChrIns.SpEffectManager],true);
+            WorldChrMan.PlayerIns],true);
         AsmHelper.WriteAbsoluteAddresses(bytes, [
             (spEffectPtr.ToInt64(), 0x4 + 2),
             (spEffect, 0xE + 2),
-            (Functions.RemoveSpEffect, 0x18 + 2)
+            (Functions.ApplySpEffect, 0x18 + 2)
         ]);
         memoryService.AllocateAndExecute(bytes);
-        
-        
     }
+
     #endregion
 
 
