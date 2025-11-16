@@ -39,6 +39,7 @@ public class PlayerViewModel : BaseViewModel
         SetMaxHpCommand = new DelegateCommand(SetMaxHp);
         SetMaxPostureCommand = new DelegateCommand(SetMaxPosture);
         RemoveConfettiCommand = new DelegateCommand(SetRemoveConfetti);
+        RemoveGachiinCommand = new DelegateCommand(SetRemoveGachiin);
 
         _playerTick = new DispatcherTimer
         {
@@ -63,6 +64,8 @@ public class PlayerViewModel : BaseViewModel
     
     public 
         ICommand RemoveConfettiCommand { get; set; }
+    
+    public ICommand RemoveGachiinCommand { get; set; }
 
     // Check TargetViewModel for examples of commands when you need to implement that
 
@@ -500,6 +503,10 @@ public class PlayerViewModel : BaseViewModel
     {
         _playerService.RemoveConfetti(SpecialEffect.Confetti);
     }
-    
+
+    private void SetRemoveGachiin()
+    {
+        _playerService.RemoveGachiin(SpecialEffect.Gachiin);
+    }
     #endregion
 }

@@ -41,5 +41,7 @@ public interface IPlayerService
     void ToggleGachiinFlag(bool isEnabled);
     int RequestRespawn();
     void RemoveConfetti(int SpEffectId);
-    
+    void RemoveGachiin(int SpEffectId);
+
+
 }

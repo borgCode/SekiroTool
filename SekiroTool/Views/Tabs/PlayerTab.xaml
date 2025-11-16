@@ -212,6 +212,9 @@
                               Margin="20,2,0,2"
                               Visibility="{Binding IsInfiniteConfettiEnabled, 
                        Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        
+                    
+                    
                     
                 </StackPanel>
             </Grid>
