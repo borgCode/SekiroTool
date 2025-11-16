@@ -10,38 +10,34 @@ namespace SekiroTool.Services;
 
 public class PlayerService(IMemoryService memoryService, HookManager hookManager) : IPlayerService
 {
-
     private Position _position1 = new();
     private Position _position2 = new();
-    private Dictionary<uint, uint> _idolsByAreaDict = DataLoader.GetIdolsByAreaDictionary();
-    
-    
+    private Dictionary<int, int> _idolsByAreaIndex = DataLoader.GetIdolIdsByAreaIndexDictionary();
+
+
     #region Public Methods
 
     public void SavePos(int index)
     {
         var chrPhysicsPtr = GetChrPhysicsPtr();
-        
-        var worldBlockIdPtr = memoryService.FollowPointers(WorldChrMan.Base, [
-            WorldChrMan.WorldBlockInfo, 
-            WorldChrMan.WorldBlockId], false);
 
-        var worldBlockId = memoryService.ReadUInt32(worldBlockIdPtr);
-        
+        var areaIndex = memoryService.ReadInt32((IntPtr)memoryService.ReadInt64(FieldArea.Base) +
+                                                FieldArea.CurrentWorldBlockIndex);
+
         byte[] positionBytes = memoryService.ReadBytes(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.X, 16);
         float angle = memoryService.ReadFloat(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.Angle);
-        
+
         if (index == 0)
         {
             _position1.Xyz = positionBytes;
             _position1.Angle = angle;
-            _position1.AreaId = worldBlockId;
+            _position1.AreaIndex = areaIndex;
         }
         else
         {
             _position2.Xyz = positionBytes;
             _position2.Angle = angle;
-            _position2.AreaId = worldBlockId;
+            _position2.AreaIndex = areaIndex;
         }
     }
 
@@ -51,41 +47,43 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
 
         byte[] xyzBytes;
         float angle;
-        uint savedWorldBlockId;
+        int savedAreaIndex;
         if (index == 0)
         {
             xyzBytes = _position1.Xyz;
             angle = _position1.Angle;
-            savedWorldBlockId = _position1.AreaId;
+            savedAreaIndex = _position1.AreaIndex;
         }
         else
         {
             xyzBytes = _position2.Xyz;
             angle = _position2.Angle;
-            savedWorldBlockId = _position2.AreaId;
+            savedAreaIndex = _position2.AreaIndex;
         }
-        
-        var worldBlockIdPtr = memoryService.FollowPointers(WorldChrMan.Base, [
-            WorldChrMan.WorldBlockInfo, 
-            WorldChrMan.WorldBlockId], false);
-        
-        var worldBlockId = memoryService.ReadUInt32(worldBlockIdPtr);
 
-        if (worldBlockId != savedWorldBlockId)
+        var areaIndex = memoryService.ReadInt32((IntPtr)memoryService.ReadInt64(FieldArea.Base) +
+                                                FieldArea.CurrentWorldBlockIndex);
+
+        if (areaIndex != savedAreaIndex)
         {
-            DoAreaWarp(xyzBytes, angle, savedWorldBlockId);
+            Task.Run(() =>
+            {
+                DoAreaWarp(savedAreaIndex, xyzBytes, angle);
+       
+            });
         }
         else
         {
             memoryService.WriteBytes(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.X, xyzBytes);
             memoryService.WriteFloat(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.Angle, angle);
         }
+ 
     }
 
-    private void DoAreaWarp(byte[] xyzBytes, float angle, uint savedWorldBlockId)
+    private void DoAreaWarp(int areaIndex, byte[] xyzBytes, float angle)
     {
-        var idolId = _idolsByAreaDict[savedWorldBlockId];
-        
+        var idolId = _idolsByAreaIndex[areaIndex];
+
         var bytes = AsmLoader.GetAsmBytes("Warp");
         AsmHelper.WriteAbsoluteAddresses(bytes, [
             (idolId, 0x0 + 2),
@@ -112,7 +110,6 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         var angleWriteCode = CodeCaveOffsets.Base + CodeCaveOffsets.WarpAngleCode;
         
         var angleToWrite = new float[] { 0f, angle, 0f, 0f };
-        
         memoryService.WriteBytes(angleLoc, MemoryMarshal.AsBytes(angleToWrite.AsSpan()).ToArray());
         
         codeBytes = AsmLoader.GetAsmBytes("WarpAngleWrite");
@@ -124,25 +121,26 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
             [0x66, 0x0F, 0x7F, 0x80, 0xC0, 0x0A, 0x00, 0x00]);
         hookManager.InstallHook(angleWriteCode.ToInt64(), angleWriteHook,
             [0x66, 0x0F, 0x7F, 0x80, 0xD0, 0x0A, 0x00, 0x00]);
-
+        
         var isGameLoadedPtr = (IntPtr)memoryService.ReadInt64(MenuMan.Base) + MenuMan.IsLoaded;
         {
             int start = Environment.TickCount;
             while (memoryService.ReadUInt8(isGameLoadedPtr) != 0 &&
-                   Environment.TickCount < start + 10000) 
+                   Environment.TickCount < start + 10000)
                 Thread.Sleep(50);
         }
-        
+
         {
             int start = Environment.TickCount;
-          
+
             while (memoryService.ReadUInt8(isGameLoadedPtr) != 1 &&
-                   Environment.TickCount < start + 10000) 
+                   Environment.TickCount < start + 10000)
                 Thread.Sleep(50);
         }
         
         hookManager.UninstallHook(coordWriteCode.ToInt64());
         hookManager.UninstallHook(angleWriteCode.ToInt64());
+
     }
 
     public (float x, float y, float z) GetCoords()
@@ -234,7 +232,7 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         ]);
         memoryService.AllocateAndExecute(bytes);
     }
-    
+
     public void TogglePlayerNoDeath(bool isEnabled)
     {
         memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoDeath, isEnabled ? 1 : 0);
@@ -334,23 +332,23 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
 
     public void ToggleInfiniteConfetti(bool isEnabled)
     {
-        var infiniteConfettiCaveLoc  = CodeCaveOffsets.Base + CodeCaveOffsets.InfiniteConfetti; //Base = allocated memory
+        var infiniteConfettiCaveLoc = CodeCaveOffsets.Base + CodeCaveOffsets.InfiniteConfetti; //Base = allocated memory
         var confettiFlag = CodeCaveOffsets.Base + CodeCaveOffsets.ConfettiFlag;
         var gachiinFlag = CodeCaveOffsets.Base + CodeCaveOffsets.GachiinFlag;
         if (isEnabled)
         {
             var hookLoc = Hooks.InfiniteConfetti; //140C06BFE
-            var originalRetJmp = hookLoc + 0x7;  //movss in og code
+            var originalRetJmp = hookLoc + 0x7; //movss in og code
 
             var bytes = AsmLoader.GetAsmBytes("InfiniteConfetti");
             AsmHelper.WriteRelativeOffsets(bytes, new[]
             {
-                (infiniteConfettiCaveLoc.ToInt64() + 0x19, originalRetJmp, 5, 0x19 + 1),  //jmp return 1
+                (infiniteConfettiCaveLoc.ToInt64() + 0x19, originalRetJmp, 5, 0x19 + 1), //jmp return 1
                 (infiniteConfettiCaveLoc.ToInt64() + 0x1e, confettiFlag.ToInt64(), 7, 0x1e + 2), //cmp byte     
                 (infiniteConfettiCaveLoc.ToInt64() + 0x2a, originalRetJmp, 5, 0x2a + 1),
                 (infiniteConfettiCaveLoc.ToInt64() + 0x2f, gachiinFlag.ToInt64(), 7, 0x2f + 2),
-                (infiniteConfettiCaveLoc.ToInt64() + 0x3b, originalRetJmp, 5, 0x3b + 1),  
-                (infiniteConfettiCaveLoc.ToInt64() + 0x47, originalRetJmp, 5, 0x47 + 1),  
+                (infiniteConfettiCaveLoc.ToInt64() + 0x3b, originalRetJmp, 5, 0x3b + 1),
+                (infiniteConfettiCaveLoc.ToInt64() + 0x47, originalRetJmp, 5, 0x47 + 1),
             });
             memoryService.WriteBytes(infiniteConfettiCaveLoc, bytes);
             hookManager.InstallHook(infiniteConfettiCaveLoc.ToInt64(), hookLoc,
@@ -363,9 +361,10 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
     }
 
     public void ToggleConfettiFlag(bool isEnabled)
-    
-    {   var confettiFlag = CodeCaveOffsets.Base + CodeCaveOffsets.ConfettiFlag;
-        
+
+    {
+        var confettiFlag = CodeCaveOffsets.Base + CodeCaveOffsets.ConfettiFlag;
+
         if (isEnabled)
         {
             memoryService.WriteUInt8(confettiFlag, 1);
@@ -374,8 +373,6 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         {
             memoryService.WriteUInt8(confettiFlag, 0);
         }
-            
-            
     }
 
     public void ToggleGachiinFlag(bool isEnabled)
@@ -391,14 +388,13 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         }
     }
 
-    
-    
 
     public int RequestRespawn()
     {
         var worldBlockIdPtr = memoryService.FollowPointers(WorldChrMan.Base, [
-            WorldChrMan.WorldBlockInfo, 
-            WorldChrMan.WorldBlockId], false);
+            WorldChrMan.WorldBlockInfo,
+            WorldChrMan.WorldBlockId
+        ], false);
         var requestRespawnAddr = RequestRespawnGlobal.Base;
         var addr = (IntPtr)0x143afeba0;
         var worldblockid = memoryService.ReadInt32(worldBlockIdPtr);
@@ -412,32 +408,31 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         var bytes = AsmLoader.GetAsmBytes("RemoveSpecialEffect");
         var spEffectPtr = memoryService.FollowPointers(WorldChrMan.Base, [
             WorldChrMan.PlayerIns,
-            ChrIns.SpEffectManager],true);
+            ChrIns.SpEffectManager
+        ], true);
         AsmHelper.WriteAbsoluteAddresses(bytes, [
             (spEffectPtr.ToInt64(), 0x4 + 2),
             (spEffect, 0xE + 2),
             (Functions.RemoveSpEffect, 0x18 + 2)
         ]);
         memoryService.AllocateAndExecute(bytes);
-        
-        
     }
-    
+
     public void RemoveGachiin(int spEffect)
     {
         var bytes = AsmLoader.GetAsmBytes("RemoveSpecialEffect");
         var spEffectPtr = memoryService.FollowPointers(WorldChrMan.Base, [
             WorldChrMan.PlayerIns,
-            ChrIns.SpEffectManager],true);
+            ChrIns.SpEffectManager
+        ], true);
         AsmHelper.WriteAbsoluteAddresses(bytes, [
             (spEffectPtr.ToInt64(), 0x4 + 2),
             (spEffect, 0xE + 2),
             (Functions.RemoveSpEffect, 0x18 + 2)
         ]);
         memoryService.AllocateAndExecute(bytes);
-        
-        
     }
+
     #endregion
 
 

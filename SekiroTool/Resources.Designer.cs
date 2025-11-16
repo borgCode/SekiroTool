@@ -97,23 +97,6 @@ namespace SekiroTool {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 0,1001953
-        ///1,1101952
-        ///2,1111950
-        ///3,1121950
-        ///6,1301950
-        ///7,1501952
-        ///9,1701952
-        ///11,2001953
-        ///12,2501953.
-        /// </summary>
-        internal static string AreaIndexToIdolId {
-            get {
-                return ResourceManager.GetString("AreaIndexToIdolId", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to ff 90 08 01 00 00       call   QWORD PTR [rax+0x108]
         ///81 fb 73 0d 03 00       cmp    ebx,0x30d73
         ///75 11                   jne    1f &lt;exit&gt;
@@ -332,6 +315,23 @@ namespace SekiroTool {
         internal static string IdolEventFlags {
             get {
                 return ResourceManager.GetString("IdolEventFlags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0,1001953
+        ///1,1101952
+        ///2,1111950
+        ///3,1121950
+        ///6,1301950
+        ///7,1501952
+        ///9,1701952
+        ///11,2001953
+        ///12,2501953.
+        /// </summary>
+        internal static string IdolIdByAreaIndex {
+            get {
+                return ResourceManager.GetString("IdolIdByAreaIndex", resourceCulture);
             }
         }
         

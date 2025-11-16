@@ -235,6 +235,7 @@ public static class Offsets
     public static class FieldArea
     {
         public static IntPtr Base;
+        public const int CurrentWorldBlockIndex = 0x28;
         public const int GameRend = 0x20;
         public static readonly int[] FreeCamMode = [GameRend, 0xE0]; 
         public const int DebugFreecam = 0xE8;

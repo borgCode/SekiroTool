@@ -4,5 +4,5 @@ public class Position()
 {
     public byte[] Xyz = new byte[16];
     public float Angle;
-    public uint AreaId;
+    public int AreaIndex;
 }
