@@ -1,6 +1,8 @@
-﻿using System.Runtime.InteropServices.JavaScript;
+﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.JavaScript;
 using SekiroTool.Interfaces;
 using SekiroTool.Memory;
+using SekiroTool.Models;
 using SekiroTool.Utilities;
 using static SekiroTool.Memory.Offsets;
 
