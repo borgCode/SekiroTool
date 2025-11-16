@@ -337,6 +337,39 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 0,1001953
+        ///1,1101952
+        ///2,1111950
+        ///3,1121950
+        ///6,1301950
+        ///7,1501952
+        ///9,1701952
+        ///11,2001953
+        ///12,2501953.
+        /// </summary>
+        internal static string IdolIdByAreaIndex {
+            get {
+                return ResourceManager.GetString("IdolIdByAreaIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 184549376,1101950
+        ///184614912,1121951
+        ///218103808,1111955
+        ///335544320,2001950
+        ///285212672,1701956
+        ///251658240,1501951
+        ///419430400,2501950
+        ///167772160,1001950.
+        /// </summary>
+        internal static string IdolsByArea {
+            get {
+                return ResourceManager.GetString("IdolsByArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 81 7b 58 7b 0d 00 00    cmp    DWORD PTR [rbx+0x58],0xd7b
         ///74 15                   je     1e &lt;CheckConfettiFlag&gt;
         ///81 7b 58 71 0d 00 00    cmp    DWORD PTR [rbx+0x58],0xd71
@@ -676,22 +709,6 @@ namespace SekiroTool {
         internal static string RemoveSpecialEffect {
             get {
                 return ResourceManager.GetString("RemoveSpecialEffect", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 184549376,1101950
-        ///184614912,1121951
-        ///218103808,1111955
-        ///335544320,2001950
-        ///285212672,1701956
-        ///251658240,1501951
-        ///419430400,2501950
-        ///167772160,1001950.
-        /// </summary>
-        internal static string RequestRespawnHashMap {
-            get {
-                return ResourceManager.GetString("RequestRespawnHashMap", resourceCulture);
             }
         }
         

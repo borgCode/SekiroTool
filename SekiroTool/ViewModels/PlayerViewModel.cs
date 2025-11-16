@@ -18,6 +18,8 @@ public class PlayerViewModel : BaseViewModel
 
     private readonly DispatcherTimer _playerTick;
 
+    private Dictionary<uint, uint> _idolsByAreaDict;
+
     private bool _pauseUpdates;
 
     public PlayerViewModel(IPlayerService playerService, HotkeyManager hotkeyManager,
@@ -50,7 +52,7 @@ public class PlayerViewModel : BaseViewModel
         };
         _playerTick.Tick += PlayerTick;
 
-        DataLoader.RequestRespawnHash();
+        _idolsByAreaDict = DataLoader.GetIdolsByAreaDictionary();
     }
 
     
@@ -484,7 +486,6 @@ public class PlayerViewModel : BaseViewModel
         int index = Convert.ToInt32(parameter);
         if (index == 0) IsPos1Saved = true;
         else IsPos2Saved = true;
-        //TODO include state
 
         _playerService.SavePos(index);
     }
@@ -492,8 +493,10 @@ public class PlayerViewModel : BaseViewModel
     private void RestorePosition(object parameter)
     {
         int index = Convert.ToInt32(parameter);
+        if (index == 0 && !IsPos1Saved) return;
+        if (index == 1 && !IsPos2Saved) return;
         _playerService.RestorePos(index);
-        //TODO include state
+    
     }
 
     private void SetMaxHp()
