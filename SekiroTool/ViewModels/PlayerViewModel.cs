@@ -18,6 +18,8 @@ public class PlayerViewModel : BaseViewModel
 
     private readonly DispatcherTimer _playerTick;
 
+    private Dictionary<uint, uint> _idolsByAreaDict;
+
     private bool _pauseUpdates;
 
     public PlayerViewModel(IPlayerService playerService, HotkeyManager hotkeyManager,
@@ -47,7 +49,7 @@ public class PlayerViewModel : BaseViewModel
         };
         _playerTick.Tick += PlayerTick;
 
-        DataLoader.RequestRespawnHash();
+        _idolsByAreaDict = DataLoader.GetIdolsByAreaDictionary();
     }
 
     

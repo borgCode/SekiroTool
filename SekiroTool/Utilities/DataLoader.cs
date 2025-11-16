@@ -59,10 +59,10 @@ public class DataLoader
             return warpDict;
         }
 
-    public static Dictionary<uint, uint> RequestRespawnHash()
+    public static Dictionary<uint, uint> GetIdolsByAreaDictionary()
     {
-        Dictionary<uint, uint> respawnHash = new Dictionary<uint, uint>();
-        string csvData = Resources.RequestRespawnHashMap;
+        Dictionary<uint, uint> idolsByAreaDict = new Dictionary<uint, uint>();
+        string csvData = Resources.IdolsByArea;
 
         using StringReader reader = new StringReader(csvData);
         string line;
@@ -72,11 +72,11 @@ public class DataLoader
             uint mapId = uint.Parse(parts[0], NumberStyles.Integer, CultureInfo.InvariantCulture);
             uint idolId = uint.Parse(parts[1], NumberStyles.Integer, CultureInfo.InvariantCulture);
             
-            respawnHash.Add((mapId), idolId);
+            idolsByAreaDict.Add(mapId, idolId);
     
         }
         
-        return respawnHash;
+        return idolsByAreaDict;
 
         
 

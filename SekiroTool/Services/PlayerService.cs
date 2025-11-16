@@ -1,6 +1,8 @@
-﻿using System.Runtime.InteropServices.JavaScript;
+﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.JavaScript;
 using SekiroTool.Interfaces;
 using SekiroTool.Memory;
+using SekiroTool.Models;
 using SekiroTool.Utilities;
 using static SekiroTool.Memory.Offsets;
 
@@ -8,39 +10,139 @@ namespace SekiroTool.Services;
 
 public class PlayerService(IMemoryService memoryService, HookManager hookManager) : IPlayerService
 {
+
+    private Position _position1 = new();
+    private Position _position2 = new();
+    private Dictionary<uint, uint> _idolsByAreaDict = DataLoader.GetIdolsByAreaDictionary();
+    
+    
     #region Public Methods
 
     public void SavePos(int index)
     {
         var chrPhysicsPtr = GetChrPhysicsPtr();
+        
+        var worldBlockIdPtr = memoryService.FollowPointers(WorldChrMan.Base, [
+            WorldChrMan.WorldBlockInfo, 
+            WorldChrMan.WorldBlockId], false);
 
-        byte[] positionBytes = memoryService.ReadBytes(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.X, 12);
+        var worldBlockId = memoryService.ReadUInt32(worldBlockIdPtr);
+        
+        byte[] positionBytes = memoryService.ReadBytes(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.X, 16);
         float angle = memoryService.ReadFloat(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.Angle);
-
-        byte[] angleBytes = BitConverter.GetBytes(angle);
-        byte[] data = new byte[16];
-        Buffer.BlockCopy(positionBytes, 0, data, 0, 12);
-        Buffer.BlockCopy(angleBytes, 0, data, 12, 4);
-
-        if (index == 0) memoryService.WriteBytes(CodeCaveOffsets.Base + CodeCaveOffsets.SavePos1, data);
-        else memoryService.WriteBytes(CodeCaveOffsets.Base + CodeCaveOffsets.SavePos2, data);
+        
+        if (index == 0)
+        {
+            _position1.Xyz = positionBytes;
+            _position1.Angle = angle;
+            _position1.AreaId = worldBlockId;
+        }
+        else
+        {
+            _position2.Xyz = positionBytes;
+            _position2.Angle = angle;
+            _position2.AreaId = worldBlockId;
+        }
     }
 
     public void RestorePos(int index)
     {
-        byte[] positionBytes;
-        if (index == 0) positionBytes = memoryService.ReadBytes(CodeCaveOffsets.Base + CodeCaveOffsets.SavePos1, 16);
-        else positionBytes = memoryService.ReadBytes(CodeCaveOffsets.Base + CodeCaveOffsets.SavePos2, 16);
-
-        float angle = BitConverter.ToSingle(positionBytes, 12);
-
         var chrPhysicsPtr = GetChrPhysicsPtr();
 
-        byte[] xyzBytes = new byte[12];
-        Buffer.BlockCopy(positionBytes, 0, xyzBytes, 0, 12);
+        byte[] xyzBytes;
+        float angle;
+        uint savedWorldBlockId;
+        if (index == 0)
+        {
+            xyzBytes = _position1.Xyz;
+            angle = _position1.Angle;
+            savedWorldBlockId = _position1.AreaId;
+        }
+        else
+        {
+            xyzBytes = _position2.Xyz;
+            angle = _position2.Angle;
+            savedWorldBlockId = _position2.AreaId;
+        }
+        
+        var worldBlockIdPtr = memoryService.FollowPointers(WorldChrMan.Base, [
+            WorldChrMan.WorldBlockInfo, 
+            WorldChrMan.WorldBlockId], false);
+        
+        var worldBlockId = memoryService.ReadUInt32(worldBlockIdPtr);
 
-        memoryService.WriteBytes(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.X, xyzBytes);
-        memoryService.WriteFloat(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.Angle, angle);
+        if (worldBlockId != savedWorldBlockId)
+        {
+            DoAreaWarp(xyzBytes, angle, savedWorldBlockId);
+        }
+        else
+        {
+            memoryService.WriteBytes(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.X, xyzBytes);
+            memoryService.WriteFloat(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.Angle, angle);
+        }
+    }
+
+    private void DoAreaWarp(byte[] xyzBytes, float angle, uint savedWorldBlockId)
+    {
+        var idolId = _idolsByAreaDict[savedWorldBlockId];
+        
+        var bytes = AsmLoader.GetAsmBytes("Warp");
+        AsmHelper.WriteAbsoluteAddresses(bytes, [
+            (idolId, 0x0 + 2),
+            (Functions.Warp, 0x10 + 2)
+        ]);
+        memoryService.AllocateAndExecute(bytes);
+        
+        var coordWriteHook = Hooks.SetWarpCoordinates;
+        var angleWriteHook = Hooks.SetWarpAngle;
+
+        var coordLoc = CodeCaveOffsets.Base + CodeCaveOffsets.WarpCoords;
+        var coordWriteCode = CodeCaveOffsets.Base + CodeCaveOffsets.WarpCoordsCode;
+        
+        memoryService.WriteBytes(coordLoc, xyzBytes);
+        
+        var codeBytes = AsmLoader.GetAsmBytes("WarpCoordWrite");
+        
+        bytes = AsmHelper.GetRelOffsetBytes(coordWriteCode.ToInt64(), coordLoc.ToInt64(), 7);
+        Array.Copy(bytes, 0, codeBytes, 0x0 + 3, bytes.Length);
+        memoryService.WriteBytes(coordWriteCode, codeBytes);
+        
+        var angleLoc = CodeCaveOffsets.Base + CodeCaveOffsets.WarpAngle;
+        
+        var angleWriteCode = CodeCaveOffsets.Base + CodeCaveOffsets.WarpAngleCode;
+        
+        var angleToWrite = new float[] { 0f, angle, 0f, 0f };
+        
+        memoryService.WriteBytes(angleLoc, MemoryMarshal.AsBytes(angleToWrite.AsSpan()).ToArray());
+        
+        codeBytes = AsmLoader.GetAsmBytes("WarpAngleWrite");
+        bytes = AsmHelper.GetRelOffsetBytes(angleWriteCode.ToInt64(), angleLoc.ToInt64(), 7);
+        Array.Copy(bytes, 0, codeBytes, 0x0 + 3, bytes.Length);
+        memoryService.WriteBytes(angleWriteCode, codeBytes);
+
+        hookManager.InstallHook(coordWriteCode.ToInt64(), coordWriteHook,
+            [0x66, 0x0F, 0x7F, 0x80, 0xC0, 0x0A, 0x00, 0x00]);
+        hookManager.InstallHook(angleWriteCode.ToInt64(), angleWriteHook,
+            [0x66, 0x0F, 0x7F, 0x80, 0xD0, 0x0A, 0x00, 0x00]);
+
+        var isGameLoadedPtr = (IntPtr)memoryService.ReadInt64(MenuMan.Base) + MenuMan.IsLoaded;
+        {
+            int start = Environment.TickCount;
+            while (memoryService.ReadUInt8(isGameLoadedPtr) != 0 &&
+                   Environment.TickCount < start + 10000) 
+                Thread.Sleep(50);
+        }
+        
+        {
+            int start = Environment.TickCount;
+          
+            while (memoryService.ReadUInt8(isGameLoadedPtr) != 1 &&
+                   Environment.TickCount < start + 10000) 
+                Thread.Sleep(50);
+        }
+        
+        hookManager.UninstallHook(coordWriteCode.ToInt64());
+        hookManager.UninstallHook(angleWriteCode.ToInt64());
     }
 
     public (float x, float y, float z) GetCoords()
@@ -263,6 +365,7 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
     public void ToggleConfettiFlag(bool isEnabled)
     
     {   var confettiFlag = CodeCaveOffsets.Base + CodeCaveOffsets.ConfettiFlag;
+        
         if (isEnabled)
         {
             memoryService.WriteUInt8(confettiFlag, 1);

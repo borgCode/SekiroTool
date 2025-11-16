@@ -431,10 +431,10 @@ Boss,Ogre,1101952,186.99|-52.56|119.99|1.00,1.97
 Boss,General 2,1101953,56.23|-42.52|147.30|1.00,-2.38
 Boss,Ako headless,1101952,221.71|-104.34|237.26|1.00,-0.55
 Boss,Gyoubu,1101954,-95.57|-53.61|27.80|1.00,2.31
-Boss,Bull,1101955,-283.00|-32.05|133.40|1.00,-2.08
+Boss,Bull,1111950,-283.00|-32.05|133.40|1.00,-2.08
 Boss,General 3,1111950,-155.71|-0.34|190.35|1.00,-2.60
-Boss,Seven Spears 1,1111950,-183.47|-37.56|327.29|1.00,-3.03
-Boss,Lone Shadow 1,1111950,-302.46|-36.69|289.72|1.00,2.82
+Boss,Seven Spears 1,1121950,-183.47|-37.56|327.29|1.00,-3.03
+Boss,Lone Shadow 1,1121950,-302.46|-36.69|289.72|1.00,2.82
 Boss,Shichimen 1,1301951,-331.80|-70.99|409.19|1.00,1.44
 Boss,Geni 2,1111951,-92.91|52.67|255.09|1.00,0.68
 Boss,Elite 1,1111951,-115.35|40.42|257.43|1.00,0.52
@@ -1191,7 +1191,7 @@ f3 0f 5c cf             subss  xmm1,xmm7
 0f 2f c1                comiss xmm0,xmm1
 e9 00 00 00 00          jmp    4c &lt;OriginalInstructions+0xc&gt;</value>
     </data>
-    <data name="RequestRespawnHashMap" xml:space="preserve">
+    <data name="IdolsByArea" xml:space="preserve">
         <value>184549376,1101950
 184614912,1121951
 218103808,1111955
@@ -1395,5 +1395,16 @@ e9 00 00 00 00          jmp    119 &lt;normal+0x5&gt;</value>
 ff d0                   call   rax
 48 83 c4 28             add    rsp,0x28
 c3                      ret</value>
+    </data>
+    <data name="AreaIndexToIdolId" xml:space="preserve">
+        <value>0,1001953
+1,1101952
+2,1111950
+3,1121950
+6,1301950
+7,1501952
+9,1701952
+11,2001953
+12,2501953</value>
     </data>
 </root>
