@@ -435,7 +435,13 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         ]);
         memoryService.AllocateAndExecute(bytes);
     }
+    
+    public float GetSpeed() =>
+        memoryService.ReadFloat(GetChrBehaviorPtr() + (int)ChrIns.ChrBehaviorOffsets.AnimationSpeed);
 
+    public void SetSpeed(float speed) =>
+        memoryService.WriteFloat(GetChrBehaviorPtr() + (int)ChrIns.ChrBehaviorOffsets.AnimationSpeed, speed);
+    
     #endregion
 
 
@@ -447,5 +453,7 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
     private IntPtr GetChrPhysicsPtr() =>
         memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrPhysicsModule], true);
 
+    private IntPtr GetChrBehaviorPtr() =>
+        memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrPhysicsModule], true);
     #endregion
 }

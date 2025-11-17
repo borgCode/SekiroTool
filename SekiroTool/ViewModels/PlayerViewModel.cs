@@ -21,6 +21,10 @@ public class PlayerViewModel : BaseViewModel
     private Dictionary<uint, uint> _idolsByAreaDict;
 
     private bool _pauseUpdates;
+    
+    private const float DefaultSpeed = 1f;
+    private float _playerDesiredSpeed = -1f;
+    private const float Epsilon = 0.0001f;
 
     public PlayerViewModel(IPlayerService playerService, HotkeyManager hotkeyManager,
         IGameStateService gameStateService)
@@ -57,6 +61,7 @@ public class PlayerViewModel : BaseViewModel
 
     
 
+    
 
     #region Commands
 
@@ -391,6 +396,23 @@ public class PlayerViewModel : BaseViewModel
         set => SetProperty(ref _requestRespawn, value);
     }
     
+    
+    private float _playerSpeed;
+    
+    public float PlayerSpeed
+    {
+        get => _playerSpeed;
+        set
+        {
+            if (SetProperty(ref _playerSpeed, value))
+            {
+                _playerService.SetSpeed();
+            }
+        }
+    }
+    
+    public void SetSpeed(double value) => PlayerSpeed = (float)value;
+    
     #endregion
 
     #region Public Methods
@@ -413,9 +435,31 @@ public class PlayerViewModel : BaseViewModel
         _hotkeyManager.RegisterAction(HotkeyActions.RestorePos1.ToString(), () => RestorePosition(0));
         _hotkeyManager.RegisterAction(HotkeyActions.RestorePos2.ToString(), () => RestorePosition(1));
         
+        _hotkeyManager.RegisterAction(HotkeyActions.IncreaseTargetSpeed.ToString(), () =>
+            ExecutePlayerAction(() => SetSpeed(Math.Min(5, TargetSpeed + 0.25f))));
+        _hotkeyManager.RegisterAction(HotkeyActions.DecreaseTargetSpeed.ToString(), () =>
+            ExecuteTargetAction(() => SetSpeed(Math.Max(0, TargetSpeed - 0.25f))));
+        _hotkeyManager.RegisterAction(HotkeyActions.ToggleTargetSpeed.ToString(), () => 
+            ExecuteTargetAction(ToggleTargetSpeed));
         
     }
 
+    private void ExecuteTargetAction(Action action)
+    {
+        if (!IsPlayerOptionsEnabled)
+        {
+            IsPlayerOptionsEnabled = true;
+            Task.Run(async () =>
+            {
+                await Task.Delay(100);
+                if (EnsureValidTarget()) action();
+            });
+            return;
+        }
+
+        if (!IsValidTarget) return;
+        action();
+    
     private void OnGameLoaded()
     {
         AreOptionsEnabled = true;
@@ -533,6 +577,22 @@ public class PlayerViewModel : BaseViewModel
     {
         _playerService.Rest();
     }
+    
+    private void TogglePlayerSpeed()
+    {
+        if (!AreOptionsEnabled) return;
+
+        if (!IsApproximately(PlayerSpeed, DefaultSpeed))
+        {
+            _playerDesiredSpeed = _playerSpeed;
+            SetSpeed(DefaultSpeed);
+        }
+        else if (_playerDesiredSpeed >= 0)
+        {
+            SetSpeed(_playerDesiredSpeed);
+        }
+    }
+    private bool IsApproximately(float a, float b) => Math.Abs(a - b) < Epsilon;
     
     #endregion
 }

@@ -217,6 +217,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Functions.OpenGenericDialog: 0x{Offsets.Functions.OpenGenericDialog:X}");
         Console.WriteLine($"Functions.RemoveItem: 0x{Offsets.Functions.RemoveItem:X}");
         Console.WriteLine($"Functions.GiveSkillAndPros: 0x{Offsets.Functions.GiveSkillAndPros:X}");
+        Console.WriteLine($"Functions.GiveSkillAndPros: 0x{Offsets.Functions.:X}");
 #endif
     }
 
