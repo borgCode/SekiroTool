@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>WinExe</OutputType>
+        <OutputType>Exe</OutputType>
         <TargetFramework>net9.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
         <PublishSingleFile>true</PublishSingleFile>
-        <SelfContained>false</SelfContained>
+        <SelfContained>true</SelfContained>
         <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
+        <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
         <Version>1.0.0</Version>
     </PropertyGroup>
-    
     
 
     <ItemGroup>
