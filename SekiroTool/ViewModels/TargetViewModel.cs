@@ -75,7 +75,7 @@ public class TargetViewModel : BaseViewModel
     private bool _isTargetViewEnabled;
 
 
-    public TargetViewModel(IGameStateService gameStateService, HotkeyManager hotkeyManager,
+    public TargetViewModel(IStateService stateService, HotkeyManager hotkeyManager,
         ITargetService targetService,
         IDebugDrawService debugDrawService)
     {
@@ -85,8 +85,8 @@ public class TargetViewModel : BaseViewModel
 
         RegisterHotkeys();
 
-        gameStateService.Subscribe(GameState.Loaded, OnGameLoaded);
-        gameStateService.Subscribe(GameState.NotLoaded, OnGameNotLoaded);
+        stateService.Subscribe(State.Loaded, OnGameLoaded);
+        stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
 
         SetHpCommand = new DelegateCommand(SetHp);
         SetHpPercentageCommand = new DelegateCommand(SetHpPercentage);

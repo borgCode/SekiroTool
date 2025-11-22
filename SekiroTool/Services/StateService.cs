@@ -4,9 +4,9 @@ using static SekiroTool.Memory.Offsets;
 
 namespace SekiroTool.Services;
 
-public class GameStateService(IMemoryService memoryService) : IGameStateService
+public class StateService(IMemoryService memoryService) : IStateService
 {
-    private readonly Dictionary<GameState, List<Action>> _eventHandlers = new();
+    private readonly Dictionary<State, List<Action>> _eventHandlers = new();
     
     public bool IsLoaded()
     {
@@ -15,7 +15,7 @@ public class GameStateService(IMemoryService memoryService) : IGameStateService
         return playerIns != IntPtr.Zero;
     }
 
-    public void Publish(GameState eventType)
+    public void Publish(State eventType)
     {
         if (_eventHandlers.ContainsKey(eventType))
         {
@@ -24,7 +24,7 @@ public class GameStateService(IMemoryService memoryService) : IGameStateService
         }
     }
 
-    public void Subscribe(GameState eventType, Action handler)
+    public void Subscribe(State eventType, Action handler)
     {
         if (!_eventHandlers.ContainsKey(eventType))
             _eventHandlers[eventType] = new List<Action>();
@@ -32,7 +32,7 @@ public class GameStateService(IMemoryService memoryService) : IGameStateService
         _eventHandlers[eventType].Add(handler);
     }
 
-    public void Unsubscribe(GameState eventType, Action handler)
+    public void Unsubscribe(State eventType, Action handler)
     {
         if (_eventHandlers.ContainsKey(eventType))
             _eventHandlers[eventType].Remove(handler);

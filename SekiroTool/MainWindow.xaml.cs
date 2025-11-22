@@ -21,7 +21,7 @@ namespace SekiroTool;
 public partial class MainWindow : Window
 {
     private readonly IMemoryService _memoryService;
-    private readonly IGameStateService _gameStateService;
+    private readonly IStateService _stateService;
     private readonly IPlayerService _playerService;
 
     private readonly AoBScanner _aobScanner;
@@ -36,36 +36,45 @@ public partial class MainWindow : Window
         _memoryService.StartAutoAttach();
 
         InitializeComponent();
+        
+        if (SettingsManager.Default.WindowLeft != 0 || SettingsManager.Default.WindowTop != 0)
+        {
+            Left = SettingsManager.Default.WindowLeft;
+            Top = SettingsManager.Default.WindowTop;
+        }
+        else WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
         _aobScanner = new AoBScanner(_memoryService);
-        var hookManager = new HookManager(_memoryService);
-
-        _nopManager = new NopManager(_memoryService);
+        _stateService = new StateService(_memoryService);
+        
+        var hookManager = new HookManager(_memoryService, _stateService);
+        
+        _nopManager = new NopManager(_memoryService, _stateService);
         _hotkeyManager = new HotkeyManager(_memoryService);
-
-        _gameStateService = new GameStateService(_memoryService);
+        
         _playerService = new PlayerService(_memoryService, hookManager);
         ITravelService travelService = new TravelService(_memoryService, hookManager);
         IEnemyService enemyService = new EnemyService(_memoryService, hookManager);
         ITargetService targetService = new TargetService(_memoryService, hookManager);
-        IDebugDrawService debugDrawService = new DebugDrawService(_memoryService, _gameStateService, _nopManager);
+        IDebugDrawService debugDrawService = new DebugDrawService(_memoryService, _stateService, _nopManager);
         IEventService eventService = new EventService(_memoryService);
         IUtilityService utilityService = new UtilityService(_memoryService, hookManager);
         IItemService itemService = new ItemService(_memoryService);
         ISettingsService settingsService = new SettingsService(_memoryService, _nopManager, hookManager);
+        
 
-        PlayerViewModel playerViewModel = new PlayerViewModel(_playerService, _hotkeyManager, _gameStateService);
+        PlayerViewModel playerViewModel = new PlayerViewModel(_playerService, _hotkeyManager, _stateService);
         TravelViewModel travelViewModel =
-            new TravelViewModel(travelService, _gameStateService, _hotkeyManager, eventService);
-        EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _hotkeyManager, _gameStateService,
+            new TravelViewModel(travelService, _stateService, _hotkeyManager, eventService);
+        EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _hotkeyManager, _stateService,
             debugDrawService, eventService);
         TargetViewModel targetViewModel =
-            new TargetViewModel(_gameStateService, _hotkeyManager, targetService, debugDrawService);
+            new TargetViewModel(_stateService, _hotkeyManager, targetService, debugDrawService);
         UtilityViewModel utilityViewModel =
-            new UtilityViewModel(utilityService, _gameStateService, _hotkeyManager, debugDrawService, playerViewModel);
-        ItemViewModel itemViewModel = new ItemViewModel(itemService, _gameStateService);
-        EventViewModel eventViewModel = new EventViewModel(eventService, _gameStateService, debugDrawService);
-        SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, _gameStateService, _hotkeyManager);
+            new UtilityViewModel(utilityService, _stateService, _hotkeyManager, debugDrawService, playerViewModel);
+        ItemViewModel itemViewModel = new ItemViewModel(itemService, _stateService);
+        EventViewModel eventViewModel = new EventViewModel(eventService, _stateService, debugDrawService);
+        SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, _stateService, _hotkeyManager);
 
         var playerTab = new PlayerTab(playerViewModel);
         var travelTab = new TravelTab(travelViewModel);
@@ -86,6 +95,8 @@ public partial class MainWindow : Window
         MainTabControl.Items.Add(new TabItem { Header = "Settings", Content = settingsTab });
 
         settingsViewModel.ApplyStartUpOptions();
+        
+        Closing += MainWindow_Closing;
 
         _gameLoadedTimer = new DispatcherTimer
         {
@@ -93,6 +104,12 @@ public partial class MainWindow : Window
         };
         _gameLoadedTimer.Tick += Timer_Tick;
         _gameLoadedTimer.Start();
+        
+        VersionChecker.UpdateVersionText(AppVersion);
+        if (SettingsManager.Default.EnableUpdateChecks)
+        {
+            VersionChecker.CheckForUpdates(this);
+        }
     }
 
 
@@ -101,9 +118,8 @@ public partial class MainWindow : Window
     private bool _hasScanned;
 
     private bool _hasAllocatedMemory;
-
-
-    private bool _appliedOneTimeFeatures;
+    
+    private bool _hasPublishedAttached;
 
 
     private void Timer_Tick(object sender, EventArgs e)
@@ -112,35 +128,40 @@ public partial class MainWindow : Window
         {
             IsAttachedText.Text = "Attached to game";
             IsAttachedText.Foreground = (SolidColorBrush)Application.Current.Resources["AttachedBrush"];
-            // LaunchGameButton.IsEnabled = false;
-
-            if (!_hasScanned)
-            {
-                _nopManager.ClearRegistry();
-                _aobScanner.Scan();
-                _hasScanned = true;
-            }
-
+            LaunchGameButton.IsEnabled = false;
+            
             if (!_hasAllocatedMemory)
             {
                 _memoryService.AllocCodeCave();
                 Console.WriteLine($"Code cave: 0x{CodeCaveOffsets.Base.ToInt64():X}");
                 _hasAllocatedMemory = true;
-                _gameStateService.Publish(GameState.Attached);
+              
             }
 
+            if (!_hasScanned)
+            {
+                _aobScanner.DoEarlyScan();
+                _stateService.Publish(State.EarlyAttached);
+                _aobScanner.DoMainScan();
+                _hasScanned = true;
+            }
 
-            if (_gameStateService.IsLoaded())
+            if (!_hasPublishedAttached)
+            {
+                _stateService.Publish(State.Attached);
+                _hasPublishedAttached = true;
+            }
+
+            if (_stateService.IsLoaded())
             {
                 if (_loaded) return;
                 _loaded = true;
-                _gameStateService.Publish(GameState.Loaded);
+                _stateService.Publish(State.Loaded);
                 TrySetGameStartPrefs();
             }
             else if (_loaded)
             {
-                _gameStateService.Publish(GameState.NotLoaded);
-                // _debugDrawService.Reset();
+                _stateService.Publish(State.NotLoaded);
                 _loaded = false;
             }
         }
@@ -148,21 +169,16 @@ public partial class MainWindow : Window
         {
             if (_memoryService.IsAttached)
             {
-                _gameStateService.Publish(GameState.Detached);
+                _stateService.Publish(State.Detached);
+                _hasPublishedAttached = false;
             }
 
             _loaded = false;
             _hasScanned = false;
             _hasAllocatedMemory = false;
-
-            // _hookManager.ClearHooks();
-            // DisableFeatures();
-            // _settingsViewModel.ResetLoaded();
-            // _settingsViewModel.ResetAttached();
-            _nopManager.ClearRegistry();
             IsAttachedText.Text = "Not attached";
             IsAttachedText.Foreground = (SolidColorBrush)Application.Current.Resources["NotAttachedBrush"];
-            // LaunchGameButton.IsEnabled = true;
+            LaunchGameButton.IsEnabled = true;
         }
     }
 
@@ -170,7 +186,7 @@ public partial class MainWindow : Window
     {
         var igtPtr = _memoryService.ReadInt64((IntPtr)_memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.IGT);
         long gameTimeMs = _memoryService.ReadInt64((IntPtr)igtPtr);
-        if (gameTimeMs < 5000) _gameStateService.Publish(GameState.GameStart);
+        if (gameTimeMs < 5000) _stateService.Publish(State.GameStart);
     }
 
     private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -193,10 +209,11 @@ public partial class MainWindow : Window
 
     private void MainWindow_Closing(object sender, CancelEventArgs e)
     {
-        // SettingsManager.Default.WindowLeft = Left;
-        // SettingsManager.Default.WindowTop = Top;
-        // SettingsManager.Default.Save();
-        // DisableFeatures();
-        // _hookManager.UninstallAllHooks();
+        SettingsManager.Default.WindowLeft = Left;
+        SettingsManager.Default.WindowTop = Top;
+        SettingsManager.Default.Save();
     }
+    
+    private void LaunchGame_Click(object sender, RoutedEventArgs e) => Task.Run(GameLauncher.LaunchSekiro);
+    private void CheckUpdate_Click(object sender, RoutedEventArgs e) => VersionChecker.CheckForUpdates(this, true);
 }

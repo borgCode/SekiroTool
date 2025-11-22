@@ -17,14 +17,15 @@ public class SettingsViewModel : BaseViewModel
     private LowLevelKeyboardHook _tempHook;
     private Keys _currentKeys;
 
-    public SettingsViewModel(ISettingsService settingsService, IGameStateService gameStateService,
+    public SettingsViewModel(ISettingsService settingsService, IStateService stateService,
         HotkeyManager hotkeyManager)
     {
         _settingsService = settingsService;
         _hotkeyManager = hotkeyManager;
 
-        gameStateService.Subscribe(GameState.Attached, OnGameAttached);
-
+        stateService.Subscribe(State.Attached, OnGameAttached);
+        stateService.Subscribe(State.EarlyAttached, OnGameEarlyAttached);
+        
         RegisterHotkeys();
 
         _propertySetters = new Dictionary<string, Action<string>>
@@ -697,10 +698,14 @@ public class SettingsViewModel : BaseViewModel
 
     private void OnGameAttached()
     {
-        if (IsNoLogoEnabled) _settingsService.ToggleNoLogo(true);
         if (IsNoTutorialsEnabled) _settingsService.ToggleNoTutorials(true);
         if (IsSaveInCombatEnabled) _settingsService.ToggleSaveInCombat(true);
         if (IsNoCameraSpinEnabled) _settingsService.ToggleNoCameraSpin(true);
+    }
+    
+    private void OnGameEarlyAttached()
+    {
+        if (IsNoLogoEnabled) _settingsService.ToggleNoLogo(true);
         if (IsDefaultSoundChangeEnabled) _settingsService.PatchDefaultSound(DefaultSoundVolume);
         if (IsDisableMenuMusicEnabled) _settingsService.ToggleDisableMusic(true);
     }

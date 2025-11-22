@@ -22,15 +22,15 @@ public class ItemViewModel : BaseViewModel
     private readonly ObservableCollection<Skill> _skillSearchResults = new ObservableCollection<Skill>();
     private ObservableCollection<Skill> _allSkills;
 
-    public ItemViewModel(IItemService itemService, IGameStateService gameStateService)
+    public ItemViewModel(IItemService itemService, IStateService stateService)
     {
         _itemService = itemService;
 
         LoadItems();
         LoadSkills();
 
-        gameStateService.Subscribe(GameState.Loaded, OnGameLoaded);
-        gameStateService.Subscribe(GameState.NotLoaded, OnGameNotLoaded);
+        stateService.Subscribe(State.Loaded, OnGameLoaded);
+        stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
 
         SpawnCommand = new DelegateCommand(SpawnItem);
         LearnSkillCommand = new DelegateCommand(LearnSkill);

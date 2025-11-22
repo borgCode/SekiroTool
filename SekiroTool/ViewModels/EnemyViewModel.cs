@@ -14,7 +14,7 @@ public class EnemyViewModel : BaseViewModel
     private readonly IDebugDrawService _debugDrawService;
     private readonly IEventService _eventService;
 
-    public EnemyViewModel(IEnemyService enemyService, HotkeyManager hotkeyManager, IGameStateService gameStateService,
+    public EnemyViewModel(IEnemyService enemyService, HotkeyManager hotkeyManager, IStateService stateService,
         IDebugDrawService debugDrawService, IEventService eventService)
     {
         _enemyService = enemyService;
@@ -24,8 +24,8 @@ public class EnemyViewModel : BaseViewModel
 
         RegisterHotkeys();
 
-        gameStateService.Subscribe(GameState.Loaded, OnGameLoaded);
-        gameStateService.Subscribe(GameState.NotLoaded, OnGameNotLoaded);
+        stateService.Subscribe(State.Loaded, OnGameLoaded);
+        stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
 
         SkipDragonPhaseOneCommand = new DelegateCommand(SkipDragonPhaseOne);
         TriggerDragonFinalAttackCommand = new DelegateCommand(TriggerFinalDragonAttack);

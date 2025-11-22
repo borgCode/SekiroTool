@@ -14,7 +14,7 @@ public class PlayerViewModel : BaseViewModel
 {
     private readonly IPlayerService _playerService;
     private readonly HotkeyManager _hotkeyManager;
-    private readonly IGameStateService _gameStateService;
+    private readonly IStateService _stateService;
 
     private readonly DispatcherTimer _playerTick;
 
@@ -27,17 +27,17 @@ public class PlayerViewModel : BaseViewModel
     private const float Epsilon = 0.0001f;
 
     public PlayerViewModel(IPlayerService playerService, HotkeyManager hotkeyManager,
-        IGameStateService gameStateService)
+        IStateService stateService)
     {
         _playerService = playerService;
         _hotkeyManager = hotkeyManager;
-        _gameStateService = gameStateService;
+        _stateService = stateService;
 
         RegisterHotkeys();
 
-        gameStateService.Subscribe(GameState.Loaded, OnGameLoaded);
-        gameStateService.Subscribe(GameState.NotLoaded, OnGameNotLoaded);
-        gameStateService.Subscribe(GameState.GameStart, OnGameStart);
+        stateService.Subscribe(State.Loaded, OnGameLoaded);
+        stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
+        stateService.Subscribe(State.GameStart, OnGameStart);
 
         SavePositionCommand = new DelegateCommand(SavePosition);
         RestorePositionCommand = new DelegateCommand(RestorePosition);

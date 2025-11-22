@@ -14,7 +14,7 @@ public class TravelViewModel : BaseViewModel
     private readonly HotkeyManager _hotkeyManager;
     private readonly IEventService _eventService;
 
-    public TravelViewModel(ITravelService travelService, IGameStateService gameStateService,
+    public TravelViewModel(ITravelService travelService, IStateService stateService,
         HotkeyManager hotkeyManager, IEventService eventService)
     {
         _travelService = travelService;
@@ -23,8 +23,8 @@ public class TravelViewModel : BaseViewModel
         
         RegisterHotkeys();
 
-        gameStateService.Subscribe(GameState.Loaded, OnGameLoaded);
-        gameStateService.Subscribe(GameState.NotLoaded, OnGameNotLoaded);
+        stateService.Subscribe(State.Loaded, OnGameLoaded);
+        stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
         
         _mainAreas = new ObservableCollection<string>();
         _warpLocations = new ObservableCollection<Warp>();
