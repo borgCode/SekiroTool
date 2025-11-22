@@ -162,6 +162,9 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
     public int GetMaxHp() =>
         memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.MaxHp);
 
+    
+
+
     public void SetPosture(int posture) =>
         memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Posture, posture);
 
@@ -436,7 +439,7 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         memoryService.AllocateAndExecute(bytes);
     }
     
-    public float GetSpeed() =>
+    public float GetPlayerSpeed() =>
         memoryService.ReadFloat(GetChrBehaviorPtr() + (int)ChrIns.ChrBehaviorOffsets.AnimationSpeed);
 
     public void SetSpeed(float speed) =>
@@ -454,6 +457,6 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrPhysicsModule], true);
 
     private IntPtr GetChrBehaviorPtr() =>
-        memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrPhysicsModule], true);
+        memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrBehaviorModule], true);
     #endregion
 }

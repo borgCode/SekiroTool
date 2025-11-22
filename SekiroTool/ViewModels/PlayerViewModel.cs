@@ -406,10 +406,12 @@ public class PlayerViewModel : BaseViewModel
         {
             if (SetProperty(ref _playerSpeed, value))
             {
-                _playerService.SetSpeed();
+                _playerService.SetSpeed(_playerSpeed);
             }
         }
     }
+    
+    
     
     public void SetSpeed(double value) => PlayerSpeed = (float)value;
     
@@ -422,7 +424,7 @@ public class PlayerViewModel : BaseViewModel
     public void SetNewGame(int newGameCycle) => _playerService.SetNewGame(newGameCycle);
     public void SetHp(int health) => _playerService.SetHp(health);
     public void SetPosture(int posture) => _playerService.SetPosture(posture);
-
+    
     
     #endregion
 
@@ -434,32 +436,16 @@ public class PlayerViewModel : BaseViewModel
         _hotkeyManager.RegisterAction(HotkeyActions.SavePos2.ToString(), () => SavePosition(1));
         _hotkeyManager.RegisterAction(HotkeyActions.RestorePos1.ToString(), () => RestorePosition(0));
         _hotkeyManager.RegisterAction(HotkeyActions.RestorePos2.ToString(), () => RestorePosition(1));
-        
-        _hotkeyManager.RegisterAction(HotkeyActions.IncreaseTargetSpeed.ToString(), () =>
-            ExecutePlayerAction(() => SetSpeed(Math.Min(5, TargetSpeed + 0.25f))));
-        _hotkeyManager.RegisterAction(HotkeyActions.DecreaseTargetSpeed.ToString(), () =>
-            ExecuteTargetAction(() => SetSpeed(Math.Max(0, TargetSpeed - 0.25f))));
-        _hotkeyManager.RegisterAction(HotkeyActions.ToggleTargetSpeed.ToString(), () => 
-            ExecuteTargetAction(ToggleTargetSpeed));
-        
+        _hotkeyManager.RegisterAction(HotkeyActions.TogglePlayerSpeed.ToString(), () => TogglePlayerSpeed());
+        _hotkeyManager.RegisterAction(HotkeyActions.IncreasePlayerSpeed.ToString(), () => SetSpeed(Math.Min(10, PlayerSpeed + 0.25f)));
+        _hotkeyManager.RegisterAction(HotkeyActions.DecreasePlayerSpeed.ToString(), () => SetSpeed(Math.Max(0, PlayerSpeed - 0.25f)));
+
+
+
     }
-
-    private void ExecuteTargetAction(Action action)
-    {
-        if (!IsPlayerOptionsEnabled)
-        {
-            IsPlayerOptionsEnabled = true;
-            Task.Run(async () =>
-            {
-                await Task.Delay(100);
-                if (EnsureValidTarget()) action();
-            });
-            return;
-        }
-
-        if (!IsValidTarget) return;
-        action();
     
+    
+
     private void OnGameLoaded()
     {
         AreOptionsEnabled = true;
@@ -518,8 +504,7 @@ public class PlayerViewModel : BaseViewModel
         MaxHealth = _playerService.GetMaxHp();
         CurrentPosture = _playerService.GetCurrentPosture();
         MaxPosture = _playerService.GetMaxPosture();
-       
-
+        PlayerSpeed =  _playerService.GetPlayerSpeed();
 
         // We'll have logic such as reading hp every tick etc, see how it works in targetviewmodel
     }
