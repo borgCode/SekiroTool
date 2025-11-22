@@ -23,7 +23,7 @@ public class UtilityViewModel : BaseViewModel
     private bool _wasNoDeathEnabled;
     private float _desiredSpeed;
 
-    public UtilityViewModel(IUtilityService utilityService, IGameStateService gameStateService,
+    public UtilityViewModel(IUtilityService utilityService, IStateService stateService,
         HotkeyManager hotkeyManager, IDebugDrawService debugDrawService, PlayerViewModel playerViewModel)
     {
         _utilityService = utilityService;
@@ -33,9 +33,9 @@ public class UtilityViewModel : BaseViewModel
 
         RegisterHotkeys();
 
-        gameStateService.Subscribe(GameState.Loaded, OnGameLoaded);
-        gameStateService.Subscribe(GameState.NotLoaded, OnGameNotLoaded);
-        gameStateService.Subscribe(GameState.Detached, OnGameDetached);
+        stateService.Subscribe(State.Loaded, OnGameLoaded);
+        stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
+        stateService.Subscribe(State.Detached, OnGameDetached);
 
 
         MoveCamToPlayerCommand = new DelegateCommand(MoveCamToPlayer);

@@ -12,11 +12,11 @@ public class DebugDrawService : IDebugDrawService
     private int _clientCount;
 
 
-    public DebugDrawService(IMemoryService memoryService, IGameStateService gameStateService, NopManager nopManager)
+    public DebugDrawService(IMemoryService memoryService, IStateService stateService, NopManager nopManager)
     {
         _memoryService = memoryService;
         _nopManager = nopManager;
-        gameStateService.Subscribe(GameState.Attached, Reset);
+        stateService.Subscribe(State.Attached, Reset);
     }
 
     public void RequestDebugDraw()

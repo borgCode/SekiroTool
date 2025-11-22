@@ -10,6 +10,9 @@ public interface IPlayerService
     int GetCurrentHp();
     int GetMaxHp();
 
+    float GetPlayerSpeed();
+    void SetSpeed(float speed);
+
     void SetPosture(int posture);
     int GetCurrentPosture();
     int GetMaxPosture();

@@ -17,6 +17,9 @@ public class SettingsManager
     public bool DisableMenuMusic { get; set; }
     public bool DefaultSoundChangeEnabled { get; set; }
     public int DefaultSoundVolume { get; set; } = 3;
+    public double WindowLeft { get; set; }
+    public double WindowTop { get; set; }
+    public bool EnableUpdateChecks { get; set; } = true;
     
     
     private static string SettingsPath => Path.Combine(
@@ -43,6 +46,9 @@ public class SettingsManager
                 $"DisableMenuMusic={DisableMenuMusic}",
                 $"DefaultSoundChangeEnabled={DefaultSoundChangeEnabled}",
                 $"DefaultSoundVolume={DefaultSoundVolume}",
+                $"WindowLeft={WindowLeft}",
+                $"WindowTop={WindowTop}",
+                $"EnableUpdateChecks={EnableUpdateChecks}",
             };
 
             File.WriteAllLines(SettingsPath, lines);
@@ -108,6 +114,18 @@ public class SettingsManager
                             case "DefaultSoundVolume":
                                 int.TryParse(value, out int dsv);
                                 settings.DefaultSoundVolume = dsv;
+                                break;
+                            case "WindowLeft":
+                                double.TryParse(value, out double wl);
+                                settings.WindowLeft = wl;
+                                break;
+                            case "WindowTop":
+                                double.TryParse(value, out double wt);
+                                settings.WindowTop = wt;
+                                break;
+                            case "EnableUpdateChecks":
+                                bool.TryParse(value, out bool euc);
+                                settings.EnableUpdateChecks = euc;
                                 break;
                         }
                     }

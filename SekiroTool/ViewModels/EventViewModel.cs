@@ -12,14 +12,14 @@ public class EventViewModel : BaseViewModel
     private readonly IEventService _eventService;
     private readonly IDebugDrawService _debugDrawService;
 
-    public EventViewModel(IEventService eventService, IGameStateService gameStateService,
+    public EventViewModel(IEventService eventService, IStateService stateService,
         IDebugDrawService debugDrawService)
     {
         _eventService = eventService;
         _debugDrawService = debugDrawService;
 
-        gameStateService.Subscribe(GameState.Loaded, OnGameLoaded);
-        gameStateService.Subscribe(GameState.NotLoaded, OnGameNotLoaded);
+        stateService.Subscribe(State.Loaded, OnGameLoaded);
+        stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
         
         SetEventCommand = new DelegateCommand(SetEvent);
         GetEventCommand = new DelegateCommand(GetEvent);

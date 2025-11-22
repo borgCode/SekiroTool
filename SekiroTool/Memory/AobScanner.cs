@@ -5,23 +5,14 @@ namespace SekiroTool.Memory;
 
 public class AoBScanner(IMemoryService memoryService)
 {
-    public void Scan()
+    private Dictionary<string, long> saved = new Dictionary<string, long>();
+    public void DoMainScan()
     {
+        
         string appData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             "SekiroTool");
         Directory.CreateDirectory(appData);
         string savePath = Path.Combine(appData, "backup_addresses.txt");
-
-        Dictionary<string, long> saved = new Dictionary<string, long>();
-        if (File.Exists(savePath))
-        {
-            foreach (string line in File.ReadAllLines(savePath))
-            {
-                string[] parts = line.Split('=');
-                saved[parts[0]] = Convert.ToInt64(parts[1], 16);
-            }
-        }
-
 
         Offsets.WorldChrMan.Base = FindAddressByPattern(Patterns.WorldChrMan);
         Offsets.WorldChrManDbg.Base = FindAddressByPattern(Patterns.WorldChrManDbg);
@@ -73,8 +64,6 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Hooks.AiHasSpEffect = addr.ToInt64(), saved);
         TryPatternWithFallback("GetMouseDelta", Patterns.GetMouseDelta,
             addr => Offsets.Hooks.GetMouseDelta = addr.ToInt64(), saved);
-        TryPatternWithFallback("StartMenuMusic", Patterns.StartMusic,
-            addr => Offsets.Hooks.StartMusic = addr, saved);
         TryPatternWithFallback("InfiniteConfetti", Patterns.InfiniteConfetti,
             addr => Offsets.Hooks.InfiniteConfetti = addr, saved);
         TryPatternWithFallback("HpWrite", Patterns.HpWrite,
@@ -82,8 +71,6 @@ public class AoBScanner(IMemoryService memoryService)
         TryPatternWithFallback("SetLastAct", Patterns.SetLastAct,
             addr => Offsets.Hooks.SetLastAct = addr, saved);
 
-        TryPatternWithFallback("NoLogo", Patterns.NoLogo,
-            addr => Offsets.Patches.NoLogo = addr, saved);
         TryPatternWithFallback("DebugFont", Patterns.DebugFontPatch,
             addr => Offsets.Patches.DebugFont = addr, saved);
         TryPatternWithFallback("EventView", Patterns.EventViewPatch,
@@ -98,8 +85,6 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Patches.SaveInCombat = addr, saved);
         TryPatternWithFallback("OpenRegularShopPatch", Patterns.OpenRegularShopPatch,
             addr => Offsets.Patches.OpenRegularShopPatch = addr, saved);
-        TryPatternWithFallback("DefaultSoundVolWrite", Patterns.DefaultSoundVolWrite,
-            addr => Offsets.Patches.DefaultSoundVolWrite = addr, saved);
         TryPatternWithFallback("PlayerSoundView", Patterns.PlayerSoundView,
             addr => Offsets.Patches.PlayerSoundView = addr, saved);
         
@@ -136,7 +121,6 @@ public class AoBScanner(IMemoryService memoryService)
         });
 
         Offsets.Functions.FrpgCastRay = FindAddressByPattern(Patterns.FrpgCastRay).ToInt64();
-        Offsets.Functions.StopMusic = FindAddressByPattern(Patterns.StopMusic).ToInt64();
         Offsets.Functions.GetItemSlot = FindAddressByPattern(Patterns.GetItemSlot).ToInt64();
         Offsets.Functions.GetItemPtrFromSlot = FindAddressByPattern(Patterns.GetItemPtrFromSlot).ToInt64();
         Offsets.Functions.EzStateExternalEventTempCtor = FindAddressByPattern(Patterns.EzStateExternalEventTempCtor).ToInt64();
@@ -175,13 +159,11 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Hooks.InfinitePoise: 0x{Offsets.Hooks.InfinitePoise:X}");
         Console.WriteLine($"Hooks.AiHasSpEffect: 0x{Offsets.Hooks.AiHasSpEffect:X}");
         Console.WriteLine($"Hooks.GetMouseDelta: 0x{Offsets.Hooks.GetMouseDelta:X}");
-        Console.WriteLine($"Hooks.StartMusic: 0x{Offsets.Hooks.StartMusic:X}");
         Console.WriteLine($"Hooks.HpWrite: 0x{Offsets.Hooks.HpWrite:X}");
         Console.WriteLine($"Hooks.InfiniteConfetti: 0x{Offsets.Hooks.InfiniteConfetti:X}");
         Console.WriteLine($"Hooks.SetLastAct: 0x{Offsets.Hooks.SetLastAct:X}");
 
 
-        Console.WriteLine($"Patches.NoLogo: 0x{Offsets.Patches.NoLogo.ToInt64():X}");
         Console.WriteLine($"Patches.DebugFont: 0x{Offsets.Patches.DebugFont.ToInt64():X}");
         Console.WriteLine($"Patches.EventView: 0x{Offsets.Patches.EventView.ToInt64():X}");
         Console.WriteLine($"Patches.MenuTutorialSkip: 0x{Offsets.Patches.MenuTutorialSkip.ToInt64():X}");
@@ -189,7 +171,6 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Patches.ShowTutorialText: 0x{Offsets.Patches.ShowTutorialText.ToInt64():X}");
         Console.WriteLine($"Patches.SaveInCombat: 0x{Offsets.Patches.SaveInCombat.ToInt64():X}");
         Console.WriteLine($"Patches.OpenRegularShopPatch: 0x{Offsets.Patches.OpenRegularShopPatch.ToInt64():X}");
-        Console.WriteLine($"Patches.DefaultSoundVolWrite: 0x{Offsets.Patches.DefaultSoundVolWrite.ToInt64():X}");
         Console.WriteLine($"Patches.PlayerSoundView: 0x{Offsets.Patches.PlayerSoundView.ToInt64():X}");
 
         Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");
@@ -207,7 +188,6 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Functions.OpenScalesShop: 0x{Offsets.Functions.OpenScalesShop:X}");
         Console.WriteLine($"Functions.OpenProstheticsShop: 0x{Offsets.Functions.OpenProstheticsShop:X}");
         Console.WriteLine($"Functions.FrpgCastRay: 0x{Offsets.Functions.FrpgCastRay:X}");
-        Console.WriteLine($"Functions.StopMusic: 0x{Offsets.Functions.StopMusic:X}");
         Console.WriteLine($"Functions.GetItemSlot: 0x{Offsets.Functions.GetItemSlot:X}");
         Console.WriteLine($"Functions.GetItemPtrFromSlot: 0x{Offsets.Functions.GetItemPtrFromSlot:X}");
         Console.WriteLine($"Functions.EzStateExternalEventTempCtor: 0x{Offsets.Functions.EzStateExternalEventTempCtor:X}");
@@ -352,5 +332,38 @@ public class AoBScanner(IMemoryService memoryService)
         }
     
         return currentAddress;
+    }
+
+    public void DoEarlyScan()
+    {
+        string appData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "SekiroTool");
+        Directory.CreateDirectory(appData);
+        string savePath = Path.Combine(appData, "backup_addresses.txt");
+        
+        if (File.Exists(savePath))
+        {
+            foreach (string line in File.ReadAllLines(savePath))
+            {
+                string[] parts = line.Split('=');
+                saved[parts[0]] = Convert.ToInt64(parts[1], 16);
+            }
+        }
+        TryPatternWithFallback("StartMenuMusic", Patterns.StartMusic,
+            addr => Offsets.Hooks.StartMusic = addr, saved);
+        TryPatternWithFallback("NoLogo", Patterns.NoLogo,
+            addr => Offsets.Patches.NoLogo = addr, saved);
+        TryPatternWithFallback("DefaultSoundVolWrite", Patterns.DefaultSoundVolWrite,
+            addr => Offsets.Patches.DefaultSoundVolWrite = addr, saved);
+
+        Offsets.Functions.StopMusic = FindAddressByPattern(Patterns.StopMusic).ToInt64();
+        
+        
+#if DEBUG
+        Console.WriteLine($"Hooks.StartMusic: 0x{Offsets.Hooks.StartMusic:X}");
+        Console.WriteLine($"Patches.NoLogo: 0x{Offsets.Patches.NoLogo.ToInt64():X}");
+        Console.WriteLine($"Patches.DefaultSoundVolWrite: 0x{Offsets.Patches.DefaultSoundVolWrite.ToInt64():X}");
+        Console.WriteLine($"Functions.StopMusic: 0x{Offsets.Functions.StopMusic:X}");
+#endif
     }
 }

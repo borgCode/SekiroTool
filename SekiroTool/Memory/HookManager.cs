@@ -1,10 +1,18 @@
-﻿using SekiroTool.Interfaces;
+﻿using SekiroTool.Enums;
+using SekiroTool.Interfaces;
 
 namespace SekiroTool.Memory
 {
-    public class HookManager(IMemoryService memoryService)
+    public class HookManager
     {
+        private readonly IMemoryService _memoryService;
         private readonly Dictionary<long, HookData> _hookRegistry = new Dictionary<long, HookData>();
+
+        public HookManager(IMemoryService memoryService, IStateService stateService)
+        {
+            _memoryService = memoryService;
+            stateService.Subscribe(State.Detached, OnGameDetached);
+        }
 
         private class HookData
         {
@@ -17,7 +25,7 @@ namespace SekiroTool.Memory
         public long InstallHook(long codeLoc, long origin, byte[] originalBytes)
         {
             byte[] hookBytes = GetHookBytes(originalBytes.Length, codeLoc, origin);
-            memoryService.WriteBytes((IntPtr)origin, hookBytes);
+            _memoryService.WriteBytes((IntPtr)origin, hookBytes);
             _hookRegistry[codeLoc] = new HookData
             {
                 CaveAddr = codeLoc,
@@ -52,11 +60,11 @@ namespace SekiroTool.Memory
             }
 
             IntPtr originAddrPtr = (IntPtr)hookToUninstall.OriginAddr;
-            memoryService.WriteBytes(originAddrPtr, hookToUninstall.OriginalBytes);
+            _memoryService.WriteBytes(originAddrPtr, hookToUninstall.OriginalBytes);
             _hookRegistry.Remove(key);
         }
 
-        public void ClearHooks()
+        private void OnGameDetached()
         {
             _hookRegistry.Clear();
         }

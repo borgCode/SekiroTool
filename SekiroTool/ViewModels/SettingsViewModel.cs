@@ -17,14 +17,15 @@ public class SettingsViewModel : BaseViewModel
     private LowLevelKeyboardHook _tempHook;
     private Keys _currentKeys;
 
-    public SettingsViewModel(ISettingsService settingsService, IGameStateService gameStateService,
+    public SettingsViewModel(ISettingsService settingsService, IStateService stateService,
         HotkeyManager hotkeyManager)
     {
         _settingsService = settingsService;
         _hotkeyManager = hotkeyManager;
 
-        gameStateService.Subscribe(GameState.Attached, OnGameAttached);
-
+        stateService.Subscribe(State.Attached, OnGameAttached);
+        stateService.Subscribe(State.EarlyAttached, OnGameEarlyAttached);
+        
         RegisterHotkeys();
 
         _propertySetters = new Dictionary<string, Action<string>>
@@ -33,6 +34,9 @@ public class SettingsViewModel : BaseViewModel
             { HotkeyActions.SavePos2.ToString(), text => SavePos2HotkeyText = text },
             { HotkeyActions.RestorePos1.ToString(), text => RestorePos1HotkeyText = text },
             { HotkeyActions.RestorePos2.ToString(), text => RestorePos2HotkeyText = text },
+            { HotkeyActions.IncreasePlayerSpeed.ToString(), text => IncreasePlayerSpeedHotkeyText = text },
+            { HotkeyActions.DecreasePlayerSpeed.ToString(), text => DecreasePlayerSpeedHotkeyText = text },
+            { HotkeyActions.TogglePlayerSpeed.ToString(), text => TogglePlayerSpeedHotkeyText = text },
             // { "RTSR", text => RtsrHotkeyText = text },
             // { "NoDeath", text => NoDeathHotkeyText = text },
             // { "OneShot", text => OneShotHotkeyText = text },
@@ -249,6 +253,30 @@ public class SettingsViewModel : BaseViewModel
     {
         get => _enableTargetOptionsHotkeyText;
         set => SetProperty(ref _enableTargetOptionsHotkeyText, value);
+    }
+    
+    private string _increasePlayerSpeedHotkeyText;
+    
+    public string IncreasePlayerSpeedHotkeyText
+    {
+        get => _increasePlayerSpeedHotkeyText;
+        set => SetProperty(ref _increasePlayerSpeedHotkeyText, value);
+    }
+    
+    private string _decreasePlayerSpeedHotkeyText;
+    
+    public string DecreasePlayerSpeedHotkeyText
+    {
+        get => _decreasePlayerSpeedHotkeyText;
+        set => SetProperty(ref _decreasePlayerSpeedHotkeyText, value);
+    }
+    
+    private string _togglePlayerSpeedHotkeyText;
+    
+    public string TogglePlayerSpeedHotkeyText
+    {
+        get => _togglePlayerSpeedHotkeyText;
+        set => SetProperty(ref _togglePlayerSpeedHotkeyText, value);
     }
 
     private string _savePos1HotkeyText;
@@ -532,6 +560,8 @@ public class SettingsViewModel : BaseViewModel
         get => _decreaseGameSpeedHotkeyText;
         set => SetProperty(ref _decreaseGameSpeedHotkeyText, value);
     }
+    
+    
 
     private string _noClipHotkeyText;
 
@@ -668,10 +698,14 @@ public class SettingsViewModel : BaseViewModel
 
     private void OnGameAttached()
     {
-        if (IsNoLogoEnabled) _settingsService.ToggleNoLogo(true);
         if (IsNoTutorialsEnabled) _settingsService.ToggleNoTutorials(true);
         if (IsSaveInCombatEnabled) _settingsService.ToggleSaveInCombat(true);
         if (IsNoCameraSpinEnabled) _settingsService.ToggleNoCameraSpin(true);
+    }
+    
+    private void OnGameEarlyAttached()
+    {
+        if (IsNoLogoEnabled) _settingsService.ToggleNoLogo(true);
         if (IsDefaultSoundChangeEnabled) _settingsService.PatchDefaultSound(DefaultSoundVolume);
         if (IsDisableMenuMusicEnabled) _settingsService.ToggleDisableMusic(true);
     }

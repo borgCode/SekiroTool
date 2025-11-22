@@ -20,7 +20,9 @@ public enum HotkeyActions
     PlayerHide,
     PlayerSilent,
     InfinitePoise,
-    ApplyConfetti,
+    TogglePlayerSpeed,
+    IncreasePlayerSpeed,
+    DecreasePlayerSpeed,
     
     SkipDragonPhaseOne,
     TriggerDragonFinalAttack,

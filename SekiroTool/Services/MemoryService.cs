@@ -13,6 +13,7 @@ public class MemoryService : IMemoryService
     private const int ProcessVmOperation = 0x0008;
     private const int ProcessQueryInformation = 0x0400;
     private const string ProcessName = "sekiro";
+    private const int AttachCheckInterval = 2000; //MS
 
     private bool _disposed;
     public bool IsAttached { get; private set; }
@@ -238,7 +239,7 @@ public class MemoryService : IMemoryService
 
     public void StartAutoAttach()
     {
-        _autoAttachTimer = new Timer(4000);
+        _autoAttachTimer = new Timer(AttachCheckInterval);
         _autoAttachTimer.Elapsed += (sender, e) => TryAttachToProcess();
 
         TryAttachToProcess();

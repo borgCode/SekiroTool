@@ -1,10 +1,13 @@
 ﻿namespace SekiroTool.Enums;
 
-public enum GameState
+public enum State
 {
+    EarlyAttached,
     Attached,
     Detached,
     Loaded,
     NotLoaded,
-    GameStart
+    GameStart,
+    AppClosing,
+    AppStarting,
 }
