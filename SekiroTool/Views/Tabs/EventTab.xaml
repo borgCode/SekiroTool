@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:SekiroTool.Views.Tabs"
              xmlns:converters="clr-namespace:SekiroTool.Converters"
              mc:Ignorable="d"
              d:DesignHeight="670" d:DesignWidth="520">
@@ -96,163 +95,200 @@
             </StackPanel>
         </Border>
 
-        <Border Grid.Row="1"
+      <Border Grid.Row="1"
                 BorderThickness="1"
                 BorderBrush="#333"
                 CornerRadius="3"
                 Margin="0,0,0,10">
             <StackPanel Margin="10">
-                <TextBlock Text="Game Progression"
-                           FontWeight="Bold"
-                           Margin="0,0,0,10" />
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Margin="0,0,20,0">
+                        <TextBlock Text="Flags"
+                                   FontWeight="Bold"
+                                   Margin="5,0,0,10" />
+                        
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="Demon Bell:" Width="100" VerticalAlignment="Center" Margin="0,0,10,0" />
+                            <Button
+                                CommandParameter="True"
+                                Command="{Binding SetDemonBellCommand}"
+                                IsEnabled="{Binding AreOptionsEnabled}"
+                                Content="On" Width="45" Margin="0,0,5,0" />
+                            <Button
+                                CommandParameter="False"
+                                Command="{Binding SetDemonBellCommand}"
+                                IsEnabled="{Binding AreOptionsEnabled}"
+                                Content="Off" Width="45" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="No Kuro's Charm:" Width="100" VerticalAlignment="Center" Margin="0,0,10,0" />
+                            <Button
+                                CommandParameter="True"
+                                Command="{Binding SetNoKurosCharmCommand}"
+                                IsEnabled="{Binding AreOptionsEnabled}"
+                                Content="On" Width="45" Margin="0,0,5,0" />
+                            <Button
+                                CommandParameter="False"
+                                Command="{Binding SetNoKurosCharmCommand}"
+                                IsEnabled="{Binding AreOptionsEnabled}"
+                                Content="Off" Width="45" />
+                        </StackPanel>
+                        
+                        <TextBlock Text="Scaling"
+                                   FontWeight="Bold"
+                                   Margin="5,10,0,10" />
 
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="5">
-                        <TextBlock Text="Demon Bell:" Width="100" VerticalAlignment="Center" Margin="0,0,10,0" />
-                        <Button
-                            CommandParameter="True"
-                            Command="{Binding SetDemonBellCommand}"
-                            Content="On" Width="45" Margin="0,0,5,0" />
-                        <Button
-                            CommandParameter="False"
-                            Command="{Binding SetDemonBellCommand}"
-                            Content="Off" Width="45" />
-                    </StackPanel>
-                    <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="5">
-                        <TextBlock Text="No Kuro's Charm:" Width="100" VerticalAlignment="Center" Margin="0,0,10,0" />
-                        <Button
-                            CommandParameter="True"
-                            Command="{Binding SetNoKurosCharmCommand}"
-                            Content="On" Width="45" Margin="0,0,5,0" />
-                        <Button
-                            CommandParameter="False"
-                            Command="{Binding SetNoKurosCharmCommand}"
-                            Content="Off" Width="45" />
+                        <Grid HorizontalAlignment="Left">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                    
+                            <Button Grid.Row="0" Grid.Column="0"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Command="{Binding SetMorningCommand}"
+                                    Content="Morning" Margin="5" Width="100" />
+                            <Button Grid.Row="0" Grid.Column="1" 
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Command="{Binding SetNoonCommand}"
+                                    Content="Noon" Margin="5" Width="100" />
+                            <Button Grid.Row="1" Grid.Column="0" 
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Command="{Binding SetEveningCommand}"
+                                    Content="Evening" Margin="5" Width="100" />
+                            <Button Grid.Row="1" Grid.Column="1" 
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Command="{Binding SetNightCommand}"
+                                    Content="Night" Margin="5" Width="100" />
+                        </Grid>
                     </StackPanel>
                     
-                    
-                    <Button Grid.Row="0" Grid.Column="1"
-                            Command="{Binding MoveIsshinCommand}"
-                            Content="Move Isshin To Castle" Margin="100,0,5,0">
-
-                    </Button>
-
-                </Grid>
-                
-                <TextBlock Text="Game Progression"
-                           FontWeight="Bold"
-                           Margin="0,0,0,10" />
-
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="5">
-                        <TextBlock Text="Demon Bell:" Width="100" VerticalAlignment="Center" Margin="0,0,10,0" />
-                        <Button
-                            CommandParameter="True"
-                            Command="{Binding SetDemonBellCommand}"
-                            Content="On" Width="45" Margin="0,0,5,0" />
-                        <Button
-                            CommandParameter="False"
-                            Command="{Binding SetDemonBellCommand}"
-                            Content="Off" Width="45" />
+                    <StackPanel>
+                        <TextBlock Text="Game Progression"
+                                   FontWeight="Bold"
+                                   Margin="0,0,0,10" />
+                        
+                        <Button Command="{Binding MoveIsshinCommand}"
+                                IsEnabled="{Binding AreOptionsEnabled}"
+                                Content="Move Isshin To Castle" 
+                                Margin="0,0,0,5" />
+                        
+                        <TextBlock Text="All of the Below Require Reloading Area"
+                                   Foreground="Gold"
+                                   FontWeight="Bold"
+                                  
+                                   Margin="0,15,0,5" />
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <TextBlock Text="Tutorial Complete" Width="110" VerticalAlignment="Center" Margin="0,0,10,0" />
+                            <Button Content="On"
+                                    Width="45"
+                                    CommandParameter="False"
+                                    Command="{Binding SetTutorialCompleteCommand}"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Margin="0,0,5,0" />
+                            <Button Content="Off"
+                                    CommandParameter="True"
+                                    Command="{Binding SetTutorialCompleteCommand}"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Width="45" />
+                            <Border Background="#3498db"
+                                    CornerRadius="10"
+                                    Width="12"
+                                    Height="12"
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    ToolTip="Completes the tutorial (Happens when you defeat Geni 1)&#x0a;Needed for enemies to spawn if you warp out before killing Geni 1"
+                                    ToolTipService.InitialShowDelay='100'>
+                                <TextBlock Text="i"
+                                           Foreground="White"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontWeight="Bold"
+                                           FontSize="10" />
+                            </Border>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <TextBlock Text="Hirata 2" Width="110" VerticalAlignment="Center" Margin="0,0,10,0" />
+                            <Button Content="On"
+                                    CommandParameter="True"
+                                    Command="{Binding SetHirataTwoCommand}"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Width="45" Margin="0,0,5,0" />
+                            <Button 
+                                CommandParameter="False"
+                                Command="{Binding SetHirataTwoCommand}"
+                                IsEnabled="{Binding AreOptionsEnabled}"
+                                Content="Off" Width="45" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <TextBlock Text="Ashina Invasion" Width="110" VerticalAlignment="Center" Margin="0,0,10,0" />
+                            <Button Content="On"
+                                    CommandParameter="True"
+                                    Command="{Binding SetInvasionCommand}"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Width="45" Margin="0,0,5,0" />
+                            <Button Content="Off"
+                                    CommandParameter="False"
+                                    Command="{Binding SetInvasionCommand}"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Width="45" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <TextBlock Text="Ashina Night" Width="110" VerticalAlignment="Center" Margin="0,0,10,0" />
+                            <Button Content="On"
+                                    CommandParameter="True"
+                                    Command="{Binding SetAshinaNightCommand}"
+                                    IsEnabled="{Binding AreOptionsEnabled}" 
+                                    Width="45" Margin="0,0,5,0" />
+                            <Button Content="Off"
+                                    CommandParameter="False"
+                                    Command="{Binding SetAshinaNightCommand}"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Width="45" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <TextBlock Text="Spawn Headless Ape" Width="110" VerticalAlignment="Center" Margin="0,0,10,0" />
+                            <Button Content="On"
+                                    CommandParameter="True"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Command="{Binding SetHeadlessApeCommand}"
+                                    Width="45" Margin="0,0,5,0" />
+                            <Button Content="Off"
+                                    CommandParameter="False"
+                                    Command="{Binding SetHeadlessApeCommand}"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Width="45" />
+                            <Border Background="#3498db"
+                                    CornerRadius="10"
+                                    Width="12"
+                                    Height="12"
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    ToolTip="Allows Headless Ape to spawn without having to kill Guardian Ape"
+                                    ToolTipService.InitialShowDelay='100'>
+                                <TextBlock Text="i"
+                                           Foreground="White"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontWeight="Bold"
+                                           FontSize="10" />
+                            </Border>
+                        </StackPanel>
                     </StackPanel>
-                    <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="5">
-                        <TextBlock Text="No Kuro's Charm:" Width="100" VerticalAlignment="Center" Margin="0,0,10,0" />
-                        <Button
-                            CommandParameter="True"
-                            Command="{Binding SetNoKurosCharmCommand}"
-                            Content="On" Width="45" Margin="0,0,5,0" />
-                        <Button
-                            CommandParameter="False"
-                            Command="{Binding SetNoKurosCharmCommand}"
-                            Content="Off" Width="45" />
-                    </StackPanel>
-                    </Grid>
+                </StackPanel>
             </StackPanel>
         </Border>
 
-        <Border Grid.Row="2"
-                BorderThickness="1"
-                BorderBrush="#333"
-                CornerRadius="3"
-                Margin="0,0,0,0">
-            <StackPanel Margin="10">
-                <!-- <TextBlock Text="Move to Firelink" -->
-                <!--            FontWeight="Bold" -->
-                <!--            Margin="0,0,0,10" /> -->
-
-                <!-- <Grid> -->
-                <!--     <Grid.ColumnDefinitions> -->
-                <!--         <ColumnDefinition Width="*" /> -->
-                <!--         <ColumnDefinition Width="*" /> -->
-                <!--     </Grid.ColumnDefinitions> -->
-                <!--     <Grid.RowDefinitions> -->
-                <!--         <RowDefinition Height="Auto" /> -->
-                <!--         <RowDefinition Height="Auto" /> -->
-                <!--         <RowDefinition Height="Auto" /> -->
-                <!--     </Grid.RowDefinitions> -->
-                <!-- -->
-                <!--     <Button Grid.Row="0" Grid.Column="0" -->
-                <!--             Content="Patches to Firelink" -->
-                <!--             Click="MovePatches_Click" -->
-                <!--             IsEnabled="{Binding AreButtonsEnabled}" -->
-                <!--             Height="20" -->
-                <!--             Margin="0,5,5,5" /> -->
-                <!-- -->
-                <!--     <Button Grid.Row="0" Grid.Column="1" -->
-                <!--             Content="Greirat to Firelink" -->
-                <!--             Click="MoveGreirat_Click" -->
-                <!--             IsEnabled="{Binding AreButtonsEnabled}" -->
-                <!--             Height="20" -->
-                <!--             Margin="5,5,0,5" /> -->
-                <!-- -->
-                <!--     <Button Grid.Row="1" Grid.Column="0" -->
-                <!--             Content="Karla to Firelink" -->
-                <!--             Click="MoveKarla_Click" -->
-                <!--             IsEnabled="{Binding AreButtonsEnabled}" -->
-                <!--             Height="20" -->
-                <!--             Margin="0,5,5,5" /> -->
-                <!-- -->
-                <!--     <Button Grid.Row="1" Grid.Column="1" -->
-                <!--             Content="Cornyx to Firelink" -->
-                <!--             Click="MoveCornyx_Click" -->
-                <!--             IsEnabled="{Binding AreButtonsEnabled}" -->
-                <!--             Height="20" -->
-                <!--             Margin="5,5,0,5" /> -->
-                <!-- -->
-                <!--     <Button Grid.Row="2" Grid.Column="0" -->
-                <!--             Content="Irina to Firelink" -->
-                <!--             Click="MoveIrina_Click" -->
-                <!--             IsEnabled="{Binding AreButtonsEnabled}" -->
-                <!--             Height="20" -->
-                <!--             Margin="0,5,5,5" /> -->
-                <!-- -->
-                <!--     <Button Grid.Row="2" Grid.Column="1" -->
-                <!--             Content="Orbeck to Firelink" -->
-                <!--             Click="MoveOrbeck_Click" -->
-                <!--             IsEnabled="{Binding AreButtonsEnabled}" -->
-                <!--             Height="20" -->
-                <!--             Margin="5,5,0,5" /> -->
-                <!-- </Grid> -->
-            </StackPanel>
-        </Border>
         <Border Grid.Row="3"
                 BorderThickness="1"
                 BorderBrush="#333"

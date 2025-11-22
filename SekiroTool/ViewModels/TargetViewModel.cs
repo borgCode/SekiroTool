@@ -599,9 +599,7 @@ public class TargetViewModel : BaseViewModel
         if (targetAddr != _currentTargetAddr)
         {
             _currentTargetAddr = targetAddr;
-
-            TargetMaxHealth = _targetService.GetMaxHp();
-            TargetMaxPosture = _targetService.GetMaxPosture();
+            
             TargetMaxPoise = _targetService.GetMaxPoise();
             TargetMaxPoison = _targetService.GetMaxPoison();
             TargetMaxBurn = _targetService.GetMaxBurn();
@@ -618,6 +616,8 @@ public class TargetViewModel : BaseViewModel
             OnPropertyChanged(nameof(IsTargetViewEnabled));
         }
 
+        TargetMaxHealth = _targetService.GetMaxHp();
+        TargetMaxPosture = _targetService.GetMaxPosture();
         TargetCurrentHealth = _targetService.GetCurrentHp();
         TargetCurrentPosture = _targetService.GetCurrentPosture();
         TargetCurrentPoise = _targetService.GetCurrentPoise();

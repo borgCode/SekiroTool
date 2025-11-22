@@ -20,7 +20,7 @@ public class EventViewModel : BaseViewModel
 
         stateService.Subscribe(State.Loaded, OnGameLoaded);
         stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
-        
+
         SetEventCommand = new DelegateCommand(SetEvent);
         GetEventCommand = new DelegateCommand(GetEvent);
         SetDemonBellCommand = new DelegateCommand(SetDemonBell);
@@ -30,8 +30,13 @@ public class EventViewModel : BaseViewModel
         SetNoonCommand = new DelegateCommand(SetNoon);
         SetEveningCommand = new DelegateCommand(SetEvening);
         SetNightCommand = new DelegateCommand(SetNight);
+        SetTutorialCompleteCommand = new DelegateCommand(SetTutorialComplete);
+        SetHirataTwoCommand = new DelegateCommand(SetHirataTwo);
+        SetInvasionCommand = new DelegateCommand(SetInvasion);
+        SetAshinaNightCommand = new DelegateCommand(SetAshinaNight);
+        SetHeadlessApeCommand = new DelegateCommand(SetHeadlessApe);
     }
-    
+
 
     #region Commands
 
@@ -44,47 +49,58 @@ public class EventViewModel : BaseViewModel
     public ICommand SetNoonCommand { get; set; }
     public ICommand SetEveningCommand { get; set; }
     public ICommand SetNightCommand { get; set; }
+    public ICommand SetTutorialCompleteCommand { get; set; }
+    public ICommand SetHirataTwoCommand { get; set; }
+    public ICommand SetInvasionCommand { get; set; }
+    public ICommand SetAshinaNightCommand { get; set; }
+    public ICommand SetHeadlessApeCommand { get; set; }
 
     #endregion
-    
+
     #region Properties
 
     private bool _areOptionsEnabled;
+
     public bool AreOptionsEnabled
     {
         get => _areOptionsEnabled;
         set => SetProperty(ref _areOptionsEnabled, value);
     }
-    
+
     private string _setFlagId;
+
     public string SetFlagId
     {
         get => _setFlagId;
         set => SetProperty(ref _setFlagId, value);
     }
-    
+
     private string _getFlagId;
+
     public string GetFlagId
     {
         get => _getFlagId;
         set => SetProperty(ref _getFlagId, value);
     }
-    
+
     private int _flagStateIndex;
+
     public int FlagStateIndex
     {
         get => _flagStateIndex;
         set => SetProperty(ref _flagStateIndex, value);
     }
-    
+
     private string _eventStatusText;
+
     public string EventStatusText
     {
         get => _eventStatusText;
         set => SetProperty(ref _eventStatusText, value);
     }
-    
+
     private Brush _eventStatusColor;
+
     public Brush EventStatusColor
     {
         get => _eventStatusColor;
@@ -92,6 +108,7 @@ public class EventViewModel : BaseViewModel
     }
 
     private bool _isDrawEventsEnabled;
+
     public bool IsDrawEventsEnabled
     {
         get => _isDrawEventsEnabled;
@@ -103,8 +120,9 @@ public class EventViewModel : BaseViewModel
             _eventService.ToggleDrawEvents(_isDrawEventsEnabled);
         }
     }
-    
+
     private bool _isDisableEventsEnabled;
+
     public bool IsDisableEventsEnabled
     {
         get => _isDisableEventsEnabled;
@@ -114,9 +132,9 @@ public class EventViewModel : BaseViewModel
             _eventService.ToggleDisableEvent(_isDisableEventsEnabled);
         }
     }
-    
+
     #endregion
-    
+
     #region Private Methods
 
     private void OnGameLoaded()
@@ -127,6 +145,7 @@ public class EventViewModel : BaseViewModel
             _debugDrawService.RequestDebugDraw();
             _eventService.ToggleDrawEvents(true);
         }
+
         if (IsDisableEventsEnabled) _eventService.ToggleDisableEvent(true);
     }
 
@@ -134,14 +153,14 @@ public class EventViewModel : BaseViewModel
     {
         AreOptionsEnabled = false;
     }
-    
+
     private void SetEvent()
     {
         if (string.IsNullOrWhiteSpace(SetFlagId))
             return;
-            
+
         string trimmedFlagId = SetFlagId.Trim();
-        
+
         if (!long.TryParse(trimmedFlagId, out long flagIdValue) || flagIdValue <= 0)
             return;
         _eventService.SetEvent(flagIdValue, FlagStateIndex == 0);
@@ -151,9 +170,9 @@ public class EventViewModel : BaseViewModel
     {
         if (string.IsNullOrWhiteSpace(GetFlagId))
             return;
-            
+
         string trimmedFlagId = GetFlagId.Trim();
-            
+
         if (!long.TryParse(trimmedFlagId, out long flagIdValue) || flagIdValue <= 0)
             return;
 
@@ -179,31 +198,59 @@ public class EventViewModel : BaseViewModel
 
     private void SetMorning()
     {
-        _eventService.SetEvent(GameEvent.Noon, false);
-        _eventService.SetEvent(GameEvent.Evening, false);
-        _eventService.SetEvent(GameEvent.Night, false);
+        _eventService.SetEvent(GameEvent.NoonScaling, false);
+        _eventService.SetEvent(GameEvent.EveningScaling, false);
+        _eventService.SetEvent(GameEvent.NightScaling, false);
     }
-    
+
     private void SetNoon()
     {
-        _eventService.SetEvent(GameEvent.Noon, true);
-        _eventService.SetEvent(GameEvent.Evening, false);
-        _eventService.SetEvent(GameEvent.Night, false);
+        _eventService.SetEvent(GameEvent.NoonScaling, true);
+        _eventService.SetEvent(GameEvent.EveningScaling, false);
+        _eventService.SetEvent(GameEvent.NightScaling, false);
     }
-    
+
     private void SetEvening()
     {
-        _eventService.SetEvent(GameEvent.Noon, true);
-        _eventService.SetEvent(GameEvent.Evening, true);
-        _eventService.SetEvent(GameEvent.Night, false);
+        _eventService.SetEvent(GameEvent.NoonScaling, true);
+        _eventService.SetEvent(GameEvent.EveningScaling, true);
+        _eventService.SetEvent(GameEvent.NightScaling, false);
     }
-    
+
     private void SetNight()
     {
-        _eventService.SetEvent(GameEvent.Noon, true);
-        _eventService.SetEvent(GameEvent.Evening, true);
-        _eventService.SetEvent(GameEvent.Night, true);
+        _eventService.SetEvent(GameEvent.NoonScaling, true);
+        _eventService.SetEvent(GameEvent.EveningScaling, true);
+        _eventService.SetEvent(GameEvent.NightScaling, true);
     }
+
+    private void SetTutorialComplete(object parameter) => 
+        _eventService.SetEvent(GameEvent.IsTutorial, Convert.ToBoolean(parameter));
+
+
+    private void SetHirataTwo(object parameter)
+    {
+        bool isOn = Convert.ToBoolean(parameter);
+        if (isOn) _eventService.SetEvent(GameEvent.IsTutorial, false);
+        _eventService.SetEvent(GameEvent.HirataFire, isOn);
+    }
+
+    private void SetInvasion(object parameter)
+    {
+        bool isOn = Convert.ToBoolean(parameter);
+        if (isOn) _eventService.SetEvent(GameEvent.IsTutorial, false);
+        _eventService.SetEvent(GameEvent.AshinaCastleInvasion, isOn);
+    }
+
+    private void SetAshinaNight(object parameter)
+    {
+        bool isOn = Convert.ToBoolean(parameter);
+        if (isOn) _eventService.SetEvent(GameEvent.IsTutorial, false);
+        _eventService.SetEvent(GameEvent.AshinaCastleFire, isOn);
+    }
+
+    private void SetHeadlessApe(object parameter)=> 
+        _eventService.SetEvent(GameEvent.HeadlessApe, Convert.ToBoolean(parameter));
 
     #endregion
 }

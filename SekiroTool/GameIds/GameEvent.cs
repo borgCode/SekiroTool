@@ -9,13 +9,14 @@ public static class GameEvent
     public const long HasDragonPhase2TreesSpawned = 12505888;
     public const long TriggerFinalDragonAttack = 12505889;
 
-    public const long Noon = 9800;
-    public const long Evening = 9801;
-    public const long Night = 9802;
+    public const long NoonScaling = 9800;
+    public const long EveningScaling = 9801;
+    public const long NightScaling = 9802;
 
-    // after dragon 8302
-    // headless ape, requires reload 8303
-    // Ashina invasion 8301 reload area
-    // isTutorial 8306 
-
+    public const long AshinaCastleInvasion = 8301;
+    public const long AshinaCastleFire = 8302;
+    public const long HirataFire = 8304;
+    public const long IsTutorial = 8306;
+    public const long HeadlessApe = 8303;
+    
 }

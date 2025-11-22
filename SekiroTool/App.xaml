@@ -8,8 +8,8 @@
         <Color x:Key="BackgroundColor">#121212</Color>
         <Color x:Key="PanelColor">#1A1A1A</Color>
         <Color x:Key="TextColor">#EAEAEA</Color>
-        <Color x:Key="AccentColor">#7C3AED</Color>
-        <Color x:Key="HoverColor">#6B21A8</Color>
+        <Color x:Key="AccentColor">#C93D3D</Color>
+        <Color x:Key="HoverColor">#963839</Color>
         <Color x:Key="BorderColor">#333333</Color>
         <Color x:Key="ControlBackgroundColor">#252525</Color>
 
@@ -38,7 +38,7 @@
             <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
         </Style>
 
-        <Color x:Key="TitleBarColor">#491A8C</Color>
+        <Color x:Key="TitleBarColor">#963839</Color>
         <SolidColorBrush x:Key="TitleBarBrush" Color="{StaticResource TitleBarColor}" />
 
         <Style TargetType="Button">
@@ -467,7 +467,7 @@
         <Style TargetType="ScrollBar">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="Foreground" Value="#667C3AED" />
+            <Setter Property="Foreground" Value="#6F292A " />
             <Setter Property="Width" Value="8" />
             <Setter Property="Template">
                 <Setter.Value>
