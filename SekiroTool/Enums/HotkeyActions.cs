@@ -20,6 +20,9 @@ public enum HotkeyActions
     PlayerHide,
     PlayerSilent,
     InfinitePoise,
+    TogglePlayerSpeed,
+    IncreasePlayerSpeed,
+    DecreasePlayerSpeed,
     
     SkipDragonPhaseOne,
     TriggerDragonFinalAttack,
@@ -62,6 +65,4 @@ public enum HotkeyActions
     DecreaseNoClipSpeed,
     FreeCam,
     MoveCamToPlayer,
-    
-    
 }

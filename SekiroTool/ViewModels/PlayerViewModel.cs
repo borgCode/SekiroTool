@@ -21,6 +21,10 @@ public class PlayerViewModel : BaseViewModel
     private Dictionary<uint, uint> _idolsByAreaDict;
 
     private bool _pauseUpdates;
+    
+    private const float DefaultSpeed = 1f;
+    private float _playerDesiredSpeed = -1f;
+    private const float Epsilon = 0.0001f;
 
     public PlayerViewModel(IPlayerService playerService, HotkeyManager hotkeyManager,
         IGameStateService gameStateService)
@@ -57,6 +61,7 @@ public class PlayerViewModel : BaseViewModel
 
     
 
+    
 
     #region Commands
 
@@ -391,6 +396,25 @@ public class PlayerViewModel : BaseViewModel
         set => SetProperty(ref _requestRespawn, value);
     }
     
+    
+    private float _playerSpeed;
+    
+    public float PlayerSpeed
+    {
+        get => _playerSpeed;
+        set
+        {
+            if (SetProperty(ref _playerSpeed, value))
+            {
+                _playerService.SetSpeed(_playerSpeed);
+            }
+        }
+    }
+    
+    
+    
+    public void SetSpeed(double value) => PlayerSpeed = (float)value;
+    
     #endregion
 
     #region Public Methods
@@ -400,7 +424,7 @@ public class PlayerViewModel : BaseViewModel
     public void SetNewGame(int newGameCycle) => _playerService.SetNewGame(newGameCycle);
     public void SetHp(int health) => _playerService.SetHp(health);
     public void SetPosture(int posture) => _playerService.SetPosture(posture);
-
+    
     
     #endregion
 
@@ -412,9 +436,15 @@ public class PlayerViewModel : BaseViewModel
         _hotkeyManager.RegisterAction(HotkeyActions.SavePos2.ToString(), () => SavePosition(1));
         _hotkeyManager.RegisterAction(HotkeyActions.RestorePos1.ToString(), () => RestorePosition(0));
         _hotkeyManager.RegisterAction(HotkeyActions.RestorePos2.ToString(), () => RestorePosition(1));
-        
-        
+        _hotkeyManager.RegisterAction(HotkeyActions.TogglePlayerSpeed.ToString(), () => TogglePlayerSpeed());
+        _hotkeyManager.RegisterAction(HotkeyActions.IncreasePlayerSpeed.ToString(), () => SetSpeed(Math.Min(10, PlayerSpeed + 0.25f)));
+        _hotkeyManager.RegisterAction(HotkeyActions.DecreasePlayerSpeed.ToString(), () => SetSpeed(Math.Max(0, PlayerSpeed - 0.25f)));
+
+
+
     }
+    
+    
 
     private void OnGameLoaded()
     {
@@ -474,8 +504,7 @@ public class PlayerViewModel : BaseViewModel
         MaxHealth = _playerService.GetMaxHp();
         CurrentPosture = _playerService.GetCurrentPosture();
         MaxPosture = _playerService.GetMaxPosture();
-       
-
+        PlayerSpeed =  _playerService.GetPlayerSpeed();
 
         // We'll have logic such as reading hp every tick etc, see how it works in targetviewmodel
     }
@@ -533,6 +562,22 @@ public class PlayerViewModel : BaseViewModel
     {
         _playerService.Rest();
     }
+    
+    private void TogglePlayerSpeed()
+    {
+        if (!AreOptionsEnabled) return;
+
+        if (!IsApproximately(PlayerSpeed, DefaultSpeed))
+        {
+            _playerDesiredSpeed = _playerSpeed;
+            SetSpeed(DefaultSpeed);
+        }
+        else if (_playerDesiredSpeed >= 0)
+        {
+            SetSpeed(_playerDesiredSpeed);
+        }
+    }
+    private bool IsApproximately(float a, float b) => Math.Abs(a - b) < Epsilon;
     
     #endregion
 }
