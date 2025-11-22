@@ -26,6 +26,10 @@ public class EventViewModel : BaseViewModel
         SetDemonBellCommand = new DelegateCommand(SetDemonBell);
         SetNoKurosCharmCommand = new DelegateCommand(SetNoKurosCharm);
         MoveIsshinCommand = new DelegateCommand(MoveIsshinToCastle);
+        SetMorningCommand = new DelegateCommand(SetMorning);
+        SetNoonCommand = new DelegateCommand(SetNoon);
+        SetEveningCommand = new DelegateCommand(SetEvening);
+        SetNightCommand = new DelegateCommand(SetNight);
     }
     
 
@@ -36,6 +40,10 @@ public class EventViewModel : BaseViewModel
     public ICommand SetDemonBellCommand { get; set; }
     public ICommand SetNoKurosCharmCommand { get; set; }
     public ICommand MoveIsshinCommand { get; set; }
+    public ICommand SetMorningCommand { get; set; }
+    public ICommand SetNoonCommand { get; set; }
+    public ICommand SetEveningCommand { get; set; }
+    public ICommand SetNightCommand { get; set; }
 
     #endregion
     
@@ -168,6 +176,34 @@ public class EventViewModel : BaseViewModel
         _eventService.SetEvent(GameEvent.IsNoKurosCharm, Convert.ToBoolean(parameter));
 
     private void MoveIsshinToCastle() => _eventService.SetEvent(GameEvent.HasIsshinMovedToCastle, true);
+
+    private void SetMorning()
+    {
+        _eventService.SetEvent(GameEvent.Noon, false);
+        _eventService.SetEvent(GameEvent.Evening, false);
+        _eventService.SetEvent(GameEvent.Night, false);
+    }
+    
+    private void SetNoon()
+    {
+        _eventService.SetEvent(GameEvent.Noon, true);
+        _eventService.SetEvent(GameEvent.Evening, false);
+        _eventService.SetEvent(GameEvent.Night, false);
+    }
+    
+    private void SetEvening()
+    {
+        _eventService.SetEvent(GameEvent.Noon, true);
+        _eventService.SetEvent(GameEvent.Evening, true);
+        _eventService.SetEvent(GameEvent.Night, false);
+    }
+    
+    private void SetNight()
+    {
+        _eventService.SetEvent(GameEvent.Noon, true);
+        _eventService.SetEvent(GameEvent.Evening, true);
+        _eventService.SetEvent(GameEvent.Night, true);
+    }
 
     #endregion
 }

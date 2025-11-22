@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:SekiroTool.Views.Tabs"
              xmlns:converters="clr-namespace:SekiroTool.Converters"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
-     <UserControl.Resources>
+             d:DesignHeight="670" d:DesignWidth="520">
+    <UserControl.Resources>
         <converters:BooleanAndConverter x:Key="BooleanAndConverter" />
     </UserControl.Resources>
 
@@ -117,34 +117,74 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="5">
-                        <TextBlock Text="Demon Bell:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                        <Button 
+                        <TextBlock Text="Demon Bell:" Width="100" VerticalAlignment="Center" Margin="0,0,10,0" />
+                        <Button
                             CommandParameter="True"
                             Command="{Binding SetDemonBellCommand}"
-                            Content="On" Width="45" Margin="0,0,5,0"/>
-                        <Button 
+                            Content="On" Width="45" Margin="0,0,5,0" />
+                        <Button
                             CommandParameter="False"
                             Command="{Binding SetDemonBellCommand}"
-                            Content="Off" Width="45"/>
+                            Content="Off" Width="45" />
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="5">
-                        <TextBlock Text="No Kuro's Charm:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                        <Button 
+                        <TextBlock Text="No Kuro's Charm:" Width="100" VerticalAlignment="Center" Margin="0,0,10,0" />
+                        <Button
                             CommandParameter="True"
                             Command="{Binding SetNoKurosCharmCommand}"
-                            Content="On" Width="45" Margin="0,0,5,0"/>
-                        <Button 
+                            Content="On" Width="45" Margin="0,0,5,0" />
+                        <Button
                             CommandParameter="False"
                             Command="{Binding SetNoKurosCharmCommand}"
-                            Content="Off" Width="45"/>
+                            Content="Off" Width="45" />
                     </StackPanel>
-                    <Button Grid.Row="2" Grid.Column="0"
-                            Command="{Binding MoveIsshinCommand}"
-                            Content="Move Isshin To Castle"  Margin="0,0,5,0">
-                        
-                    </Button>
                     
+                    
+                    <Button Grid.Row="0" Grid.Column="1"
+                            Command="{Binding MoveIsshinCommand}"
+                            Content="Move Isshin To Castle" Margin="100,0,5,0">
+
+                    </Button>
+
                 </Grid>
+                
+                <TextBlock Text="Game Progression"
+                           FontWeight="Bold"
+                           Margin="0,0,0,10" />
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="5">
+                        <TextBlock Text="Demon Bell:" Width="100" VerticalAlignment="Center" Margin="0,0,10,0" />
+                        <Button
+                            CommandParameter="True"
+                            Command="{Binding SetDemonBellCommand}"
+                            Content="On" Width="45" Margin="0,0,5,0" />
+                        <Button
+                            CommandParameter="False"
+                            Command="{Binding SetDemonBellCommand}"
+                            Content="Off" Width="45" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="5">
+                        <TextBlock Text="No Kuro's Charm:" Width="100" VerticalAlignment="Center" Margin="0,0,10,0" />
+                        <Button
+                            CommandParameter="True"
+                            Command="{Binding SetNoKurosCharmCommand}"
+                            Content="On" Width="45" Margin="0,0,5,0" />
+                        <Button
+                            CommandParameter="False"
+                            Command="{Binding SetNoKurosCharmCommand}"
+                            Content="Off" Width="45" />
+                    </StackPanel>
+                    </Grid>
             </StackPanel>
         </Border>
 
@@ -228,7 +268,7 @@
                           IsChecked="{Binding IsDisableEventsEnabled}"
                           VerticalAlignment="Center"
                           Margin="0,10,20,0" />
-               
+
             </StackPanel>
         </Border>
     </Grid>
