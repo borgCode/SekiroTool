@@ -295,7 +295,7 @@ public class PlayerViewModel : BaseViewModel
         {
             if (SetProperty(ref _isInfiniteConfettiEnabled, value))
             {
-                _playerService.ToggleInfiniteConfetti(_isInfiniteConfettiEnabled);
+                _playerService.ToggleInfiniteBuffs(_isInfiniteConfettiEnabled);
 
                 if (!_isInfiniteConfettiEnabled)
                 {
@@ -470,7 +470,7 @@ public class PlayerViewModel : BaseViewModel
         if (_isInfinitePoiseEnabled) _playerService.TogglePlayerInfinitePoise(true);
         _playerTick.Start();
 
-        if (_isInfiniteConfettiEnabled) _playerService.ToggleInfiniteConfetti(true);
+        if (_isInfiniteConfettiEnabled) _playerService.ToggleInfiniteBuffs(true);
         _playerTick.Start();
 
         if (_isConfettiFlagEnabled) _playerService.ToggleConfettiFlag(true);
