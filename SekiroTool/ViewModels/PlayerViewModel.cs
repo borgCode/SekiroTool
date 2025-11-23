@@ -438,6 +438,12 @@ public class PlayerViewModel : BaseViewModel
         _hotkeyManager.RegisterAction(HotkeyActions.SavePos2.ToString(), () => SavePosition(1));
         _hotkeyManager.RegisterAction(HotkeyActions.RestorePos1.ToString(), () => RestorePosition(0));
         _hotkeyManager.RegisterAction(HotkeyActions.RestorePos2.ToString(), () => RestorePosition(1));
+        _hotkeyManager.RegisterAction(HotkeyActions.ApplyConfetti.ToString(), () => SetApplyConfetti());
+        _hotkeyManager.RegisterAction(HotkeyActions.ApplyGachiin.ToString(), () => SetApplyGachiin());
+        _hotkeyManager.RegisterAction(HotkeyActions.RemoveConfetti.ToString(), () => SetRemoveConfetti());
+        _hotkeyManager.RegisterAction(HotkeyActions.RemoveGachiin.ToString(), () => SetRemoveGachiin());
+        
+        
         _hotkeyManager.RegisterAction(HotkeyActions.TogglePlayerSpeed.ToString(), () => TogglePlayerSpeed());
         _hotkeyManager.RegisterAction(HotkeyActions.IncreasePlayerSpeed.ToString(), () => SetSpeed(Math.Min(10, PlayerSpeed + 0.25f)));
         _hotkeyManager.RegisterAction(HotkeyActions.DecreasePlayerSpeed.ToString(), () => SetSpeed(Math.Max(0, PlayerSpeed - 0.25f)));

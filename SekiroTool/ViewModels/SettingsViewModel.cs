@@ -34,6 +34,11 @@ public class SettingsViewModel : BaseViewModel
             { HotkeyActions.SavePos2.ToString(), text => SavePos2HotkeyText = text },
             { HotkeyActions.RestorePos1.ToString(), text => RestorePos1HotkeyText = text },
             { HotkeyActions.RestorePos2.ToString(), text => RestorePos2HotkeyText = text },
+            { HotkeyActions.ApplyConfetti.ToString(), text => ApplyConfettiHotkeyText = text },
+            { HotkeyActions.ApplyGachiin.ToString(), text => ApplyGachiinHotkeyText = text },
+            { HotkeyActions.RemoveConfetti.ToString(), text => RemoveConfettiHotkeyText = text },
+            { HotkeyActions.RemoveGachiin.ToString(), text => RemoveGachiinHotkeyText = text },
+            
             { HotkeyActions.IncreasePlayerSpeed.ToString(), text => IncreasePlayerSpeedHotkeyText = text },
             { HotkeyActions.DecreasePlayerSpeed.ToString(), text => DecreasePlayerSpeedHotkeyText = text },
             { HotkeyActions.TogglePlayerSpeed.ToString(), text => TogglePlayerSpeedHotkeyText = text },
@@ -311,6 +316,37 @@ public class SettingsViewModel : BaseViewModel
         set => SetProperty(ref _restorePos2HotkeyText, value);
     }
 
+    private string _applyConfettiHotkeyText;
+    
+    public string ApplyConfettiHotkeyText
+    {
+        get => _applyConfettiHotkeyText;
+        set => SetProperty(ref _applyConfettiHotkeyText, value);
+    }
+
+    private string _applyGachiinHotkeyText;
+    
+    public string ApplyGachiinHotkeyText
+    {
+        get => _applyGachiinHotkeyText;
+        set => SetProperty(ref _applyGachiinHotkeyText, value);
+    }
+    
+    private string _removeConfettiHotkeyText;
+
+    public string RemoveConfettiHotkeyText
+    {
+        get => _removeConfettiHotkeyText;
+        set => SetProperty(ref _removeConfettiHotkeyText, value);
+    }
+    
+    private string _removeGachiinHotkeyText;
+
+    public string RemoveGachiinHotkeyText
+    {
+        get => _removeGachiinHotkeyText;
+        set => SetProperty(ref _removeGachiinHotkeyText, value);
+    }
 
     private string _skipDragonPhaseOneHotkeyText;
 

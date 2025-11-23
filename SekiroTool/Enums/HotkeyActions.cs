@@ -20,6 +20,11 @@ public enum HotkeyActions
     PlayerHide,
     PlayerSilent,
     InfinitePoise,
+    ApplyConfetti,
+    ApplyGachiin,
+    RemoveConfetti,
+    RemoveGachiin,
+    
     TogglePlayerSpeed,
     IncreasePlayerSpeed,
     DecreasePlayerSpeed,
