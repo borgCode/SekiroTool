@@ -286,18 +286,18 @@ public class PlayerViewModel : BaseViewModel
         }
     }
 
-    private bool _isInfiniteConfettiEnabled;
+    private bool _isInfiniteBuffsEnabled;
 
-    public bool IsInfiniteConfettiEnabled
+    public bool IsInfiniteBuffsEnabled
     {
-        get => _isInfiniteConfettiEnabled;
+        get => _isInfiniteBuffsEnabled;
         set
         {
-            if (SetProperty(ref _isInfiniteConfettiEnabled, value))
+            if (SetProperty(ref _isInfiniteBuffsEnabled, value))
             {
-                _playerService.ToggleInfiniteBuffs(_isInfiniteConfettiEnabled);
+                _playerService.ToggleInfiniteBuffs(_isInfiniteBuffsEnabled);
 
-                if (!_isInfiniteConfettiEnabled)
+                if (!_isInfiniteBuffsEnabled)
                 {
                     IsConfettiFlagEnabled = false;
                     IsGachiinFlagEnabled = false;
@@ -315,6 +315,7 @@ public class PlayerViewModel : BaseViewModel
         {
             if (SetProperty(ref _isConfettiFlagEnabled, value))
             {
+                IsInfiniteBuffsEnabled = true;
                 _playerService.ToggleConfettiFlag(_isConfettiFlagEnabled);
             }
         }
@@ -329,6 +330,7 @@ public class PlayerViewModel : BaseViewModel
         {
             if (SetProperty(ref _isGachiinFlagEnabled, value))
             {
+                IsInfiniteBuffsEnabled = true;
                 _playerService.ToggleGachiinFlag(_isGachiinFlagEnabled);
             }
         }
@@ -470,7 +472,7 @@ public class PlayerViewModel : BaseViewModel
         if (_isInfinitePoiseEnabled) _playerService.TogglePlayerInfinitePoise(true);
         _playerTick.Start();
 
-        if (_isInfiniteConfettiEnabled) _playerService.ToggleInfiniteBuffs(true);
+        if (_isInfiniteBuffsEnabled) _playerService.ToggleInfiniteBuffs(true);
         _playerTick.Start();
 
         if (_isConfettiFlagEnabled) _playerService.ToggleConfettiFlag(true);

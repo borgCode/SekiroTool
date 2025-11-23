@@ -175,6 +175,7 @@
                     <CheckBox Content="Infinite Poise"
                               IsChecked="{Binding IsInfinitePoiseEnabled}"/>
                     
+                    
                         
                     
                     
