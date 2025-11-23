@@ -285,26 +285,7 @@ public class PlayerViewModel : BaseViewModel
             }
         }
     }
-
-    private bool _isInfiniteBuffsEnabled;
-
-    public bool IsInfiniteBuffsEnabled
-    {
-        get => _isInfiniteBuffsEnabled;
-        set
-        {
-            if (SetProperty(ref _isInfiniteBuffsEnabled, value))
-            {
-                _playerService.ToggleInfiniteBuffs(_isInfiniteBuffsEnabled);
-
-                if (!_isInfiniteBuffsEnabled)
-                {
-                    IsConfettiFlagEnabled = false;
-                    IsGachiinFlagEnabled = false;
-                }
-            }
-        }
-    }
+    
 
     private bool _isConfettiFlagEnabled;
 
@@ -315,8 +296,12 @@ public class PlayerViewModel : BaseViewModel
         {
             if (SetProperty(ref _isConfettiFlagEnabled, value))
             {
-                IsInfiniteBuffsEnabled = true;
                 _playerService.ToggleConfettiFlag(_isConfettiFlagEnabled);
+                _playerService.ToggleInfiniteBuffs(_isConfettiFlagEnabled);
+                if (!_isConfettiFlagEnabled)
+                {
+                    _playerService.ToggleInfiniteBuffs(_isGachiinFlagEnabled);
+                }
             }
         }
     }
@@ -330,8 +315,13 @@ public class PlayerViewModel : BaseViewModel
         {
             if (SetProperty(ref _isGachiinFlagEnabled, value))
             {
-                IsInfiniteBuffsEnabled = true;
+                
                 _playerService.ToggleGachiinFlag(_isGachiinFlagEnabled);
+                _playerService.ToggleInfiniteBuffs(_isGachiinFlagEnabled);
+                if (!_isGachiinFlagEnabled)
+                {
+                    _playerService.ToggleInfiniteBuffs(_isConfettiFlagEnabled);
+                }
             }
         }
     }
@@ -476,9 +466,6 @@ public class PlayerViewModel : BaseViewModel
         if (_isPlayerSilentEnabled) _playerService.TogglePlayerSilent(true);
 
         if (_isInfinitePoiseEnabled) _playerService.TogglePlayerInfinitePoise(true);
-        _playerTick.Start();
-
-        if (_isInfiniteBuffsEnabled) _playerService.ToggleInfiniteBuffs(true);
         _playerTick.Start();
 
         if (_isConfettiFlagEnabled) _playerService.ToggleConfettiFlag(true);
