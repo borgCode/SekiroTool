@@ -468,7 +468,17 @@ public class PlayerViewModel : BaseViewModel
         if (_isInfinitePoiseEnabled) _playerService.TogglePlayerInfinitePoise(true);
         _playerTick.Start();
 
-        if (_isConfettiFlagEnabled) _playerService.ToggleConfettiFlag(true);
+        if (_isConfettiFlagEnabled)
+        {
+            _playerService.ToggleConfettiFlag(true);
+            _playerService.ToggleInfiniteBuffs(true);
+        }
+
+        if (_isGachiinFlagEnabled)
+        {
+            _playerService.ToggleGachiinFlag(true);
+            _playerService.ToggleInfiniteBuffs(true);
+        }
         
         NewGame = _playerService.GetNewGame();
     }
