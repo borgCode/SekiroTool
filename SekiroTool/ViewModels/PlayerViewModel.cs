@@ -285,26 +285,7 @@ public class PlayerViewModel : BaseViewModel
             }
         }
     }
-
-    private bool _isInfiniteConfettiEnabled;
-
-    public bool IsInfiniteConfettiEnabled
-    {
-        get => _isInfiniteConfettiEnabled;
-        set
-        {
-            if (SetProperty(ref _isInfiniteConfettiEnabled, value))
-            {
-                _playerService.ToggleInfiniteConfetti(_isInfiniteConfettiEnabled);
-
-                if (!_isInfiniteConfettiEnabled)
-                {
-                    IsConfettiFlagEnabled = false;
-                    IsGachiinFlagEnabled = false;
-                }
-            }
-        }
-    }
+    
 
     private bool _isConfettiFlagEnabled;
 
@@ -316,6 +297,11 @@ public class PlayerViewModel : BaseViewModel
             if (SetProperty(ref _isConfettiFlagEnabled, value))
             {
                 _playerService.ToggleConfettiFlag(_isConfettiFlagEnabled);
+                _playerService.ToggleInfiniteBuffs(_isConfettiFlagEnabled);
+                if (!_isConfettiFlagEnabled)
+                {
+                    _playerService.ToggleInfiniteBuffs(_isGachiinFlagEnabled);
+                }
             }
         }
     }
@@ -329,7 +315,13 @@ public class PlayerViewModel : BaseViewModel
         {
             if (SetProperty(ref _isGachiinFlagEnabled, value))
             {
+                
                 _playerService.ToggleGachiinFlag(_isGachiinFlagEnabled);
+                _playerService.ToggleInfiniteBuffs(_isGachiinFlagEnabled);
+                if (!_isGachiinFlagEnabled)
+                {
+                    _playerService.ToggleInfiniteBuffs(_isConfettiFlagEnabled);
+                }
             }
         }
     }
@@ -436,6 +428,12 @@ public class PlayerViewModel : BaseViewModel
         _hotkeyManager.RegisterAction(HotkeyActions.SavePos2.ToString(), () => SavePosition(1));
         _hotkeyManager.RegisterAction(HotkeyActions.RestorePos1.ToString(), () => RestorePosition(0));
         _hotkeyManager.RegisterAction(HotkeyActions.RestorePos2.ToString(), () => RestorePosition(1));
+        _hotkeyManager.RegisterAction(HotkeyActions.ApplyConfetti.ToString(), () => SetApplyConfetti());
+        _hotkeyManager.RegisterAction(HotkeyActions.ApplyGachiin.ToString(), () => SetApplyGachiin());
+        _hotkeyManager.RegisterAction(HotkeyActions.RemoveConfetti.ToString(), () => SetRemoveConfetti());
+        _hotkeyManager.RegisterAction(HotkeyActions.RemoveGachiin.ToString(), () => SetRemoveGachiin());
+        
+        
         _hotkeyManager.RegisterAction(HotkeyActions.TogglePlayerSpeed.ToString(), () => TogglePlayerSpeed());
         _hotkeyManager.RegisterAction(HotkeyActions.IncreasePlayerSpeed.ToString(), () => SetSpeed(Math.Min(10, PlayerSpeed + 0.25f)));
         _hotkeyManager.RegisterAction(HotkeyActions.DecreasePlayerSpeed.ToString(), () => SetSpeed(Math.Max(0, PlayerSpeed - 0.25f)));
@@ -470,10 +468,17 @@ public class PlayerViewModel : BaseViewModel
         if (_isInfinitePoiseEnabled) _playerService.TogglePlayerInfinitePoise(true);
         _playerTick.Start();
 
-        if (_isInfiniteConfettiEnabled) _playerService.ToggleInfiniteConfetti(true);
-        _playerTick.Start();
+        if (_isConfettiFlagEnabled)
+        {
+            _playerService.ToggleConfettiFlag(true);
+            _playerService.ToggleInfiniteBuffs(true);
+        }
 
-        if (_isConfettiFlagEnabled) _playerService.ToggleConfettiFlag(true);
+        if (_isGachiinFlagEnabled)
+        {
+            _playerService.ToggleGachiinFlag(true);
+            _playerService.ToggleInfiniteBuffs(true);
+        }
         
         NewGame = _playerService.GetNewGame();
     }
