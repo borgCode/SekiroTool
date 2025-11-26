@@ -206,8 +206,8 @@
                                                 TextAlignment="Center"
                                                 Width="120"
                                                 Minimum="1"
-                                                Maximum="99"
-                                                
+                                                Maximum="999999999"
+                                                Increment="1000"
                                                 IsEnabled="{Binding AreOptionsEnabled}"
                                                 BorderBrush="#3F3F46"
                                                 Tag="Experience" />
@@ -248,7 +248,7 @@
                         Minimum="0"
                         Maximum="999999999"
                         DefaultValue="10000"
-
+                        Increment="1000"
                         IsEnabled="{Binding AreOptionsEnabled}"
                         BorderBrush="#3F3F46" />
 
@@ -258,6 +258,7 @@
                             Margin="10,0,0,0"
                             Width="100"
                             Height="25"
+                            
                             Command="{Binding SetAddSenCommand}"
                             />
                 </StackPanel>
