@@ -39,7 +39,7 @@ public interface IPlayerService
     void TogglePlayerHide(bool isEnabled);
     void TogglePlayerSilent(bool isEnabled);
     void TogglePlayerInfinitePoise(bool isEnabled);
-    void ToggleInfiniteConfetti(bool isEnabled);
+    void ToggleInfiniteBuffs(bool isEnabled);
     void ToggleConfettiFlag(bool isEnabled);
     void ToggleGachiinFlag(bool isEnabled);
     int RequestRespawn();

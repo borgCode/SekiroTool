@@ -90,6 +90,7 @@
                                     <ColumnDefinition Width="125" />
                                     <ColumnDefinition Width="85" />
                                 </Grid.ColumnDefinitions>
+                                
 
                                 <TextBlock Grid.Column="0" Text="RTSR Setup:" VerticalAlignment="Center"
                                            HorizontalAlignment="Left" />
@@ -321,6 +322,71 @@
                                          Tag="TogglePlayerSpeed"
                                          KeyDown="HotkeyTextBox_KeyDown" />
                             </Grid>
+                            
+                            <Grid Margin="0,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="125" />
+                                    <ColumnDefinition Width="85" />
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="125" />
+                                    <ColumnDefinition Width="85" />
+                                </Grid.ColumnDefinitions>
+
+
+                                <TextBlock Grid.Column="0" Text="Apply Confetti:" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                                <TextBox Grid.Column="1"
+                                         Text="{Binding ApplyConfettiHotkeyText}"
+                                         Style="{StaticResource HotkeyTextBoxStyle}"
+                                         GotFocus="HotkeyTextBox_GotFocus"
+                                         LostFocus="HotkeyTextBox_LostFocus"
+                                         Tag="ApplyConfetti"
+                                         KeyDown="HotkeyTextBox_KeyDown" />
+                                <TextBlock Grid.Column="3" Text="Remove Confetti:" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                                <TextBox Grid.Column="4"
+                                         Margin="5,0,-10,0"
+                                         Text="{Binding RemoveConfettiHotkeyText}"
+                                         Style="{StaticResource HotkeyTextBoxStyle}"
+                                         GotFocus="HotkeyTextBox_GotFocus"
+                                         LostFocus="HotkeyTextBox_LostFocus"
+                                         Tag="RemoveConfetti"
+                                         KeyDown="HotkeyTextBox_KeyDown" />
+                            
+                            </Grid>
+                            <Grid Margin="0,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="125" />
+                                    <ColumnDefinition Width="85" />
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="125" />
+                                    <ColumnDefinition Width="85" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="Apply Gachiin:" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                                <TextBox Grid.Column="1"
+                                         Text="{Binding ApplyGachiinHotkeyText}"
+                                         Style="{StaticResource HotkeyTextBoxStyle}"
+                                         GotFocus="HotkeyTextBox_GotFocus"
+                                         LostFocus="HotkeyTextBox_LostFocus"
+                                         Tag="ApplyGachiin"
+                                         KeyDown="HotkeyTextBox_KeyDown" />
+                                <TextBlock Grid.Column="3" Text="Remove Gachiin:" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                                <TextBox Grid.Column="4"
+                                         Margin="5,0,-10,0"
+                                         Text="{Binding RemoveGachiinHotkeyText}"
+                                         Style="{StaticResource HotkeyTextBoxStyle}"
+                                         GotFocus="HotkeyTextBox_GotFocus"
+                                         LostFocus="HotkeyTextBox_LostFocus"
+                                         Tag="RemoveGachiin"
+                                         KeyDown="HotkeyTextBox_KeyDown" />
+                            </Grid>
+                            
+                            
+                            
+                            
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>

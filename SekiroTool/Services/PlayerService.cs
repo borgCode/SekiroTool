@@ -333,7 +333,7 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         }
     }
 
-    public void ToggleInfiniteConfetti(bool isEnabled)
+    public void ToggleInfiniteBuffs(bool isEnabled)
     {
         var infiniteConfettiCaveLoc  = CodeCaveOffsets.Base + CodeCaveOffsets.InfiniteConfetti; //Base = allocated memory
         var confettiFlag = CodeCaveOffsets.Base + CodeCaveOffsets.ConfettiFlag;
