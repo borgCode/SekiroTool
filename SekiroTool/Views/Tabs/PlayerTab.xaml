@@ -241,13 +241,13 @@
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="10,0,0,0">
                     <xctk:IntegerUpDown
-                        Value="{Binding Souls}"
+                        Value="{Binding AddSenUpDown}"
                         TextAlignment="Center"
                         Width="120"
                         Minimum="0"
                         Maximum="999999999"
                         DefaultValue="10000"
-
+                        Increment="1000"
                         IsEnabled="{Binding AreOptionsEnabled}"
                         BorderBrush="#3F3F46" />
 
@@ -256,7 +256,10 @@
                             IsEnabled="{Binding AreOptionsEnabled}"
                             Margin="10,0,0,0"
                             Width="100"
-                            Height="25" />
+                            Height="25"
+                            
+                            Command="{Binding SetAddSenCommand}"
+                            />
                 </StackPanel>
             </Grid>
 

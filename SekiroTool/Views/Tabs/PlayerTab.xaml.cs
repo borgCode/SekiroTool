@@ -37,5 +37,10 @@ public partial class PlayerTab : UserControl
              _playerViewModel.PauseUpdates,
              _playerViewModel.ResumeUpdates
          );
+         
+        
+         
+        
     }   
+      
 }

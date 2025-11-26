@@ -49,7 +49,8 @@ public class PlayerViewModel : BaseViewModel
         SetRestCommand = new DelegateCommand(Rest);
         SetApplyConfettiCommand = new DelegateCommand(SetApplyConfetti);
         SetApplyGachiinCommand = new DelegateCommand(SetApplyGachiin);
-
+        SetAddSenCommand = new DelegateCommand(SetAddSen);
+        SetAddExperienceCommand = new DelegateCommand(SetAddExperience);
         _playerTick = new DispatcherTimer
         {
             Interval = TimeSpan.FromMilliseconds(64)
@@ -81,6 +82,11 @@ public class PlayerViewModel : BaseViewModel
     public ICommand SetApplyConfettiCommand {  get; set; }
     
     public ICommand SetApplyGachiinCommand {  get; set; }
+    
+    public ICommand SetAddSenCommand {  get; set; }
+    public ICommand SetAddExperienceCommand {  get; set; }
+    
+    
     // Check TargetViewModel for examples of commands when you need to implement that
 
     #endregion
@@ -402,7 +408,30 @@ public class PlayerViewModel : BaseViewModel
             }
         }
     }
+
+    private int _currentExperience;
+
+    public int CurrentExperience
+    {
+        get => _currentExperience;
+        set => SetProperty(ref _currentExperience, value);
+    }
+
+    private int _addSenUpDown;
+
+    public int AddSenUpDown
+    {
+       get => _addSenUpDown;
+       set => SetProperty(ref _addSenUpDown, value);
+    }
     
+    private int _addExperienceUpDown;
+
+    public int AddExperienceUpDown
+    {
+        get => _addExperienceUpDown;
+        set => SetProperty(ref _addExperienceUpDown, value);
+    }
     
     
     public void SetSpeed(double value) => PlayerSpeed = (float)value;
@@ -416,6 +445,7 @@ public class PlayerViewModel : BaseViewModel
     public void SetNewGame(int newGameCycle) => _playerService.SetNewGame(newGameCycle);
     public void SetHp(int health) => _playerService.SetHp(health);
     public void SetPosture(int posture) => _playerService.SetPosture(posture);
+    
     
     
     #endregion
@@ -510,8 +540,8 @@ public class PlayerViewModel : BaseViewModel
         CurrentPosture = _playerService.GetCurrentPosture();
         MaxPosture = _playerService.GetMaxPosture();
         PlayerSpeed =  _playerService.GetPlayerSpeed();
+        // CurrentExperience = _playerService.GetExperience();
 
-        // We'll have logic such as reading hp every tick etc, see how it works in targetviewmodel
     }
 
 
@@ -566,6 +596,16 @@ public class PlayerViewModel : BaseViewModel
     private void Rest()
     {
         _playerService.Rest();
+    }
+
+    private void SetAddSen()
+    {
+        _playerService.AddSen(AddSenUpDown);
+    }
+    
+    private void SetAddExperience()
+    {
+        _playerService.AddExperience(AddExperienceUpDown);
     }
     
     private void TogglePlayerSpeed()

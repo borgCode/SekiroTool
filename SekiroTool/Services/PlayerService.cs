@@ -162,8 +162,8 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
     public int GetMaxHp() =>
         memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.MaxHp);
 
-    
-
+    public int GetExperience() =>
+        memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.PlayerGameDataOffsets.Experience);
 
     public void SetPosture(int posture) =>
         memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Posture, posture);
