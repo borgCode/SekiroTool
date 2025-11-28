@@ -201,22 +201,23 @@
 
                         <TextBlock Text="Experience" Grid.Column="0" Width="70" VerticalAlignment="Center" Margin="0,0,0,0" />
                         <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="10,0,0,0">
-                            <xctk:IntegerUpDown x:Name="ExperienceUpDown"
-                                                Value="{Binding Experience}"
-                                                TextAlignment="Center"
-                                                Width="120"
-                                                Minimum="1"
-                                                Maximum="99"
-                                                
-                                                IsEnabled="{Binding AreOptionsEnabled}"
-                                                BorderBrush="#3F3F46"
-                                                Tag="Experience" />
-                            <Button Content="Give Experience?"
+                            <xctk:IntegerUpDown
+                                Value="{Binding AddExperienceUpDown}"
+                                TextAlignment="Center"
+                                Width="120"
+                                Minimum="1"
+                                Maximum="999999999"
+                                Increment="1000"
+                                IsEnabled="{Binding AreOptionsEnabled}"
+                                BorderBrush="#3F3F46"
+                                Tag="Experience" />
+                            <Button Content="Give Experience"
 
                                     IsEnabled="{Binding AreOptionsEnabled}"
                                     Margin="10,0,0,0"
                                     Width="100"
-                                    Height="25" />
+                                    Height="25"
+                                    Command="{Binding SetAddExperienceCommand}"/>
                             
                         </StackPanel>
                     </Grid>
@@ -237,7 +238,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="Sen to give?" Width="70" VerticalAlignment="Center" />
+                <TextBlock Grid.Column="0" Text="Sen to give" Width="70" VerticalAlignment="Center" />
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="10,0,0,0">
                     <xctk:IntegerUpDown
@@ -251,7 +252,7 @@
                         IsEnabled="{Binding AreOptionsEnabled}"
                         BorderBrush="#3F3F46" />
 
-                    <Button Content="Give Sen?"
+                    <Button Content="Give Sen"
 
                             IsEnabled="{Binding AreOptionsEnabled}"
                             Margin="10,0,0,0"
