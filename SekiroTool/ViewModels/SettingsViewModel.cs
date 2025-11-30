@@ -42,6 +42,7 @@ public class SettingsViewModel : BaseViewModel
             { HotkeyActions.IncreasePlayerSpeed.ToString(), text => IncreasePlayerSpeedHotkeyText = text },
             { HotkeyActions.DecreasePlayerSpeed.ToString(), text => DecreasePlayerSpeedHotkeyText = text },
             { HotkeyActions.TogglePlayerSpeed.ToString(), text => TogglePlayerSpeedHotkeyText = text },
+            { HotkeyActions.NoDamage.ToString(), text => TogglePlayerNoDamageHotkeyText = text},
             // { "RTSR", text => RtsrHotkeyText = text },
             // { "NoDeath", text => NoDeathHotkeyText = text },
             // { "OneShot", text => OneShotHotkeyText = text },
@@ -282,6 +283,14 @@ public class SettingsViewModel : BaseViewModel
     {
         get => _togglePlayerSpeedHotkeyText;
         set => SetProperty(ref _togglePlayerSpeedHotkeyText, value);
+    }
+    
+    private string _togglePlayerNoDamageHotkeyText;
+    
+    public string TogglePlayerNoDamageHotkeyText
+    {
+        get => _togglePlayerNoDamageHotkeyText;
+        set => SetProperty(ref _togglePlayerNoDamageHotkeyText, value);
     }
 
     private string _savePos1HotkeyText;

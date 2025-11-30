@@ -137,11 +137,11 @@
                                            HorizontalAlignment="Left" />
                                 <TextBox Grid.Column="4"
                                          Margin="5,0,-10,0"
-                                         Text="{Binding NoDamagePlayerHotkeyText}"
+                                         Text="{Binding TogglePlayerNoDamageHotkeyText}"
                                          Style="{StaticResource HotkeyTextBoxStyle}"
                                          GotFocus="HotkeyTextBox_GotFocus"
                                          LostFocus="HotkeyTextBox_LostFocus"
-                                         Tag="PlayerNoDamage"
+                                         Tag="NoDamage"
                                          KeyDown="HotkeyTextBox_KeyDown" />
                             </Grid>
 

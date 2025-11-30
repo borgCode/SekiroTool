@@ -160,6 +160,20 @@ public class PlayerViewModel : BaseViewModel
             
         }
     }
+
+    private bool _isNoDamageEnabled;
+
+    public bool IsNoDamageEnabled
+    {
+        get => _isNoDamageEnabled;
+        set
+        {
+            if (SetProperty(ref _isNoDamageEnabled, value))
+            {
+                _playerService.TogglePlayerNoDamage(_isNoDamageEnabled);
+            }
+        }
+    }
     
     private bool _isNoDeathEnabledWithoutKillbox;
     public bool IsNoDeathEnabledWithoutKillbox
@@ -178,7 +192,6 @@ public class PlayerViewModel : BaseViewModel
         }
     }
     
-    // TODO PlayerNoDamage
 
     private bool _isOneShotEnabled;
 
@@ -484,8 +497,7 @@ public class PlayerViewModel : BaseViewModel
         _hotkeyManager.RegisterAction(HotkeyActions.ApplyGachiin.ToString(), () => SetApplyGachiin());
         _hotkeyManager.RegisterAction(HotkeyActions.RemoveConfetti.ToString(), () => SetRemoveConfetti());
         _hotkeyManager.RegisterAction(HotkeyActions.RemoveGachiin.ToString(), () => SetRemoveGachiin());
-        
-        
+        _hotkeyManager.RegisterAction(HotkeyActions.NoDamage.ToString(),() => { IsNoDamageEnabled = !IsNoDamageEnabled; }); //do this for toggles
         _hotkeyManager.RegisterAction(HotkeyActions.TogglePlayerSpeed.ToString(), () => TogglePlayerSpeed());
         _hotkeyManager.RegisterAction(HotkeyActions.IncreasePlayerSpeed.ToString(), () => SetSpeed(Math.Min(10, PlayerSpeed + 0.25f)));
         _hotkeyManager.RegisterAction(HotkeyActions.DecreasePlayerSpeed.ToString(), () => SetSpeed(Math.Max(0, PlayerSpeed - 0.25f)));
@@ -500,8 +512,10 @@ public class PlayerViewModel : BaseViewModel
     {
         AreOptionsEnabled = true;
         if (IsNoDeathEnabled) _playerService.TogglePlayerNoDeath(true); 
+        
         if (IsNoDeathEnabledWithoutKillbox) _playerService.TogglePlayerNoDeathWithoutKillbox(true); 
-        //TODO No Damage
+        
+        if (IsNoDamageEnabled) _playerService.TogglePlayerNoDamage(true);
 
         if (IsOneShotEnabled) _playerService.TogglePlayerOneShotHealth(true);
 
@@ -605,6 +619,7 @@ public class PlayerViewModel : BaseViewModel
     {
         _playerService.RemoveSpecialEffect(SpecialEffect.Gachiin);
     }
+    
 
     private void SetApplyConfetti()
     {

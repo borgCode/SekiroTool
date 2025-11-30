@@ -143,9 +143,9 @@
                     <CheckBox Content="No Death (Except Killbox)"
                               IsChecked="{Binding IsNoDeathEnabledWithoutKillbox}"
                               Margin="0,2" />
-                    <!-- <CheckBox Content="No Damage" -->
-                    <!--           IsChecked="{Binding IsNoDamageEnabled}" -->
-                    <!--           Margin="0,2" /> -->
+                    <CheckBox Content="No Damage"
+                              IsChecked="{Binding IsNoDamageEnabled}"
+                              Margin="0,2" />
                     <CheckBox Content="One Shot Health"
                               IsChecked="{Binding IsOneShotEnabled}"
                               Margin="0,2" />
