@@ -38,6 +38,12 @@ public partial class PlayerTab : UserControl
              _playerViewModel.ResumeUpdates
          );
          
+         _ = new UpDownHelper<int>(
+             ApUpDown,
+             _playerViewModel.SetAttackPower,
+             _playerViewModel.PauseUpdates,
+             _playerViewModel.ResumeUpdates
+         );
         
          
         

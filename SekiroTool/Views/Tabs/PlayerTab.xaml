@@ -296,10 +296,12 @@
                                                BorderBrush="#3F3F46" />
                             <TextBlock Text="Player Speed" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0" />
                         </Grid>
+                        
                         <Grid Margin="0,2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
+                                
                             </Grid.ColumnDefinitions>
                             <xctk:IntegerUpDown x:Name="NewGameUpDown"
                                                 Value="{Binding NewGame}"
@@ -312,6 +314,26 @@
                                                 BorderBrush="#3F3F46" />
                             <TextBlock Text="New Game" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0" />
                         </Grid>
+                        <Grid Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                
+                            </Grid.ColumnDefinitions>
+                            <xctk:IntegerUpDown x:Name="ApUpDown"
+                                                Value="{Binding CurrentAp}"
+                                                TextAlignment="Center"
+                                                Width="80"
+                                                Minimum="1"
+                                                Maximum="99"
+                                                Grid.Column="0"
+                                                IsEnabled="{Binding AreOptionsEnabled}"
+                                                BorderBrush="#3F3F46" />
+                            <TextBlock Text="Attack Power" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0" />
+                        </Grid>
+                        <StackPanel>
+                            
+                        </StackPanel>
                     </StackPanel>
 
                     <Border Grid.Column="1"

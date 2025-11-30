@@ -346,6 +346,20 @@ public class PlayerViewModel : BaseViewModel
         }
     }
 
+    private int _apChange;
+
+    public int ApChange
+    {
+        get => _apChange;
+        set
+        {
+            if (SetProperty(ref _apChange, value))
+            {
+                _playerService.SetAttackPower(_apChange);
+            }
+        }
+    }
+
     private bool _isAutoSetNewGameSevenEnabled;
     
     public bool IsAutoSetNewGameSevenEnabled
@@ -409,6 +423,14 @@ public class PlayerViewModel : BaseViewModel
         }
     }
 
+    private int _currentAp;
+
+    public int CurrentAp
+    {
+        get => _currentAp;
+        set => SetProperty(ref _currentAp, value);
+    }
+
     private int _currentExperience;
 
     public int CurrentExperience
@@ -445,7 +467,7 @@ public class PlayerViewModel : BaseViewModel
     public void SetNewGame(int newGameCycle) => _playerService.SetNewGame(newGameCycle);
     public void SetHp(int health) => _playerService.SetHp(health);
     public void SetPosture(int posture) => _playerService.SetPosture(posture);
-    
+    public void SetAttackPower(int ap) => _playerService.SetAttackPower(ap);
     
     
     #endregion
@@ -540,6 +562,7 @@ public class PlayerViewModel : BaseViewModel
         CurrentPosture = _playerService.GetCurrentPosture();
         MaxPosture = _playerService.GetMaxPosture();
         PlayerSpeed =  _playerService.GetPlayerSpeed();
+        CurrentAp = _playerService.GetAttackPower();
         // CurrentExperience = _playerService.GetExperience();
 
     }
