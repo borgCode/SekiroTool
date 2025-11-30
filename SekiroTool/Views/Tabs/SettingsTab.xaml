@@ -92,21 +92,9 @@
                                 </Grid.ColumnDefinitions>
                                 
 
-                                <TextBlock Grid.Column="0" Text="RTSR Setup:" VerticalAlignment="Center"
+                                <TextBlock Grid.Column="0" Text="No Death:" VerticalAlignment="Center"
                                            HorizontalAlignment="Left" />
                                 <TextBox Grid.Column="1"
-                                         Text="{Binding RtsrHotkeyText}"
-                                         Style="{StaticResource HotkeyTextBoxStyle}"
-                                         GotFocus="HotkeyTextBox_GotFocus"
-                                         LostFocus="HotkeyTextBox_LostFocus"
-                                         Tag="RTSR"
-                                         KeyDown="HotkeyTextBox_KeyDown" />
-
-
-                                <TextBlock Grid.Column="3" Text="No Death:" VerticalAlignment="Center"
-                                           HorizontalAlignment="Left" />
-                                <TextBox Grid.Column="4"
-                                         Margin="5,0,-10,0"
                                          Text="{Binding NoDeathHotkeyText}"
                                          Style="{StaticResource HotkeyTextBoxStyle}"
                                          GotFocus="HotkeyTextBox_GotFocus"
@@ -114,6 +102,18 @@
                                          Tag="NoDeath"
                                          KeyDown="HotkeyTextBox_KeyDown" />
 
+
+                                <TextBlock Grid.Column="3" Text="No Goods Consume:" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                                <TextBox Grid.Column="4"
+                                         Margin="5,0,-10,0"
+                                         Text="{Binding NoGoodsConsumeHotkeyText}"
+                                         Style="{StaticResource HotkeyTextBoxStyle}"
+                                         GotFocus="HotkeyTextBox_GotFocus"
+                                         LostFocus="HotkeyTextBox_LostFocus"
+                                         Tag="NoGoodsConsume"
+                                         KeyDown="HotkeyTextBox_KeyDown" />
+
                             </Grid>
                             <Grid Margin="0,5">
                                 <Grid.ColumnDefinitions>
@@ -123,57 +123,25 @@
                                     <ColumnDefinition Width="125" />
                                     <ColumnDefinition Width="85" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="One Shot:" VerticalAlignment="Center"
+                                <TextBlock Grid.Column="0" Text="No Death (Yes Killbox):" VerticalAlignment="Center"
                                            HorizontalAlignment="Left" />
                                 <TextBox Grid.Column="1"
-                                         Text="{Binding OneShotHotkeyText}"
+                                         Text="{Binding NoDeathExKillboxHotkeyText}"
                                          Style="{StaticResource HotkeyTextBoxStyle}"
                                          GotFocus="HotkeyTextBox_GotFocus"
                                          LostFocus="HotkeyTextBox_LostFocus"
-                                         Tag="OneShot"
+                                         Tag="NoDeathExKillbox"
                                          KeyDown="HotkeyTextBox_KeyDown" />
 
-                                <TextBlock Grid.Column="3" Text="No Damage:" VerticalAlignment="Center"
+                                <TextBlock Grid.Column="3" Text="No Emblem Consume:" VerticalAlignment="Center"
                                            HorizontalAlignment="Left" />
                                 <TextBox Grid.Column="4"
                                          Margin="5,0,-10,0"
-                                         Text="{Binding NoDamagePlayerHotkeyText}"
+                                         Text="{Binding NoEmblemConsumeHotkeyText}"
                                          Style="{StaticResource HotkeyTextBoxStyle}"
                                          GotFocus="HotkeyTextBox_GotFocus"
                                          LostFocus="HotkeyTextBox_LostFocus"
-                                         Tag="PlayerNoDamage"
-                                         KeyDown="HotkeyTextBox_KeyDown" />
-                            </Grid>
-
-                            <Grid Margin="0,5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="125" />
-                                    <ColumnDefinition Width="85" />
-                                    <ColumnDefinition Width="20" />
-                                    <ColumnDefinition Width="125" />
-                                    <ColumnDefinition Width="85" />
-                                </Grid.ColumnDefinitions>
-
-
-                                <TextBlock Grid.Column="0" Text="Deal No Damage" VerticalAlignment="Center"
-                                           HorizontalAlignment="Left" />
-                                <TextBox Grid.Column="1"
-                                         Text="{Binding DealNoDamageHotkeyText}"
-                                         Style="{StaticResource HotkeyTextBoxStyle}"
-                                         GotFocus="HotkeyTextBox_GotFocus"
-                                         LostFocus="HotkeyTextBox_LostFocus"
-                                         Tag="DealNoDamage"
-                                         KeyDown="HotkeyTextBox_KeyDown" />
-
-                                <TextBlock Grid.Column="3" Text="Restore Spellcasts" VerticalAlignment="Center"
-                                           HorizontalAlignment="Left" />
-                                <TextBox Grid.Column="4"
-                                         Margin="5,0,-10,0"
-                                         Text="{Binding RestoreSpellcastsHotkeyText}"
-                                         Style="{StaticResource HotkeyTextBoxStyle}"
-                                         GotFocus="HotkeyTextBox_GotFocus"
-                                         LostFocus="HotkeyTextBox_LostFocus"
-                                         Tag="RestoreSpellcasts"
+                                         Tag="NoEmblemConsume"
                                          KeyDown="HotkeyTextBox_KeyDown" />
                             </Grid>
 
@@ -186,28 +154,95 @@
                                     <ColumnDefinition Width="85" />
                                 </Grid.ColumnDefinitions>
 
+                                
 
-                                <TextBlock Grid.Column="0" Text="Restore Humanity" VerticalAlignment="Center"
+                                <TextBlock Grid.Column="0" Text="No Damage:" VerticalAlignment="Center"
                                            HorizontalAlignment="Left" />
                                 <TextBox Grid.Column="1"
-                                         Text="{Binding RestoreHumanityHotkeyText}"
+                                         Text="{Binding TogglePlayerNoDamageHotkeyText}"
                                          Style="{StaticResource HotkeyTextBoxStyle}"
                                          GotFocus="HotkeyTextBox_GotFocus"
                                          LostFocus="HotkeyTextBox_LostFocus"
-                                         Tag="RestoreHumanity"
+                                         Tag="NoDamage"
                                          KeyDown="HotkeyTextBox_KeyDown" />
 
-                                <TextBlock Grid.Column="3" Text="Rest" VerticalAlignment="Center"
+                                <TextBlock Grid.Column="3" Text="Infinite Revival:" VerticalAlignment="Center"
                                            HorizontalAlignment="Left" />
                                 <TextBox Grid.Column="4"
                                          Margin="5,0,-10,0"
-                                         Text="{Binding RestHotkeyText}"
+                                         Text="{Binding InfiniteRevivalHotkeyText}"
                                          Style="{StaticResource HotkeyTextBoxStyle}"
                                          GotFocus="HotkeyTextBox_GotFocus"
                                          LostFocus="HotkeyTextBox_LostFocus"
-                                         Tag="Rest"
+                                         Tag="InfiniteRevival"
                                          KeyDown="HotkeyTextBox_KeyDown" />
                             </Grid>
+
+                            <Grid Margin="0,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="125" />
+                                    <ColumnDefinition Width="85" />
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="125" />
+                                    <ColumnDefinition Width="85" />
+                                </Grid.ColumnDefinitions>
+
+
+                                <TextBlock Grid.Column="0" Text="One Shot Health" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                                <TextBox Grid.Column="1"
+                                         Text="{Binding OneShotHealthHotkeyText}"
+                                         Style="{StaticResource HotkeyTextBoxStyle}"
+                                         GotFocus="HotkeyTextBox_GotFocus"
+                                         LostFocus="HotkeyTextBox_LostFocus"
+                                         Tag="OneShotHealth"
+                                         KeyDown="HotkeyTextBox_KeyDown" />
+
+                                <TextBlock Grid.Column="3" Text="Player Hide:" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                                <TextBox Grid.Column="4"
+                                         Margin="5,0,-10,0"
+                                         Text="{Binding PlayerHideHotkeyText}"
+                                         Style="{StaticResource HotkeyTextBoxStyle}"
+                                         GotFocus="HotkeyTextBox_GotFocus"
+                                         LostFocus="HotkeyTextBox_LostFocus"
+                                         Tag="PlayerHide"
+                                         KeyDown="HotkeyTextBox_KeyDown" />
+                                
+                            </Grid>
+                            <Grid Margin="0,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="125" />
+                                    <ColumnDefinition Width="85" />
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="125" />
+                                    <ColumnDefinition Width="85" />
+                                </Grid.ColumnDefinitions>
+
+
+                                <TextBlock Grid.Column="0" Text="One Shot Posture" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                                <TextBox Grid.Column="1"
+                                         Text="{Binding OneShotPostureHotkeyText}"
+                                         Style="{StaticResource HotkeyTextBoxStyle}"
+                                         GotFocus="HotkeyTextBox_GotFocus"
+                                         LostFocus="HotkeyTextBox_LostFocus"
+                                         Tag="OneShotPosture"
+                                         KeyDown="HotkeyTextBox_KeyDown" />
+
+                                <TextBlock Grid.Column="3" Text="Player Silent:" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                                <TextBox Grid.Column="4"
+                                         Margin="5,0,-10,0"
+                                         Text="{Binding PlayerSilentHotkeyText}"
+                                         Style="{StaticResource HotkeyTextBoxStyle}"
+                                         GotFocus="HotkeyTextBox_GotFocus"
+                                         LostFocus="HotkeyTextBox_LostFocus"
+                                         Tag="PlayerSilent"
+                                         KeyDown="HotkeyTextBox_KeyDown" />
+                                
+                            </Grid>
+                            
 
                             <Grid Margin="0,5">
                                 <Grid.ColumnDefinitions>
@@ -282,6 +317,36 @@
                                 </Grid.ColumnDefinitions>
 
 
+                                <TextBlock Grid.Column="0" Text="Infinite Poise:" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                                <TextBox Grid.Column="1"
+                                         Text="{Binding InfinitePoiseHotkeyText}"
+                                         Style="{StaticResource HotkeyTextBoxStyle}"
+                                         GotFocus="HotkeyTextBox_GotFocus"
+                                         LostFocus="HotkeyTextBox_LostFocus"
+                                         Tag="InfinitePoise"
+                                         KeyDown="HotkeyTextBox_KeyDown" />
+                                <TextBlock Grid.Column="3" Text="Rest" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                                <TextBox Grid.Column="4"
+                                         Margin="5,0,-10,0"
+                                         Text="{Binding Rest}"
+                                         Style="{StaticResource HotkeyTextBoxStyle}"
+                                         GotFocus="HotkeyTextBox_GotFocus"
+                                         LostFocus="HotkeyTextBox_LostFocus"
+                                         Tag="Rest"
+                                         KeyDown="HotkeyTextBox_KeyDown" />
+                            </Grid>
+                            <Grid Margin="0,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="125" />
+                                    <ColumnDefinition Width="85" />
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="125" />
+                                    <ColumnDefinition Width="85" />
+                                </Grid.ColumnDefinitions>
+
+
                                 <TextBlock Grid.Column="0" Text="Increase Player Speed:" VerticalAlignment="Center"
                                            HorizontalAlignment="Left" />
                                 <TextBox Grid.Column="1"
@@ -291,16 +356,17 @@
                                          LostFocus="HotkeyTextBox_LostFocus"
                                          Tag="IncreasePlayerSpeed"
                                          KeyDown="HotkeyTextBox_KeyDown" />
-                                <TextBlock Grid.Column="3" Text="Decrease Player Speed:" VerticalAlignment="Center"
+                                <TextBlock Grid.Column="3" Text="Respawn Enemies:" VerticalAlignment="Center"
                                            HorizontalAlignment="Left" />
                                 <TextBox Grid.Column="4"
                                          Margin="5,0,-10,0"
-                                         Text="{Binding DecreasePlayerSpeedHotkeyText}"
+                                         Text="{Binding RespawnEnemies}"
                                          Style="{StaticResource HotkeyTextBoxStyle}"
                                          GotFocus="HotkeyTextBox_GotFocus"
                                          LostFocus="HotkeyTextBox_LostFocus"
-                                         Tag="DecreasePlayerSpeed"
+                                         Tag="RespawnEnemies"
                                          KeyDown="HotkeyTextBox_KeyDown" />
+                                
                             </Grid>
 
                             <Grid Margin="0,5">
@@ -320,6 +386,16 @@
                                          GotFocus="HotkeyTextBox_GotFocus"
                                          LostFocus="HotkeyTextBox_LostFocus"
                                          Tag="TogglePlayerSpeed"
+                                         KeyDown="HotkeyTextBox_KeyDown" />
+                                <TextBlock Grid.Column="3" Text="Decrease Player Speed:" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                                <TextBox Grid.Column="4"
+                                         Margin="5,0,-10,0"
+                                         Text="{Binding DecreasePlayerSpeedHotkeyText}"
+                                         Style="{StaticResource HotkeyTextBoxStyle}"
+                                         GotFocus="HotkeyTextBox_GotFocus"
+                                         LostFocus="HotkeyTextBox_LostFocus"
+                                         Tag="DecreasePlayerSpeed"
                                          KeyDown="HotkeyTextBox_KeyDown" />
                             </Grid>
                             
@@ -392,7 +468,7 @@
                 </TabItem>
 
                 <TabItem Header="Enemies">
-                    <ScrollViewer MaxHeight="370" VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer MaxHeight="380" VerticalScrollBarVisibility="Auto">
                         <StackPanel Margin="5,0,0,0">
                             <Grid Margin="0,5">
                                 <Grid.ColumnDefinitions>

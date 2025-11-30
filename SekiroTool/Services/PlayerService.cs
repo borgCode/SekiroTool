@@ -159,6 +159,18 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
     public int GetCurrentHp() =>
         memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Hp);
 
+    public int GetAttackPower()
+    {
+      var apPtr = memoryService.FollowPointers(WorldChrMan.Base, [
+            WorldChrMan.PlayerIns,
+            WorldChrMan.PlayerGameData,
+            (int)ChrIns.PlayerGameDataOffsets.AttackPower
+        ], false);
+      
+      return memoryService.ReadInt32(apPtr);
+    }
+    
+
     public int GetMaxHp() =>
         memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.MaxHp);
 
@@ -264,8 +276,10 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
 
     public void TogglePlayerNoDamage(bool isEnabled)
     {
+        var bitFlags = GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.BitFlags;
+        memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDamage, isEnabled);
     }
-
+    
     public void TogglePlayerOneShotHealth(bool isEnabled)
     {
         memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerOneShotHealth, isEnabled ? 1 : 0);
