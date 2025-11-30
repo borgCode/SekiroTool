@@ -220,6 +220,8 @@ public class PlayerViewModel : BaseViewModel
             }
         }
     }
+    
+    
 
     private bool _isNoGoodsConsumeEnabled;
 
@@ -498,6 +500,28 @@ public class PlayerViewModel : BaseViewModel
         _hotkeyManager.RegisterAction(HotkeyActions.RemoveConfetti.ToString(), () => SetRemoveConfetti());
         _hotkeyManager.RegisterAction(HotkeyActions.RemoveGachiin.ToString(), () => SetRemoveGachiin());
         _hotkeyManager.RegisterAction(HotkeyActions.NoDamage.ToString(),() => { IsNoDamageEnabled = !IsNoDamageEnabled; }); //do this for toggles
+        
+        _hotkeyManager.RegisterAction(HotkeyActions.OneShotHealth.ToString(), () => { IsOneShotEnabled = !IsOneShotEnabled; });
+
+        _hotkeyManager.RegisterAction(HotkeyActions.OneShotPosture.ToString(), () => { IsOneShotPostureEnabled = !IsOneShotPostureEnabled; });
+
+        _hotkeyManager.RegisterAction(HotkeyActions.NoGoodsConsume.ToString(), () => { IsNoGoodsConsumeEnabled = !IsNoGoodsConsumeEnabled; });
+
+        _hotkeyManager.RegisterAction(HotkeyActions.NoEmblemConsume.ToString(), () => { IsNoEmblemConsumeEnabled = !IsNoEmblemConsumeEnabled; });
+
+        _hotkeyManager.RegisterAction(HotkeyActions.InfiniteRevival.ToString(), () => { IsNoRevivalConsumeEnabled = !IsNoRevivalConsumeEnabled; });
+
+        _hotkeyManager.RegisterAction(HotkeyActions.PlayerHide.ToString(), () => { IsPlayerHideEnabled = !IsPlayerHideEnabled; });
+
+        _hotkeyManager.RegisterAction(HotkeyActions.PlayerSilent.ToString(), () => { IsPlayerSilentEnabled = !IsPlayerSilentEnabled; });
+
+        _hotkeyManager.RegisterAction(HotkeyActions.InfinitePoise.ToString(), () => { IsInfinitePoiseEnabled = !IsInfinitePoiseEnabled; });
+        
+
+        _hotkeyManager.RegisterAction(HotkeyActions.NoDeath.ToString(), () => { IsNoDeathEnabled = !IsNoDeathEnabled; });
+
+        _hotkeyManager.RegisterAction(HotkeyActions.NoDeathExKillbox.ToString(), () => { IsNoDeathEnabledWithoutKillbox = !IsNoDeathEnabledWithoutKillbox; });
+        
         _hotkeyManager.RegisterAction(HotkeyActions.TogglePlayerSpeed.ToString(), () => TogglePlayerSpeed());
         _hotkeyManager.RegisterAction(HotkeyActions.IncreasePlayerSpeed.ToString(), () => SetSpeed(Math.Min(10, PlayerSpeed + 0.25f)));
         _hotkeyManager.RegisterAction(HotkeyActions.DecreasePlayerSpeed.ToString(), () => SetSpeed(Math.Max(0, PlayerSpeed - 0.25f)));
@@ -525,13 +549,13 @@ public class PlayerViewModel : BaseViewModel
 
         if (IsNoEmblemConsumeEnabled) _playerService.TogglePlayerNoGoodsConsume(true);
 
-        if (_isNoRevivalConsumeEnabled) _playerService.TogglePlayerNoRevivalConsume(true);
+        if (IsNoRevivalConsumeEnabled) _playerService.TogglePlayerNoRevivalConsume(true);
 
-        if (_isPlayerHideEnabled) _playerService.TogglePlayerHide(true);
+        if (IsPlayerHideEnabled) _playerService.TogglePlayerHide(true);
 
-        if (_isPlayerSilentEnabled) _playerService.TogglePlayerSilent(true);
+        if (IsPlayerSilentEnabled) _playerService.TogglePlayerSilent(true);
 
-        if (_isInfinitePoiseEnabled) _playerService.TogglePlayerInfinitePoise(true);
+        if (IsInfinitePoiseEnabled) _playerService.TogglePlayerInfinitePoise(true);
         _playerTick.Start();
 
         if (_isConfettiFlagEnabled)

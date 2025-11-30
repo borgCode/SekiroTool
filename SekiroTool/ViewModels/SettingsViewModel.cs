@@ -39,6 +39,17 @@ public class SettingsViewModel : BaseViewModel
             { HotkeyActions.RemoveConfetti.ToString(), text => RemoveConfettiHotkeyText = text },
             { HotkeyActions.RemoveGachiin.ToString(), text => RemoveGachiinHotkeyText = text },
             
+            { HotkeyActions.OneShotHealth.ToString(), text => OneShotHealthHotkeyText = text },
+            { HotkeyActions.OneShotPosture.ToString(), text => OneShotPostureHotkeyText = text },
+            { HotkeyActions.NoGoodsConsume.ToString(), text => NoGoodsConsumeHotkeyText = text },
+            { HotkeyActions.NoEmblemConsume.ToString(), text => NoEmblemConsumeHotkeyText = text },
+            { HotkeyActions.InfiniteRevival.ToString(), text => InfiniteRevivalHotkeyText = text },
+            { HotkeyActions.PlayerHide.ToString(), text => PlayerHideHotkeyText = text },
+            { HotkeyActions.PlayerSilent.ToString(), text => PlayerSilentHotkeyText = text },
+            { HotkeyActions.InfinitePoise.ToString(), text => InfinitePoiseHotkeyText = text },
+            { HotkeyActions.NoDeath.ToString(), text => NoDeathHotkeyText = text },
+            { HotkeyActions.NoDeathExKillbox.ToString(), text => NoDeathExKillboxHotkeyText = text },
+            
             { HotkeyActions.IncreasePlayerSpeed.ToString(), text => IncreasePlayerSpeedHotkeyText = text },
             { HotkeyActions.DecreasePlayerSpeed.ToString(), text => DecreasePlayerSpeedHotkeyText = text },
             { HotkeyActions.TogglePlayerSpeed.ToString(), text => TogglePlayerSpeedHotkeyText = text },
@@ -323,6 +334,86 @@ public class SettingsViewModel : BaseViewModel
     {
         get => _restorePos2HotkeyText;
         set => SetProperty(ref _restorePos2HotkeyText, value);
+    }
+    
+    private string _oneShotHealthHotkeyText;
+
+    public string OneShotHealthHotkeyText
+    {
+        get => _oneShotHealthHotkeyText;
+        set => SetProperty(ref _oneShotHealthHotkeyText, value);
+    }
+
+    private string _oneShotPostureHotkeyText;
+
+    public string OneShotPostureHotkeyText
+    {
+        get => _oneShotPostureHotkeyText;
+        set => SetProperty(ref _oneShotPostureHotkeyText, value);
+    }
+
+    private string _noGoodsConsumeHotkeyText;
+
+    public string NoGoodsConsumeHotkeyText
+    {
+        get => _noGoodsConsumeHotkeyText;
+        set => SetProperty(ref _noGoodsConsumeHotkeyText, value);
+    }
+
+    private string _noEmblemConsumeHotkeyText;
+
+    public string NoEmblemConsumeHotkeyText
+    {
+        get => _noEmblemConsumeHotkeyText;
+        set => SetProperty(ref _noEmblemConsumeHotkeyText, value);
+    }
+
+    private string _infiniteRevivalHotkeyText;
+
+    public string InfiniteRevivalHotkeyText
+    {
+        get => _infiniteRevivalHotkeyText;
+        set => SetProperty(ref _infiniteRevivalHotkeyText, value);
+    }
+
+    private string _playerHideHotkeyText;
+
+    public string PlayerHideHotkeyText
+    {
+        get => _playerHideHotkeyText;
+        set => SetProperty(ref _playerHideHotkeyText, value);
+    }
+
+    private string _playerSilentHotkeyText;
+
+    public string PlayerSilentHotkeyText
+    {
+        get => _playerSilentHotkeyText;
+        set => SetProperty(ref _playerSilentHotkeyText, value);
+    }
+
+    private string _infinitePoiseHotkeyText;
+
+    public string InfinitePoiseHotkeyText
+    {
+        get => _infinitePoiseHotkeyText;
+        set => SetProperty(ref _infinitePoiseHotkeyText, value);
+    }
+
+    private string _noDeathHotkeyText;
+
+    public string NoDeathHotkeyText
+    {
+        get => _noDeathHotkeyText;
+        set => SetProperty(ref _noDeathHotkeyText, value);
+    }
+
+    private string _noDeathExKillboxHotkeyText;
+
+    public string NoDeathExKillboxHotkeyText
+    {
+        get => _noDeathExKillboxHotkeyText;
+        set => SetProperty(ref _noDeathExKillboxHotkeyText, value);
     }
 
     private string _applyConfettiHotkeyText;

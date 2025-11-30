@@ -158,8 +158,7 @@
                     <CheckBox Content="No Emblem Consume"
                               IsChecked="{Binding IsNoEmblemConsumeEnabled}"
                               Margin="0,2" />
-
-
+                    
                 </StackPanel>
 
                 <StackPanel Grid.Column="1">
