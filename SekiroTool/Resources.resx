@@ -597,7 +597,6 @@ c3                      ret</value>
 2924,Mushin Esoteric Text,1
 2930,Recovery Charm,1
 3000,Healing Gourd,10
-3001,Healing Gourd,1
 3020,Pellet,3
 3040,Divine Grass,1
 3050,Red Lump,3
@@ -620,11 +619,8 @@ c3                      ret</value>
 3291,Hidden Tooth,1
 3292,Bite Down,3
 3300,Green Mossy Gourd,5
-3301,Green Mossy Gourd,1
 3310,Withered Red Gourd,5
-3311,Withered Red Gourd,1
 3320,Mottled Purple Gourd,5
-3321,Mottled Purple Gourd,1
 3350,Ako's Spiritfall,1
 3360,Yashariku's Spiritfall,1
 3370,Ungo's Spiritfall,1
@@ -641,7 +637,6 @@ c3                      ret</value>
 3520,Oil,10
 3530,Snap Seed,10
 3580,Five-color Rice,5
-3581,Five-color Rice,1
 3600,Mibu Balloon of Wealth,5
 3610,Mibu Balloon of Soul,5
 3620,Mibu Possession Balloon,5
@@ -654,7 +649,6 @@ c3                      ret</value>
 3721,Jinza's Jizo Statue,1
 3730,Bell Demon,1
 3800,Ceremonial Tanto,3
-3801,Ceremonial Tanto,1
 3900,Nightjar Monocular,1
 3980,Homeward Idol,1
 3990,Illusive Hall Bell,1
@@ -670,7 +664,6 @@ c3                      ret</value>
 4108,Ninth Prayer Necklace,1
 4109,Final Prayer Necklace,1
 4400,Gourd Seed,99
-5100,Memory,98
 5200,Memory: Gyoubu Oniwa,99
 5201,Memory: Lady Butterfly,99
 5202,Memory: Genichiro,99
@@ -705,7 +698,6 @@ c3                      ret</value>
 5320,Remnant: Inner Genichiro,99
 5321,Remnant: Inner Father,99
 5322,Remnant: Inner Isshin,99
-5400,Memory,99
 5500,Mask Fragment: Right,1
 5501,Mask Fragment: Left,1
 5502,Mask Fragment: Dragon,1

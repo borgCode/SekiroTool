@@ -7,7 +7,7 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:converters="clr-namespace:SekiroTool.Converters"
              mc:Ignorable="d"
-             d:DesignHeight="700" d:DesignWidth="300">
+             d:DesignHeight="670" d:DesignWidth="520">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:StringToVisibilityConverter x:Key="NullToVisibilityConverter" />
@@ -49,6 +49,7 @@
                          SelectedItem="{Binding SelectedCategory}"
                          BorderThickness="1"
                          BorderBrush="#333">
+                    
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="Template">
