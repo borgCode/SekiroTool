@@ -7,7 +7,7 @@
              xmlns:converters="clr-namespace:SekiroTool.Converters"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="670" d:DesignWidth="520">
     <UserControl.Resources>
         <converters:BooleanAndConverter x:Key="BooleanAndConverter" />
         <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
