@@ -485,10 +485,10 @@
                                 <Binding Path="IsRepeatActEnabled" />
                             </CheckBox.IsChecked>
                         </CheckBox>
-                        <TextBlock Text="Last Act: " Margin="20,0,0,0" VerticalAlignment="Center" />
+                        <TextBlock Text="Last Act: " Margin="10,0,0,0" VerticalAlignment="Center" />
                         <TextBlock Text="{Binding LastAct}" VerticalAlignment="Center" Width="20" TextAlignment="Right" />
 
-                        <TextBlock Text="Force Act: " Margin="30,0,10,0" VerticalAlignment="Center" />
+                        <TextBlock Text="Force Act: " Margin="10,0,10,0" VerticalAlignment="Center" />
                         <xctk:IntegerUpDown Width="50" Height="20"
                                             Value="{Binding ForceAct, UpdateSourceTrigger=PropertyChanged}"
                                             Minimum="0"
@@ -531,12 +531,14 @@
                                 <Binding Path="IsRepeatKengekiActEnabled" />
                             </CheckBox.IsChecked>
                         </CheckBox>
-                        <TextBlock Text="Last Kengeki Act: " Margin="20,0,0,0" VerticalAlignment="Center" />
+                        <TextBlock Text="Last Kengeki Act: " Margin="10,0,0,0" VerticalAlignment="Center" />
                         <TextBlock Text="{Binding LastKengekiAct}" VerticalAlignment="Center" Width="20"
                                    TextAlignment="Right" />
 
-                        <TextBlock Text="Force Kengeki Act: " Margin="30,0,10,0" VerticalAlignment="Center" />
+
+                        <TextBlock Text="Force Kengeki Act: " Margin="10,0,10,0" VerticalAlignment="Center" />
                         <xctk:IntegerUpDown Width="50" Height="20"
+
                                             Value="{Binding ForceKengekiAct, UpdateSourceTrigger=PropertyChanged}"
                                             Minimum="0"
                                             Maximum="255"
@@ -548,7 +550,27 @@
                                 </MultiBinding>
                             </xctk:IntegerUpDown.IsEnabled>
                         </xctk:IntegerUpDown>
+                        <Border
+                            Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Kengeki Act: The counter attack after a deflect/block"
+                    
+                            ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
                     </StackPanel>
+                    
+                    
+                    
                     <Grid Margin="0,10,0,10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />

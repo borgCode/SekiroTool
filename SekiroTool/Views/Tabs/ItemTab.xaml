@@ -43,7 +43,7 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" Text="Categories" Margin="0,0,0,5" />
-
+                
                 <ListBox Grid.Row="1"
                          ItemsSource="{Binding Categories}"
                          SelectedItem="{Binding SelectedCategory}"
@@ -106,7 +106,26 @@
                             Height="25" />
                 </StackPanel>
             </Grid>
-
+            
+            <StackPanel Grid.Row="0" Grid.Column="1">
+                <Border
+                    Background="#3498db"
+                    CornerRadius="10"
+                    Width="12"
+                    Height="12"
+                    Margin="5,7,0,0"
+                    VerticalAlignment="Center"
+                    ToolTip="Goods: Duplicates have different IDs internally, probably quest based&#x0a;Prosthetics: Spawns do not show notifications, but they are added to your inventory"
+                    
+                    ToolTipService.InitialShowDelay='100'>
+                    <TextBlock Text="i"
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontWeight="Bold"
+                               FontSize="10" /></Border>
+            </StackPanel>
+            
             <TextBox Grid.Row="0" Grid.Column="1"
                      Name="SearchBox"
                      Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
@@ -115,6 +134,7 @@
                      Height="25"
                      VerticalAlignment="Center"
                      Margin="0,0,0,5">
+                    
                 <TextBox.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="3" />

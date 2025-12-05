@@ -136,13 +136,42 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
+                
+         
+                
                 <StackPanel Grid.Column="0">
+                    
                     <CheckBox Content="No Death"
                               IsChecked="{Binding IsNoDeathEnabled}"
                               Margin="0,2" />
-                    <CheckBox Content="No Death (Except Killbox)"
-                              IsChecked="{Binding IsNoDeathEnabledWithoutKillbox}"
-                              Margin="0,2" />
+                    <StackPanel Grid.Column="0">
+              
+                        <StackPanel Orientation="Horizontal" Margin="0,2">
+                            <CheckBox Content="No Death (Yes Killbox)"
+                                      IsChecked="{Binding IsNoDeathEnabledWithoutKillbox}"
+                                      ToolTip="Killboxes kill you"
+                                      ToolTipService.Placement="Right"/>
+                            <Border
+                                Background="#3498db"
+                                CornerRadius="10"
+                                Width="12"
+                                Height="12"
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                ToolTip="Killboxes kill you"
+                                ToolTipService.InitialShowDelay="100">
+                                <TextBlock Text="i"
+                                           Foreground="White"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontWeight="Bold"
+                                           FontSize="10" />
+                            </Border>
+
+                        </StackPanel>
+                    </StackPanel>
+                    
+
                     <CheckBox Content="No Damage"
                               IsChecked="{Binding IsNoDamageEnabled}"
                               Margin="0,2" />
@@ -161,6 +190,8 @@
                     
                 </StackPanel>
 
+                
+                
                 <StackPanel Grid.Column="1">
                     <CheckBox Content="Infinite Revival"
                               IsChecked="{Binding IsNoRevivalConsumeEnabled}"
