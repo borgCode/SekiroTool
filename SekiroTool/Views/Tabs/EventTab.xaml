@@ -95,7 +95,7 @@
             </StackPanel>
         </Border>
 
-      <Border Grid.Row="1"
+        <Border Grid.Row="1"
                 BorderThickness="1"
                 BorderBrush="#333"
                 CornerRadius="3"
@@ -106,35 +106,35 @@
                         <TextBlock Text="Flags"
                                    FontWeight="Bold"
                                    Margin="5,0,0,10" />
-                        
+
                         <StackPanel Orientation="Horizontal" Margin="5">
                             <TextBlock Text="Demon Bell:" Width="100" VerticalAlignment="Center" Margin="0,0,10,0" />
-                            <Button
-                                CommandParameter="True"
-                                Command="{Binding SetDemonBellCommand}"
-                                IsEnabled="{Binding AreOptionsEnabled}"
-                                Content="On" Width="45" Margin="0,0,5,0" />
-                            <Button
-                                CommandParameter="False"
-                                Command="{Binding SetDemonBellCommand}"
-                                IsEnabled="{Binding AreOptionsEnabled}"
-                                Content="Off" Width="45" />
+                            <Button Background="{Binding DemonBellOnBackground}"
+                                    CommandParameter="True"
+                                    Command="{Binding SetDemonBellCommand}"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Content="On" Width="45" Margin="0,0,5,0" />
+                            <Button Background="{Binding DemonBellOffBackground}"
+                                    CommandParameter="False"
+                                    Command="{Binding SetDemonBellCommand}"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Content="Off" Width="45" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal" Margin="5">
                             <TextBlock Text="No Kuro's Charm:" Width="100" VerticalAlignment="Center" Margin="0,0,10,0" />
-                            <Button
-                                CommandParameter="True"
-                                Command="{Binding SetNoKurosCharmCommand}"
-                                IsEnabled="{Binding AreOptionsEnabled}"
-                                Content="On" Width="45" Margin="0,0,5,0" />
-                            <Button
-                                CommandParameter="False"
-                                Command="{Binding SetNoKurosCharmCommand}"
-                                IsEnabled="{Binding AreOptionsEnabled}"
-                                Content="Off" Width="45" />
+                            <Button Background="{Binding NoKurosCharmOnForeground}"
+                                    CommandParameter="True"
+                                    Command="{Binding SetNoKurosCharmCommand}"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Content="On" Width="45" Margin="0,0,5,0" />
+                            <Button Background="{Binding NoKurosCharmOffBackground}"
+                                    CommandParameter="False"
+                                    Command="{Binding SetNoKurosCharmCommand}"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Content="Off" Width="45" />
                         </StackPanel>
-                        
+
                         <TextBlock Text="Scaling"
                                    FontWeight="Bold"
                                    Margin="5,10,0,10" />
@@ -148,51 +148,58 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                    
+
                             <Button Grid.Row="0" Grid.Column="0"
+                                    Background="{Binding MorningBackground}"
                                     IsEnabled="{Binding AreOptionsEnabled}"
                                     Command="{Binding SetMorningCommand}"
                                     Content="Morning" Margin="5" Width="100" />
-                            <Button Grid.Row="0" Grid.Column="1" 
+                            <Button Grid.Row="0" Grid.Column="1"
+                                    Background="{Binding NoonForeground}"
                                     IsEnabled="{Binding AreOptionsEnabled}"
                                     Command="{Binding SetNoonCommand}"
                                     Content="Noon" Margin="5" Width="100" />
-                            <Button Grid.Row="1" Grid.Column="0" 
+                            <Button Grid.Row="1" Grid.Column="0"
+                                    Background="{Binding EveningBackground}"
                                     IsEnabled="{Binding AreOptionsEnabled}"
                                     Command="{Binding SetEveningCommand}"
                                     Content="Evening" Margin="5" Width="100" />
-                            <Button Grid.Row="1" Grid.Column="1" 
+                            <Button Grid.Row="1" Grid.Column="1"
+                                    Background="{Binding NightBackground}"
                                     IsEnabled="{Binding AreOptionsEnabled}"
                                     Command="{Binding SetNightCommand}"
                                     Content="Night" Margin="5" Width="100" />
                         </Grid>
                     </StackPanel>
-                    
+
                     <StackPanel>
                         <TextBlock Text="Game Progression"
                                    FontWeight="Bold"
                                    Margin="0,0,0,10" />
-                        
+
                         <Button Command="{Binding MoveIsshinCommand}"
                                 IsEnabled="{Binding AreOptionsEnabled}"
-                                Content="Move Isshin To Castle" 
+                                Content="Move Isshin To Castle"
                                 Margin="0,0,0,5" />
-                        
+
                         <TextBlock Text="All of the Below Require Reloading Area"
                                    Foreground="Gold"
                                    FontWeight="Bold"
-                                  
+
                                    Margin="0,15,0,5" />
-                        
+
                         <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <TextBlock Text="Tutorial Complete" Width="110" VerticalAlignment="Center" Margin="0,0,10,0" />
+                            <TextBlock Text="Tutorial Complete" Width="110" VerticalAlignment="Center"
+                                       Margin="0,0,10,0" />
                             <Button Content="On"
+                                    Background="{Binding TutorialCompleteOnBackground}"
                                     Width="45"
                                     CommandParameter="False"
                                     Command="{Binding SetTutorialCompleteCommand}"
                                     IsEnabled="{Binding AreOptionsEnabled}"
                                     Margin="0,0,5,0" />
                             <Button Content="Off"
+                                    Background="{Binding TutorialCompleteOffBackground}"
                                     CommandParameter="True"
                                     Command="{Binding SetTutorialCompleteCommand}"
                                     IsEnabled="{Binding AreOptionsEnabled}"
@@ -213,57 +220,66 @@
                                            FontSize="10" />
                             </Border>
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                             <TextBlock Text="Hirata 2" Width="110" VerticalAlignment="Center" Margin="0,0,10,0" />
                             <Button Content="On"
+                                    Background="{Binding HirataTwoOnBackground}"
                                     CommandParameter="True"
                                     Command="{Binding SetHirataTwoCommand}"
                                     IsEnabled="{Binding AreOptionsEnabled}"
                                     Width="45" Margin="0,0,5,0" />
-                            <Button 
-                                CommandParameter="False"
-                                Command="{Binding SetHirataTwoCommand}"
-                                IsEnabled="{Binding AreOptionsEnabled}"
-                                Content="Off" Width="45" />
+                            <Button Content="Off"
+                                    Background="{Binding HirataTwoOffBackground}"
+                                    CommandParameter="False"
+                                    Command="{Binding SetHirataTwoCommand}"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Width="45" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                             <TextBlock Text="Ashina Invasion" Width="110" VerticalAlignment="Center" Margin="0,0,10,0" />
                             <Button Content="On"
+                                    Background="{Binding AshinaInvasionOnBackground}"
                                     CommandParameter="True"
                                     Command="{Binding SetInvasionCommand}"
                                     IsEnabled="{Binding AreOptionsEnabled}"
                                     Width="45" Margin="0,0,5,0" />
                             <Button Content="Off"
+                                    Background="{Binding AshinaInvasionOffBackground}"
                                     CommandParameter="False"
                                     Command="{Binding SetInvasionCommand}"
                                     IsEnabled="{Binding AreOptionsEnabled}"
                                     Width="45" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                             <TextBlock Text="Ashina Night" Width="110" VerticalAlignment="Center" Margin="0,0,10,0" />
                             <Button Content="On"
+                                    Background="{Binding AshinaNightOnBackground}"
                                     CommandParameter="True"
                                     Command="{Binding SetAshinaNightCommand}"
-                                    IsEnabled="{Binding AreOptionsEnabled}" 
+                                    IsEnabled="{Binding AreOptionsEnabled}"
                                     Width="45" Margin="0,0,5,0" />
                             <Button Content="Off"
+                                    Background="{Binding AshinaNightOffBackground}"
                                     CommandParameter="False"
                                     Command="{Binding SetAshinaNightCommand}"
                                     IsEnabled="{Binding AreOptionsEnabled}"
                                     Width="45" />
                         </StackPanel>
-                        
+
                         <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <TextBlock Text="Spawn Headless Ape" Width="110" VerticalAlignment="Center" Margin="0,0,10,0" />
+                            <TextBlock Text="Spawn Headless Ape" Width="110" VerticalAlignment="Center"
+                                       Margin="0,0,10,0" />
                             <Button Content="On"
+                                    Background="{Binding HeadlessApeOnBackground}"
                                     CommandParameter="True"
                                     IsEnabled="{Binding AreOptionsEnabled}"
                                     Command="{Binding SetHeadlessApeCommand}"
                                     Width="45" Margin="0,0,5,0" />
                             <Button Content="Off"
+                                    Background="{Binding HeadlessApeOffBackground}"
                                     CommandParameter="False"
                                     Command="{Binding SetHeadlessApeCommand}"
                                     IsEnabled="{Binding AreOptionsEnabled}"

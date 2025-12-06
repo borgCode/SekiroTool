@@ -93,6 +93,8 @@ public partial class MainWindow : Window
         MainTabControl.Items.Add(new TabItem { Header = "Items", Content = itemTab });
         MainTabControl.Items.Add(new TabItem { Header = "Event", Content = eventTab });
         MainTabControl.Items.Add(new TabItem { Header = "Settings", Content = settingsTab });
+        
+        MainTabControl.SelectionChanged += MainTabControl_SelectionChanged;
 
         settingsViewModel.ApplyStartUpOptions();
         
@@ -216,4 +218,14 @@ public partial class MainWindow : Window
     
     private void LaunchGame_Click(object sender, RoutedEventArgs e) => Task.Run(GameLauncher.LaunchSekiro);
     private void CheckUpdate_Click(object sender, RoutedEventArgs e) => VersionChecker.CheckForUpdates(this, true);
+    private void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (e.Source is TabControl && MainTabControl.SelectedItem is TabItem selectedTab)
+        {
+            if (selectedTab.Header.ToString() == "Event")
+            {
+                _stateService.Publish(State.EventTabActivated);
+            }
+        }
+    }
 }

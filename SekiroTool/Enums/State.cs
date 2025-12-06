@@ -10,4 +10,5 @@ public enum State
     GameStart,
     AppClosing,
     AppStarting,
+    EventTabActivated,
 }
