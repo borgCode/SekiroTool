@@ -39,6 +39,11 @@
         <PackageReference Include="Extended.Wpf.Toolkit" Version="5.0.0" />
         <PackageReference Include="H.Hooks" Version="1.7.0" />
     </ItemGroup>
+n 
+    <ItemGroup>
+      <None Remove="Assets\icon.ico" />
+      <Resource Include="Assets\icon.ico" />
+    </ItemGroup>
     
 
 </Project>
