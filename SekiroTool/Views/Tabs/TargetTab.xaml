@@ -486,7 +486,8 @@
                             </CheckBox.IsChecked>
                         </CheckBox>
                         <TextBlock Text="Last Act: " Margin="10,0,0,0" VerticalAlignment="Center" />
-                        <TextBlock Text="{Binding LastAct}" VerticalAlignment="Center" Width="20" TextAlignment="Right" />
+                        <TextBlock Text="{Binding LastAct}" VerticalAlignment="Center" Width="10" TextAlignment="Right" 
+                                   Foreground="Gold"/>
 
                         <TextBlock Text="Force Act: " Margin="10,0,10,0" VerticalAlignment="Center" />
                         <xctk:IntegerUpDown Width="50" Height="20"
@@ -532,8 +533,9 @@
                             </CheckBox.IsChecked>
                         </CheckBox>
                         <TextBlock Text="Last Kengeki Act: " Margin="10,0,0,0" VerticalAlignment="Center" />
-                        <TextBlock Text="{Binding LastKengekiAct}" VerticalAlignment="Center" Width="20"
-                                   TextAlignment="Right" />
+                        <TextBlock Text="{Binding LastKengekiAct}" VerticalAlignment="Center" Width="10"
+                                   TextAlignment="Right"
+                                   Foreground="Gold"/>
 
 
                         <TextBlock Text="Force Kengeki Act: " Margin="10,0,10,0" VerticalAlignment="Center" />
@@ -557,7 +559,7 @@
                             Height="12"
                             Margin="5,0,0,0"
                             VerticalAlignment="Center"
-                            ToolTip="Kengeki Act: The counter attack after a deflect/block"
+                            ToolTip="Kengeki Act: A counterattack the enemy chooses after they deflect/block player character's attacks"
                     
                             ToolTipService.InitialShowDelay='100'>
                             <TextBlock Text="i"

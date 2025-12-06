@@ -34,7 +34,7 @@
                         Height="12"
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
-                        ToolTip="No Death and No Posture Buildup effect sekiro"
+                        ToolTip="Could effect Player"
                         ToolTipService.InitialShowDelay="100">
                         <TextBlock Text="i"
                                    Foreground="White"

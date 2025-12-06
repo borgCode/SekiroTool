@@ -148,9 +148,7 @@
               
                         <StackPanel Orientation="Horizontal" Margin="0,2">
                             <CheckBox Content="No Death (Yes Killbox)"
-                                      IsChecked="{Binding IsNoDeathEnabledWithoutKillbox}"
-                                      ToolTip="Killboxes kill you"
-                                      ToolTipService.Placement="Right"/>
+                                      IsChecked="{Binding IsNoDeathEnabledWithoutKillbox}"/>
                             <Border
                                 Background="#3498db"
                                 CornerRadius="10"
@@ -158,7 +156,7 @@
                                 Height="12"
                                 Margin="5,0,0,0"
                                 VerticalAlignment="Center"
-                                ToolTip="Killboxes kill you"
+                                ToolTip="The normal No Death ignores Killboxes, but this one does not&#x0a;i.e. Jumping into the void and getting ported back to ground/or dying when at low enough hp "
                                 ToolTipService.InitialShowDelay="100">
                                 <TextBlock Text="i"
                                            Foreground="White"
