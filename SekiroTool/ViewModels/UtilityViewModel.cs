@@ -398,6 +398,8 @@ public class UtilityViewModel : BaseViewModel
             if (!AreOptionsEnabled || !IsFreeCamEnabled) return;
             _utilityService.MoveCamToPlayer();
         });
+        
+        
     }
 
     private void OnGameLoaded()

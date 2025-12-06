@@ -541,6 +541,39 @@ public class TargetViewModel : BaseViewModel
             () => ExecuteTargetAction(() => IsRepeatActEnabled = !IsRepeatActEnabled));
         _hotkeyManager.RegisterAction(HotkeyActions.RepeatKengekiAct.ToString(),
             () => ExecuteTargetAction(() => IsRepeatKengekiActEnabled = !IsRepeatKengekiActEnabled));
+        
+        _hotkeyManager.RegisterAction(HotkeyActions.IncrementForceAct.ToString(), () =>
+            ExecuteTargetAction(() =>
+            {
+                if (ForceAct + 1 > 99) ForceAct = 0;
+                else ForceAct += 1;
+            }));
+        
+        
+        _hotkeyManager.RegisterAction(HotkeyActions.DecrementForceAct.ToString(), () =>
+            ExecuteTargetAction(() =>
+            {
+                if (ForceAct - 1 < 0) ForceAct = 99;
+                else ForceAct -= 1;
+                
+            }));
+        
+        _hotkeyManager.RegisterAction(HotkeyActions.IncrementForceKengekiAct.ToString(), () =>
+            ExecuteTargetAction(() =>
+            {
+                if (ForceKengekiAct + 1 > 99) ForceKengekiAct = 0;
+                else ForceKengekiAct += 1;
+                
+            }));
+        
+        _hotkeyManager.RegisterAction(HotkeyActions.DecrementForceKengekiAct.ToString(), () =>
+            ExecuteTargetAction(() =>
+            {
+                if (ForceKengekiAct - 1 < 0) ForceKengekiAct = 99;
+                else ForceKengekiAct -= 1;
+            }));
+        
+        
         _hotkeyManager.RegisterAction(HotkeyActions.IncreaseTargetSpeed.ToString(), () =>
             ExecuteTargetAction(() => SetSpeed(Math.Min(5, TargetSpeed + 0.25f))));
         _hotkeyManager.RegisterAction(HotkeyActions.DecreaseTargetSpeed.ToString(), () =>
@@ -559,7 +592,7 @@ public class TargetViewModel : BaseViewModel
             () => ExecuteTargetAction(() => IsNoDeathEnabled = !IsNoDeathEnabled));
         _hotkeyManager.RegisterAction(HotkeyActions.TargetTargetingView.ToString(),
             () => ExecuteTargetAction(() => IsTargetViewEnabled = !IsTargetViewEnabled));
-       
+        
     }
     
 

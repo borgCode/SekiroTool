@@ -252,14 +252,14 @@
                         </StackPanel>
                     </Grid>
                 </StackPanel>
-                <StackPanel Grid.Column="1">
-                    <Button Content="Rest"
-                            Width="150"
-                            Margin="0, 3, 0,0"
-
-                            IsEnabled="{Binding AreOptionsEnabled}">
-                    </Button>
-                </StackPanel>
+                <!-- <StackPanel Grid.Column="1"> -->
+                <!--     <Button Content="Rest" -->
+                <!--             Width="150" -->
+                <!--             Margin="0, 3, 0,0" -->
+                <!-- -->
+                <!--             IsEnabled="{Binding AreOptionsEnabled}"> -->
+                <!--     </Button> -->
+                <!-- </StackPanel> -->
             </Grid>
 
             <Grid Grid.Row="5" Margin="0,10,0,10">

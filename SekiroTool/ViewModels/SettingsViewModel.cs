@@ -90,6 +90,10 @@ public class SettingsViewModel : BaseViewModel
             { HotkeyActions.ShowAllResistances.ToString(), text => ShowAllResistancesHotkeyText = text },
             { HotkeyActions.RepeatAct.ToString(), text => RepeatActHotkeyText = text },
             { HotkeyActions.RepeatKengekiAct.ToString(), text => RepeatKengekiActHotkeyText = text },
+            { HotkeyActions.IncrementForceAct.ToString(), text => IncrementForceActHotkeyText = text },
+            { HotkeyActions.DecrementForceAct.ToString(), text => DecrementForceActHotkeyText = text },
+            { HotkeyActions.IncrementForceKengekiAct.ToString(), text => IncrementForceKengekiActHotkeyText = text },
+            { HotkeyActions.DecrementForceKengekiAct.ToString(), text => DecrementForceKengekiActHotkeyText = text },
             { HotkeyActions.IncreaseTargetSpeed.ToString(), text => IncreaseTargetSpeedHotkeyText = text },
             { HotkeyActions.DecreaseTargetSpeed.ToString(), text => DecreaseTargetSpeedHotkeyText = text },
             { HotkeyActions.ToggleTargetSpeed.ToString(), text => ToggleTargetSpeedHotkeyText = text },
@@ -382,6 +386,7 @@ public class SettingsViewModel : BaseViewModel
         get => _infinitePoiseHotkeyText;
         set => SetProperty(ref _infinitePoiseHotkeyText, value);
     }
+    
 
     private string _noDeathHotkeyText;
 
@@ -582,7 +587,39 @@ public class SettingsViewModel : BaseViewModel
         get => _repeatKengekiActHotkeyText;
         set => SetProperty(ref _repeatKengekiActHotkeyText, value);
     }
+    
+    private string _incrementForceActHotkeyText;
 
+    public string IncrementForceActHotkeyText
+    {
+        get => _incrementForceActHotkeyText;
+        set => SetProperty(ref _incrementForceActHotkeyText, value);
+    }
+
+    private string _decrementForceActHotkeyText;
+
+    public string DecrementForceActHotkeyText
+    {
+        get => _decrementForceActHotkeyText;
+        set => SetProperty(ref _decrementForceActHotkeyText, value);
+    }
+    
+    private string _incrementForceKengekiActHotkeyText;
+
+    public string IncrementForceKengekiActHotkeyText
+    {
+        get => _incrementForceKengekiActHotkeyText;
+        set => SetProperty(ref _incrementForceKengekiActHotkeyText, value);
+    }
+
+    private string _decrementForceKengekiActHotkeyText;
+
+    public string DecrementForceKengekiActHotkeyText
+    {
+        get => _decrementForceKengekiActHotkeyText;
+        set => SetProperty(ref _decrementForceKengekiActHotkeyText, value);
+    }
+    
     private string _increaseTargetSpeedHotkeyText;
 
     public string IncreaseTargetSpeedHotkeyText
