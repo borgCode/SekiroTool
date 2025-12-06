@@ -1,4 +1,4 @@
-An offline practice tool for challenge running in Seiro
+An offline practice tool for challenge running in Sekiro
 
 This tool is strictly for offline practice only, it directly manipulates game memory which violates Terms of Service and will most likely lead to a ban if you use this online.
 
