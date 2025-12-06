@@ -154,6 +154,11 @@
                           IsChecked="{Binding IsNoClipEnabled}"
                           IsEnabled="{Binding AreButtonsEnabled}"
                           Margin="0,10,0,0" />
+                <CheckBox Grid.Row="1" Grid.Column="0"
+                          Content="Save In Combat"
+                          IsChecked="{Binding IsSaveInCombatEnabled}"
+                          Margin="0,10,0,0" />
+                
                 
                 <StackPanel Grid.Row="1" Grid.Column="1"
                             Orientation="Horizontal"

@@ -179,24 +179,7 @@ public class SettingsViewModel : BaseViewModel
             }
         }
     }
-
-    private bool _isSaveInCombatEnabled;
-
-    public bool IsSaveInCombatEnabled
-    {
-        get => _isSaveInCombatEnabled;
-        set
-        {
-            if (SetProperty(ref _isSaveInCombatEnabled, value))
-            {
-                SettingsManager.Default.SaveInCombat = value;
-                SettingsManager.Default.Save();
-
-                _settingsService.ToggleSaveInCombat(_isSaveInCombatEnabled);
-            }
-        }
-    }
-
+    
     private bool _isNoCameraSpinEnabled;
 
     public bool IsNoCameraSpinEnabled
@@ -804,10 +787,7 @@ public class SettingsViewModel : BaseViewModel
 
         _isNoTutorialsEnabled = SettingsManager.Default.NoTutorials;
         OnPropertyChanged(nameof(IsNoTutorialsEnabled));
-
-        _isSaveInCombatEnabled = SettingsManager.Default.SaveInCombat;
-        OnPropertyChanged(nameof(IsSaveInCombatEnabled));
-
+        
         _isNoCameraSpinEnabled = SettingsManager.Default.NoCameraSpin;
         OnPropertyChanged(nameof(IsNoCameraSpinEnabled));
         
@@ -835,7 +815,6 @@ public class SettingsViewModel : BaseViewModel
     private void OnGameAttached()
     {
         if (IsNoTutorialsEnabled) _settingsService.ToggleNoTutorials(true);
-        if (IsSaveInCombatEnabled) _settingsService.ToggleSaveInCombat(true);
         if (IsNoCameraSpinEnabled) _settingsService.ToggleNoCameraSpin(true);
     }
     

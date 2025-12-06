@@ -21,4 +21,5 @@ public interface IUtilityService
     void SetCameraMode(int mode);
     void MoveCamToPlayer();
     void OpenUpgradePrayerBead();
+    void ToggleSaveInCombat(bool isEnabled);
 }

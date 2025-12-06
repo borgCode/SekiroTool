@@ -247,6 +247,20 @@ public class UtilityViewModel : BaseViewModel
             }
         }
     }
+    
+    private bool _isSaveInCombatEnabled;
+
+    public bool IsSaveInCombatEnabled
+    {
+        get => _isSaveInCombatEnabled;
+        set
+        {
+            if (SetProperty(ref _isSaveInCombatEnabled, value))
+            {
+                _utilityService.ToggleSaveInCombat(_isSaveInCombatEnabled);
+            }
+        }
+    }
 
     private float _noClipSpeedMultiplier = DefaultNoclipMultiplier;
 
@@ -401,6 +415,7 @@ public class UtilityViewModel : BaseViewModel
         if (IsDrawHighHitEnabled) _utilityService.ToggleMeshFlag(Offsets.MeshBase.HighHit, true);
         if (IsDrawObjMeshEnabled) _utilityService.ToggleMeshFlag(Offsets.MeshBase.Objects, true);
         if (IsDrawChrRagdollEnabled) EnableDrawFeature(() => _utilityService.ToggleMeshFlag(Offsets.MeshBase.Chr, true));
+        if (IsSaveInCombatEnabled) _utilityService.ToggleSaveInCombat(true);
     }
 
     private void EnableDrawFeature(Action action)

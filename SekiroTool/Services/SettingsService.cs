@@ -27,13 +27,7 @@ public class SettingsService(IMemoryService memoryService, NopManager nopManager
             nopManager.RestoreNop(Patches.ShowSmallHintBox);
         }
     }
-
-    public void ToggleSaveInCombat(bool isEnabled)
-    {
-        if (isEnabled) memoryService.WriteBytes(Patches.SaveInCombat, [0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90]);
-        else memoryService.WriteBytes(Patches.SaveInCombat, [0x80, 0xB9, 0xFC, 0x11, 0x00, 0x00, 0x03, 0x74, 0x4B]);
-    }
-
+    
     public void ToggleNoCameraSpin(bool isEnabled)
     {
         var code = CodeCaveOffsets.Base + CodeCaveOffsets.NoCameraSpin;

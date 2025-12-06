@@ -261,6 +261,12 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
         var freeCamCoordsPtr = memoryService.FollowPointers(FieldArea.Base, FieldArea.DebugCamCoords, false);
         memoryService.WriteBytes(freeCamCoordsPtr, positionBytes);
     }
+    
+    public void ToggleSaveInCombat(bool isEnabled)
+    {
+        if (isEnabled) memoryService.WriteBytes(Patches.SaveInCombat, [0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90]);
+        else memoryService.WriteBytes(Patches.SaveInCombat, [0x80, 0xB9, 0xFC, 0x11, 0x00, 0x00, 0x03, 0x74, 0x4B]);
+    }
 
     public void OpenUpgradePrayerBead()
     {

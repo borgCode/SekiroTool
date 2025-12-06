@@ -12,7 +12,6 @@ public class SettingsManager
     public bool NoLogo { get; set; }
     public bool AlwaysOnTop { get; set; }
     public bool NoTutorials { get; set; }
-    public bool SaveInCombat { get; set; }
     public bool NoCameraSpin { get; set; }
     public bool DisableMenuMusic { get; set; }
     public bool DefaultSoundChangeEnabled { get; set; }
@@ -41,7 +40,6 @@ public class SettingsManager
                 $"NoLogo={NoLogo}",
                 $"AlwaysOnTop={AlwaysOnTop}",
                 $"NoTutorials={NoTutorials}",
-                $"SaveInCombat={SaveInCombat}",
                 $"NoCameraSpin={NoCameraSpin}",
                 $"DisableMenuMusic={DisableMenuMusic}",
                 $"DefaultSoundChangeEnabled={DefaultSoundChangeEnabled}",
@@ -90,10 +88,6 @@ public class SettingsManager
                             case "NoTutorials":
                                 bool.TryParse(value, out bool nt);
                                 settings.NoTutorials = nt;
-                                break;
-                            case "SaveInCombat":
-                                bool.TryParse(value, out bool sic);
-                                settings.SaveInCombat = sic;
                                 break;
                             case "AlwaysOnTop":
                                 bool.TryParse(value, out bool aot);
