@@ -1181,18 +1181,6 @@
                                          LostFocus="HotkeyTextBox_LostFocus"
                                          Tag="TargetTargetingView"
                                          KeyDown="HotkeyTextBox_KeyDown" />
-
-                                <TextBlock Grid.Column="3" Text="No Death" VerticalAlignment="Center"
-                                           HorizontalAlignment="Left" />
-                                <TextBox Grid.Column="4"
-                                         Margin="5,0,-10,0"
-                                         Text="{Binding TargetNoDeathHotkeyText}"
-                                         Style="{StaticResource HotkeyTextBoxStyle}"
-                                         GotFocus="HotkeyTextBox_GotFocus"
-                                         LostFocus="HotkeyTextBox_LostFocus"
-                                         Tag="TargetNoDeath"
-                                         KeyDown="HotkeyTextBox_KeyDown" />
-
                             </Grid>
 
                         </StackPanel>
