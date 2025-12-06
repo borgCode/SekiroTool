@@ -474,6 +474,7 @@ public class EventViewModel : BaseViewModel
         bool isOn = Convert.ToBoolean(parameter);
         if (isOn) _eventService.SetEvent(GameEvent.IsTutorial, false);
         _eventService.SetEvent(GameEvent.AshinaCastleInvasion, isOn);
+        
     }
 
     private void SetAshinaNight(object parameter)
