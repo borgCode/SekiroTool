@@ -137,7 +137,7 @@ public static class Offsets
     {
         public static IntPtr Base;
 
-        public const int HitboxView = 0x31;
+        public const int HitboxView = 0x30;
     }
 
     public static class DebugFlags

@@ -103,7 +103,7 @@ public class UtilityViewModel : BaseViewModel
         {
             if (!SetProperty(ref _isHitboxViewEnabled, value)) return;
             if (_isHitboxViewEnabled) _debugDrawService.RequestDebugDraw();
-            else _debugDrawService.RequestDebugDraw();
+            else _debugDrawService.ReleaseDebugDraw();
             _utilityService.ToggleHitboxView(_isHitboxViewEnabled);
         }
     }
@@ -117,7 +117,7 @@ public class UtilityViewModel : BaseViewModel
         {
             if (!SetProperty(ref _isSoundViewEnabled, value)) return;
             if (_isSoundViewEnabled) _debugDrawService.RequestDebugDraw();
-            else _debugDrawService.RequestDebugDraw();
+            else _debugDrawService.ReleaseDebugDraw();
             _utilityService.TogglePlayerSoundView(_isSoundViewEnabled);
         }
     }
@@ -228,7 +228,7 @@ public class UtilityViewModel : BaseViewModel
         {
             if (!SetProperty(ref _isDrawChrRagdollEnabled, value)) return;
             if (_isDrawChrRagdollEnabled) _debugDrawService.RequestDebugDraw();
-            else _debugDrawService.RequestDebugDraw();
+            else _debugDrawService.ReleaseDebugDraw();
             _utilityService.ToggleMeshFlag(Offsets.MeshBase.Chr, _isDrawChrRagdollEnabled);
         }
     }
