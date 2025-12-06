@@ -326,15 +326,14 @@
                                          LostFocus="HotkeyTextBox_LostFocus"
                                          Tag="InfinitePoise"
                                          KeyDown="HotkeyTextBox_KeyDown" />
-                                <TextBlock Grid.Column="3" Text="Rest" VerticalAlignment="Center"
+                                <TextBlock Grid.Column="3" Text="Placeholder" VerticalAlignment="Center"
                                            HorizontalAlignment="Left" />
                                 <TextBox Grid.Column="4"
                                          Margin="5,0,-10,0"
-                                         Text="{Binding Rest}"
+                                       
                                          Style="{StaticResource HotkeyTextBoxStyle}"
-                                         GotFocus="HotkeyTextBox_GotFocus"
-                                         LostFocus="HotkeyTextBox_LostFocus"
-                                         Tag="Rest"
+                                         
+                                         
                                          KeyDown="HotkeyTextBox_KeyDown" />
                             </Grid>
                             <Grid Margin="0,5">
@@ -356,15 +355,14 @@
                                          LostFocus="HotkeyTextBox_LostFocus"
                                          Tag="IncreasePlayerSpeed"
                                          KeyDown="HotkeyTextBox_KeyDown" />
-                                <TextBlock Grid.Column="3" Text="Respawn Enemies:" VerticalAlignment="Center"
+                                <TextBlock Grid.Column="3" Text="Placeholder" VerticalAlignment="Center"
                                            HorizontalAlignment="Left" />
                                 <TextBox Grid.Column="4"
                                          Margin="5,0,-10,0"
-                                         Text="{Binding RespawnEnemies}"
+                                         
                                          Style="{StaticResource HotkeyTextBoxStyle}"
-                                         GotFocus="HotkeyTextBox_GotFocus"
-                                         LostFocus="HotkeyTextBox_LostFocus"
-                                         Tag="RespawnEnemies"
+                                         
+                                        
                                          KeyDown="HotkeyTextBox_KeyDown" />
                                 
                             </Grid>
@@ -468,7 +466,7 @@
                 </TabItem>
 
                 <TabItem Header="Enemies">
-                    <ScrollViewer MaxHeight="380" VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer MaxHeight="370" VerticalScrollBarVisibility="Auto">
                         <StackPanel Margin="5,0,0,0">
                             <Grid Margin="0,5">
                                 <Grid.ColumnDefinitions>
@@ -518,16 +516,16 @@
                                          Tag="TriggerDragonFinalAttack"
                                          KeyDown="HotkeyTextBox_KeyDown" />
 
-                                <!-- <TextBlock Grid.Column="3" Text="No Butterfly Summons" VerticalAlignment="Center" -->
-                                <!--            HorizontalAlignment="Left" /> -->
-                                <!-- <TextBox Grid.Column="4" -->
-                                <!--          Margin="5,0,-10,0" -->
-                                <!--          Text="{Binding NoButterflySummonsHotkeyText}" -->
-                                <!--          Style="{StaticResource HotkeyTextBoxStyle}" -->
-                                <!--          GotFocus="HotkeyTextBox_GotFocus" -->
-                                <!--          LostFocus="HotkeyTextBox_LostFocus" -->
-                                <!--          Tag="NoButterflySummons" -->
-                                <!--          KeyDown="HotkeyTextBox_KeyDown" /> -->
+                                <TextBlock Grid.Column="3" Text="Placeholder" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                                <TextBox Grid.Column="4"
+                                         Margin="5,0,-10,0"
+                                         
+                                         Style="{StaticResource HotkeyTextBoxStyle}"
+                                         
+                                         KeyDown="HotkeyTextBox_KeyDown" />
+                                
+                                
                             </Grid>
 
                             <Grid Margin="0,5">
@@ -656,36 +654,9 @@
                 <TabItem Header="Utility">
                     <ScrollViewer MaxHeight="370" VerticalScrollBarVisibility="Auto">
                         <StackPanel Margin="5,0,0,0">
-                            <Grid Margin="0,5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="125" />
-                                    <ColumnDefinition Width="85" />
-                                    <ColumnDefinition Width="20" />
-                                    <ColumnDefinition Width="125" />
-                                    <ColumnDefinition Width="85" />
-                                </Grid.ColumnDefinitions>
+                            
 
-                                <!-- <TextBlock Grid.Column="0" Text="Force Save:" VerticalAlignment="Center" -->
-                                <!--            HorizontalAlignment="Left" /> -->
-                                <!-- <TextBox Grid.Column="1" -->
-                                <!--          Text="{Binding ForceSaveHotkeyText}" -->
-                                <!--          Style="{StaticResource HotkeyTextBoxStyle}" -->
-                                <!--          GotFocus="HotkeyTextBox_GotFocus" -->
-                                <!--          LostFocus="HotkeyTextBox_LostFocus" -->
-                                <!--          Tag="ForceSave" -->
-                                <!--          KeyDown="HotkeyTextBox_KeyDown" /> -->
-
-                                <TextBlock Grid.Column="3" Text="Quitout:" VerticalAlignment="Center"
-                                           HorizontalAlignment="Left" />
-                                <TextBox Grid.Column="4"
-                                         Margin="5,0,-10,0"
-                                         Text="{Binding QuitoutHotkeyText}"
-                                         Style="{StaticResource HotkeyTextBoxStyle}"
-                                         GotFocus="HotkeyTextBox_GotFocus"
-                                         LostFocus="HotkeyTextBox_LostFocus"
-                                         Tag="Quitout"
-                                         KeyDown="HotkeyTextBox_KeyDown" />
-                            </Grid>
+                                
 
                             <Grid Margin="0,5">
                                 <Grid.ColumnDefinitions>
@@ -737,6 +708,17 @@
                                          Tag="ToggleGameSpeed"
                                          KeyDown="HotkeyTextBox_KeyDown" />
 
+                                <TextBlock Grid.Column="3" Text="Quitout:" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                                <TextBox Grid.Column="4"
+                                         Margin="5,0,-10,0"
+                                         Text="{Binding QuitoutHotkeyText}"
+                                         Style="{StaticResource HotkeyTextBoxStyle}"
+                                         GotFocus="HotkeyTextBox_GotFocus"
+                                         LostFocus="HotkeyTextBox_LostFocus"
+                                         Tag="Quitout"
+                                         KeyDown="HotkeyTextBox_KeyDown" />
+                                
                             </Grid>
 
                             <Grid Margin="0,5">
@@ -987,10 +969,12 @@
                                          GotFocus="HotkeyTextBox_GotFocus"
                                          LostFocus="HotkeyTextBox_LostFocus"
                                          Tag="RepeatKengekiAct"
-                                         KeyDown="HotkeyTextBox_KeyDown" />
+                                         KeyDown="HotkeyTextBox_KeyDown"/>
 
                             </Grid>
-
+                            
+                            
+                            
                             <Grid Margin="0,5">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="125" />
@@ -1000,6 +984,70 @@
                                     <ColumnDefinition Width="85" />
                                 </Grid.ColumnDefinitions>
 
+                                <TextBlock Grid.Column="0" Text="Decrement Force Act:" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                                <TextBox Grid.Column="1"
+                                         Text="{Binding DecrementForceActHotkeyText}"
+                                         Style="{StaticResource HotkeyTextBoxStyle}"
+                                         GotFocus="HotkeyTextBox_GotFocus"
+                                         LostFocus="HotkeyTextBox_LostFocus"
+                                         Tag="DecrementForceAct"
+                                         KeyDown="HotkeyTextBox_KeyDown" />
+
+                                <TextBlock Grid.Column="3" Text="Increment Force Act:" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                                <TextBox Grid.Column="4"
+                                         Margin="5,0,-10,0"
+                                         Text="{Binding IncrementForceActHotkeyText}"
+                                         Style="{StaticResource HotkeyTextBoxStyle}"
+                                         GotFocus="HotkeyTextBox_GotFocus"
+                                         LostFocus="HotkeyTextBox_LostFocus"
+                                         Tag="IncrementForceAct"
+                                         KeyDown="HotkeyTextBox_KeyDown" />
+
+                            </Grid>
+                            
+                            <Grid Margin="0,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="125" />
+                                    <ColumnDefinition Width="85" />
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="125" />
+                                    <ColumnDefinition Width="85" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="Decrement Kengeki:" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                                <TextBox Grid.Column="1"
+                                         Text="{Binding DecrementForceKengekiActHotkeyText}"
+                                         Style="{StaticResource HotkeyTextBoxStyle}"
+                                         GotFocus="HotkeyTextBox_GotFocus"
+                                         LostFocus="HotkeyTextBox_LostFocus"
+                                         Tag="DecrementForceKengekiAct"
+                                         KeyDown="HotkeyTextBox_KeyDown" />
+
+                                <TextBlock Grid.Column="3" Text="Increment Kengeki" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                                <TextBox Grid.Column="4"
+                                         Margin="5,0,-10,0"
+                                         Text="{Binding IncrementForceKengekiActHotkeyText}"
+                                         Style="{StaticResource HotkeyTextBoxStyle}"
+                                         GotFocus="HotkeyTextBox_GotFocus"
+                                         LostFocus="HotkeyTextBox_LostFocus"
+                                         Tag="IncrementForceKengekiAct"
+                                         KeyDown="HotkeyTextBox_KeyDown"/>
+
+                            </Grid>
+                            
+                            <Grid Margin="0,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="125" />
+                                    <ColumnDefinition Width="85" />
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="125" />
+                                    <ColumnDefinition Width="85" />
+                                </Grid.ColumnDefinitions>
+                                
                                 <TextBlock Grid.Column="0" Text="Increase Speed" VerticalAlignment="Center"
                                            HorizontalAlignment="Left" />
                                 <TextBox Grid.Column="1"
@@ -1137,16 +1185,16 @@
                                          Tag="TargetTargetingView"
                                          KeyDown="HotkeyTextBox_KeyDown" />
 
-                                <!-- <TextBlock Grid.Column="3" Text="No Death" VerticalAlignment="Center" -->
-                                <!--            HorizontalAlignment="Left" /> -->
-                                <!-- <TextBox Grid.Column="4" -->
-                                <!--          Margin="5,0,-10,0" -->
-                                <!--          Text="{Binding TargetNoDeathHotkeyText}" -->
-                                <!--          Style="{StaticResource HotkeyTextBoxStyle}" -->
-                                <!--          GotFocus="HotkeyTextBox_GotFocus" -->
-                                <!--          LostFocus="HotkeyTextBox_LostFocus" -->
-                                <!--          Tag="TargetNoDeath" -->
-                                <!--          KeyDown="HotkeyTextBox_KeyDown" /> -->
+                                <TextBlock Grid.Column="3" Text="No Death" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" />
+                                <TextBox Grid.Column="4"
+                                         Margin="5,0,-10,0"
+                                         Text="{Binding TargetNoDeathHotkeyText}"
+                                         Style="{StaticResource HotkeyTextBoxStyle}"
+                                         GotFocus="HotkeyTextBox_GotFocus"
+                                         LostFocus="HotkeyTextBox_LostFocus"
+                                         Tag="TargetNoDeath"
+                                         KeyDown="HotkeyTextBox_KeyDown" />
 
                             </Grid>
 
