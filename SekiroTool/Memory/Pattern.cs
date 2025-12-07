@@ -108,9 +108,9 @@ public static class Patterns
     );
 
     public static readonly Pattern SprjFlipperImp = new Pattern(
-        new byte[] { 0x48, 0x8B, 0x05, 0x73, 0xE0, 0x2E },
-        "xxxxxx",
-        0,
+        new byte[] { 0xF3, 0x0F, 0x10, 0x5B, 0x50, 0x0F, 0x28 },
+        "xxxxxxx",
+        -0x1F,
         AddressingMode.Relative,
         3,
         7
@@ -319,10 +319,13 @@ public static class Patterns
     );
 
     public static readonly Pattern Warp = new Pattern(
-        new byte[] { 0x0F, 0x84, 0xC2, 0x00, 0x00, 0x00, 0xB8 },
-        "xxxxxxx",
-        -0x1B,
-        AddressingMode.Absolute
+        new byte[] { 0x0F, 0xBF, 0x6B, 0x16 },
+        "xxxx",
+        0xD,
+        AddressingMode.Relative,
+        1,
+        5
+
     );
 
     public static readonly Pattern ApplySpEffect = new Pattern(
@@ -349,12 +352,17 @@ public static class Patterns
     );
 
     public static readonly Pattern ProcessEsdCommand = new Pattern(
-        new byte[] { 0xFF, 0x50, 0x10, 0x3D, 0x84 },
-        "xxxxx",
+        new byte[] { 0x48, 0x8B, 0xF1, 0x48, 0x8B, 0x02, 0x48, 0x8B, 0xCA, 0xFF, 0x50, 0x10 },
+        "xxxxxxxxxxxx",
         0,
         AddressingMode.Absolute
+    
+        
     );
 
+    
+
+    
     public static readonly Pattern FrpgCastRay = new Pattern(
         new byte[] { 0xE8, 0x00, 0x00, 0x00, 0x00, 0x84, 0xC0, 0x74, 0x4F, 0x0F },
         "x????xxxxx",
