@@ -107,15 +107,29 @@ public static class Patterns
         7
     );
 
+    // public static readonly Pattern SprjFlipperImp = new Pattern(
+    //     new byte[] { 0xF3, 0x0F, 0x10, 0x5B, 0x50, 0x0F, 0x28 },
+    //     "xxxxxxx",
+    //     -0x1F,
+    //     AddressingMode.Relative,
+    //     3,
+    //     7
+    //     // Works on 1.06
+    //     // Does NOT work on 1.02
+    //     // Does NOT work on 1.04
+    //  );
+
     public static readonly Pattern SprjFlipperImp = new Pattern(
-        new byte[] { 0xF3, 0x0F, 0x10, 0x5B, 0x50, 0x0F, 0x28 },
-        "xxxxxxx",
-        -0x1F,
+        new byte[] { 0x48, 0x8B, 0x05, 0x6D, 0x17 },
+        "xxxxx",
+        0,
         AddressingMode.Relative,
         3,
         7
-    );
+        // Works on 1.04 and 1.06
+    );  // Does NOT work on 1.02
 
+    
     public static readonly Pattern FieldArea = new Pattern(
         new byte[] { 0x48, 0x8B, 0x1D, 0x00, 0x00, 0x00, 0x00, 0x41, 0x0F, 0xB6, 0xF8, 0x48, 0x85, 0xDB, 0x74, 0x25 },
         "xxx????xxxxxxxxx",
