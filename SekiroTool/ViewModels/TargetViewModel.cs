@@ -12,6 +12,7 @@ public class TargetViewModel : BaseViewModel
     private readonly HotkeyManager _hotkeyManager;
     private readonly ITargetService _targetService;
     private readonly IDebugDrawService _debugDrawService;
+    private readonly IReminderService _reminderService;
 
     private readonly DispatcherTimer _targetTick;
 
@@ -77,11 +78,12 @@ public class TargetViewModel : BaseViewModel
 
     public TargetViewModel(IStateService stateService, HotkeyManager hotkeyManager,
         ITargetService targetService,
-        IDebugDrawService debugDrawService)
+        IDebugDrawService debugDrawService, IReminderService reminderService)
     {
         _hotkeyManager = hotkeyManager;
         _targetService = targetService;
         _debugDrawService = debugDrawService;
+        _reminderService = reminderService;
 
         RegisterHotkeys();
 
@@ -138,6 +140,7 @@ public class TargetViewModel : BaseViewModel
             if (!SetProperty(ref _isTargetOptionsEnabled, value)) return;
             if (value)
             {
+                _reminderService.ChangeIdolIcon();
                 _targetService.ToggleTargetHook(true);
                 _targetTick.Start();
                 ShowAllResistances = true;

@@ -134,6 +134,24 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 48 83 ec 48             sub    rsp,0x48
+        ///48 8d 4c 24 20          lea    rcx,[rsp+0x20]
+        ///ba 8c 0f 00 00          mov    edx,0xf8c
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///ff d0                   call   rax
+        ///48 8b 4c 24 28          mov    rcx,QWORD PTR [rsp+0x28]
+        ///48 83 c4 48             add    rsp,0x48
+        ///66 c7 41 2c 42 02       mov    WORD PTR [rcx+0x2c],0x242
+        ///c3                      ret.
+        /// </summary>
+        internal static string ChangeIdolIcon {
+            get {
+                return ResourceManager.GetString("ChangeIdolIcon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 88 98 42 b7 00 00       mov    BYTE PTR [rax+0xb742],bl
         ///81 78 18 00 75 19 03    cmp    DWORD PTR [rax+0x18],0x3197500
         ///0f 85 01 01 00 00       jne    114 &lt;normal&gt;

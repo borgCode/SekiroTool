@@ -61,15 +61,16 @@ public partial class MainWindow : Window
         IUtilityService utilityService = new UtilityService(_memoryService, hookManager);
         IItemService itemService = new ItemService(_memoryService);
         ISettingsService settingsService = new SettingsService(_memoryService, _nopManager, hookManager);
+        IReminderService reminderService = new ReminderService(_memoryService);
         
 
         PlayerViewModel playerViewModel = new PlayerViewModel(_playerService, _hotkeyManager, _stateService);
         TravelViewModel travelViewModel =
             new TravelViewModel(travelService, _stateService, _hotkeyManager, eventService);
         EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _hotkeyManager, _stateService,
-            debugDrawService, eventService);
+            debugDrawService, eventService, reminderService);
         TargetViewModel targetViewModel =
-            new TargetViewModel(_stateService, _hotkeyManager, targetService, debugDrawService);
+            new TargetViewModel(_stateService, _hotkeyManager, targetService, debugDrawService, reminderService);
         UtilityViewModel utilityViewModel =
             new UtilityViewModel(utilityService, _stateService, _hotkeyManager, debugDrawService, playerViewModel);
         ItemViewModel itemViewModel = new ItemViewModel(itemService, _stateService);

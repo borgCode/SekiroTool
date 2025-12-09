@@ -50,6 +50,8 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager)
         
         if (isEnabled)
         {
+            
+            
             var stage = CodeCaveOffsets.Base + CodeCaveOffsets.DragonActCombosStage;
             var attackBeforeManipCount = CodeCaveOffsets.Base + CodeCaveOffsets.AttacksBeforeManipCount;
             var staggerDurationCmpVal = CodeCaveOffsets.Base + CodeCaveOffsets.StaggerCmpValue;

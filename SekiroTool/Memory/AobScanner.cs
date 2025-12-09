@@ -106,6 +106,7 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.Functions.ItemSpawn = FindAddressByPattern(Patterns.ItemSpawn).ToInt64();
         Offsets.Functions.GetEnemyInsWithPackedWorldIdAndChrId = FindAddressByPattern(Patterns.GetEnemyInsWithPackedWorldIdAndChrId).ToInt64();
         Offsets.Functions.RemoveSpEffect = FindAddressByPattern(Patterns.RemoveEffect).ToInt64();
+        Offsets.Functions.GetGoodsParam = FindAddressByPattern(Patterns.GetGoodsParam).ToInt64();
 
         FindMultipleCallsInFunction(Patterns.ProcessEsdCommand, new Dictionary<Action<long>, int>
         {
@@ -197,6 +198,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Functions.OpenGenericDialog: 0x{Offsets.Functions.OpenGenericDialog:X}");
         Console.WriteLine($"Functions.RemoveItem: 0x{Offsets.Functions.RemoveItem:X}");
         Console.WriteLine($"Functions.GiveSkillAndPros: 0x{Offsets.Functions.GiveSkillAndPros:X}");
+        Console.WriteLine($"Functions.GetGoodsParam: 0x{Offsets.Functions.GetGoodsParam:X}");
 #endif
     }
 
