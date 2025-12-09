@@ -51,26 +51,26 @@ public partial class MainWindow : Window
         
         _nopManager = new NopManager(_memoryService, _stateService);
         _hotkeyManager = new HotkeyManager(_memoryService);
-        
+
         _playerService = new PlayerService(_memoryService, hookManager);
+        IReminderService reminderService = new ReminderService(_memoryService);
         ITravelService travelService = new TravelService(_memoryService, hookManager);
-        IEnemyService enemyService = new EnemyService(_memoryService, hookManager);
-        ITargetService targetService = new TargetService(_memoryService, hookManager);
+        IEnemyService enemyService = new EnemyService(_memoryService, hookManager, reminderService);
+        ITargetService targetService = new TargetService(_memoryService, hookManager, reminderService);
         IDebugDrawService debugDrawService = new DebugDrawService(_memoryService, _stateService, _nopManager);
         IEventService eventService = new EventService(_memoryService);
         IUtilityService utilityService = new UtilityService(_memoryService, hookManager);
         IItemService itemService = new ItemService(_memoryService);
         ISettingsService settingsService = new SettingsService(_memoryService, _nopManager, hookManager);
-        IReminderService reminderService = new ReminderService(_memoryService);
-        
+
 
         PlayerViewModel playerViewModel = new PlayerViewModel(_playerService, _hotkeyManager, _stateService);
         TravelViewModel travelViewModel =
             new TravelViewModel(travelService, _stateService, _hotkeyManager, eventService);
         EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _hotkeyManager, _stateService,
-            debugDrawService, eventService, reminderService);
+            debugDrawService, eventService);
         TargetViewModel targetViewModel =
-            new TargetViewModel(_stateService, _hotkeyManager, targetService, debugDrawService, reminderService);
+            new TargetViewModel(_stateService, _hotkeyManager, targetService, debugDrawService);
         UtilityViewModel utilityViewModel =
             new UtilityViewModel(utilityService, _stateService, _hotkeyManager, debugDrawService, playerViewModel);
         ItemViewModel itemViewModel = new ItemViewModel(itemService, _stateService);

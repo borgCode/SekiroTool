@@ -13,16 +13,14 @@ public class EnemyViewModel : BaseViewModel
     private readonly HotkeyManager _hotkeyManager;
     private readonly IDebugDrawService _debugDrawService;
     private readonly IEventService _eventService;
-    private readonly IReminderService _reminderService;
 
     public EnemyViewModel(IEnemyService enemyService, HotkeyManager hotkeyManager, IStateService stateService,
-        IDebugDrawService debugDrawService, IEventService eventService, IReminderService reminderService)
+        IDebugDrawService debugDrawService, IEventService eventService)
     {
         _enemyService = enemyService;
         _hotkeyManager = hotkeyManager;
         _debugDrawService = debugDrawService;
         _eventService = eventService;
-        _reminderService = reminderService;
 
         RegisterHotkeys();
 
@@ -119,10 +117,6 @@ public class EnemyViewModel : BaseViewModel
         set
         {
             SetProperty(ref _isDisableAiEnabled, value);
-            if (_isDisableAiEnabled)
-            {
-                _reminderService.ChangeIdolIcon();
-            }
             _enemyService.ToggleDisableAi(_isDisableAiEnabled);
         }
     }
@@ -163,7 +157,6 @@ public class EnemyViewModel : BaseViewModel
             SetProperty(ref _isDragonCombo1Enabled, value);
             if (_isDragonCombo1Enabled)
             {
-                _reminderService.ChangeIdolIcon();
                 IsDragonCombo2Enabled = false;
                 IsDragonCombo3Enabled = false;
             }
@@ -181,7 +174,6 @@ public class EnemyViewModel : BaseViewModel
             SetProperty(ref _isDragonCombo2Enabled, value);
             if (_isDragonCombo2Enabled)
             {
-                _reminderService.ChangeIdolIcon();
                 IsDragonCombo1Enabled = false;
                 IsDragonCombo3Enabled = false;
             }
@@ -199,7 +191,6 @@ public class EnemyViewModel : BaseViewModel
             SetProperty(ref _isDragonCombo3Enabled, value);
             if (_isDragonCombo3Enabled)
             {
-                _reminderService.ChangeIdolIcon();
                 IsDragonCombo1Enabled = false;
                 IsDragonCombo2Enabled = false;
             }
@@ -262,7 +253,7 @@ public class EnemyViewModel : BaseViewModel
         if (IsNoMoveEnabled) _enemyService.ToggleNoMove(true);
         if (IsDisableAiEnabled) _enemyService.ToggleDisableAi(true);
         if (IsNoPostureBuildupEnabled) _enemyService.ToggleNoPostureBuildup(true);
-        if (IsDragonCombo1Enabled) _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo1, true);
+        if (IsDragonCombo1Enabled) {_enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo1, true);}
         if (IsDragonCombo2Enabled) _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo2, true);
         if (IsDragonCombo3Enabled) _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo3, true);
     }

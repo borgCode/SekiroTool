@@ -12,8 +12,6 @@ public class TargetViewModel : BaseViewModel
     private readonly HotkeyManager _hotkeyManager;
     private readonly ITargetService _targetService;
     private readonly IDebugDrawService _debugDrawService;
-    private readonly IReminderService _reminderService;
-
     private readonly DispatcherTimer _targetTick;
 
     private bool _areOptionsEnabled;
@@ -75,15 +73,12 @@ public class TargetViewModel : BaseViewModel
     private bool _isNoPostureBuildupEnabled;
     private bool _isTargetViewEnabled;
 
-
     public TargetViewModel(IStateService stateService, HotkeyManager hotkeyManager,
-        ITargetService targetService,
-        IDebugDrawService debugDrawService, IReminderService reminderService)
+        ITargetService targetService, IDebugDrawService debugDrawService)
     {
         _hotkeyManager = hotkeyManager;
         _targetService = targetService;
         _debugDrawService = debugDrawService;
-        _reminderService = reminderService;
 
         RegisterHotkeys();
 
@@ -104,7 +99,6 @@ public class TargetViewModel : BaseViewModel
         };
         _targetTick.Tick += TargetTick;
     }
-
 
     #region Commands
 
@@ -140,7 +134,6 @@ public class TargetViewModel : BaseViewModel
             if (!SetProperty(ref _isTargetOptionsEnabled, value)) return;
             if (value)
             {
-                _reminderService.ChangeIdolIcon();
                 _targetService.ToggleTargetHook(true);
                 _targetTick.Start();
                 ShowAllResistances = true;
@@ -259,7 +252,6 @@ public class TargetViewModel : BaseViewModel
             // _resistancesWindowWindow.DataContext = this;
         }
     }
-
 
     public int TargetCurrentPoison
     {
@@ -439,7 +431,6 @@ public class TargetViewModel : BaseViewModel
 
     public void SetSpeed(double value) => TargetSpeed = (float)value;
 
-
     public bool IsAiFreezeEnabled
     {
         get => _isAiFreezEnabled;
@@ -544,45 +535,43 @@ public class TargetViewModel : BaseViewModel
             () => ExecuteTargetAction(() => IsRepeatActEnabled = !IsRepeatActEnabled));
         _hotkeyManager.RegisterAction(HotkeyActions.RepeatKengekiAct.ToString(),
             () => ExecuteTargetAction(() => IsRepeatKengekiActEnabled = !IsRepeatKengekiActEnabled));
-        
+
         _hotkeyManager.RegisterAction(HotkeyActions.IncrementForceAct.ToString(), () =>
             ExecuteTargetAction(() =>
             {
                 if (ForceAct + 1 > 99) ForceAct = 0;
                 else ForceAct += 1;
             }));
-        
-        
+
+
         _hotkeyManager.RegisterAction(HotkeyActions.DecrementForceAct.ToString(), () =>
             ExecuteTargetAction(() =>
             {
                 if (ForceAct - 1 < 0) ForceAct = 99;
                 else ForceAct -= 1;
-                
             }));
-        
+
         _hotkeyManager.RegisterAction(HotkeyActions.IncrementForceKengekiAct.ToString(), () =>
             ExecuteTargetAction(() =>
             {
                 if (ForceKengekiAct + 1 > 99) ForceKengekiAct = 0;
                 else ForceKengekiAct += 1;
-                
             }));
-        
+
         _hotkeyManager.RegisterAction(HotkeyActions.DecrementForceKengekiAct.ToString(), () =>
             ExecuteTargetAction(() =>
             {
                 if (ForceKengekiAct - 1 < 0) ForceKengekiAct = 99;
                 else ForceKengekiAct -= 1;
             }));
-        
-        
+
+
         _hotkeyManager.RegisterAction(HotkeyActions.IncreaseTargetSpeed.ToString(), () =>
             ExecuteTargetAction(() => SetSpeed(Math.Min(5, TargetSpeed + 0.25f))));
         _hotkeyManager.RegisterAction(HotkeyActions.DecreaseTargetSpeed.ToString(), () =>
             ExecuteTargetAction(() => SetSpeed(Math.Max(0, TargetSpeed - 0.25f))));
-        _hotkeyManager.RegisterAction(HotkeyActions.ToggleTargetSpeed.ToString(), () => 
-                ExecuteTargetAction(ToggleTargetSpeed));
+        _hotkeyManager.RegisterAction(HotkeyActions.ToggleTargetSpeed.ToString(), () =>
+            ExecuteTargetAction(ToggleTargetSpeed));
         _hotkeyManager.RegisterAction(HotkeyActions.FreezeTargetAi.ToString(),
             () => ExecuteTargetAction(() => IsAiFreezeEnabled = !IsAiFreezeEnabled));
         _hotkeyManager.RegisterAction(HotkeyActions.NoAttackTargetAi.ToString(),
@@ -595,9 +584,7 @@ public class TargetViewModel : BaseViewModel
             () => ExecuteTargetAction(() => IsNoDeathEnabled = !IsNoDeathEnabled));
         _hotkeyManager.RegisterAction(HotkeyActions.TargetTargetingView.ToString(),
             () => ExecuteTargetAction(() => IsTargetViewEnabled = !IsTargetViewEnabled));
-        
     }
-    
 
     private void ExecuteTargetAction(Action action)
     {
@@ -635,7 +622,7 @@ public class TargetViewModel : BaseViewModel
         if (targetAddr != _currentTargetAddr)
         {
             _currentTargetAddr = targetAddr;
-            
+
             TargetMaxPoise = _targetService.GetMaxPoise();
             TargetMaxPoison = _targetService.GetMaxPoison();
             TargetMaxBurn = _targetService.GetMaxBurn();
@@ -732,7 +719,7 @@ public class TargetViewModel : BaseViewModel
         if (CustomPosture > TargetMaxPosture) CustomPosture = TargetMaxPosture;
         _targetService.SetPosture(CustomPosture);
     }
-    
+
     private void ToggleTargetSpeed()
     {
         if (!AreOptionsEnabled) return;
@@ -749,7 +736,6 @@ public class TargetViewModel : BaseViewModel
     }
 
     private bool IsApproximately(float a, float b) => Math.Abs(a - b) < Epsilon;
-
 
     private void UpdateResistancesDisplay()
     {
