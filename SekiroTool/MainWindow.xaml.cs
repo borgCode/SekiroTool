@@ -170,7 +170,7 @@ public partial class MainWindow : Window
         }
         else
         {
-            if (_memoryService.IsAttached)
+            if (_hasPublishedAttached)
             {
                 _stateService.Publish(State.Detached);
                 _hasPublishedAttached = false;
