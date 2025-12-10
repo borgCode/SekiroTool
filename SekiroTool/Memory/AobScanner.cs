@@ -104,7 +104,7 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.Functions.AddExperience = FindAddressByPattern(Patterns.AddExperience).ToInt64();
         Offsets.Functions.ApplySpEffect = FindAddressByPattern(Patterns.ApplySpEffect).ToInt64();
         Offsets.Functions.ItemSpawn = FindAddressByPattern(Patterns.ItemSpawn).ToInt64();
-        Offsets.Functions.GetEnemyInsWithPackedWorldIdAndChrId = FindAddressByPattern(Patterns.GetEnemyInsWithPackedWorldIdAndChrId).ToInt64();
+        Offsets.Functions.GetChrInsWithHandle = FindAddressByPattern(Patterns.GetEnemyInsWithPackedWorldIdAndChrId).ToInt64();
         Offsets.Functions.RemoveSpEffect = FindAddressByPattern(Patterns.RemoveEffect).ToInt64();
 
         FindMultipleCallsInFunction(Patterns.ProcessEsdCommand, new Dictionary<Action<long>, int>
@@ -181,7 +181,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Functions.ApplySpEffect: 0x{Offsets.Functions.ApplySpEffect:X}");
         Console.WriteLine($"Functions.ItemSpawn: 0x{Offsets.Functions.ItemSpawn:X}");
         Console.WriteLine(
-            $"Functions.GetEnemyInsWithPackedWorldIdAndChrId: 0x{Offsets.Functions.GetEnemyInsWithPackedWorldIdAndChrId:X}");
+            $"Functions.GetEnemyInsWithPackedWorldIdAndChrId: 0x{Offsets.Functions.GetChrInsWithHandle:X}");
         Console.WriteLine($"Functions.OpenRegularShop: 0x{Offsets.Functions.OpenRegularShop:X}");
         Console.WriteLine($"Functions.OpenSkillMenu: 0x{Offsets.Functions.OpenSkillMenu:X}");
         Console.WriteLine($"Functions.UpgradeProstheticsMenu: 0x{Offsets.Functions.UpgradeProstheticsMenu:X}");

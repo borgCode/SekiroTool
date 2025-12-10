@@ -37,7 +37,7 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager)
         var bytes = AsmLoader.GetAsmBytes("DragonSkipPhaseOne");
         AsmHelper.WriteAbsoluteAddresses(bytes, [
             (memoryService.ReadInt64(WorldChrMan.Base), 0x0 + 2),
-            (Functions.GetEnemyInsWithPackedWorldIdAndChrId, 0x18 + 2)
+            (Functions.GetChrInsWithHandle, 0x18 + 2)
         ]);
 
         memoryService.AllocateAndExecute(bytes);
