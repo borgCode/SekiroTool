@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -123,7 +124,7 @@ public partial class MainWindow : Window
     private bool _hasAllocatedMemory;
     
     private bool _hasPublishedAttached;
-
+    private bool _hasCheckedPatch;
 
     private void Timer_Tick(object sender, EventArgs e)
     {
@@ -132,6 +133,13 @@ public partial class MainWindow : Window
             IsAttachedText.Text = "Attached to game";
             IsAttachedText.Foreground = (SolidColorBrush)Application.Current.Resources["AttachedBrush"];
             LaunchGameButton.IsEnabled = false;
+
+            if (!_hasCheckedPatch)
+            {
+                PatchChecker.Initialize(_memoryService.TargetProcess.MainModule.FileName);
+                Console.WriteLine(PatchChecker.CurrentPatch?.ToString() ?? "Unknown");
+                _hasCheckedPatch = true;
+            }
             
             if (!_hasAllocatedMemory)
             {
