@@ -142,7 +142,7 @@ namespace SekiroTool {
         ///ff d0                   call   rax
         ///48 8b 4c 24 28          mov    rcx,QWORD PTR [rsp+0x28]
         ///48 83 c4 48             add    rsp,0x48
-        ///66 c7 41 2c 42 02       mov    WORD PTR [rcx+0x2c],0x242
+        ///66 c7 41 2c 33 02       mov    WORD PTR [rcx+0x2c],0x233
         ///c3                      ret.
         /// </summary>
         internal static string ChangeIdolIcon {
