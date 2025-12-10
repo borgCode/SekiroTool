@@ -331,6 +331,6 @@ public static class Offsets
         public static long RemoveSpEffect;
         public static long RemoveItem;
         public static long GiveSkillAndPros;
-        
+        public static long GetGoodsParam;
     }
 }

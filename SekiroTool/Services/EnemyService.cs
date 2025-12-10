@@ -6,7 +6,7 @@ using static SekiroTool.Memory.Offsets;
 
 namespace SekiroTool.Services;
 
-public class EnemyService(IMemoryService memoryService, HookManager hookManager) : IEnemyService
+public class EnemyService(IMemoryService memoryService, HookManager hookManager, IReminderService reminderService) : IEnemyService
 {
     public void ToggleNoDeath(bool isEnabled) =>
         memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.AllNoDeath, isEnabled ? 1 : 0);
@@ -23,8 +23,12 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager)
     public void ToggleNoMove(bool isEnabled) =>
         memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.AllNoMove, isEnabled ? 1 : 0);
 
-    public void ToggleDisableAi(bool isEnabled) =>
+    public void ToggleDisableAi(bool isEnabled)
+    {
+        if (isEnabled) reminderService.ChangeIdolIcon();
         memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.DisableAi, isEnabled ? 1 : 0);
+    }
+  
 
     public void ToggleNoPostureBuildup(bool isEnabled) =>
         memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.AllNoPosture, isEnabled ? 1 : 0);
@@ -50,6 +54,7 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager)
         
         if (isEnabled)
         {
+            reminderService.ChangeIdolIcon();
             var stage = CodeCaveOffsets.Base + CodeCaveOffsets.DragonActCombosStage;
             var attackBeforeManipCount = CodeCaveOffsets.Base + CodeCaveOffsets.AttacksBeforeManipCount;
             var staggerDurationCmpVal = CodeCaveOffsets.Base + CodeCaveOffsets.StaggerCmpValue;

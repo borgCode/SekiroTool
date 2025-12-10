@@ -51,17 +51,18 @@ public partial class MainWindow : Window
         
         _nopManager = new NopManager(_memoryService, _stateService);
         _hotkeyManager = new HotkeyManager(_memoryService);
-        
+
         _playerService = new PlayerService(_memoryService, hookManager);
+        IReminderService reminderService = new ReminderService(_memoryService);
         ITravelService travelService = new TravelService(_memoryService, hookManager);
-        IEnemyService enemyService = new EnemyService(_memoryService, hookManager);
-        ITargetService targetService = new TargetService(_memoryService, hookManager);
+        IEnemyService enemyService = new EnemyService(_memoryService, hookManager, reminderService);
+        ITargetService targetService = new TargetService(_memoryService, hookManager, reminderService);
         IDebugDrawService debugDrawService = new DebugDrawService(_memoryService, _stateService, _nopManager);
         IEventService eventService = new EventService(_memoryService);
         IUtilityService utilityService = new UtilityService(_memoryService, hookManager);
         IItemService itemService = new ItemService(_memoryService);
         ISettingsService settingsService = new SettingsService(_memoryService, _nopManager, hookManager);
-        
+
 
         PlayerViewModel playerViewModel = new PlayerViewModel(_playerService, _hotkeyManager, _stateService);
         TravelViewModel travelViewModel =
@@ -169,7 +170,7 @@ public partial class MainWindow : Window
         }
         else
         {
-            if (_memoryService.IsAttached)
+            if (_hasPublishedAttached)
             {
                 _stateService.Publish(State.Detached);
                 _hasPublishedAttached = false;

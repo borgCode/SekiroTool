@@ -5,7 +5,7 @@ using static SekiroTool.Memory.Offsets;
 
 namespace SekiroTool.Services;
 
-public class TargetService(IMemoryService memoryService, HookManager hookManager) : ITargetService
+public class TargetService(IMemoryService memoryService, HookManager hookManager, IReminderService reminderService) : ITargetService
 {
     #region Public Methods
 
@@ -15,6 +15,7 @@ public class TargetService(IMemoryService memoryService, HookManager hookManager
 
         if (isEnabled)
         {
+            reminderService.ChangeIdolIcon();
             var hookLoc = Hooks.LockedTarget;
             var ptrLoc = CodeCaveOffsets.Base + CodeCaveOffsets.LockedTarget;
             var bytes = AsmLoader.GetAsmBytes("LockedTarget");

@@ -253,7 +253,7 @@ public class EnemyViewModel : BaseViewModel
         if (IsNoMoveEnabled) _enemyService.ToggleNoMove(true);
         if (IsDisableAiEnabled) _enemyService.ToggleDisableAi(true);
         if (IsNoPostureBuildupEnabled) _enemyService.ToggleNoPostureBuildup(true);
-        if (IsDragonCombo1Enabled) _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo1, true);
+        if (IsDragonCombo1Enabled) {_enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo1, true);}
         if (IsDragonCombo2Enabled) _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo2, true);
         if (IsDragonCombo3Enabled) _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo3, true);
     }
