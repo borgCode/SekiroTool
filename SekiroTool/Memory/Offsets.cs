@@ -313,7 +313,7 @@ public static class Offsets
         public static long AddExperience;
         public static long ApplySpEffect;
         public static long ItemSpawn;
-        public static long GetEnemyInsWithPackedWorldIdAndChrId;
+        public static long GetChrInsWithHandle;
         public static long OpenRegularShop;
         public static long OpenSkillMenu;
         public static long UpgradeProstheticsMenu;

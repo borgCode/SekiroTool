@@ -108,9 +108,9 @@ public static class Patterns
     );
 
     public static readonly Pattern SprjFlipperImp = new Pattern(
-        new byte[] { 0x48, 0x8B, 0x05, 0x73, 0xE0, 0x2E },
-        "xxxxxx",
-        0,
+        new byte[] { 0x8B, 0x83, 0x44, 0x01, 0x00, 0x00, 0xA8, 0x10, 0x0F, 0x85, 0x8C, 0x02, 0x00, 0x00 },
+        "xxxxxxxxxxxxxx",
+        0x56,
         AddressingMode.Relative,
         3,
         7
