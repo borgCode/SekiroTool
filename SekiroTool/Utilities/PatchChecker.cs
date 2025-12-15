@@ -9,9 +9,10 @@ public static class PatchChecker
 {
     private static readonly Dictionary<long, Patch> PatchSizes = new()
     {
-        [67727360] = Patch.V102,
-        [67731456] = Patch.V104,
-        [70066176] = Patch.V106
+        [65682008] = Patch.V102,
+        [65688152] = Patch.V104,
+        [68005144] = Patch.V106,
+        [68002072] = Patch.V105
     };
 
     public static Patch? CurrentPatch { get; private set; }

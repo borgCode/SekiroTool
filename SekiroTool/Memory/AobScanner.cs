@@ -110,15 +110,15 @@ public class AoBScanner(IMemoryService memoryService)
 
         FindMultipleCallsInFunction(Patterns.ProcessEsdCommand, new Dictionary<Action<long>, int>
         {
-            { addr => Offsets.Functions.OpenRegularShop = addr, 0xBCF + 9 },
-            { addr => Offsets.Functions.OpenSkillMenu = addr, 0x2A03 + 9 },
-            { addr => Offsets.Functions.UpgradeProstheticsMenu = addr, 0x29DC + 9 },
-            { addr => Offsets.Functions.OpenScalesShop = addr, 0x29B5 + 9 },
-            { addr => Offsets.Functions.OpenProstheticsShop = addr, 0x24FA + 9 },
-            { addr => Offsets.Functions.AwardItemLot = addr, 0x228B + 9 },
-            { addr => Offsets.Functions.SetMessageTagValue = addr, 0x18B4 + 9 },
-            { addr => Offsets.Functions.AdjustItemCount = addr, 0x1548 + 9 },
-            { addr => Offsets.Functions.OpenGenericDialog = addr, 0x9CC + 9 },
+            { addr => Offsets.Functions.OpenRegularShop = addr, 0xBCF },
+            { addr => Offsets.Functions.OpenSkillMenu = addr, 0x2A03 },
+            { addr => Offsets.Functions.UpgradeProstheticsMenu = addr, 0x29DC },
+            { addr => Offsets.Functions.OpenScalesShop = addr, 0x29B5 },
+            { addr => Offsets.Functions.OpenProstheticsShop = addr, 0x24FA },
+            { addr => Offsets.Functions.AwardItemLot = addr, 0x228B },
+            { addr => Offsets.Functions.SetMessageTagValue = addr, 0x18B4 },
+            { addr => Offsets.Functions.AdjustItemCount = addr, 0x1548 },
+            { addr => Offsets.Functions.OpenGenericDialog = addr, 0x9CC },
         });
 
         Offsets.Functions.FrpgCastRay = FindAddressByPattern(Patterns.FrpgCastRay).ToInt64();

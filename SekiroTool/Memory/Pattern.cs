@@ -346,10 +346,11 @@ public static class Patterns
     );
 
     public static readonly Pattern ProcessEsdCommand = new Pattern(
-        new byte[] { 0xFF, 0x50, 0x10, 0x3D, 0x84 },
-        "xxxxx",
-        0,
+        new byte[] { 0x48, 0x8B, 0xDA, 0x48, 0x8B, 0xF1, 0x48, 0x8B, 0x02, 0x48, 0x8B, 0xCA, 0xFF, 0x50, 0x10 },
+        "xxxxxxxxxxxxxxx",
+        0xc,
         AddressingMode.Absolute
+
     );
 
     public static readonly Pattern FrpgCastRay = new Pattern(
