@@ -19,6 +19,8 @@ public class SettingsManager
     public double WindowLeft { get; set; }
     public double WindowTop { get; set; }
     public bool EnableUpdateChecks { get; set; } = true;
+    public bool HotkeyReminder { get; set; }
+    
     
     
     private static string SettingsPath => Path.Combine(
@@ -47,6 +49,7 @@ public class SettingsManager
                 $"WindowLeft={WindowLeft}",
                 $"WindowTop={WindowTop}",
                 $"EnableUpdateChecks={EnableUpdateChecks}",
+                $"HotkeyReminder={HotkeyReminder}",
             };
 
             File.WriteAllLines(SettingsPath, lines);
@@ -120,6 +123,10 @@ public class SettingsManager
                             case "EnableUpdateChecks":
                                 bool.TryParse(value, out bool euc);
                                 settings.EnableUpdateChecks = euc;
+                                break;
+                            case "HotkeyReminder":
+                                bool.TryParse(value, out bool hr);
+                                settings.HotkeyReminder = hr;
                                 break;
                         }
                     }
