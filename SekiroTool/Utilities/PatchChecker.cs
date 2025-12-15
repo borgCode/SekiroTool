@@ -10,7 +10,7 @@ public static class PatchChecker
     private static readonly Dictionary<long, Patch> PatchSizes = new()
     {
         [65682008] = Patch.V102,
-        [65688152] = Patch.V104,
+        [65688152] = Patch.V103and4,
         [68005144] = Patch.V106,
         [68002072] = Patch.V105
     };

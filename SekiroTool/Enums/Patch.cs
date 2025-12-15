@@ -5,8 +5,7 @@ namespace SekiroTool.Enums;
 public enum Patch
 {
     V102,
-    V103,
-    V104,
+    V103and4,
     V105,
     V106
 }

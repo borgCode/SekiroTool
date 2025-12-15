@@ -7,7 +7,7 @@ public static class Handles
     private static readonly Dictionary<Patch, int> DragonPatchHandles = new()
     {
         [Patch.V102] = 0x100300b8,
-        [Patch.V104] = 0x100300b8,
+        [Patch.V103and4] = 0x100300b8,
         [Patch.V105] = 0x100300ba, 
         [Patch.V106] = 0x100300ba
     };

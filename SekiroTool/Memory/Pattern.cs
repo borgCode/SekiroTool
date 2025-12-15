@@ -316,10 +316,12 @@ public static class Patterns
     );
 
     public static readonly Pattern Warp = new Pattern(
-        new byte[] { 0x0F, 0x84, 0xC2, 0x00, 0x00, 0x00, 0xB8 },
-        "xxxxxxx",
-        -0x1B,
-        AddressingMode.Absolute
+        new byte[] { 0xBA, 0x10, 0x27, 0x00, 0x00, 0x41, 0xB8, 0x64, 0xEB, 0x00, 0x00, 0xE8, 0x00, 0x00, 0x00, 0x00 },
+        "xxxxxxxxxxxx????",
+0x1A,
+        AddressingMode.Relative,
+        1,
+        5
     );
 
     public static readonly Pattern ApplySpEffect = new Pattern(
