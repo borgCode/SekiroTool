@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using SekiroTool.GameIds;
 using SekiroTool.Interfaces;
 using SekiroTool.Memory;
 using SekiroTool.Utilities;
@@ -38,9 +39,13 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
 
     public void SkipDragonPhaseOne()
     {
+        var dragonHandle = Handles.GetDragonHandle(PatchChecker.CurrentPatch.Value);
+        if (!dragonHandle.HasValue) return;
+        
         var bytes = AsmLoader.GetAsmBytes("DragonSkipPhaseOne");
         AsmHelper.WriteAbsoluteAddresses(bytes, [
             (memoryService.ReadInt64(WorldChrMan.Base), 0x0 + 2),
+            (dragonHandle.Value, 0xA + 2),
             (Functions.GetChrInsWithHandle, 0x18 + 2)
         ]);
 
