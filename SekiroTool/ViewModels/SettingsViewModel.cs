@@ -25,6 +25,7 @@ public class SettingsViewModel : BaseViewModel
 
         stateService.Subscribe(State.Attached, OnGameAttached);
         stateService.Subscribe(State.EarlyAttached, OnGameEarlyAttached);
+        stateService.Subscribe(State.GameStart, OnGameStart);
         
         RegisterHotkeys();
 
@@ -54,14 +55,6 @@ public class SettingsViewModel : BaseViewModel
             { HotkeyActions.DecreasePlayerSpeed.ToString(), text => DecreasePlayerSpeedHotkeyText = text },
             { HotkeyActions.TogglePlayerSpeed.ToString(), text => TogglePlayerSpeedHotkeyText = text },
             { HotkeyActions.NoDamage.ToString(), text => TogglePlayerNoDamageHotkeyText = text},
-            // { "RTSR", text => RtsrHotkeyText = text },
-            // { "NoDeath", text => NoDeathHotkeyText = text },
-            // { "OneShot", text => OneShotHotkeyText = text },
-            // { "PlayerNoDamage", text => NoDamagePlayerHotkeyText = text },
-            // { "TogglePlayerSpeed", text => TogglePlayerSpeedHotkeyText = text },
-            // { "IncreasePlayerSpeed", text => IncreasePlayerSpeedHotkeyText = text },
-            // { "DecreasePlayerSpeed", text => DecreasePlayerSpeedHotkeyText = text },
-            // { "DealNoDamage", text => DealNoDamageHotkeyText = text },
             { HotkeyActions.SkipDragonPhaseOne.ToString(), text => SkipDragonPhaseOneHotkeyText = text },
             { HotkeyActions.TriggerDragonFinalAttack.ToString(), text => TriggerDragonFinalAttackHotkeyText = text },
             { HotkeyActions.NoButterflySummons.ToString(), text => NoButterflySummonsHotkeyText = text },
@@ -73,13 +66,7 @@ public class SettingsViewModel : BaseViewModel
             { HotkeyActions.AllDisableAi.ToString(), text => AllDisableAiHotkeyText = text },
             { HotkeyActions.AllNoPostureBuildup.ToString(), text => AllNoPostureBuildupHotkeyText = text },
             { HotkeyActions.AllTargetingView.ToString(), text => AllTargetingViewHotkeyText = text },
-            // { "RestoreSpellcasts", text => RestoreSpellcastsHotkeyText = text },
-            // { "RestoreHumanity", text => RestoreHumanityHotkeyText = text },
-            // { "Rest", text => RestHotkeyText = text },
-
             { HotkeyActions.Quitout.ToString(), text => QuitoutHotkeyText = text },
-            // { "Warp", text => WarpHotkeyText = text },
-
             { HotkeyActions.EnableTargetOptions.ToString(), text => EnableTargetOptionsHotkeyText = text },
             { HotkeyActions.FreezeTargetHp.ToString(), text => FreezeHpHotkeyText = text },
             { HotkeyActions.SetTargetOneHp.ToString(), text => SetTargetOneHpHotkeyText = text },
@@ -115,6 +102,7 @@ public class SettingsViewModel : BaseViewModel
 
         LoadHotkeyDisplays();
     }
+    
 
     #region Properties
 
@@ -180,6 +168,23 @@ public class SettingsViewModel : BaseViewModel
                 SettingsManager.Default.Save();
 
                 _settingsService.ToggleNoTutorials(_isNoTutorialsEnabled);
+            }
+        }
+    }
+    
+    private bool _isHotkeyReminderEnabled;
+
+    public bool IsHotkeyReminderEnabled
+    {
+        get => _isHotkeyReminderEnabled;
+        set
+        {
+            if (SetProperty(ref _isHotkeyReminderEnabled, value))
+            {
+                SettingsManager.Default.HotkeyReminder = value;
+                SettingsManager.Default.Save();
+
+                // _settingsService.ToggleNoTutorials(_isNoTutorialsEnabled);
             }
         }
     }
@@ -836,6 +841,9 @@ public class SettingsViewModel : BaseViewModel
 
         _defaultSoundVolume = SettingsManager.Default.DefaultSoundVolume;
         OnPropertyChanged(nameof(DefaultSoundVolume));
+        
+        _isHotkeyReminderEnabled = SettingsManager.Default.HotkeyReminder;
+        OnPropertyChanged(nameof(IsHotkeyReminderEnabled));
 
         IsAlwaysOnTopEnabled = SettingsManager.Default.AlwaysOnTop;
     }
@@ -860,6 +868,13 @@ public class SettingsViewModel : BaseViewModel
         if (IsNoLogoEnabled) _settingsService.ToggleNoLogo(true);
         if (IsDefaultSoundChangeEnabled) _settingsService.PatchDefaultSound(DefaultSoundVolume);
         if (IsDisableMenuMusicEnabled) _settingsService.ToggleDisableMusic(true);
+    }
+    
+    private void OnGameStart()
+    {
+        if (!IsHotkeyReminderEnabled) return;
+        if (!IsEnableHotkeysEnabled) return;
+        MsgBox.Show("Hotkeys are enabled");
     }
 
     private void LoadHotkeyDisplays()

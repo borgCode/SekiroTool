@@ -14,11 +14,6 @@
         <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
         <Version>1.0.1</Version>
     </PropertyGroup>
-    
-
-    <ItemGroup>
-      <Folder Include="Views\Windows\" />
-    </ItemGroup>
 
     <ItemGroup>
       <EmbeddedResource Update="Resources.resx">

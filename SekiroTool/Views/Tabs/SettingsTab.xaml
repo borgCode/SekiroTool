@@ -22,6 +22,28 @@
                                  <CheckBox Content="Always On Top"
                                            IsChecked="{Binding IsAlwaysOnTopEnabled}"
                                            Margin="0,0,0,0" />
+                                 
+                                 <StackPanel Orientation="Horizontal">
+                                     <CheckBox Content="Hotkey Reminder"
+                                               IsChecked="{Binding IsHotkeyReminderEnabled}"
+                                               Margin="10 ,0,0,0" />
+                                     <Border
+                                         Background="#3498db"
+                                         CornerRadius="10"
+                                         Width="12"
+                                         Height="12"
+                                         Margin="5,0,0,0"
+                                         VerticalAlignment="Center"
+                                         ToolTip="Show a popup reminder when starting a new game while hotkeys are still enabled"
+                                         ToolTipService.InitialShowDelay='100'>
+                                         <TextBlock Text="i"
+                                                    Foreground="White"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontWeight="Bold"
+                                                    FontSize="10" />
+                                     </Border>
+                                 </StackPanel>
                              </StackPanel>
              
                              <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
