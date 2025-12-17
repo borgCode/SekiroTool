@@ -1,5 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.JavaScript;
+using System.Windows.Shapes;
+using SekiroTool.Enums;
 using SekiroTool.Interfaces;
 using SekiroTool.Memory;
 using SekiroTool.Models;
@@ -250,7 +252,17 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
     
     public void TogglePlayerNoDeath(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoDeath, isEnabled ? 1 : 0);
+        if (PatchChecker.CurrentPatch == Patch.V106)
+        {
+            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoDeath, isEnabled ? 1 : 0);
+            
+        }
+
+        else if(PatchChecker.CurrentPatch == Patch.V103and4)
+        {
+            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flagv104.PlayerNoDeath, isEnabled ? 1 : 0);
+            
+        }
     }
 
     public void TogglePlayerNoDeathWithoutKillbox(bool isNoDeathEnabledWithoutKillbox)
@@ -282,41 +294,108 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
     
     public void TogglePlayerOneShotHealth(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerOneShotHealth, isEnabled ? 1 : 0);
+        if (PatchChecker.CurrentPatch == Patch.V106)
+        {
+            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerOneShotHealth, isEnabled ? 1 : 0);
+            
+        }
+
+        else if(PatchChecker.CurrentPatch == Patch.V103and4)
+        {
+            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flagv104.PlayerOneShotHealth, isEnabled ? 1 : 0);
+            
+        }
     }
 
     public void TogglePlayerOneShotPosture(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerOneShotPosture,
-            isEnabled ? 1 : 0);
+        if (PatchChecker.CurrentPatch == Patch.V106)
+        {
+            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerOneShotPosture, isEnabled ? 1 : 0);
+            
+        }
+
+        else if(PatchChecker.CurrentPatch == Patch.V103and4)
+        {
+            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flagv104.PlayerOneShotPosture, isEnabled ? 1 : 0);
+            
+        }
     }
 
     public void TogglePlayerNoGoodsConsume(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoGoodsConsume,
-            isEnabled ? 1 : 0);
+        if (PatchChecker.CurrentPatch == Patch.V106)
+        {
+            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoGoodsConsume, isEnabled ? 1 : 0);
+            
+        }
+
+        else if(PatchChecker.CurrentPatch == Patch.V103and4)
+        {
+            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flagv104.PlayerNoGoodsConsume, isEnabled ? 1 : 0);
+            
+        }
     }
 
     public void TogglePlayerNoEmblemsConsume(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoEmblemsConsume,
-            isEnabled ? 1 : 0);
+        if (PatchChecker.CurrentPatch == Patch.V106)
+        {
+            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoEmblemsConsume, isEnabled ? 1 : 0);
+            
+        }
+
+        else if(PatchChecker.CurrentPatch == Patch.V103and4)
+        {
+            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flagv104.PlayerNoEmblemsConsume, isEnabled ? 1 : 0);
+            
+        }
     }
 
     public void TogglePlayerNoRevivalConsume(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoRevivalConsume,
-            isEnabled ? 1 : 0);
+        if (PatchChecker.CurrentPatch == Patch.V106)
+        {
+            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoRevivalConsume, isEnabled ? 1 : 0);
+            
+        }
+
+        else if(PatchChecker.CurrentPatch == Patch.V103and4)
+        {
+            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flagv104.PlayerNoRevivalConsume, isEnabled ? 1 : 0);
+            
+        }
     }
 
     public void TogglePlayerHide(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerHide, isEnabled ? 1 : 0);
+        if (PatchChecker.CurrentPatch == Patch.V106)
+        {
+            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerHide, isEnabled ? 1 : 0);
+            Console.WriteLine("Using 1.06");
+        }
+
+        else if(PatchChecker.CurrentPatch == Patch.V103and4)
+        {
+            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flagv104.PlayerHide, isEnabled ? 1 : 0);
+            
+        }
+            
     }
 
     public void TogglePlayerSilent(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerSilent, isEnabled ? 1 : 0);
+        if (PatchChecker.CurrentPatch == Patch.V106)
+        {
+            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerSilent, isEnabled ? 1 : 0);
+            
+        }
+
+        else if(PatchChecker.CurrentPatch == Patch.V103and4)
+        {
+            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flagv104.PlayerSilent, isEnabled ? 1 : 0);
+            
+        }
     }
 
     public void TogglePlayerInfinitePoise(bool isEnabled)

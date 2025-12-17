@@ -162,6 +162,25 @@ public static class Offsets
             DisableAi = 0x10,
             AllNoPosture = 0x17,
         }
+        
+        public enum Flagv104
+        {
+            PlayerNoDeath = 0x0,
+            PlayerOneShotHealth = 0x1,
+            PlayerOneShotPosture = -0x34,
+            PlayerNoGoodsConsume = -0x33,
+            PlayerNoEmblemsConsume = -0x32,
+            PlayerNoRevivalConsume = -0x31,
+            PlayerHide = -0x2D,
+            PlayerSilent = -0x2C,
+            AllNoDeath = -0x2B,
+            AllNoDamage = -0x2A,
+            AllNoHit = -0x29,
+            AllNoAttack = -0x28,
+            AllNoMove = -0x27,
+            DisableAi = -0x26,
+            AllNoPosture = -0x1F,
+        }
     }
 
     public static class MapItemMan
