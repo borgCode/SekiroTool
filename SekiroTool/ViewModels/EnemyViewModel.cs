@@ -159,8 +159,9 @@ public class EnemyViewModel : BaseViewModel
             {
                 IsDragonCombo2Enabled = false;
                 IsDragonCombo3Enabled = false;
+                IsDragonCombo4Enabled = false;
             }
-            _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo1, _isDragonCombo1Enabled);
+            _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo1, _isDragonCombo1Enabled, false);
         }
     }
     
@@ -176,8 +177,9 @@ public class EnemyViewModel : BaseViewModel
             {
                 IsDragonCombo1Enabled = false;
                 IsDragonCombo3Enabled = false;
+                IsDragonCombo4Enabled = false;
             }
-            _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo2, _isDragonCombo2Enabled);
+            _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo2, _isDragonCombo2Enabled, false);
         }
     }
     
@@ -193,8 +195,27 @@ public class EnemyViewModel : BaseViewModel
             {
                 IsDragonCombo1Enabled = false;
                 IsDragonCombo2Enabled = false;
+                IsDragonCombo4Enabled = false;
             }
-            _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo3, _isDragonCombo3Enabled);
+            _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo3, _isDragonCombo3Enabled, false);
+        }
+    }
+    
+    private bool _isDragonCombo4Enabled;
+    
+    public bool IsDragonCombo4Enabled
+    {
+        get => _isDragonCombo4Enabled;
+        set
+        {
+            SetProperty(ref _isDragonCombo4Enabled, value);
+            if (_isDragonCombo4Enabled)
+            {
+                IsDragonCombo1Enabled = false;
+                IsDragonCombo2Enabled = false;
+                IsDragonCombo3Enabled = false;
+            }
+            _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo4, _isDragonCombo4Enabled, true);
         }
     }
 
@@ -253,9 +274,10 @@ public class EnemyViewModel : BaseViewModel
         if (IsNoMoveEnabled) _enemyService.ToggleNoMove(true);
         if (IsDisableAiEnabled) _enemyService.ToggleDisableAi(true);
         if (IsNoPostureBuildupEnabled) _enemyService.ToggleNoPostureBuildup(true);
-        if (IsDragonCombo1Enabled) {_enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo1, true);}
-        if (IsDragonCombo2Enabled) _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo2, true);
-        if (IsDragonCombo3Enabled) _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo3, true);
+        if (IsDragonCombo1Enabled) {_enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo1, true, false);}
+        if (IsDragonCombo2Enabled) _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo2, true, false);
+        if (IsDragonCombo3Enabled) _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo3, true, false);
+        if (IsDragonCombo4Enabled) _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo4, true, true);
     }
 
     private void OnGameNotLoaded()

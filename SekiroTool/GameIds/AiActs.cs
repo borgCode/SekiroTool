@@ -33,6 +33,16 @@ public static class AiActs
             (byte)DragonActs.SlowNeckSwim,
             (byte)DragonActs.VerticalSlams
         ];
+        
+        
+        public static readonly byte[] Combo4 = 
+        [
+            (byte)DragonActs.VerticalSlams,
+            (byte)DragonActs.KanjiSwipe,
+            (byte)DragonActs.SlowNeckSwim,
+            (byte)DragonActs.SlowNeckSwim
+        ];
+        
     }
     
     

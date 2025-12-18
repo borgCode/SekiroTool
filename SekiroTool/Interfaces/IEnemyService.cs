@@ -13,6 +13,6 @@ public interface IEnemyService
     void ToggleNoPostureBuildup(bool isEnabled);
     void ToggleTargetingView(bool isEnabled);
     void SkipDragonPhaseOne();
-    void ToggleDragonActCombo(byte[] actArray, bool isEnabled);
+    void ToggleDragonActCombo(byte[] actArray, bool isEnabled, bool shouldDoStage1Twice);
     void ToggleButterflyNoSummons(bool isEnabled);
 }

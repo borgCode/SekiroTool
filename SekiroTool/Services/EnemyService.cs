@@ -63,7 +63,7 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
         memoryService.AllocateAndExecute(bytes);
     }
 
-    public void ToggleDragonActCombo(byte[] actArray, bool isEnabled)
+    public void ToggleDragonActCombo(byte[] actArray, bool isEnabled, bool shouldDoStage1Twice)
     {
 
         var code = CodeCaveOffsets.Base + CodeCaveOffsets.DragonActCombosCode;
@@ -73,7 +73,9 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
             reminderService.ChangeIdolIcon();
             var stage = CodeCaveOffsets.Base + CodeCaveOffsets.DragonActCombosStage;
             var attackBeforeManipCount = CodeCaveOffsets.Base + CodeCaveOffsets.AttacksBeforeManipCount;
+            var doStage1TwiceFlag = CodeCaveOffsets.Base + CodeCaveOffsets.ShouldDoStage1Twice;
             var staggerDurationCmpVal = CodeCaveOffsets.Base + CodeCaveOffsets.StaggerCmpValue;
+            memoryService.WriteUInt8(doStage1TwiceFlag, shouldDoStage1Twice ? 1 : 0);
             memoryService.WriteUInt8(stage, 0);
             memoryService.WriteUInt8(attackBeforeManipCount, 0);
             memoryService.WriteFloat(staggerDurationCmpVal, 3.9f);
@@ -85,11 +87,13 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
                 (code.ToInt64() + 0x14, stage.ToInt64(), 7, 0x14 + 3),
                 (code.ToInt64() + 0x29, attackBeforeManipCount.ToInt64(), 6, 0x29 + 2),
                 (code.ToInt64() + 0x2F, attackBeforeManipCount.ToInt64(), 7, 0x2F + 2),
-                (code.ToInt64() + 0xD8, staggerDurationCmpVal.ToInt64(), 8, 0xD8 + 4),
-                (code.ToInt64() + 0x114, hookLoc + 0x6, 5, 0x114 + 1)
+                (code.ToInt64() + 0x57, doStage1TwiceFlag.ToInt64(), 7, 0x57 + 2),
+                (code.ToInt64() + 0x5E, doStage1TwiceFlag.ToInt64(), 7, 0x5E + 2),
+                (code.ToInt64() + 0xEC, staggerDurationCmpVal.ToInt64(), 8, 0xEC + 4),
+                (code.ToInt64() + 0x128, hookLoc + 0x6, 5, 0x128 + 1)
             });
             
-            int[] patchOffsets = { 0x42, 0x56, 0xf3, 0xfc };
+            int[] patchOffsets = { 0x42, 0x56, 0x107, 0x110 };
 
             for (int i = 0; i < Math.Min(actArray.Length, patchOffsets.Length); i++)
             {

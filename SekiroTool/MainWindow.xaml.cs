@@ -195,9 +195,8 @@ public partial class MainWindow : Window
 
     private void TrySetGameStartPrefs()
     {
-        var igtPtr = _memoryService.ReadInt64((IntPtr)_memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.IGT);
-        long gameTimeMs = _memoryService.ReadInt64((IntPtr)igtPtr);
-        if (gameTimeMs < 5000) _stateService.Publish(State.GameStart);
+        var igt = _memoryService.ReadInt64((IntPtr)_memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.IGT);
+        if (igt < 5000) _stateService.Publish(State.GameStart);
     }
 
     private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
