@@ -233,7 +233,7 @@
                                 Height="12"
                                 Margin="5,0,0,0"
                                 VerticalAlignment="Center"
-                                ToolTip="Kanji Swipe -> Neck Swim -> Vertical Slams"
+                                ToolTip="Vertial Slams -> Neck Swim&#x0a;(For ABMB Category)"
                                 ToolTipService.InitialShowDelay='100'>
                                 <TextBlock Text="i"
                                            Foreground="White"
