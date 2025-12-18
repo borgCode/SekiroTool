@@ -1,4 +1,7 @@
-﻿namespace SekiroTool.Memory;
+﻿using SekiroTool.Enums;
+using SekiroTool.Utilities;
+
+namespace SekiroTool.Memory;
 
 public static class Offsets
 {
@@ -9,7 +12,6 @@ public static class Offsets
         public const int PlayerGameData = 0x2000;
         public const int WorldBlockInfo = 0x20;
         public const int WorldBlockId = 0x8;
-
     }
 
     public static class ChrIns
@@ -24,7 +26,6 @@ public static class Offsets
         public static readonly BitFlag NoEmblemsConsume = new(0x3, 1 << 0);
         public const int SpEffectManager = 0x11d0;
 
-
         public const int Modules = 0x1FF8;
 
         public static readonly int[] ChrDataModule = [Modules, 0x18];
@@ -32,7 +33,6 @@ public static class Offsets
         public static readonly int[] ChrBehaviorModule = [Modules, 0x28];
         public static readonly int[] ChrSuperArmorModule = [Modules, 0x40];
         public static readonly int[] ChrPhysicsModule = [Modules, 0x68];
-
 
         public enum ChrDataOffsets
         {
@@ -132,7 +132,6 @@ public static class Offsets
         public const int GlobalForceKengekiAct = 0x4C6ED;
     }
 
-
     public static class DamageManager
     {
         public static IntPtr Base;
@@ -144,23 +143,79 @@ public static class Offsets
     {
         public static IntPtr Base;
 
-        public enum Flag
+        private static readonly Dictionary<Patch, Func<DebugFlag, int>> OffsetResolvers = new()
         {
-            PlayerNoDeath = 0x0,
-            PlayerOneShotHealth = 0x1,
-            PlayerOneShotPosture = 0x2,
-            PlayerNoGoodsConsume = 0x3,
-            PlayerNoEmblemsConsume = 0x4,
-            PlayerNoRevivalConsume = 0x5,
-            PlayerHide = 0x9,
-            PlayerSilent = 0xA,
-            AllNoDeath = 0xB,
-            AllNoDamage = 0xC,
-            AllNoHit = 0xD,
-            AllNoAttack = 0xE,
-            AllNoMove = 0xF,
-            DisableAi = 0x10,
-            AllNoPosture = 0x17,
+            [Patch.V102] = flag => (int)flag,
+            [Patch.V103and4] = GetV104Offset,
+            [Patch.V105] = flag => (int)flag,
+            [Patch.V106] = flag => (int)flag,
+        };
+
+        public enum DebugFlag
+        {
+            PlayerNoDeath,
+            PlayerOneShotHealth,
+            PlayerOneShotPosture,
+            PlayerNoGoodsConsume,
+            PlayerNoEmblemsConsume,
+            PlayerNoRevivalConsume,
+            PlayerHide,
+            PlayerSilent,
+            AllNoDeath,
+            AllNoDamage,
+            AllNoHit,
+            AllNoAttack,
+            AllNoMove,
+            DisableAi,
+            AllNoPosture,
+        }
+
+        private static readonly Dictionary<DebugFlag, int> V104Offsets = new()
+        {
+            [DebugFlag.PlayerNoDeath] = 0x0,
+            [DebugFlag.PlayerOneShotHealth] = 0x1,
+            [DebugFlag.PlayerOneShotPosture] = -0x34,
+            [DebugFlag.PlayerNoGoodsConsume] = -0x33,
+            [DebugFlag.PlayerNoEmblemsConsume] = -0x32,
+            [DebugFlag.PlayerNoRevivalConsume] = -0x31,
+            [DebugFlag.PlayerHide] = -0x2D,
+            [DebugFlag.PlayerSilent] = -0x2C,
+            [DebugFlag.AllNoDeath] = -0x2B,
+            [DebugFlag.AllNoDamage] = -0x2A,
+            [DebugFlag.AllNoHit] = -0x29,
+            [DebugFlag.AllNoAttack] = -0x28,
+            [DebugFlag.AllNoMove] = -0x27,
+            [DebugFlag.DisableAi] = -0x26,
+            [DebugFlag.AllNoPosture] = -0x1F,
+        };
+
+
+        private static readonly Dictionary<DebugFlag, int> StandardOffsets = new()
+        {
+            [DebugFlag.PlayerNoDeath] = 0x0,
+            [DebugFlag.PlayerOneShotHealth] = 0x1,
+            [DebugFlag.PlayerOneShotPosture] = 0x2,
+            [DebugFlag.PlayerNoGoodsConsume] = 0x3,
+            [DebugFlag.PlayerNoEmblemsConsume] = 0x4,
+            [DebugFlag.PlayerNoRevivalConsume] = 0x5,
+            [DebugFlag.PlayerHide] = 0x9,
+            [DebugFlag.PlayerSilent] = 0xA,
+            [DebugFlag.AllNoDeath] = 0xB,
+            [DebugFlag.AllNoDamage] = 0xC,
+            [DebugFlag.AllNoHit] = 0xD,
+            [DebugFlag.AllNoAttack] = 0xE,
+            [DebugFlag.AllNoMove] = 0xF,
+            [DebugFlag.DisableAi] = 0x10,
+            [DebugFlag.AllNoPosture] = 0x17,
+        };
+
+        private static int GetV104Offset(DebugFlag flag) => V104Offsets[flag];
+
+        public static int GetOffset(DebugFlag flag)
+        {
+            var patch = PatchChecker.CurrentPatch;
+
+            return patch == Patch.V103and4 ? V104Offsets[flag] : StandardOffsets[flag];
         }
     }
 
@@ -168,7 +223,7 @@ public static class Offsets
     {
         public static IntPtr Base;
     }
-    
+
     public static class GameRendFlags
     {
         public static IntPtr Base;
@@ -178,7 +233,7 @@ public static class Offsets
         public const int ShowSfx = 0x3;
         public const int ShowGrass = 0x6;
     }
-    
+
     public static class MeshBase
     {
         public static IntPtr Base;
@@ -188,12 +243,10 @@ public static class Offsets
         public const int Chr = 0x3;
     }
 
-
     public static class EventFlagMan
     {
         public static IntPtr Base;
     }
-    
 
     public static class DebugEventMan
     {
@@ -206,7 +259,7 @@ public static class Offsets
     public static class SprjFlipperImp
     {
         public static IntPtr Base;
-        
+
         public const int GameSpeed = 0x344;
     }
 
@@ -214,38 +267,37 @@ public static class Offsets
     {
         public static IntPtr Base;
     }
-    
+
     public static class DlUserInputManager
     {
         public static IntPtr Base;
         public const int IsGameFocused = 0x23D;
     }
-    
+
     public static class TargetingView
     {
         public static IntPtr Base;
     }
-    
+
     public static class IdolRequests
     {
         public static IntPtr Base;
     }
-
 
     public static class FieldArea
     {
         public static IntPtr Base;
         public const int CurrentWorldBlockIndex = 0x28;
         public const int GameRend = 0x20;
-        public static readonly int[] FreeCamMode = [GameRend, 0xE0]; 
+        public static readonly int[] FreeCamMode = [GameRend, 0xE0];
         public const int DebugFreecam = 0xE8;
         public static readonly int[] DebugCamCoords = [GameRend, DebugFreecam, 0x40];
-        
+
         public const int ChrCam = 0x30;
+
         public static readonly int[] ChrExFollowCam = [ChrCam, 0x60];
         // +0x10 yaw
         //+0x30 pitch
-        
     }
 
     public static class FrpgHavokMan
@@ -266,7 +318,6 @@ public static class Offsets
     {
         public static IntPtr Base;
     }
-    
 
     public static class Patches
     {
@@ -281,7 +332,6 @@ public static class Offsets
         public static IntPtr DefaultSoundVolWrite;
         public static IntPtr PlayerSoundView;
     }
-
 
     public static class Hooks
     {
