@@ -1,7 +1,4 @@
 ﻿using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.JavaScript;
-using System.Windows.Shapes;
-using SekiroTool.Enums;
 using SekiroTool.Interfaces;
 using SekiroTool.Memory;
 using SekiroTool.Models;
@@ -15,7 +12,6 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
     private Position _position1 = new();
     private Position _position2 = new();
     private Dictionary<int, int> _idolsByAreaIndex = DataLoader.GetIdolIdsByAreaIndexDictionary();
-
 
     #region Public Methods
 
@@ -68,18 +64,13 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
 
         if (areaIndex != savedAreaIndex)
         {
-            Task.Run(() =>
-            {
-                DoAreaWarp(savedAreaIndex, xyzBytes, angle);
-       
-            });
+            Task.Run(() => { DoAreaWarp(savedAreaIndex, xyzBytes, angle); });
         }
         else
         {
             memoryService.WriteBytes(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.X, xyzBytes);
             memoryService.WriteFloat(chrPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.Angle, angle);
         }
- 
     }
 
     private void DoAreaWarp(int areaIndex, byte[] xyzBytes, float angle)
@@ -92,28 +83,28 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
             (Functions.Warp, 0x10 + 2)
         ]);
         memoryService.AllocateAndExecute(bytes);
-        
+
         var coordWriteHook = Hooks.SetWarpCoordinates;
         var angleWriteHook = Hooks.SetWarpAngle;
 
         var coordLoc = CodeCaveOffsets.Base + CodeCaveOffsets.WarpCoords;
         var coordWriteCode = CodeCaveOffsets.Base + CodeCaveOffsets.WarpCoordsCode;
-        
+
         memoryService.WriteBytes(coordLoc, xyzBytes);
-        
+
         var codeBytes = AsmLoader.GetAsmBytes("WarpCoordWrite");
-        
+
         bytes = AsmHelper.GetRelOffsetBytes(coordWriteCode.ToInt64(), coordLoc.ToInt64(), 7);
         Array.Copy(bytes, 0, codeBytes, 0x0 + 3, bytes.Length);
         memoryService.WriteBytes(coordWriteCode, codeBytes);
-        
+
         var angleLoc = CodeCaveOffsets.Base + CodeCaveOffsets.WarpAngle;
-        
+
         var angleWriteCode = CodeCaveOffsets.Base + CodeCaveOffsets.WarpAngleCode;
-        
+
         var angleToWrite = new float[] { 0f, angle, 0f, 0f };
         memoryService.WriteBytes(angleLoc, MemoryMarshal.AsBytes(angleToWrite.AsSpan()).ToArray());
-        
+
         codeBytes = AsmLoader.GetAsmBytes("WarpAngleWrite");
         bytes = AsmHelper.GetRelOffsetBytes(angleWriteCode.ToInt64(), angleLoc.ToInt64(), 7);
         Array.Copy(bytes, 0, codeBytes, 0x0 + 3, bytes.Length);
@@ -123,7 +114,7 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
             [0x66, 0x0F, 0x7F, 0x80, 0xC0, 0x0A, 0x00, 0x00]);
         hookManager.InstallHook(angleWriteCode.ToInt64(), angleWriteHook,
             [0x66, 0x0F, 0x7F, 0x80, 0xD0, 0x0A, 0x00, 0x00]);
-        
+
         var isGameLoadedPtr = (IntPtr)memoryService.ReadInt64(MenuMan.Base) + MenuMan.IsLoaded;
         {
             int start = Environment.TickCount;
@@ -139,10 +130,9 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
                    Environment.TickCount < start + 10000)
                 Thread.Sleep(50);
         }
-        
+
         hookManager.UninstallHook(coordWriteCode.ToInt64());
         hookManager.UninstallHook(angleWriteCode.ToInt64());
-
     }
 
     public (float x, float y, float z) GetCoords()
@@ -154,7 +144,6 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         return (x, y, z);
     }
 
-
     public void SetHp(int hp) =>
         memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Hp, hp);
 
@@ -163,15 +152,14 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
 
     public int GetAttackPower()
     {
-      var apPtr = memoryService.FollowPointers(WorldChrMan.Base, [
+        var apPtr = memoryService.FollowPointers(WorldChrMan.Base, [
             WorldChrMan.PlayerIns,
             WorldChrMan.PlayerGameData,
             (int)ChrIns.PlayerGameDataOffsets.AttackPower
         ], false);
-      
-      return memoryService.ReadInt32(apPtr);
+
+        return memoryService.ReadInt32(apPtr);
     }
-    
 
     public int GetMaxHp() =>
         memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.MaxHp);
@@ -249,20 +237,11 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         ]);
         memoryService.AllocateAndExecute(bytes);
     }
-    
+
     public void TogglePlayerNoDeath(bool isEnabled)
     {
-        if (PatchChecker.CurrentPatch == Patch.V106)
-        {
-            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoDeath, isEnabled ? 1 : 0);
-            
-        }
-
-        else if(PatchChecker.CurrentPatch == Patch.V103and4)
-        {
-            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flagv104.PlayerNoDeath, isEnabled ? 1 : 0);
-            
-        }
+        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.GetOffset(DebugFlags.DebugFlag.PlayerNoDeath),
+            isEnabled ? 1 : 0);
     }
 
     public void TogglePlayerNoDeathWithoutKillbox(bool isNoDeathEnabledWithoutKillbox)
@@ -291,111 +270,40 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         var bitFlags = GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.BitFlags;
         memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDamage, isEnabled);
     }
-    
+
     public void TogglePlayerOneShotHealth(bool isEnabled)
     {
-        if (PatchChecker.CurrentPatch == Patch.V106)
-        {
-            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerOneShotHealth, isEnabled ? 1 : 0);
-            
-        }
-
-        else if(PatchChecker.CurrentPatch == Patch.V103and4)
-        {
-            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flagv104.PlayerOneShotHealth, isEnabled ? 1 : 0);
-            
-        }
+        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.GetOffset(DebugFlags.DebugFlag.PlayerOneShotHealth), isEnabled ? 1 : 0);
     }
 
     public void TogglePlayerOneShotPosture(bool isEnabled)
     {
-        if (PatchChecker.CurrentPatch == Patch.V106)
-        {
-            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerOneShotPosture, isEnabled ? 1 : 0);
-            
-        }
-
-        else if(PatchChecker.CurrentPatch == Patch.V103and4)
-        {
-            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flagv104.PlayerOneShotPosture, isEnabled ? 1 : 0);
-            
-        }
+        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.GetOffset(DebugFlags.DebugFlag.PlayerOneShotPosture), isEnabled ? 1 : 0);
     }
 
     public void TogglePlayerNoGoodsConsume(bool isEnabled)
     {
-        if (PatchChecker.CurrentPatch == Patch.V106)
-        {
-            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoGoodsConsume, isEnabled ? 1 : 0);
-            
-        }
-
-        else if(PatchChecker.CurrentPatch == Patch.V103and4)
-        {
-            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flagv104.PlayerNoGoodsConsume, isEnabled ? 1 : 0);
-            
-        }
+        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.GetOffset(DebugFlags.DebugFlag.PlayerNoGoodsConsume), isEnabled ? 1 : 0);
     }
 
     public void TogglePlayerNoEmblemsConsume(bool isEnabled)
     {
-        if (PatchChecker.CurrentPatch == Patch.V106)
-        {
-            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoEmblemsConsume, isEnabled ? 1 : 0);
-            
-        }
-
-        else if(PatchChecker.CurrentPatch == Patch.V103and4)
-        {
-            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flagv104.PlayerNoEmblemsConsume, isEnabled ? 1 : 0);
-            
-        }
+        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.GetOffset(DebugFlags.DebugFlag.PlayerNoEmblemsConsume), isEnabled ? 1 : 0);
     }
 
     public void TogglePlayerNoRevivalConsume(bool isEnabled)
     {
-        if (PatchChecker.CurrentPatch == Patch.V106)
-        {
-            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerNoRevivalConsume, isEnabled ? 1 : 0);
-            
-        }
-
-        else if(PatchChecker.CurrentPatch == Patch.V103and4)
-        {
-            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flagv104.PlayerNoRevivalConsume, isEnabled ? 1 : 0);
-            
-        }
+        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.GetOffset(DebugFlags.DebugFlag.PlayerNoRevivalConsume), isEnabled ? 1 : 0);
     }
 
     public void TogglePlayerHide(bool isEnabled)
     {
-        if (PatchChecker.CurrentPatch == Patch.V106)
-        {
-            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerHide, isEnabled ? 1 : 0);
-            Console.WriteLine("Using 1.06");
-        }
-
-        else if(PatchChecker.CurrentPatch == Patch.V103and4)
-        {
-            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flagv104.PlayerHide, isEnabled ? 1 : 0);
-            
-        }
-            
+        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.GetOffset(DebugFlags.DebugFlag.PlayerHide), isEnabled ? 1 : 0);
     }
 
     public void TogglePlayerSilent(bool isEnabled)
     {
-        if (PatchChecker.CurrentPatch == Patch.V106)
-        {
-            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flag.PlayerSilent, isEnabled ? 1 : 0);
-            
-        }
-
-        else if(PatchChecker.CurrentPatch == Patch.V103and4)
-        {
-            memoryService.WriteUInt8(DebugFlags.Base + (int)DebugFlags.Flagv104.PlayerSilent, isEnabled ? 1 : 0);
-            
-        }
+        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.GetOffset(DebugFlags.DebugFlag.PlayerSilent), isEnabled ? 1 : 0);
     }
 
     public void TogglePlayerInfinitePoise(bool isEnabled)
@@ -428,23 +336,23 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
 
     public void ToggleInfiniteBuffs(bool isEnabled)
     {
-        var infiniteConfettiCaveLoc  = CodeCaveOffsets.Base + CodeCaveOffsets.InfiniteConfetti; //Base = allocated memory
+        var infiniteConfettiCaveLoc = CodeCaveOffsets.Base + CodeCaveOffsets.InfiniteConfetti; //Base = allocated memory
         var confettiFlag = CodeCaveOffsets.Base + CodeCaveOffsets.ConfettiFlag;
         var gachiinFlag = CodeCaveOffsets.Base + CodeCaveOffsets.GachiinFlag;
         if (isEnabled)
         {
             var hookLoc = Hooks.InfiniteConfetti; //140C06BFE
-            var originalRetJmp = hookLoc + 0x7;  //movss in og code
+            var originalRetJmp = hookLoc + 0x7; //movss in og code
 
             var bytes = AsmLoader.GetAsmBytes("InfiniteConfetti");
             AsmHelper.WriteRelativeOffsets(bytes, new[]
             {
-                (infiniteConfettiCaveLoc.ToInt64() + 0x19, originalRetJmp, 5, 0x19 + 1),  //jmp return 1
+                (infiniteConfettiCaveLoc.ToInt64() + 0x19, originalRetJmp, 5, 0x19 + 1), //jmp return 1
                 (infiniteConfettiCaveLoc.ToInt64() + 0x1e, confettiFlag.ToInt64(), 7, 0x1e + 2), //cmp byte     
                 (infiniteConfettiCaveLoc.ToInt64() + 0x2a, originalRetJmp, 5, 0x2a + 1),
                 (infiniteConfettiCaveLoc.ToInt64() + 0x2f, gachiinFlag.ToInt64(), 7, 0x2f + 2),
-                (infiniteConfettiCaveLoc.ToInt64() + 0x3b, originalRetJmp, 5, 0x3b + 1),  
-                (infiniteConfettiCaveLoc.ToInt64() + 0x47, originalRetJmp, 5, 0x47 + 1),  
+                (infiniteConfettiCaveLoc.ToInt64() + 0x3b, originalRetJmp, 5, 0x3b + 1),
+                (infiniteConfettiCaveLoc.ToInt64() + 0x47, originalRetJmp, 5, 0x47 + 1),
             });
             memoryService.WriteBytes(infiniteConfettiCaveLoc, bytes);
             hookManager.InstallHook(infiniteConfettiCaveLoc.ToInt64(), hookLoc,
@@ -457,8 +365,9 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
     }
 
     public void ToggleConfettiFlag(bool isEnabled)
-    
-    {   var confettiFlag = CodeCaveOffsets.Base + CodeCaveOffsets.ConfettiFlag;
+
+    {
+        var confettiFlag = CodeCaveOffsets.Base + CodeCaveOffsets.ConfettiFlag;
         if (isEnabled)
         {
             memoryService.WriteUInt8(confettiFlag, 1);
@@ -467,8 +376,6 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         {
             memoryService.WriteUInt8(confettiFlag, 0);
         }
-            
-            
     }
 
     public void ToggleGachiinFlag(bool isEnabled)
@@ -483,9 +390,6 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
             memoryService.WriteUInt8(gachiinFlag, 0);
         }
     }
-
-    
-    
 
     public int RequestRespawn()
     {
@@ -514,16 +418,14 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
             (Functions.RemoveSpEffect, 0x18 + 2)
         ]);
         memoryService.AllocateAndExecute(bytes);
-        
-        
-        
     }
 
     public void ApplySpecialEffect(int spEffect)
     {
         var bytes = AsmLoader.GetAsmBytes("ApplySpecialEffect");
         var spEffectPtr = memoryService.FollowPointers(WorldChrMan.Base, [
-            WorldChrMan.PlayerIns],true);
+            WorldChrMan.PlayerIns
+        ], true);
         AsmHelper.WriteAbsoluteAddresses(bytes, [
             (spEffectPtr.ToInt64(), 0x4 + 2),
             (spEffect, 0xE + 2),
@@ -531,15 +433,14 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         ]);
         memoryService.AllocateAndExecute(bytes);
     }
-    
+
     public float GetPlayerSpeed() =>
         memoryService.ReadFloat(GetChrBehaviorPtr() + (int)ChrIns.ChrBehaviorOffsets.AnimationSpeed);
 
     public void SetSpeed(float speed) =>
         memoryService.WriteFloat(GetChrBehaviorPtr() + (int)ChrIns.ChrBehaviorOffsets.AnimationSpeed, speed);
-    
-    #endregion
 
+    #endregion
 
     #region Private Methods
 
@@ -551,5 +452,6 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
 
     private IntPtr GetChrBehaviorPtr() =>
         memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrBehaviorModule], true);
+
     #endregion
 }
