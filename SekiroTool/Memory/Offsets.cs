@@ -202,13 +202,16 @@ public static class Offsets
         public const int DrawAllEvent = 0x18;
         public const int DisableEvent = 0x44;
     }
-
+    
     public static class SprjFlipperImp
     {
         public static IntPtr Base;
         
         public const int GameSpeed = 0x344;
+        public const int GameSpeedV104 = 0x360;
+        public const int GameSpeedV105 = 0x364;
     }
+    
 
     public static class PauseRequest
     {

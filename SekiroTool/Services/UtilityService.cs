@@ -1,4 +1,5 @@
-﻿using SekiroTool.GameIds;
+﻿using SekiroTool.Enums;
+using SekiroTool.GameIds;
 using SekiroTool.Interfaces;
 using SekiroTool.Memory;
 using SekiroTool.Utilities;
@@ -86,16 +87,55 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
         ]);
         memoryService.AllocateAndExecute(bytes);
     }
-
+    
+    
     public void SetGameSpeed(float gameSpeed)
     {
-        var gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeed;
-        memoryService.WriteFloat((IntPtr)gameSpeedPtr, gameSpeed);
-    }
 
+        if (PatchChecker.CurrentPatch == Patch.V105)
+        {
+            var gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeedV105;
+            memoryService.WriteFloat((IntPtr)gameSpeedPtr, gameSpeed);
+        }
+
+        else if(PatchChecker.CurrentPatch == Patch.V103and4 || PatchChecker.CurrentPatch == Patch.V102)
+        {
+            var gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeedV104;
+            memoryService.WriteFloat((IntPtr)gameSpeedPtr, gameSpeed);
+        }
+        
+        else
+        {
+            var gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeed;
+            memoryService.WriteFloat((IntPtr)gameSpeedPtr, gameSpeed);
+        }
+        
+    }
+    
+
+    
+    
     public float GetGameSpeed()
     {
-        var gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeed;
+
+        long gameSpeedPtr;
+        
+        if (PatchChecker.CurrentPatch == Patch.V105)
+        {
+            gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeedV105;
+        }
+        
+        else if (PatchChecker.CurrentPatch == Patch.V103and4 ||  PatchChecker.CurrentPatch == Patch.V102)
+        {
+            gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeedV104;
+            
+        }
+        
+        else
+        {
+            gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeed;
+        }
+
         return memoryService.ReadFloat((IntPtr)gameSpeedPtr);
     }
 
