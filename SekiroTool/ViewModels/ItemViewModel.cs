@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics.Eventing.Reader;
 using System.Windows.Input;
 using SekiroTool.Core;
 using SekiroTool.Enums;
@@ -308,11 +309,13 @@ public class ItemViewModel : BaseViewModel
     
     private void LearnSkill()
     {
+        if (SelectedSkill == null) return;
         _itemService.GiveSkillOrPros(SelectedSkill.Id);
     }
 
     private void UnlearnSkill()
     {
+        if (SelectedSkill == null) return;
         _itemService.RemoveItem(SelectedSkill.Id);
     }
 
