@@ -30,8 +30,8 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
 
     public void ToggleMeshFlag(int offset, bool isEnabled)
     {
-        var flagPtr = MeshBase.Base + offset;
-        memoryService.WriteUInt8(flagPtr, isEnabled ? 1 : 0);
+        memoryService.WriteUInt8(MeshBase.Base + MeshBase.Mode, 1);
+        memoryService.WriteUInt8( MeshBase.Base + offset, isEnabled ? 1 : 0);
     }
 
     public void OpenSkillMenu()
