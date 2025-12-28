@@ -241,6 +241,8 @@ public static class Offsets
         public const int HighHit = 0x1;
         public const int Objects = 0x2;
         public const int Chr = 0x3;
+        public const int JumpableWalls = 0x7;
+        public const int Mode = 0xC;
     }
 
     public static class EventFlagMan

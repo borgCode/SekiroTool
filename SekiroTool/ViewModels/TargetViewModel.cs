@@ -623,6 +623,11 @@ public class TargetViewModel : BaseViewModel
         {
             _currentTargetAddr = targetAddr;
 
+#if DEBUG
+
+            Console.WriteLine($@"{targetAddr:X}");
+#endif
+            
             TargetMaxPoise = _targetService.GetMaxPoise();
             TargetMaxPoison = _targetService.GetMaxPoison();
             TargetMaxBurn = _targetService.GetMaxBurn();
