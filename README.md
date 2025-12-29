@@ -34,6 +34,8 @@ Includes:
 
 
 Usage:
+Install Windows Desktop Runtime 9.0 https://dotnet.microsoft.com/en-us/download/dotnet/9.0
+
 Unzip the download and run the exe, it does not matter if you open the app before the game or after.
 
 
