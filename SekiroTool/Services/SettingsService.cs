@@ -39,7 +39,7 @@ public class SettingsService(IMemoryService memoryService, NopManager nopManager
             AsmHelper.WriteRelativeOffsets(bytes, new []
             {
                 (code.ToInt64() + 0x1, inputManager.ToInt64(), 7, 0x1 + 3),
-                (code.ToInt64() + 0x1C, hookLoc + 0x7, 5, 0x1C + 1)
+                (code.ToInt64() + 0x21, hookLoc + 0x7, 5, 0x21 + 1)
             });
             
             memoryService.WriteBytes(code, bytes);
