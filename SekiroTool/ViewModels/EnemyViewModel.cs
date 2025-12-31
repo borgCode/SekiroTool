@@ -238,28 +238,28 @@ public class EnemyViewModel : BaseViewModel
 
     private void RegisterHotkeys()
     {
-        _hotkeyManager.RegisterAction(HotkeyActions.SkipDragonPhaseOne.ToString(), () =>
+        _hotkeyManager.RegisterAction(HotkeyActions.SkipDragonPhaseOne, () =>
         {
             if (!AreOptionsEnabled) return;
             _enemyService.SkipDragonPhaseOne();
         });
-        _hotkeyManager.RegisterAction(HotkeyActions.TriggerDragonFinalAttack.ToString(), () =>
+        _hotkeyManager.RegisterAction(HotkeyActions.TriggerDragonFinalAttack, () =>
         {
             if (!AreOptionsEnabled) return;
             TriggerFinalDragonAttack();
         });
         
-        _hotkeyManager.RegisterAction(HotkeyActions.NoButterflySummons.ToString(),
+        _hotkeyManager.RegisterAction(HotkeyActions.NoButterflySummons,
             () => { IsNoButterflySummonsEnabled = !IsNoButterflySummonsEnabled; });
-        _hotkeyManager.RegisterAction(HotkeyActions.AllNoDeath.ToString(), () => { IsNoDeathEnabled = !IsNoDeathEnabled; });
-        _hotkeyManager.RegisterAction(HotkeyActions.AllNoDamage.ToString(), () => { IsNoDamageEnabled = !IsNoDamageEnabled; });
-        _hotkeyManager.RegisterAction(HotkeyActions.AllNoHit.ToString(), () => { IsNoHitEnabled = !IsNoHitEnabled; });
-        _hotkeyManager.RegisterAction(HotkeyActions.AllNoAttack.ToString(), () => { IsNoAttackEnabled = !IsNoAttackEnabled; });
-        _hotkeyManager.RegisterAction(HotkeyActions.AllNoMove.ToString(), () => { IsNoMoveEnabled = !IsNoMoveEnabled; });
-        _hotkeyManager.RegisterAction(HotkeyActions.AllDisableAi.ToString(), () => { IsDisableAiEnabled = !IsDisableAiEnabled; });
-        _hotkeyManager.RegisterAction(HotkeyActions.AllNoPostureBuildup.ToString(),
+        _hotkeyManager.RegisterAction(HotkeyActions.AllNoDeath, () => { IsNoDeathEnabled = !IsNoDeathEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.AllNoDamage, () => { IsNoDamageEnabled = !IsNoDamageEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.AllNoHit, () => { IsNoHitEnabled = !IsNoHitEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.AllNoAttack, () => { IsNoAttackEnabled = !IsNoAttackEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.AllNoMove, () => { IsNoMoveEnabled = !IsNoMoveEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.AllDisableAi, () => { IsDisableAiEnabled = !IsDisableAiEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.AllNoPostureBuildup,
             () => { IsNoPostureBuildupEnabled = !IsNoPostureBuildupEnabled; });
-        _hotkeyManager.RegisterAction(HotkeyActions.AllTargetingView.ToString(),
+        _hotkeyManager.RegisterAction(HotkeyActions.AllTargetingView,
             () => { IsTargetingViewEnabled = !IsTargetingViewEnabled; });
     }
 

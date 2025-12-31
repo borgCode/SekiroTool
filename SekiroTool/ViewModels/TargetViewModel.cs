@@ -512,31 +512,31 @@ public class TargetViewModel : BaseViewModel
 
     private void RegisterHotkeys()
     {
-        _hotkeyManager.RegisterAction(HotkeyActions.EnableTargetOptions.ToString(),
+        _hotkeyManager.RegisterAction(HotkeyActions.EnableTargetOptions,
             () => { IsTargetOptionsEnabled = !IsTargetOptionsEnabled; });
-        _hotkeyManager.RegisterAction(HotkeyActions.FreezeTargetHp.ToString(), () =>
+        _hotkeyManager.RegisterAction(HotkeyActions.FreezeTargetHp, () =>
             ExecuteTargetAction(() => IsFreezeHealthEnabled = !IsFreezeHealthEnabled));
-        _hotkeyManager.RegisterAction(HotkeyActions.SetTargetOneHp.ToString(), () =>
+        _hotkeyManager.RegisterAction(HotkeyActions.SetTargetOneHp, () =>
             ExecuteTargetAction(() => SetHp(1)));
-        _hotkeyManager.RegisterAction(HotkeyActions.TargetCustomHp.ToString(), () => ExecuteTargetAction(SetCustomHp));
-        _hotkeyManager.RegisterAction(HotkeyActions.FreezeTargetPosture.ToString(),
+        _hotkeyManager.RegisterAction(HotkeyActions.TargetCustomHp, () => ExecuteTargetAction(SetCustomHp));
+        _hotkeyManager.RegisterAction(HotkeyActions.FreezeTargetPosture,
             () => ExecuteTargetAction(() => IsFreezePostureEnabled = !IsFreezePostureEnabled));
-        _hotkeyManager.RegisterAction(HotkeyActions.SetTargetOnePosture.ToString(),
+        _hotkeyManager.RegisterAction(HotkeyActions.SetTargetOnePosture,
             () => ExecuteTargetAction(() => SetPosture(1)));
-        _hotkeyManager.RegisterAction(HotkeyActions.TargetCustomPosture.ToString(),
+        _hotkeyManager.RegisterAction(HotkeyActions.TargetCustomPosture,
             () => ExecuteTargetAction(SetCustomPosture));
-        _hotkeyManager.RegisterAction(HotkeyActions.ShowAllResistances.ToString(), () =>
+        _hotkeyManager.RegisterAction(HotkeyActions.ShowAllResistances, () =>
         {
             if (!IsTargetOptionsEnabled) IsTargetOptionsEnabled = true;
             _showAllResistances = !_showAllResistances;
             UpdateResistancesDisplay();
         });
-        _hotkeyManager.RegisterAction(HotkeyActions.RepeatAct.ToString(),
+        _hotkeyManager.RegisterAction(HotkeyActions.RepeatAct,
             () => ExecuteTargetAction(() => IsRepeatActEnabled = !IsRepeatActEnabled));
-        _hotkeyManager.RegisterAction(HotkeyActions.RepeatKengekiAct.ToString(),
+        _hotkeyManager.RegisterAction(HotkeyActions.RepeatKengekiAct,
             () => ExecuteTargetAction(() => IsRepeatKengekiActEnabled = !IsRepeatKengekiActEnabled));
 
-        _hotkeyManager.RegisterAction(HotkeyActions.IncrementForceAct.ToString(), () =>
+        _hotkeyManager.RegisterAction(HotkeyActions.IncrementForceAct, () =>
             ExecuteTargetAction(() =>
             {
                 if (ForceAct + 1 > 99) ForceAct = 0;
@@ -544,21 +544,21 @@ public class TargetViewModel : BaseViewModel
             }));
 
 
-        _hotkeyManager.RegisterAction(HotkeyActions.DecrementForceAct.ToString(), () =>
+        _hotkeyManager.RegisterAction(HotkeyActions.DecrementForceAct, () =>
             ExecuteTargetAction(() =>
             {
                 if (ForceAct - 1 < 0) ForceAct = 99;
                 else ForceAct -= 1;
             }));
 
-        _hotkeyManager.RegisterAction(HotkeyActions.IncrementForceKengekiAct.ToString(), () =>
+        _hotkeyManager.RegisterAction(HotkeyActions.IncrementForceKengekiAct, () =>
             ExecuteTargetAction(() =>
             {
                 if (ForceKengekiAct + 1 > 99) ForceKengekiAct = 0;
                 else ForceKengekiAct += 1;
             }));
 
-        _hotkeyManager.RegisterAction(HotkeyActions.DecrementForceKengekiAct.ToString(), () =>
+        _hotkeyManager.RegisterAction(HotkeyActions.DecrementForceKengekiAct, () =>
             ExecuteTargetAction(() =>
             {
                 if (ForceKengekiAct - 1 < 0) ForceKengekiAct = 99;
@@ -566,23 +566,23 @@ public class TargetViewModel : BaseViewModel
             }));
 
 
-        _hotkeyManager.RegisterAction(HotkeyActions.IncreaseTargetSpeed.ToString(), () =>
+        _hotkeyManager.RegisterAction(HotkeyActions.IncreaseTargetSpeed, () =>
             ExecuteTargetAction(() => SetSpeed(Math.Min(5, TargetSpeed + 0.25f))));
-        _hotkeyManager.RegisterAction(HotkeyActions.DecreaseTargetSpeed.ToString(), () =>
+        _hotkeyManager.RegisterAction(HotkeyActions.DecreaseTargetSpeed, () =>
             ExecuteTargetAction(() => SetSpeed(Math.Max(0, TargetSpeed - 0.25f))));
-        _hotkeyManager.RegisterAction(HotkeyActions.ToggleTargetSpeed.ToString(), () =>
+        _hotkeyManager.RegisterAction(HotkeyActions.ToggleTargetSpeed, () =>
             ExecuteTargetAction(ToggleTargetSpeed));
-        _hotkeyManager.RegisterAction(HotkeyActions.FreezeTargetAi.ToString(),
+        _hotkeyManager.RegisterAction(HotkeyActions.FreezeTargetAi,
             () => ExecuteTargetAction(() => IsAiFreezeEnabled = !IsAiFreezeEnabled));
-        _hotkeyManager.RegisterAction(HotkeyActions.NoAttackTargetAi.ToString(),
+        _hotkeyManager.RegisterAction(HotkeyActions.NoAttackTargetAi,
             () => ExecuteTargetAction(() => IsNoAttackEnabled = !IsNoAttackEnabled));
-        _hotkeyManager.RegisterAction(HotkeyActions.NoMoveTargetAi.ToString(),
+        _hotkeyManager.RegisterAction(HotkeyActions.NoMoveTargetAi,
             () => ExecuteTargetAction(() => IsNoMoveEnabled = !IsNoMoveEnabled));
-        _hotkeyManager.RegisterAction(HotkeyActions.TargetNoPostureBuildup.ToString(),
+        _hotkeyManager.RegisterAction(HotkeyActions.TargetNoPostureBuildup,
             () => ExecuteTargetAction(() => IsNoPostureBuildupEnabled = !IsNoPostureBuildupEnabled));
-        _hotkeyManager.RegisterAction(HotkeyActions.TargetNoDeath.ToString(),
+        _hotkeyManager.RegisterAction(HotkeyActions.TargetNoDeath,
             () => ExecuteTargetAction(() => IsNoDeathEnabled = !IsNoDeathEnabled));
-        _hotkeyManager.RegisterAction(HotkeyActions.TargetTargetingView.ToString(),
+        _hotkeyManager.RegisterAction(HotkeyActions.TargetTargetingView,
             () => ExecuteTargetAction(() => IsTargetViewEnabled = !IsTargetViewEnabled));
     }
 

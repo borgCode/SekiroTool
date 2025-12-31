@@ -1,4 +1,5 @@
 ﻿using H.Hooks;
+using SekiroTool.Enums;
 using SekiroTool.Interfaces;
 
 namespace SekiroTool.Utilities;
@@ -30,9 +31,9 @@ public class HotkeyManager
         _keyboardHook.Stop();
     }
     
-    public void RegisterAction(string actionId, Action action)
+    public void RegisterAction(HotkeyActions actionId, Action action)
     {
-        _actions[actionId] = action;
+        _actions[actionId.ToString()] = action;
     }
     
     
@@ -136,5 +137,11 @@ public class HotkeyManager
             {
                 Console.WriteLine($"Error loading hotkeys: {ex.Message}");
             }
+        }
+
+        public void ClearAll()
+        {
+            _hotkeyMappings.Clear();
+            SaveHotkeys();
         }
 }
