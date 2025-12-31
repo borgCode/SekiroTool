@@ -368,32 +368,32 @@ public class UtilityViewModel : BaseViewModel
 
     private void RegisterHotkeys()
     {
-        _hotkeyManager.RegisterAction(HotkeyActions.ToggleGameSpeed.ToString(), ToggleGameSpeed);
-        _hotkeyManager.RegisterAction(HotkeyActions.IncreaseGameSpeed.ToString(),
+        _hotkeyManager.RegisterAction(HotkeyActions.ToggleGameSpeed, ToggleGameSpeed);
+        _hotkeyManager.RegisterAction(HotkeyActions.IncreaseGameSpeed,
             () => GameSpeed = (Math.Min(10, GameSpeed + 0.50f)));
-        _hotkeyManager.RegisterAction(HotkeyActions.IncreaseGameSpeed.ToString(),
+        _hotkeyManager.RegisterAction(HotkeyActions.IncreaseGameSpeed,
             () => GameSpeed = (Math.Min(10, GameSpeed + 0.50f)));
-        _hotkeyManager.RegisterAction(HotkeyActions.DecreaseGameSpeed.ToString(),
+        _hotkeyManager.RegisterAction(HotkeyActions.DecreaseGameSpeed,
             () => GameSpeed = (Math.Max(0, GameSpeed - 0.50f)));
-        _hotkeyManager.RegisterAction(HotkeyActions.NoClip.ToString(), () =>
+        _hotkeyManager.RegisterAction(HotkeyActions.NoClip, () =>
         {
             if (!AreOptionsEnabled) return;
             IsNoClipEnabled = !IsNoClipEnabled;
         });
-        _hotkeyManager.RegisterAction(HotkeyActions.IncreaseNoClipSpeed.ToString(), () =>
+        _hotkeyManager.RegisterAction(HotkeyActions.IncreaseNoClipSpeed, () =>
         {
             if (IsNoClipEnabled) NoClipSpeed = Math.Min(5, NoClipSpeed + 0.50f);
         });
-        _hotkeyManager.RegisterAction(HotkeyActions.DecreaseNoClipSpeed.ToString(), () =>
+        _hotkeyManager.RegisterAction(HotkeyActions.DecreaseNoClipSpeed, () =>
         {
             if (IsNoClipEnabled) NoClipSpeed = Math.Max(0.05f, NoClipSpeed - 0.50f);
         });
-        _hotkeyManager.RegisterAction(HotkeyActions.FreeCam.ToString(), () =>
+        _hotkeyManager.RegisterAction(HotkeyActions.FreeCam, () =>
         {
             if (!AreOptionsEnabled) return;
             IsFreeCamEnabled = !IsFreeCamEnabled;
         });
-        _hotkeyManager.RegisterAction(HotkeyActions.MoveCamToPlayer.ToString(), () =>
+        _hotkeyManager.RegisterAction(HotkeyActions.MoveCamToPlayer, () =>
         {
             if (!AreOptionsEnabled || !IsFreeCamEnabled) return;
             _utilityService.MoveCamToPlayer();
