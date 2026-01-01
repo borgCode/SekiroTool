@@ -1,112 +1,115 @@
-﻿using System.IO;
+﻿using System.Collections.Concurrent;
+using System.IO;
 using SekiroTool.Interfaces;
 
 namespace SekiroTool.Memory;
 
 public class AoBScanner(IMemoryService memoryService)
 {
-    private Dictionary<string, long> saved = new Dictionary<string, long>();
+    
+    private ConcurrentDictionary<string, long> saved = new();
+    
     public void DoMainScan()
     {
-        
         string appData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             "SekiroTool");
         Directory.CreateDirectory(appData);
         string savePath = Path.Combine(appData, "backup_addresses.txt");
-
-        Offsets.WorldChrMan.Base = FindAddressByPattern(Patterns.WorldChrMan);
-        Offsets.WorldChrManDbg.Base = FindAddressByPattern(Patterns.WorldChrManDbg);
-        Offsets.MenuMan.Base = FindAddressByPattern(Patterns.MenuMan);
-        Offsets.WorldAiMan.Base = FindAddressByPattern(Patterns.WorldAiMan);
-        Offsets.DamageManager.Base = FindAddressByPattern(Patterns.DamageManager);
-        Offsets.DebugFlags.Base = FindAddressByPattern(Patterns.DebugFlagStart);
-        Offsets.MapItemMan.Base = FindAddressByPattern(Patterns.MapItemMan);
-        Offsets.EventFlagMan.Base = FindAddressByPattern(Patterns.EventFlagMan);
-        Offsets.DebugEventMan.Base = FindAddressByPattern(Patterns.DebugEventMan);
-        Offsets.SprjFlipperImp.Base = FindAddressByPattern(Patterns.SprjFlipperImp);
-        Offsets.FieldArea.Base = FindAddressByPattern(Patterns.FieldArea);
-        Offsets.FrpgHavokMan.Base = FindAddressByPattern(Patterns.FrpgHavokMan);
-        Offsets.GameDataMan.Base = FindAddressByPattern(Patterns.GameDataMan);
-        Offsets.PauseRequest.Base = FindAddressByPattern(Patterns.PauseRequest);
-        Offsets.DlUserInputManager.Base = FindAddressByPattern(Patterns.DlUserInputManager);
-        Offsets.TargetingView.Base = FindAddressByPattern(Patterns.TargetingView);
-        Offsets.GameRendFlags.Base = FindAddressByPattern(Patterns.GameRendFlags);
-        Offsets.MeshBase.Base = FindAddressByPattern(Patterns.MeshBase);
         
-        Offsets.IdolRequests.Base = FindAddressByRelativeChain(
-            Patterns.IdolRequests,
-            0, 1, 5, 
-            0, 2, 6  
-        );
-
-
-        TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
-            addr => Offsets.Hooks.LockedTarget = addr.ToInt64(), saved);
-        TryPatternWithFallback("FreezeTargetPosture", Patterns.FreezeTargetPosture,
-            addr => Offsets.Hooks.FreezeTargetPosture = addr.ToInt64(), saved);
-        TryPatternWithFallback("SetWarpCoordinates", Patterns.SetWarpCoordinates,
-            addr => Offsets.Hooks.SetWarpCoordinates = addr.ToInt64(), saved);
-        TryPatternWithFallback("SetWarpAngle", Patterns.SetWarpAngle,
-            addr => Offsets.Hooks.SetWarpAngle = addr.ToInt64(), saved);
-        TryPatternWithFallback("AddSubGoal", Patterns.AddSubGoal,
-            addr => Offsets.Hooks.AddSubGoal = addr.ToInt64(), saved);
-        TryPatternWithFallback("InAirTimer", Patterns.InAirTimer,
-            addr => Offsets.Hooks.InAirTimer = addr.ToInt64(), saved);
-        TryPatternWithFallback("UpdateCoords", Patterns.UpdateCoords,
-            addr => Offsets.Hooks.UpdateCoords = addr.ToInt64(), saved);
-        TryPatternWithFallback("PadTriggers", Patterns.PadTriggers,
-            addr => Offsets.Hooks.PadTriggers = addr.ToInt64(), saved);
-        TryPatternWithFallback("KeyBoard", Patterns.KeyBoard,
-            addr => Offsets.Hooks.KeyBoard = addr.ToInt64(), saved);
-        TryPatternWithFallback("InfinitePoise", Patterns.InfinitePoise,
-            addr => Offsets.Hooks.InfinitePoise = addr.ToInt64(), saved);
-        TryPatternWithFallback("AiHasSpEffect", Patterns.AiHasSpEffect,
-            addr => Offsets.Hooks.AiHasSpEffect = addr.ToInt64(), saved);
-        TryPatternWithFallback("GetMouseDelta", Patterns.GetMouseDelta,
-            addr => Offsets.Hooks.GetMouseDelta = addr.ToInt64(), saved);
-        TryPatternWithFallback("InfiniteConfetti", Patterns.InfiniteConfetti,
-            addr => Offsets.Hooks.InfiniteConfetti = addr, saved);
-        TryPatternWithFallback("HpWrite", Patterns.HpWrite,
-            addr => Offsets.Hooks.HpWrite = addr, saved);
-        TryPatternWithFallback("SetLastAct", Patterns.SetLastAct,
-            addr => Offsets.Hooks.SetLastAct = addr, saved);
-
-        TryPatternWithFallback("DebugFont", Patterns.DebugFontPatch,
-            addr => Offsets.Patches.DebugFont = addr, saved);
-        TryPatternWithFallback("EventView", Patterns.EventViewPatch,
-            addr => Offsets.Patches.EventView = addr + 0xE, saved);
-        TryPatternWithFallback("MenuTutorialSkip", Patterns.MenuTutorialSkip,
-            addr => Offsets.Patches.MenuTutorialSkip = addr, saved);
-        TryPatternWithFallback("ShowSmallHintBox", Patterns.ShowSmallHintBox,
-            addr => Offsets.Patches.ShowSmallHintBox = addr, saved);
-        TryPatternWithFallback("ShowTutorialText", Patterns.ShowTutorialText,
-            addr => Offsets.Patches.ShowTutorialText = addr, saved);
-        TryPatternWithFallback("SaveInCombat", Patterns.UpdateSaveCoords,
-            addr => Offsets.Patches.SaveInCombat = addr, saved);
-        TryPatternWithFallback("OpenRegularShopPatch", Patterns.OpenRegularShopPatch,
-            addr => Offsets.Patches.OpenRegularShopPatch = addr, saved);
-        TryPatternWithFallback("PlayerSoundView", Patterns.PlayerSoundView,
-            addr => Offsets.Patches.PlayerSoundView = addr, saved);
-        
-
-
-        using (var writer = new StreamWriter(savePath))
+        if (File.Exists(savePath))
         {
-            foreach (var pair in saved)
-                writer.WriteLine($"{pair.Key}={pair.Value:X}");
+            foreach (string line in File.ReadAllLines(savePath))
+            {
+                string[] parts = line.Split('=');
+                saved[parts[0]] = Convert.ToInt64(parts[1], 16);
+            }
         }
 
-        Offsets.Functions.AddSen = FindAddressByPattern(Patterns.AddSen).ToInt64();
-        Offsets.Functions.Rest = FindAddressByPattern(Patterns.Rest).ToInt64();
-        Offsets.Functions.SetEvent = FindAddressByPattern(Patterns.SetEvent).ToInt64();
-        Offsets.Functions.GetEvent = FindAddressByPattern(Patterns.GetEvent).ToInt64();
-        Offsets.Functions.Warp = FindAddressByPattern(Patterns.Warp).ToInt64();
-        Offsets.Functions.AddExperience = FindAddressByPattern(Patterns.AddExperience).ToInt64();
-        Offsets.Functions.ApplySpEffect = FindAddressByPattern(Patterns.ApplySpEffect).ToInt64();
-        Offsets.Functions.ItemSpawn = FindAddressByPattern(Patterns.ItemSpawn).ToInt64();
-        Offsets.Functions.GetChrInsWithHandle = FindAddressByPattern(Patterns.GetEnemyInsWithPackedWorldIdAndChrId).ToInt64();
-        Offsets.Functions.RemoveSpEffect = FindAddressByPattern(Patterns.RemoveEffect).ToInt64();
-        Offsets.Functions.GetGoodsParam = FindAddressByPattern(Patterns.GetGoodsParam).ToInt64();
+        Parallel.Invoke(
+            () => Offsets.WorldChrMan.Base = FindAddressByPattern(Patterns.WorldChrMan),
+            () => Offsets.WorldChrManDbg.Base = FindAddressByPattern(Patterns.WorldChrManDbg),
+            () => Offsets.MenuMan.Base = FindAddressByPattern(Patterns.MenuMan),
+            () => Offsets.WorldAiMan.Base = FindAddressByPattern(Patterns.WorldAiMan),
+            () => Offsets.DamageManager.Base = FindAddressByPattern(Patterns.DamageManager),
+            () => Offsets.DebugFlags.Base = FindAddressByPattern(Patterns.DebugFlagStart),
+            () => Offsets.MapItemMan.Base = FindAddressByPattern(Patterns.MapItemMan),
+            () => Offsets.EventFlagMan.Base = FindAddressByPattern(Patterns.EventFlagMan),
+            () => Offsets.DebugEventMan.Base = FindAddressByPattern(Patterns.DebugEventMan),
+            () => Offsets.SprjFlipperImp.Base = FindAddressByPattern(Patterns.SprjFlipperImp),
+            () => Offsets.FieldArea.Base = FindAddressByPattern(Patterns.FieldArea),
+            () => Offsets.FrpgHavokMan.Base = FindAddressByPattern(Patterns.FrpgHavokMan),
+            () => Offsets.GameDataMan.Base = FindAddressByPattern(Patterns.GameDataMan),
+            () => Offsets.PauseRequest.Base = FindAddressByPattern(Patterns.PauseRequest),
+            () => Offsets.DlUserInputManager.Base = FindAddressByPattern(Patterns.DlUserInputManager),
+            () => Offsets.TargetingView.Base = FindAddressByPattern(Patterns.TargetingView),
+            () => Offsets.GameRendFlags.Base = FindAddressByPattern(Patterns.GameRendFlags),
+            () => Offsets.MeshBase.Base = FindAddressByPattern(Patterns.MeshBase),
+            () => Offsets.IdolRequests.Base = FindAddressByRelativeChain(Patterns.IdolRequests, 0, 1, 5, 0, 2, 6),
+            () => Offsets.Functions.AddSen = FindAddressByPattern(Patterns.AddSen).ToInt64(),
+            () => Offsets.Functions.Rest = FindAddressByPattern(Patterns.Rest).ToInt64(),
+            () => Offsets.Functions.SetEvent = FindAddressByPattern(Patterns.SetEvent).ToInt64(),
+            () => Offsets.Functions.GetEvent = FindAddressByPattern(Patterns.GetEvent).ToInt64(),
+            () => Offsets.Functions.Warp = FindAddressByPattern(Patterns.Warp).ToInt64(),
+            () => Offsets.Functions.AddExperience = FindAddressByPattern(Patterns.AddExperience).ToInt64(),
+            () => Offsets.Functions.ApplySpEffect = FindAddressByPattern(Patterns.ApplySpEffect).ToInt64(),
+            () => Offsets.Functions.ItemSpawn = FindAddressByPattern(Patterns.ItemSpawn).ToInt64(),
+            () => Offsets.Functions.GetChrInsWithHandle =
+                FindAddressByPattern(Patterns.GetEnemyInsWithPackedWorldIdAndChrId).ToInt64(),
+            () => Offsets.Functions.RemoveSpEffect = FindAddressByPattern(Patterns.RemoveEffect).ToInt64(),
+            () => Offsets.Functions.GetGoodsParam = FindAddressByPattern(Patterns.GetGoodsParam).ToInt64(),
+            () => Offsets.Functions.FrpgCastRay = FindAddressByPattern(Patterns.FrpgCastRay).ToInt64(),
+            () => Offsets.Functions.GetItemSlot = FindAddressByPattern(Patterns.GetItemSlot).ToInt64(),
+            () => Offsets.Functions.GetItemPtrFromSlot = FindAddressByPattern(Patterns.GetItemPtrFromSlot).ToInt64(),
+            () => Offsets.Functions.EzStateExternalEventTempCtor =
+                FindAddressByPattern(Patterns.EzStateExternalEventTempCtor).ToInt64(),
+            () => Offsets.Functions.RemoveItem = FindAddressByPattern(Patterns.RemoveItem).ToInt64(),
+            () => Offsets.Functions.GiveSkillAndPros = FindAddressByPattern(Patterns.GiveSkillAndPros).ToInt64(),
+            () => TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
+                addr => Offsets.Hooks.LockedTarget = addr.ToInt64(), saved),
+            () => TryPatternWithFallback("FreezeTargetPosture", Patterns.FreezeTargetPosture,
+                addr => Offsets.Hooks.FreezeTargetPosture = addr.ToInt64(), saved),
+            () => TryPatternWithFallback("SetWarpCoordinates", Patterns.SetWarpCoordinates,
+                addr => Offsets.Hooks.SetWarpCoordinates = addr.ToInt64(), saved),
+            () => TryPatternWithFallback("SetWarpAngle", Patterns.SetWarpAngle,
+                addr => Offsets.Hooks.SetWarpAngle = addr.ToInt64(), saved),
+            () => TryPatternWithFallback("AddSubGoal", Patterns.AddSubGoal,
+                addr => Offsets.Hooks.AddSubGoal = addr.ToInt64(), saved),
+            () => TryPatternWithFallback("InAirTimer", Patterns.InAirTimer,
+                addr => Offsets.Hooks.InAirTimer = addr.ToInt64(), saved),
+            () => TryPatternWithFallback("UpdateCoords", Patterns.UpdateCoords,
+                addr => Offsets.Hooks.UpdateCoords = addr.ToInt64(), saved),
+            () => TryPatternWithFallback("PadTriggers", Patterns.PadTriggers,
+                addr => Offsets.Hooks.PadTriggers = addr.ToInt64(), saved),
+            () => TryPatternWithFallback("KeyBoard", Patterns.KeyBoard, addr => Offsets.Hooks.KeyBoard = addr.ToInt64(),
+                saved),
+            () => TryPatternWithFallback("InfinitePoise", Patterns.InfinitePoise,
+                addr => Offsets.Hooks.InfinitePoise = addr.ToInt64(), saved),
+            () => TryPatternWithFallback("AiHasSpEffect", Patterns.AiHasSpEffect,
+                addr => Offsets.Hooks.AiHasSpEffect = addr.ToInt64(), saved),
+            () => TryPatternWithFallback("GetMouseDelta", Patterns.GetMouseDelta,
+                addr => Offsets.Hooks.GetMouseDelta = addr.ToInt64(), saved),
+            () => TryPatternWithFallback("InfiniteConfetti", Patterns.InfiniteConfetti,
+                addr => Offsets.Hooks.InfiniteConfetti = addr, saved),
+            () => TryPatternWithFallback("HpWrite", Patterns.HpWrite, addr => Offsets.Hooks.HpWrite = addr, saved),
+            () => TryPatternWithFallback("SetLastAct", Patterns.SetLastAct, addr => Offsets.Hooks.SetLastAct = addr,
+                saved),
+            () => TryPatternWithFallback("DebugFont", Patterns.DebugFontPatch, addr => Offsets.Patches.DebugFont = addr,
+                saved),
+            () => TryPatternWithFallback("EventView", Patterns.EventViewPatch,
+                addr => Offsets.Patches.EventView = addr + 0xE, saved),
+            () => TryPatternWithFallback("MenuTutorialSkip", Patterns.MenuTutorialSkip,
+                addr => Offsets.Patches.MenuTutorialSkip = addr, saved),
+            () => TryPatternWithFallback("ShowSmallHintBox", Patterns.ShowSmallHintBox,
+                addr => Offsets.Patches.ShowSmallHintBox = addr, saved),
+            () => TryPatternWithFallback("ShowTutorialText", Patterns.ShowTutorialText,
+                addr => Offsets.Patches.ShowTutorialText = addr, saved),
+            () => TryPatternWithFallback("SaveInCombat", Patterns.UpdateSaveCoords,
+                addr => Offsets.Patches.SaveInCombat = addr, saved),
+            () => TryPatternWithFallback("OpenRegularShopPatch", Patterns.OpenRegularShopPatch,
+                addr => Offsets.Patches.OpenRegularShopPatch = addr, saved),
+            () => TryPatternWithFallback("PlayerSoundView", Patterns.PlayerSoundView,
+                addr => Offsets.Patches.PlayerSoundView = addr, saved)
+        );
 
         FindMultipleCallsInFunction(Patterns.ProcessEsdCommand, new Dictionary<Action<long>, int>
         {
@@ -121,12 +124,13 @@ public class AoBScanner(IMemoryService memoryService)
             { addr => Offsets.Functions.OpenGenericDialog = addr, 0x9CC },
         });
 
-        Offsets.Functions.FrpgCastRay = FindAddressByPattern(Patterns.FrpgCastRay).ToInt64();
-        Offsets.Functions.GetItemSlot = FindAddressByPattern(Patterns.GetItemSlot).ToInt64();
-        Offsets.Functions.GetItemPtrFromSlot = FindAddressByPattern(Patterns.GetItemPtrFromSlot).ToInt64();
-        Offsets.Functions.EzStateExternalEventTempCtor = FindAddressByPattern(Patterns.EzStateExternalEventTempCtor).ToInt64();
-        Offsets.Functions.RemoveItem = FindAddressByPattern(Patterns.RemoveItem).ToInt64();
-        Offsets.Functions.GiveSkillAndPros = FindAddressByPattern(Patterns.GiveSkillAndPros).ToInt64();
+        using (var writer = new StreamWriter(savePath))
+        {
+            foreach (var pair in saved)
+                writer.WriteLine($"{pair.Key}={pair.Value:X}");
+        }
+        
+
 
 #if DEBUG
         Console.WriteLine($"WorldChrMan.Base: 0x{Offsets.WorldChrMan.Base.ToInt64():X}");
@@ -192,7 +196,8 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Functions.FrpgCastRay: 0x{Offsets.Functions.FrpgCastRay:X}");
         Console.WriteLine($"Functions.GetItemSlot: 0x{Offsets.Functions.GetItemSlot:X}");
         Console.WriteLine($"Functions.GetItemPtrFromSlot: 0x{Offsets.Functions.GetItemPtrFromSlot:X}");
-        Console.WriteLine($"Functions.EzStateExternalEventTempCtor: 0x{Offsets.Functions.EzStateExternalEventTempCtor:X}");
+        Console.WriteLine(
+            $"Functions.EzStateExternalEventTempCtor: 0x{Offsets.Functions.EzStateExternalEventTempCtor:X}");
         Console.WriteLine($"Functions.AwardItemLot: 0x{Offsets.Functions.AwardItemLot:X}");
         Console.WriteLine($"Functions.SetMessageTagValue: 0x{Offsets.Functions.SetMessageTagValue:X}");
         Console.WriteLine($"Functions.AdjustItemCount: 0x{Offsets.Functions.AdjustItemCount:X}");
@@ -204,7 +209,7 @@ public class AoBScanner(IMemoryService memoryService)
     }
 
     private void TryPatternWithFallback(string name, Pattern pattern, Action<IntPtr> setter,
-        Dictionary<string, long> saved)
+        ConcurrentDictionary<string, long> saved)
     {
         var addr = FindAddressByPattern(pattern);
 
@@ -215,7 +220,6 @@ public class AoBScanner(IMemoryService memoryService)
 
         setter(addr);
     }
-
 
     public IntPtr FindAddressByPattern(Pattern pattern)
     {
@@ -309,31 +313,31 @@ public class AoBScanner(IMemoryService memoryService)
             mapping.Key(callTarget.ToInt64());
         }
     }
-    
+
     public IntPtr FindAddressByRelativeChain(Pattern pattern, params int[] chain)
     {
         var baseAddress = FindAddressByPattern(pattern);
         if (baseAddress == IntPtr.Zero)
             return IntPtr.Zero;
-    
+
         return FollowRelativeChain(baseAddress, chain);
     }
 
     private IntPtr FollowRelativeChain(IntPtr baseAddress, params int[] chain)
     {
         IntPtr currentAddress = baseAddress;
-    
+
         for (int i = 0; i < chain.Length; i += 3)
         {
             int offset = chain[i];
             int relativeOffsetPos = chain[i + 1];
             int instructionLength = chain[i + 2];
-        
+
             IntPtr instructionAddress = IntPtr.Add(currentAddress, offset);
             int relativeOffset = memoryService.ReadInt32(IntPtr.Add(instructionAddress, relativeOffsetPos));
             currentAddress = IntPtr.Add(instructionAddress, relativeOffset + instructionLength);
         }
-    
+
         return currentAddress;
     }
 
@@ -343,7 +347,7 @@ public class AoBScanner(IMemoryService memoryService)
             "SekiroTool");
         Directory.CreateDirectory(appData);
         string savePath = Path.Combine(appData, "backup_addresses.txt");
-        
+
         if (File.Exists(savePath))
         {
             foreach (string line in File.ReadAllLines(savePath))
@@ -352,6 +356,7 @@ public class AoBScanner(IMemoryService memoryService)
                 saved[parts[0]] = Convert.ToInt64(parts[1], 16);
             }
         }
+
         TryPatternWithFallback("StartMenuMusic", Patterns.StartMusic,
             addr => Offsets.Hooks.StartMusic = addr, saved);
         TryPatternWithFallback("NoLogo", Patterns.NoLogo,
@@ -360,8 +365,8 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Patches.DefaultSoundVolWrite = addr, saved);
 
         Offsets.Functions.StopMusic = FindAddressByPattern(Patterns.StopMusic).ToInt64();
-        
-        
+
+
 #if DEBUG
         Console.WriteLine($"Hooks.StartMusic: 0x{Offsets.Hooks.StartMusic:X}");
         Console.WriteLine($"Patches.NoLogo: 0x{Offsets.Patches.NoLogo.ToInt64():X}");
