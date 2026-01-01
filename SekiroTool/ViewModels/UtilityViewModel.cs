@@ -21,7 +21,7 @@ public class UtilityViewModel : BaseViewModel
 
 
     private bool _wasNoDeathEnabled;
-    private float _desiredSpeed;
+    private float _desiredSpeed = 2;
 
     public UtilityViewModel(IUtilityService utilityService, IStateService stateService,
         HotkeyManager hotkeyManager, IDebugDrawService debugDrawService, PlayerViewModel playerViewModel)
@@ -431,6 +431,7 @@ public class UtilityViewModel : BaseViewModel
     {
         AreOptionsEnabled = false;
         IsNoClipEnabled = false;
+        GameSpeed = 1;
     }
 
     private void OnGameDetached()
