@@ -231,6 +231,18 @@ public class EnemyViewModel : BaseViewModel
         }
     }
 
+    private bool _isSnakeIntroLoopEnabled;
+
+    public bool IsSnakeIntroLoopEnabled
+    {
+        get => _isSnakeIntroLoopEnabled;
+        set
+        {
+            SetProperty(ref _isSnakeIntroLoopEnabled, value);
+            _enemyService.ToggleSnakeCanyonIntroAnimationLoop(_isSnakeIntroLoopEnabled);
+        }
+    }
+
     #endregion
 
 
@@ -251,6 +263,10 @@ public class EnemyViewModel : BaseViewModel
         
         _hotkeyManager.RegisterAction(HotkeyActions.NoButterflySummons.ToString(),
             () => { IsNoButterflySummonsEnabled = !IsNoButterflySummonsEnabled; });
+        
+        _hotkeyManager.RegisterAction(HotkeyActions.SnakeIntroLoop.ToString(), 
+            () => { IsSnakeIntroLoopEnabled = !IsSnakeIntroLoopEnabled; });
+        
         _hotkeyManager.RegisterAction(HotkeyActions.AllNoDeath.ToString(), () => { IsNoDeathEnabled = !IsNoDeathEnabled; });
         _hotkeyManager.RegisterAction(HotkeyActions.AllNoDamage.ToString(), () => { IsNoDamageEnabled = !IsNoDamageEnabled; });
         _hotkeyManager.RegisterAction(HotkeyActions.AllNoHit.ToString(), () => { IsNoHitEnabled = !IsNoHitEnabled; });
@@ -278,6 +294,7 @@ public class EnemyViewModel : BaseViewModel
         if (IsDragonCombo2Enabled) _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo2, true, false);
         if (IsDragonCombo3Enabled) _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo3, true, false);
         if (IsDragonCombo4Enabled) _enemyService.ToggleDragonActCombo(AiActs.Dragon.Combo4, true, true);
+        if (IsSnakeIntroLoopEnabled) _enemyService.ToggleSnakeCanyonIntroAnimationLoop(true);
     }
 
     private void OnGameNotLoaded()

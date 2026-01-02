@@ -58,6 +58,7 @@ public class SettingsViewModel : BaseViewModel
             { HotkeyActions.SkipDragonPhaseOne.ToString(), text => SkipDragonPhaseOneHotkeyText = text },
             { HotkeyActions.TriggerDragonFinalAttack.ToString(), text => TriggerDragonFinalAttackHotkeyText = text },
             { HotkeyActions.NoButterflySummons.ToString(), text => NoButterflySummonsHotkeyText = text },
+            { HotkeyActions.SnakeIntroLoop.ToString(), text => SnakeIntroLoopHotkeyText = text },
             { HotkeyActions.AllNoDeath.ToString(), text => AllNoDeathHotkeyText = text },
             { HotkeyActions.AllNoDamage.ToString(), text => AllNoDamageHotkeyText = text },
             { HotkeyActions.AllNoHit.ToString(), text => AllNoHitHotkeyText = text },
@@ -462,6 +463,13 @@ public class SettingsViewModel : BaseViewModel
     {
         get => _noButterflySummonsHotkeyText;
         set => SetProperty(ref _noButterflySummonsHotkeyText, value);
+    }
+    
+    private string _snakeIntroLoopHotkeyText;
+    public string SnakeIntroLoopHotkeyText
+    {
+        get => _snakeIntroLoopHotkeyText;
+        set => SetProperty(ref _snakeIntroLoopHotkeyText, value);
     }
 
     private string _allNoDeathHotkeyText;

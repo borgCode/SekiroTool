@@ -799,6 +799,27 @@ namespace SekiroTool {
         
         /// <summary>
         ///   Looks up a localized string similar to 48 83 ec 28             sub    rsp,0x28
+        ///48 bb 00 00 00 00 00    movabs rbx,0x0
+        ///00 00 00
+        ///000000000000000e &lt;loop&gt;:
+        ///80 3d 00 00 00 00 01    cmp    BYTE PTR [rip+0x0],0x1
+        ///74 3f                   je     56 &lt;exit&gt;
+        ///c7 44 24 20 32 cc 10    mov    DWORD PTR [rsp+0x20],0x10cc32
+        ///00
+        ///48 8d 4c 24 20          lea    rcx,[rsp+0x20]
+        ///e8 00 00 00 00          call   29 &lt;loop+0x1b&gt;
+        ///48 85 c0                test   rax,rax
+        ///74 1f                   je     4d &lt;sleep_on_failure&gt;
+        ///48 8b 88 c8 22 00 00    mov    rcx,QWORD PTR [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string SnakeCanyonIntroAnimationLoop {
+            get {
+                return ResourceManager.GetString("SnakeCanyonIntroAnimationLoop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 48 83 ec 28             sub    rsp,0x28
         ///48 b8 00 00 00 00 00    movabs rax,0x0
         ///00 00 00
         ///ff d0                   call   rax

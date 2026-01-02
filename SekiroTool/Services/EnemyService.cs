@@ -130,4 +130,45 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
             hookManager.UninstallHook(code.ToInt64());
         }
     }
+
+    public void ToggleSnakeCanyonIntroAnimationLoop(bool isEnabled)
+    {
+        if (isEnabled)
+        {
+            RunSnakeCanyonIntroAnimationLoop();
+        }
+        else
+        {
+            TerminateSnakeAnimationLoop();
+        }
+    }
+
+    public void RunSnakeCanyonIntroAnimationLoop()
+    {
+        reminderService.ChangeIdolIcon();
+        
+        var sleepAddr = memoryService.GetProcAddress("kernel32.dll", "Sleep");
+        var code =  CodeCaveOffsets.Base + CodeCaveOffsets.SnakeCanyonIntoAnimationLoopCode;
+        var exitFlag = CodeCaveOffsets.Base + CodeCaveOffsets.ShouldExitSnakeLoopFlag;
+        
+        memoryService.WriteUInt8(exitFlag, 0);
+        
+        var bytes = AsmLoader.GetAsmBytes("SnakeCanyonIntroAnimationLoop");
+        AsmHelper.WriteRelativeOffsets(bytes, [
+            (code.ToInt64() + 0xe, exitFlag.ToInt64(), 7, 0xe + 2),
+            (code.ToInt64() + 0x24, Functions.FindChrInsChrEntityId, 5, 0x24 + 1),
+            (code.ToInt64() + 0x3f, Functions.ForceAnimationByChrEventModule, 5, 0x3f + 1)
+        ]);
+        
+        Array.Copy(BitConverter.GetBytes(sleepAddr), 0, bytes, 0x4 + 2, 8);
+        
+        memoryService.WriteBytes(code, bytes);
+        memoryService.RunThread(code, 0);
+    }
+
+    public void TerminateSnakeAnimationLoop()
+    {
+        var exitFlag = CodeCaveOffsets.Base + CodeCaveOffsets.ShouldExitSnakeLoopFlag;
+        memoryService.WriteUInt8(exitFlag, 1);
+    }
 }

@@ -535,13 +535,15 @@
                                                       Tag="TriggerDragonFinalAttack"
                                                       KeyDown="HotkeyTextBox_KeyDown" />
              
-                                             <TextBlock Grid.Column="3" Text="Placeholder" VerticalAlignment="Center"
+                                             <TextBlock Grid.Column="3" Text="Snake Intro Loop" VerticalAlignment="Center"
                                                         HorizontalAlignment="Left" />
                                              <TextBox Grid.Column="4"
                                                       Margin="5,0,-10,0"
-                                                      
+                                                      Text="{Binding SnakeIntroLoopHotkeyText}"
                                                       Style="{StaticResource HotkeyTextBoxStyle}"
-                                                      
+                                                      GotFocus="HotkeyTextBox_GotFocus"
+                                                      LostFocus="HotkeyTextBox_LostFocus"
+                                                      Tag="SnakeIntroLoop"
                                                       KeyDown="HotkeyTextBox_KeyDown" />
                                              
                                              

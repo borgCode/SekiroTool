@@ -105,8 +105,10 @@ public class AoBScanner(IMemoryService memoryService)
         Offsets.Functions.ApplySpEffect = FindAddressByPattern(Patterns.ApplySpEffect).ToInt64();
         Offsets.Functions.ItemSpawn = FindAddressByPattern(Patterns.ItemSpawn).ToInt64();
         Offsets.Functions.GetChrInsWithHandle = FindAddressByPattern(Patterns.GetEnemyInsWithPackedWorldIdAndChrId).ToInt64();
+        Offsets.Functions.FindChrInsChrEntityId = FindAddressByPattern(Patterns.FindChrInsChrEntityId).ToInt64();
         Offsets.Functions.RemoveSpEffect = FindAddressByPattern(Patterns.RemoveEffect).ToInt64();
         Offsets.Functions.GetGoodsParam = FindAddressByPattern(Patterns.GetGoodsParam).ToInt64();
+        Offsets.Functions.ForceAnimationByChrEventModule = FindAddressByPattern(Patterns.ForceAnimationByChrEventModule).ToInt64();
 
         FindMultipleCallsInFunction(Patterns.ProcessEsdCommand, new Dictionary<Action<long>, int>
         {
@@ -184,6 +186,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Functions.ItemSpawn: 0x{Offsets.Functions.ItemSpawn:X}");
         Console.WriteLine(
             $"Functions.GetEnemyInsWithPackedWorldIdAndChrId: 0x{Offsets.Functions.GetChrInsWithHandle:X}");
+        Console.WriteLine($"Functions.FindChrInsChrEntityId: 0x{Offsets.Functions.FindChrInsChrEntityId:X}");
         Console.WriteLine($"Functions.OpenRegularShop: 0x{Offsets.Functions.OpenRegularShop:X}");
         Console.WriteLine($"Functions.OpenSkillMenu: 0x{Offsets.Functions.OpenSkillMenu:X}");
         Console.WriteLine($"Functions.UpgradeProstheticsMenu: 0x{Offsets.Functions.UpgradeProstheticsMenu:X}");
@@ -200,6 +203,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Functions.RemoveItem: 0x{Offsets.Functions.RemoveItem:X}");
         Console.WriteLine($"Functions.GiveSkillAndPros: 0x{Offsets.Functions.GiveSkillAndPros:X}");
         Console.WriteLine($"Functions.GetGoodsParam: 0x{Offsets.Functions.GetGoodsParam:X}");
+        Console.WriteLine($"Functions.ForceAnimationByChrEventModule: 0x{Offsets.Functions.ForceAnimationByChrEventModule:X}");
 #endif
     }
 

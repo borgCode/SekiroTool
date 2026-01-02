@@ -347,6 +347,13 @@ public static class Patterns
         AddressingMode.Absolute
     );
 
+    public static readonly Pattern FindChrInsChrEntityId = new Pattern(
+        new byte[] { 0x48, 0x89, 0x5C, 0x24, 0x08, 0x57, 0x48, 0x83, 0xEC, 0x20, 0x48, 0x8B, 0x1D, 0xBF, 0x87 },
+        "xxxxxxxxxxxxxxx",
+        0x0,
+        AddressingMode.Absolute
+    );
+    
     public static readonly Pattern ProcessEsdCommand = new Pattern(
         new byte[] { 0x48, 0x8B, 0xDA, 0x48, 0x8B, 0xF1, 0x48, 0x8B, 0x02, 0x48, 0x8B, 0xCA, 0xFF, 0x50, 0x10 },
         "xxxxxxxxxxxxxxx",
@@ -422,6 +429,13 @@ public static class Patterns
         AddressingMode.Relative,
         1,
         5
+    );
+
+    public static readonly Pattern ForceAnimationByChrEventModule = new Pattern(
+        new byte[] { 0x40, 0x53, 0x48, 0x83, 0xEC, 0x20, 0x8B, 0xDA, 0x89, 0x51, 0x10 },
+        "xxxxxxxxxxx",
+        0,
+        AddressingMode.Absolute
     );
 
     #endregion
