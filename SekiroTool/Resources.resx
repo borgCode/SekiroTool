@@ -137,33 +137,38 @@ c7 80 30 01 00 00 00    mov    DWORD PTR [rax+0x130],0x0
 c3                      ret</value>
     </data>
     <data name="SnakeCanyonIntroAnimationLoop" xml:space="preserve">
-        <value>48 83 ec 28             sub    rsp,0x28
+        <value>80 3d 00 00 00 00 01    cmp    BYTE PTR [rip+0x0],0x1
+74 68                   je     71 &lt;exit&gt;
+c6 05 00 00 00 00 01    mov    BYTE PTR [rip+0x0],0x1
+48 83 ec 28             sub    rsp,0x28
 48 bb 00 00 00 00 00    movabs rbx,0x0
 00 00 00
-000000000000000e &lt;loop&gt;:
+000000000000001e &lt;loop&gt;:
 80 3d 00 00 00 00 01    cmp    BYTE PTR [rip+0x0],0x1
-74 3f                   je     56 &lt;exit&gt;
+74 3f                   je     66 &lt;end_run&gt;
 c7 44 24 20 32 cc 10    mov    DWORD PTR [rsp+0x20],0x10cc32
 00
 48 8d 4c 24 20          lea    rcx,[rsp+0x20]
-e8 00 00 00 00          call   29 &lt;loop+0x1b&gt;
+e8 00 00 00 00          call   39 &lt;loop+0x1b&gt;
 48 85 c0                test   rax,rax
-74 1f                   je     4d &lt;sleep_on_failure&gt;
+74 1f                   je     5d &lt;sleep_on_failure&gt;
 48 8b 88 c8 22 00 00    mov    rcx,QWORD PTR [rax+0x22c8]
 48 85 c9                test   rcx,rcx
-74 13                   je     4d &lt;sleep_on_failure&gt;
+74 13                   je     5d &lt;sleep_on_failure&gt;
 ba 20 4e 00 00          mov    edx,0x4e20
-e8 00 00 00 00          call   44 &lt;sleep&gt;
-0000000000000044 &lt;sleep&gt;:
+e8 00 00 00 00          call   54 &lt;sleep&gt;
+0000000000000054 &lt;sleep&gt;:
 b9 28 23 00 00          mov    ecx,0x2328
 ff d3                   call   rbx
-eb c1                   jmp    e &lt;loop&gt;
-000000000000004d &lt;sleep_on_failure&gt;:
+eb c1                   jmp    1e &lt;loop&gt;
+000000000000005d &lt;sleep_on_failure&gt;:
 b9 e8 03 00 00          mov    ecx,0x3e8
 ff d3                   call   rbx
-eb b8                   jmp    e &lt;loop&gt;
-0000000000000056 &lt;exit&gt;:
+eb b8                   jmp    1e &lt;loop&gt;
+0000000000000066 &lt;end_run&gt;:
+c6 05 00 00 00 00 00    mov    BYTE PTR [rip+0x0],0x0
 48 83 c4 28             add    rsp,0x28
+0000000000000071 &lt;exit&gt;:
 c3                      ret</value>
     </data>
     <data name="OpenMenuNoParams" xml:space="preserve">

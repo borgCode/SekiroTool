@@ -64,6 +64,7 @@ public static class CodeCaveOffsets
     public const int DragonActCombosCode = 0x1260;
 
     public const int ShouldExitSnakeLoopFlag = 0x1460;
-    public const int SnakeCanyonIntoAnimationLoopCode = 0x1461;
+    public const int SnakeLoopIsRunningFlag = 0x1461;
+    public const int SnakeCanyonIntoAnimationLoopCode = 0x1462;
     
 }

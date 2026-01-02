@@ -150,17 +150,21 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
         var sleepAddr = memoryService.GetProcAddress("kernel32.dll", "Sleep");
         var code =  CodeCaveOffsets.Base + CodeCaveOffsets.SnakeCanyonIntoAnimationLoopCode;
         var exitFlag = CodeCaveOffsets.Base + CodeCaveOffsets.ShouldExitSnakeLoopFlag;
+        var runningFlag = CodeCaveOffsets.Base + CodeCaveOffsets.SnakeLoopIsRunningFlag;
         
         memoryService.WriteUInt8(exitFlag, 0);
         
         var bytes = AsmLoader.GetAsmBytes("SnakeCanyonIntroAnimationLoop");
         AsmHelper.WriteRelativeOffsets(bytes, [
-            (code.ToInt64() + 0xe, exitFlag.ToInt64(), 7, 0xe + 2),
-            (code.ToInt64() + 0x24, Functions.FindChrInsChrEntityId, 5, 0x24 + 1),
-            (code.ToInt64() + 0x3f, Functions.ForceAnimationByChrEventModule, 5, 0x3f + 1)
+            (code.ToInt64() + 0x0, runningFlag.ToInt64(), 7, 0x0 + 2),
+            (code.ToInt64() + 0x9, runningFlag.ToInt64(), 7, 0x9 + 2),
+            (code.ToInt64() + 0x1e, exitFlag.ToInt64(), 7, 0x1e + 2),
+            (code.ToInt64() + 0x34, Functions.FindChrInsChrEntityId, 5, 0x34 + 1),
+            (code.ToInt64() + 0x4f, Functions.ForceAnimationByChrEventModule, 5, 0x4f + 1),
+            (code.ToInt64() + 0x66, runningFlag.ToInt64(), 7, 0x66 + 2),
         ]);
         
-        Array.Copy(BitConverter.GetBytes(sleepAddr), 0, bytes, 0x4 + 2, 8);
+        Array.Copy(BitConverter.GetBytes(sleepAddr), 0, bytes, 0x14 + 2, 8);
         
         memoryService.WriteBytes(code, bytes);
         memoryService.RunThread(code, 0);
