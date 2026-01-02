@@ -491,40 +491,40 @@ public class PlayerViewModel : BaseViewModel
 
     private void RegisterHotkeys()
     {
-        _hotkeyManager.RegisterAction(HotkeyActions.SavePos1.ToString(), () => SavePosition(0));
-        _hotkeyManager.RegisterAction(HotkeyActions.SavePos2.ToString(), () => SavePosition(1));
-        _hotkeyManager.RegisterAction(HotkeyActions.RestorePos1.ToString(), () => RestorePosition(0));
-        _hotkeyManager.RegisterAction(HotkeyActions.RestorePos2.ToString(), () => RestorePosition(1));
-        _hotkeyManager.RegisterAction(HotkeyActions.ApplyConfetti.ToString(), () => SetApplyConfetti());
-        _hotkeyManager.RegisterAction(HotkeyActions.ApplyGachiin.ToString(), () => SetApplyGachiin());
-        _hotkeyManager.RegisterAction(HotkeyActions.RemoveConfetti.ToString(), () => SetRemoveConfetti());
-        _hotkeyManager.RegisterAction(HotkeyActions.RemoveGachiin.ToString(), () => SetRemoveGachiin());
-        _hotkeyManager.RegisterAction(HotkeyActions.NoDamage.ToString(),() => { IsNoDamageEnabled = !IsNoDamageEnabled; }); //do this for toggles
+        _hotkeyManager.RegisterAction(HotkeyActions.SavePos1, () => SavePosition(0));
+        _hotkeyManager.RegisterAction(HotkeyActions.SavePos2, () => SavePosition(1));
+        _hotkeyManager.RegisterAction(HotkeyActions.RestorePos1, () => RestorePosition(0));
+        _hotkeyManager.RegisterAction(HotkeyActions.RestorePos2, () => RestorePosition(1));
+        _hotkeyManager.RegisterAction(HotkeyActions.ApplyConfetti, SetApplyConfetti);
+        _hotkeyManager.RegisterAction(HotkeyActions.ApplyGachiin, SetApplyGachiin);
+        _hotkeyManager.RegisterAction(HotkeyActions.RemoveConfetti, SetRemoveConfetti);
+        _hotkeyManager.RegisterAction(HotkeyActions.RemoveGachiin, SetRemoveGachiin);
+        _hotkeyManager.RegisterAction(HotkeyActions.NoDamage,() => { IsNoDamageEnabled = !IsNoDamageEnabled; }); //do this for toggles
         
-        _hotkeyManager.RegisterAction(HotkeyActions.OneShotHealth.ToString(), () => { IsOneShotEnabled = !IsOneShotEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.OneShotHealth, () => { IsOneShotEnabled = !IsOneShotEnabled; });
 
-        _hotkeyManager.RegisterAction(HotkeyActions.OneShotPosture.ToString(), () => { IsOneShotPostureEnabled = !IsOneShotPostureEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.OneShotPosture, () => { IsOneShotPostureEnabled = !IsOneShotPostureEnabled; });
 
-        _hotkeyManager.RegisterAction(HotkeyActions.NoGoodsConsume.ToString(), () => { IsNoGoodsConsumeEnabled = !IsNoGoodsConsumeEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.NoGoodsConsume, () => { IsNoGoodsConsumeEnabled = !IsNoGoodsConsumeEnabled; });
 
-        _hotkeyManager.RegisterAction(HotkeyActions.NoEmblemConsume.ToString(), () => { IsNoEmblemConsumeEnabled = !IsNoEmblemConsumeEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.NoEmblemConsume, () => { IsNoEmblemConsumeEnabled = !IsNoEmblemConsumeEnabled; });
 
-        _hotkeyManager.RegisterAction(HotkeyActions.InfiniteRevival.ToString(), () => { IsNoRevivalConsumeEnabled = !IsNoRevivalConsumeEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.InfiniteRevival, () => { IsNoRevivalConsumeEnabled = !IsNoRevivalConsumeEnabled; });
 
-        _hotkeyManager.RegisterAction(HotkeyActions.PlayerHide.ToString(), () => { IsPlayerHideEnabled = !IsPlayerHideEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.PlayerHide, () => { IsPlayerHideEnabled = !IsPlayerHideEnabled; });
 
-        _hotkeyManager.RegisterAction(HotkeyActions.PlayerSilent.ToString(), () => { IsPlayerSilentEnabled = !IsPlayerSilentEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.PlayerSilent, () => { IsPlayerSilentEnabled = !IsPlayerSilentEnabled; });
 
-        _hotkeyManager.RegisterAction(HotkeyActions.InfinitePoise.ToString(), () => { IsInfinitePoiseEnabled = !IsInfinitePoiseEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.InfinitePoise, () => { IsInfinitePoiseEnabled = !IsInfinitePoiseEnabled; });
         
 
-        _hotkeyManager.RegisterAction(HotkeyActions.NoDeath.ToString(), () => { IsNoDeathEnabled = !IsNoDeathEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.NoDeath, () => { IsNoDeathEnabled = !IsNoDeathEnabled; });
 
-        _hotkeyManager.RegisterAction(HotkeyActions.NoDeathExKillbox.ToString(), () => { IsNoDeathEnabledWithoutKillbox = !IsNoDeathEnabledWithoutKillbox; });
+        _hotkeyManager.RegisterAction(HotkeyActions.NoDeathExKillbox, () => { IsNoDeathEnabledWithoutKillbox = !IsNoDeathEnabledWithoutKillbox; });
         
-        _hotkeyManager.RegisterAction(HotkeyActions.TogglePlayerSpeed.ToString(), () => TogglePlayerSpeed());
-        _hotkeyManager.RegisterAction(HotkeyActions.IncreasePlayerSpeed.ToString(), () => SetSpeed(Math.Min(10, PlayerSpeed + 0.25f)));
-        _hotkeyManager.RegisterAction(HotkeyActions.DecreasePlayerSpeed.ToString(), () => SetSpeed(Math.Max(0, PlayerSpeed - 0.25f)));
+        _hotkeyManager.RegisterAction(HotkeyActions.TogglePlayerSpeed, () => TogglePlayerSpeed());
+        _hotkeyManager.RegisterAction(HotkeyActions.IncreasePlayerSpeed, () => SetSpeed(Math.Min(10, PlayerSpeed + 0.25f)));
+        _hotkeyManager.RegisterAction(HotkeyActions.DecreasePlayerSpeed, () => SetSpeed(Math.Max(0, PlayerSpeed - 0.25f)));
 
 
 
