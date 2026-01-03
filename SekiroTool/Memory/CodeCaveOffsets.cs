@@ -62,4 +62,9 @@ public static class CodeCaveOffsets
     public const int ShouldDoStage1Twice = 0x1252;
     public const int StaggerCmpValue = 0x1254;
     public const int DragonActCombosCode = 0x1260;
+
+    public const int ShouldExitSnakeLoopFlag = 0x1460;
+    public const int SnakeLoopIsRunningFlag = 0x1461;
+    public const int SnakeCanyonIntoAnimationLoopCode = 0x1462;
+    
 }

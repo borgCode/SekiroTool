@@ -11,6 +11,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Border Grid.Row="0"
@@ -258,6 +259,20 @@
 
                 <CheckBox Content="Butterfly No Summons"
                           IsChecked="{Binding IsNoButterflySummonsEnabled}"
+                          Margin="0,2" />
+            </StackPanel>
+        </Border>
+        
+        <Border Grid.Row="3"
+                BorderThickness="1"
+                BorderBrush="#333"
+                CornerRadius="3">
+            <StackPanel Margin="10">
+                <TextBlock Text="Snake"
+                           Margin="0,0,0,10" />
+
+                <CheckBox Content="Loop Snake Canyon Intro Animation"
+                          IsChecked="{Binding IsSnakeIntroLoopEnabled}"
                           Margin="0,2" />
             </StackPanel>
         </Border>

@@ -71,6 +71,7 @@ public class SettingsViewModel : BaseViewModel
             new("Skip Dragon Phase One", HotkeyActions.SkipDragonPhaseOne),
             new("Trigger Dragon Final Attack", HotkeyActions.TriggerDragonFinalAttack),
             new("No Butterfly Summons", HotkeyActions.NoButterflySummons),
+            new("Snake Intro Loop", HotkeyActions.SnakeIntroLoop),
             new("All No Death", HotkeyActions.AllNoDeath),
             new("All No Damage", HotkeyActions.AllNoDamage),
             new("All No Hit", HotkeyActions.AllNoHit),

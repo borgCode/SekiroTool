@@ -32,6 +32,7 @@ public enum HotkeyActions
     SkipDragonPhaseOne,
     TriggerDragonFinalAttack,
     NoButterflySummons,
+    SnakeIntroLoop,
     AllNoDeath,
     AllNoDamage,
     AllNoHit,

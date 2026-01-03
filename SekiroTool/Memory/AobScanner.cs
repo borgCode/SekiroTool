@@ -64,6 +64,8 @@ public class AoBScanner(IMemoryService memoryService)
                 FindAddressByPattern(Patterns.EzStateExternalEventTempCtor).ToInt64(),
             () => Offsets.Functions.RemoveItem = FindAddressByPattern(Patterns.RemoveItem).ToInt64(),
             () => Offsets.Functions.GiveSkillAndPros = FindAddressByPattern(Patterns.GiveSkillAndPros).ToInt64(),
+            () => Offsets.Functions.FindChrInsChrEntityId = FindAddressByPattern(Patterns.FindChrInsChrEntityId).ToInt64(),
+            () => Offsets.Functions.ForceAnimationByChrEventModule = FindAddressByPattern(Patterns.ForceAnimationByChrEventModule).ToInt64(),
             () => TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
                 addr => Offsets.Hooks.LockedTarget = addr.ToInt64(), saved),
             () => TryPatternWithFallback("FreezeTargetPosture", Patterns.FreezeTargetPosture,
@@ -188,6 +190,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Functions.ItemSpawn: 0x{Offsets.Functions.ItemSpawn:X}");
         Console.WriteLine(
             $"Functions.GetEnemyInsWithPackedWorldIdAndChrId: 0x{Offsets.Functions.GetChrInsWithHandle:X}");
+        Console.WriteLine($"Functions.FindChrInsChrEntityId: 0x{Offsets.Functions.FindChrInsChrEntityId:X}");
         Console.WriteLine($"Functions.OpenRegularShop: 0x{Offsets.Functions.OpenRegularShop:X}");
         Console.WriteLine($"Functions.OpenSkillMenu: 0x{Offsets.Functions.OpenSkillMenu:X}");
         Console.WriteLine($"Functions.UpgradeProstheticsMenu: 0x{Offsets.Functions.UpgradeProstheticsMenu:X}");
@@ -205,6 +208,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Functions.RemoveItem: 0x{Offsets.Functions.RemoveItem:X}");
         Console.WriteLine($"Functions.GiveSkillAndPros: 0x{Offsets.Functions.GiveSkillAndPros:X}");
         Console.WriteLine($"Functions.GetGoodsParam: 0x{Offsets.Functions.GetGoodsParam:X}");
+        Console.WriteLine($"Functions.ForceAnimationByChrEventModule: 0x{Offsets.Functions.ForceAnimationByChrEventModule:X}");
 #endif
     }
 

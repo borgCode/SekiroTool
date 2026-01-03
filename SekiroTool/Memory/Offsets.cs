@@ -369,6 +369,7 @@ public static class Offsets
         public static long ApplySpEffect;
         public static long ItemSpawn;
         public static long GetChrInsWithHandle;
+        public static long FindChrInsChrEntityId;
         public static long OpenRegularShop;
         public static long OpenSkillMenu;
         public static long UpgradeProstheticsMenu;
@@ -387,5 +388,6 @@ public static class Offsets
         public static long RemoveItem;
         public static long GiveSkillAndPros;
         public static long GetGoodsParam;
+        public static long ForceAnimationByChrEventModule;
     }
 }
