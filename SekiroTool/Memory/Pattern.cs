@@ -72,7 +72,11 @@ public static class Patterns
     );
 
     public static readonly Pattern DebugFlagStart = new Pattern(
-        new byte[] { 0x80, 0x3D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0F, 0x85, 0x6C, 0xFF, 0xFF, 0xFF, 0x32, 0xC0, 0x48, 0x83, 0xC4, 0x20, 0x5B, 0xC3 },
+        new byte[]
+        {
+            0x80, 0x3D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0F, 0x85, 0x6C, 0xFF, 0xFF, 0xFF, 0x32, 0xC0, 0x48, 0x83, 0xC4,
+            0x20, 0x5B, 0xC3
+        },
         "xx????xxxxxxxxxxxxxxx",
         0,
         AddressingMode.Relative,
@@ -194,6 +198,15 @@ public static class Patterns
         7
     );
 
+    public static readonly Pattern Fd4PadManager = new Pattern(
+        [0x4C, 0x8B, 0x05, 0x00, 0x00, 0x00, 0x00, 0x4D, 0x85, 0xC0, 0x74, 0x6F],
+        "xxx????xxxxx",
+        0,
+        AddressingMode.Relative,
+        3,
+        7
+    );
+
     #endregion
 
     #region Patches
@@ -274,6 +287,22 @@ public static class Patterns
 
     #region Functions
 
+    public static readonly Pattern GetMovement = new Pattern(
+        new byte[] { 0x48, 0x8B, 0x41, 0x28, 0x44, 0x8B, 0xD2, 0x4C },
+        "xxxxxxxx",
+        0,
+        AddressingMode.Absolute
+    );
+
+    public static readonly Pattern MatrixVectorToProduct = new Pattern(
+        new byte[] { 0xE8, 0x00, 0x00, 0x00, 0x00, 0x4C, 0x8D, 0x44, 0x24, 0x30, 0x48, 0x8D, 0x57, 0x50 },
+        "x????xxxxxxxxx",
+        0,
+        AddressingMode.Relative,
+        1,
+        5
+    );
+
     public static readonly Pattern AddSen = new Pattern(
         [0x7E, 0x69, 0x8B, 0x97],
         "xxxx",
@@ -318,7 +347,7 @@ public static class Patterns
     public static readonly Pattern Warp = new Pattern(
         new byte[] { 0xBA, 0x10, 0x27, 0x00, 0x00, 0x41, 0xB8, 0x64, 0xEB, 0x00, 0x00, 0xE8, 0x00, 0x00, 0x00, 0x00 },
         "xxxxxxxxxxxx????",
-0x1A,
+        0x1A,
         AddressingMode.Relative,
         1,
         5
@@ -353,13 +382,12 @@ public static class Patterns
         0x0,
         AddressingMode.Absolute
     );
-    
+
     public static readonly Pattern ProcessEsdCommand = new Pattern(
         new byte[] { 0x48, 0x8B, 0xDA, 0x48, 0x8B, 0xF1, 0x48, 0x8B, 0x02, 0x48, 0x8B, 0xCA, 0xFF, 0x50, 0x10 },
         "xxxxxxxxxxxxxxx",
         0xc,
         AddressingMode.Absolute
-
     );
 
     public static readonly Pattern FrpgCastRay = new Pattern(

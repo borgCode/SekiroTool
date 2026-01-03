@@ -37,6 +37,7 @@ public class AoBScanner(IMemoryService memoryService)
             () => Offsets.DebugEventMan.Base = FindAddressByPattern(Patterns.DebugEventMan),
             () => Offsets.SprjFlipperImp.Base = FindAddressByPattern(Patterns.SprjFlipperImp),
             () => Offsets.FieldArea.Base = FindAddressByPattern(Patterns.FieldArea),
+            () => Offsets.Fd4PadManager.Base = FindAddressByPattern(Patterns.Fd4PadManager),
             () => Offsets.FrpgHavokMan.Base = FindAddressByPattern(Patterns.FrpgHavokMan),
             () => Offsets.GameDataMan.Base = FindAddressByPattern(Patterns.GameDataMan),
             () => Offsets.PauseRequest.Base = FindAddressByPattern(Patterns.PauseRequest),
@@ -48,6 +49,8 @@ public class AoBScanner(IMemoryService memoryService)
             () => Offsets.Functions.AddSen = FindAddressByPattern(Patterns.AddSen).ToInt64(),
             () => Offsets.Functions.Rest = FindAddressByPattern(Patterns.Rest).ToInt64(),
             () => Offsets.Functions.SetEvent = FindAddressByPattern(Patterns.SetEvent).ToInt64(),
+            () => Offsets.Functions.GetMovement = FindAddressByPattern(Patterns.GetMovement).ToInt64(),
+            () => Offsets.Functions.MatrixVectorToProduct = FindAddressByPattern(Patterns.MatrixVectorToProduct).ToInt64(),
             () => Offsets.Functions.GetEvent = FindAddressByPattern(Patterns.GetEvent).ToInt64(),
             () => Offsets.Functions.Warp = FindAddressByPattern(Patterns.Warp).ToInt64(),
             () => Offsets.Functions.AddExperience = FindAddressByPattern(Patterns.AddExperience).ToInt64(),
@@ -154,6 +157,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"IdolRequests.Base: 0x{Offsets.IdolRequests.Base.ToInt64():X}");
         Console.WriteLine($"GameRendFlags.Base: 0x{Offsets.GameRendFlags.Base.ToInt64():X}");
         Console.WriteLine($"MeshBase.Base: 0x{Offsets.MeshBase.Base.ToInt64():X}");
+        Console.WriteLine($"Fd4PadManager.Base: 0x{Offsets.Fd4PadManager.Base.ToInt64():X}");
 
         Console.WriteLine($"Hooks.LockedTarget: 0x{Offsets.Hooks.LockedTarget:X}");
         Console.WriteLine($"Hooks.FreezeTargetPosture: 0x{Offsets.Hooks.FreezeTargetPosture:X}");
@@ -209,6 +213,8 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Functions.GiveSkillAndPros: 0x{Offsets.Functions.GiveSkillAndPros:X}");
         Console.WriteLine($"Functions.GetGoodsParam: 0x{Offsets.Functions.GetGoodsParam:X}");
         Console.WriteLine($"Functions.ForceAnimationByChrEventModule: 0x{Offsets.Functions.ForceAnimationByChrEventModule:X}");
+        Console.WriteLine($"Functions.MatrixVectorToProduct: 0x{Offsets.Functions.MatrixVectorToProduct:X}");
+        Console.WriteLine($"Functions.GetMovement: 0x{Offsets.Functions.GetMovement:X}");
 #endif
     }
 
