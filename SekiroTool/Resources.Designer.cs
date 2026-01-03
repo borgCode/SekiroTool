@@ -453,18 +453,17 @@ namespace SekiroTool {
         
         /// <summary>
         ///   Looks up a localized string similar to 50                      push   rax
-        ///48 a1 00 00 00 00 00    movabs rax,ds:0x0
-        ///00 00 00
+        ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;
         ///48 8b 80 88 00 00 00    mov    rax,QWORD PTR [rax+0x88]
         ///48 3b 46 08             cmp    rax,QWORD PTR [rsi+0x8]
-        ///0f 85 d6 00 00 00       jne    f2 &lt;normal&gt;
+        ///0f 85 26 01 00 00       jne    13f &lt;normal&gt;
         ///0f 10 b6 80 00 00 00    movups xmm6,XMMWORD PTR [rsi+0x80]
-        ///41 50                   push   r8
         ///52                      push   rdx
-        ///48 a1 00 00 00 00 00    movabs rax,ds:0x0
-        ///00 00 00
-        ///48 8b 80 88 00 00 00    mov    rax,QWORD PTR [rax+0x88]
-        ///48 8b 50 58             m [rest of string was truncated]&quot;;.
+        ///51                      push   rcx
+        ///41 50                   push   r8
+        ///41 51                   push   r9
+        ///53                      push   rbx
+        ///4 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string NoClip_CoordsUpdate {
             get {
