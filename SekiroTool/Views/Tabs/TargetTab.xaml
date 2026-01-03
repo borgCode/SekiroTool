@@ -486,7 +486,7 @@
                             </CheckBox.IsChecked>
                         </CheckBox>
                         <TextBlock Text="Last Act: " Margin="10,0,0,0" VerticalAlignment="Center" />
-                        <TextBlock Text="{Binding LastAct}" VerticalAlignment="Center" Width="10" TextAlignment="Right" 
+                        <TextBlock Text="{Binding LastAct}" VerticalAlignment="Center" Width="15" TextAlignment="Right" 
                                    Foreground="Gold"/>
 
                         <TextBlock Text="Force Act: " Margin="10,0,10,0" VerticalAlignment="Center" />
@@ -533,7 +533,7 @@
                             </CheckBox.IsChecked>
                         </CheckBox>
                         <TextBlock Text="Last Kengeki Act: " Margin="10,0,0,0" VerticalAlignment="Center" />
-                        <TextBlock Text="{Binding LastKengekiAct}" VerticalAlignment="Center" Width="10"
+                        <TextBlock Text="{Binding LastKengekiAct}" VerticalAlignment="Center" Width="15"
                                    TextAlignment="Right"
                                    Foreground="Gold"/>
 
