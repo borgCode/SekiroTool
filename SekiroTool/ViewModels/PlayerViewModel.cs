@@ -14,7 +14,6 @@ public class PlayerViewModel : BaseViewModel
 {
     private readonly IPlayerService _playerService;
     private readonly HotkeyManager _hotkeyManager;
-    private readonly IStateService _stateService;
 
     private readonly DispatcherTimer _playerTick;
 
@@ -31,7 +30,6 @@ public class PlayerViewModel : BaseViewModel
     {
         _playerService = playerService;
         _hotkeyManager = hotkeyManager;
-        _stateService = stateService;
 
         RegisterHotkeys();
 

@@ -5,6 +5,8 @@ using SekiroTool.Core;
 using SekiroTool.Enums;
 using SekiroTool.GameIds;
 using SekiroTool.Interfaces;
+using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
+using Item = SekiroTool.Models.Item;
 
 namespace SekiroTool.ViewModels;
 
@@ -12,15 +14,17 @@ public class EventViewModel : BaseViewModel
 {
     private readonly IEventService _eventService;
     private readonly IDebugDrawService _debugDrawService;
+    private readonly IItemService _itemService;
 
     public static readonly Brush ActiveButtonColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#963839"));
     public static readonly Brush DefaultButtonColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#252525"));
     
     public EventViewModel(IEventService eventService, IStateService stateService,
-        IDebugDrawService debugDrawService)
+        IDebugDrawService debugDrawService, IItemService itemService)
     {
         _eventService = eventService;
         _debugDrawService = debugDrawService;
+        _itemService = itemService;
 
         stateService.Subscribe(State.Loaded, OnGameLoaded);
         stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
@@ -455,13 +459,26 @@ public class EventViewModel : BaseViewModel
         _eventService.SetEvent(GameEvent.EveningScaling, true);
         _eventService.SetEvent(GameEvent.NightScaling, true);
         UpdateScalingStatus();
-
     }
 
-    private void SetTutorialComplete(object parameter) => 
-        _eventService.SetEvent(GameEvent.IsTutorial, Convert.ToBoolean(parameter));
+    private void SetTutorialComplete(object parameter)
+    {
+        _eventService.SetEvent(GameEvent.IsTutorial, Convert.ToBoolean(parameter)); 
+        TutorialSpawns(); 
+    }
+    
+    private void TutorialSpawns()
+    {
+        var kusabimaru = new Item("Kusabimaru", 2300, 0x4000, 1, "Goods"); 
+        var grapple = new Item("Shinobi Prosthetic", 2310, 0x4000, 1, "Goods");
+        _itemService.SpawnItem(kusabimaru,1);
+        _itemService.SpawnItem(grapple,1);
+    }
+        
 
-
+    
+    
+    
     private void SetHirataTwo(object parameter)
     {
         bool isOn = Convert.ToBoolean(parameter);
