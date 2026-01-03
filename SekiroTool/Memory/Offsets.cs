@@ -80,7 +80,8 @@ public static class Offsets
             X = 0x80,
             Y = 0x84,
             Z = 0x88,
-            W = 0x8C
+            W = 0x8C,
+            NoGravity = 0x92D,
         }
 
         public const int ComManipulator = 0x58;
@@ -289,6 +290,11 @@ public static class Offsets
         public static IntPtr Base;
     }
 
+    public static class Fd4PadManager
+    {
+        public static IntPtr Base;
+    }
+
     public static class FieldArea
     {
         public static IntPtr Base;
@@ -388,6 +394,8 @@ public static class Offsets
         public static long RemoveItem;
         public static long GiveSkillAndPros;
         public static long GetGoodsParam;
+        public static long MatrixVectorToProduct;
         public static long ForceAnimationByChrEventModule;
+        public static long GetMovement;
     }
 }

@@ -12,7 +12,6 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
     private const float DefaultNoClipSpeedScaleY = 0.2f;
     private const float DefaultNoClipSpeedScaleX = 0.15f;
 
-
     public void ToggleHitboxView(bool isEnabled)
     {
         var hitboxFlagPtr = (IntPtr)memoryService.ReadInt64(DamageManager.Base) + DamageManager.HitboxView;
@@ -31,7 +30,7 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
     public void ToggleMeshFlag(int offset, bool isEnabled)
     {
         memoryService.WriteUInt8(MeshBase.Base + MeshBase.Mode, 1);
-        memoryService.WriteUInt8( MeshBase.Base + offset, isEnabled ? 1 : 0);
+        memoryService.WriteUInt8(MeshBase.Base + offset, isEnabled ? 1 : 0);
     }
 
     public void OpenSkillMenu()
@@ -87,50 +86,42 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
         ]);
         memoryService.AllocateAndExecute(bytes);
     }
-    
-    
+
     public void SetGameSpeed(float gameSpeed)
     {
-
         if (PatchChecker.CurrentPatch == Patch.V105)
         {
             var gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeedV105;
             memoryService.WriteFloat((IntPtr)gameSpeedPtr, gameSpeed);
         }
 
-        else if(PatchChecker.CurrentPatch == Patch.V103and4 || PatchChecker.CurrentPatch == Patch.V102)
+        else if (PatchChecker.CurrentPatch == Patch.V103and4 || PatchChecker.CurrentPatch == Patch.V102)
         {
             var gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeedV104;
             memoryService.WriteFloat((IntPtr)gameSpeedPtr, gameSpeed);
         }
-        
+
         else
         {
             var gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeed;
             memoryService.WriteFloat((IntPtr)gameSpeedPtr, gameSpeed);
         }
-        
     }
-    
 
-    
-    
     public float GetGameSpeed()
     {
-
         long gameSpeedPtr;
-        
+
         if (PatchChecker.CurrentPatch == Patch.V105)
         {
             gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeedV105;
         }
-        
-        else if (PatchChecker.CurrentPatch == Patch.V103and4 ||  PatchChecker.CurrentPatch == Patch.V102)
+
+        else if (PatchChecker.CurrentPatch == Patch.V103and4 || PatchChecker.CurrentPatch == Patch.V102)
         {
             gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeedV104;
-            
         }
-        
+
         else
         {
             gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeed;
@@ -141,7 +132,7 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
 
     public void WriteNoClipSpeed(float speedMultiplier)
     {
-        var speedScaleYLoc = CodeCaveOffsets.Base + CodeCaveOffsets.SpeedScaleY;
+        var speedScaleYLoc = CodeCaveOffsets.Base + CodeCaveOffsets.SpeedScale;
         var speedScaleXLoc = CodeCaveOffsets.Base + CodeCaveOffsets.SpeedScaleX;
         memoryService.WriteFloat(speedScaleYLoc, DefaultNoClipSpeedScaleY * speedMultiplier);
         memoryService.WriteFloat(speedScaleXLoc, DefaultNoClipSpeedScaleX * speedMultiplier);
@@ -153,6 +144,8 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
         var keyboardCode = CodeCaveOffsets.Base + CodeCaveOffsets.KeyboardCheckCode;
         var triggersCode = CodeCaveOffsets.Base + CodeCaveOffsets.TriggersCode;
         var coordUpdateCode = CodeCaveOffsets.Base + CodeCaveOffsets.CoordsUpdate;
+        var physicsPtr = memoryService.FollowPointers(WorldChrMan.Base,
+            [WorldChrMan.PlayerIns, ..ChrIns.ChrPhysicsModule], true);
 
         if (isEnabled)
         {
@@ -190,29 +183,28 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
             bytes = AsmLoader.GetAsmBytes("NoClip_CoordsUpdate");
             var coordsUpdateHook = Hooks.UpdateCoords;
             var fieldArea = FieldArea.Base;
-            var speedScaleYLoc = CodeCaveOffsets.Base + CodeCaveOffsets.SpeedScaleY;
-            var speedScaleXLoc = CodeCaveOffsets.Base + CodeCaveOffsets.SpeedScaleX;
-
-
-            AsmHelper.WriteAbsoluteAddresses(bytes, new[]
-            {
-                (worldChrMan.ToInt64(), 0x1 + 2),
-                (worldChrMan.ToInt64(), 0x26 + 2),
-                (fieldArea.ToInt64(), 0x62 + 2)
-            });
+            var fd4PadMan = Fd4PadManager.Base;
+            var speedScaleLoc = CodeCaveOffsets.Base + CodeCaveOffsets.SpeedScale;
 
             AsmHelper.WriteRelativeOffsets(bytes, new[]
             {
-                (coordUpdateCode.ToInt64() + 0x50, speedScaleYLoc.ToInt64(), 9, 0x50 + 5),
-                (coordUpdateCode.ToInt64() + 0x92, speedScaleXLoc.ToInt64(), 9, 0x92 + 5),
-                (coordUpdateCode.ToInt64() + 0xAD, zDirectionLoc.ToInt64(), 6, 0xAD + 2),
-                (coordUpdateCode.ToInt64() + 0xD7, zDirectionLoc.ToInt64(), 7, 0xD7 + 2),
-                (coordUpdateCode.ToInt64() + 0xFA, coordsUpdateHook + 0x7, 5, 0xFA + 1)
+                (coordUpdateCode.ToInt64() + 0x1, worldChrMan.ToInt64(), 7, 0x1 + 3),
+                (coordUpdateCode.ToInt64() + 0x42, fd4PadMan.ToInt64(), 7, 0x42 + 3),
+                (coordUpdateCode.ToInt64() + 0x5B, Functions.GetMovement, 5, 0x5B + 1),
+                (coordUpdateCode.ToInt64() + 0x6D, Functions.GetMovement, 5, 0x6D + 1),
+                (coordUpdateCode.ToInt64() + 0x9F, fieldArea.ToInt64(), 7, 0x9F + 3),
+                (coordUpdateCode.ToInt64() + 0xB2, Functions.MatrixVectorToProduct, 5, 0xB2 + 1),
+                (coordUpdateCode.ToInt64() + 0xD1, speedScaleLoc.ToInt64(), 9, 0xD1 + 5),
+                (coordUpdateCode.ToInt64() + 0xEE, zDirectionLoc.ToInt64(), 6, 0xEE + 2),
+                (coordUpdateCode.ToInt64() + 0x118, zDirectionLoc.ToInt64(), 7, 0x118 + 2),
+                (coordUpdateCode.ToInt64() + 0x147, coordsUpdateHook + 0x7, 5, 0x147 + 1)
             });
+            
+            memoryService.WriteUInt8(physicsPtr + (int)ChrIns.ChrPhysicsOffsets.NoGravity, 1);
 
             memoryService.WriteBytes(coordUpdateCode, bytes);
 
-            RunRayCast();
+            // RunRayCast();
 
             hookManager.InstallHook(inAirTimerCode.ToInt64(), inAirTimerHook,
                 [0xF3, 0x0F, 0x58, 0x87, 0xD0, 0x08, 0x00, 0x00]);
@@ -229,7 +221,8 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
             hookManager.UninstallHook(keyboardCode.ToInt64());
             hookManager.UninstallHook(triggersCode.ToInt64());
             hookManager.UninstallHook(coordUpdateCode.ToInt64());
-            TerminateRayCast();
+            memoryService.WriteUInt8(physicsPtr + (int)ChrIns.ChrPhysicsOffsets.NoGravity, 0);
+            // TerminateRayCast();
         }
     }
 
@@ -301,10 +294,11 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
         var freeCamCoordsPtr = memoryService.FollowPointers(FieldArea.Base, FieldArea.DebugCamCoords, false);
         memoryService.WriteBytes(freeCamCoordsPtr, positionBytes);
     }
-    
+
     public void ToggleSaveInCombat(bool isEnabled)
     {
-        if (isEnabled) memoryService.WriteBytes(Patches.SaveInCombat, [0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90]);
+        if (isEnabled)
+            memoryService.WriteBytes(Patches.SaveInCombat, [0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90]);
         else memoryService.WriteBytes(Patches.SaveInCombat, [0x80, 0xB9, 0xFC, 0x11, 0x00, 0x00, 0x03, 0x74, 0x4B]);
     }
 
