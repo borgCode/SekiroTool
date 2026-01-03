@@ -75,7 +75,7 @@ public partial class MainWindow : Window
         UtilityViewModel utilityViewModel =
             new UtilityViewModel(utilityService, _stateService, _hotkeyManager, debugDrawService, playerViewModel);
         ItemViewModel itemViewModel = new ItemViewModel(itemService, _stateService);
-        EventViewModel eventViewModel = new EventViewModel(eventService, _stateService, debugDrawService);
+        EventViewModel eventViewModel = new EventViewModel(eventService, _stateService, debugDrawService, itemService);
         SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, _stateService, _hotkeyManager);
 
         var playerTab = new PlayerTab(playerViewModel);
