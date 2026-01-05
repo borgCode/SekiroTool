@@ -377,10 +377,12 @@ public static class Patterns
     );
 
     public static readonly Pattern FindChrInsChrEntityId = new Pattern(
-        new byte[] { 0x48, 0x89, 0x5C, 0x24, 0x08, 0x57, 0x48, 0x83, 0xEC, 0x20, 0x48, 0x8B, 0x1D, 0xBF, 0x87 },
-        "xxxxxxxxxxxxxxx",
-        0x0,
-        AddressingMode.Absolute
+        new byte[] { 0x40, 0x53, 0x48, 0x83, 0xEC, 0x20, 0x89, 0x4C, 0x24, 0x30, 0x49 },
+        "xxxxxxxxxxx",
+        0x12,
+        AddressingMode.Relative,
+        1,
+        5
     );
 
     public static readonly Pattern ProcessEsdCommand = new Pattern(
