@@ -280,6 +280,23 @@ public class SettingsViewModel : BaseViewModel
         }
     }
 
+    public bool _isNoCutsceneEnabled;
+
+    public bool IsNoCutsceneEnabled
+    {
+        get => _isNoCutsceneEnabled;
+        set
+        {
+            if (SetProperty(ref _isNoCutsceneEnabled, value))
+            {
+                SettingsManager.Default.DisableCutscenes = value;
+                SettingsManager.Default.Save();
+
+                _settingsService.ToggleDisableCutscenes(_isNoCutsceneEnabled);
+            }
+        }
+    }
+
     #endregion
 
     #region Public Methods
@@ -349,6 +366,9 @@ public class SettingsViewModel : BaseViewModel
 
         _isNoCameraSpinEnabled = SettingsManager.Default.NoCameraSpin;
         OnPropertyChanged(nameof(IsNoCameraSpinEnabled));
+
+        _isNoCutsceneEnabled = SettingsManager.Default.DisableCutscenes;
+        OnPropertyChanged(nameof(IsNoCutsceneEnabled));
 
         _isDisableMenuMusicEnabled = SettingsManager.Default.DisableMenuMusic;
         OnPropertyChanged(nameof(IsDisableMenuMusicEnabled));

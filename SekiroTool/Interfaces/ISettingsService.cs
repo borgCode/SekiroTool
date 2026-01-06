@@ -8,4 +8,5 @@ public interface ISettingsService
     void ToggleNoCameraSpin(bool isEnabled);
     void ToggleDisableMusic(bool isEnabled);
     void PatchDefaultSound(int volume);
+    void ToggleDisableCutscenes(bool isEnabled);
 }

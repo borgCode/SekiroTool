@@ -87,5 +87,17 @@ public class SettingsService(IMemoryService memoryService, NopManager nopManager
         memoryService.WriteUInt8(defaultSoundWrite + 0x4, defaultSoundVolume);
         memoryService.WriteUInt8(defaultSoundWrite + 0x5, defaultSoundVolume);
     }
+
+    public void ToggleDisableCutscenes(bool isEnabled)
+    {
+        if (isEnabled)
+        {
+            nopManager.InstallNop(Functions.FormatCutscenePathString, 146);
+        }
+        else
+        {
+            nopManager.RestoreNop(Functions.FormatCutscenePathString);
+        }
+    }
 }
 
