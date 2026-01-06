@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SekiroTool"
         mc:Ignorable="d"
         Title="SekiroTool"
-        Height="670"
+        Height="700"
         Width="520"
         Background="{StaticResource BackgroundBrush}"
         Foreground="{StaticResource TextBrush}"

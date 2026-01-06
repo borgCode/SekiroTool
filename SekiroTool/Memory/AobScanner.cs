@@ -69,6 +69,7 @@ public class AoBScanner(IMemoryService memoryService)
             () => Offsets.Functions.GiveSkillAndPros = FindAddressByPattern(Patterns.GiveSkillAndPros).ToInt64(),
             () => Offsets.Functions.FindChrInsChrEntityId = FindAddressByPattern(Patterns.FindChrInsChrEntityId).ToInt64(),
             () => Offsets.Functions.ForceAnimationByChrEventModule = FindAddressByPattern(Patterns.ForceAnimationByChrEventModule).ToInt64(),
+            () => Offsets.Functions.FormatCutscenePathString = FindAddressByPattern(Patterns.FormatCutscenePathString).ToInt64(),
             () => TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
                 addr => Offsets.Hooks.LockedTarget = addr.ToInt64(), saved),
             () => TryPatternWithFallback("FreezeTargetPosture", Patterns.FreezeTargetPosture,
@@ -213,6 +214,7 @@ public class AoBScanner(IMemoryService memoryService)
         Console.WriteLine($"Functions.GiveSkillAndPros: 0x{Offsets.Functions.GiveSkillAndPros:X}");
         Console.WriteLine($"Functions.GetGoodsParam: 0x{Offsets.Functions.GetGoodsParam:X}");
         Console.WriteLine($"Functions.ForceAnimationByChrEventModule: 0x{Offsets.Functions.ForceAnimationByChrEventModule:X}");
+        Console.WriteLine($"Functions.FormatCutscenePathString: 0x{Offsets.Functions.FormatCutscenePathString:X}");
         Console.WriteLine($"Functions.MatrixVectorToProduct: 0x{Offsets.Functions.MatrixVectorToProduct:X}");
         Console.WriteLine($"Functions.GetMovement: 0x{Offsets.Functions.GetMovement:X}");
 #endif

@@ -16,6 +16,7 @@ public class SettingsManager
     public bool DisableMenuMusic { get; set; }
     public bool DefaultSoundChangeEnabled { get; set; }
     public int DefaultSoundVolume { get; set; } = 3;
+    public bool DisableCutscenes { get; set; }
     public double WindowLeft { get; set; }
     public double WindowTop { get; set; }
     public bool EnableUpdateChecks { get; set; } = true;
@@ -43,6 +44,7 @@ public class SettingsManager
                 $"AlwaysOnTop={AlwaysOnTop}",
                 $"NoTutorials={NoTutorials}",
                 $"NoCameraSpin={NoCameraSpin}",
+                $"DisabledCutscenes={DisableCutscenes}",
                 $"DisableMenuMusic={DisableMenuMusic}",
                 $"DefaultSoundChangeEnabled={DefaultSoundChangeEnabled}",
                 $"DefaultSoundVolume={DefaultSoundVolume}",
@@ -99,6 +101,10 @@ public class SettingsManager
                             case "NoCameraSpin":
                                 bool.TryParse(value, out bool ncp);
                                 settings.NoCameraSpin = ncp;
+                                break;
+                            case "DisabledCutscenes":
+                                bool.TryParse(value, out bool dc);
+                                settings.DisableCutscenes = dc;
                                 break;
                             case "DisableMenuMusic":
                                 bool.TryParse(value, out bool dmm);

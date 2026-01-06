@@ -396,6 +396,7 @@ public static class Offsets
         public static long GetGoodsParam;
         public static long MatrixVectorToProduct;
         public static long ForceAnimationByChrEventModule;
+        public static long FormatCutscenePathString;
         public static long GetMovement;
     }
 }
