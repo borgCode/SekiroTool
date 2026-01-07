@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,14 +22,14 @@ namespace SekiroTool;
 /// </summary>
 public partial class MainWindow : Window
 {
-    private readonly IMemoryService _memoryService;
+    
     private readonly IStateService _stateService;
     private readonly IPlayerService _playerService;
 
     private readonly AoBScanner _aobScanner;
     private readonly HotkeyManager _hotkeyManager;
     private readonly NopManager _nopManager;
-
+    private readonly MemoryService _memoryService;
     private readonly DispatcherTimer _gameLoadedTimer;
 
     public MainWindow()
@@ -136,9 +137,30 @@ public partial class MainWindow : Window
 
             if (!_hasCheckedPatch)
             {
-                PatchChecker.Initialize(_memoryService.TargetProcess.MainModule.FileName);
-                Console.WriteLine(PatchChecker.CurrentPatch?.ToString() ?? "Unknown");
+                var sw = Stopwatch.StartNew();
+
+                if (!PatchManager.Initialize(_memoryService))
+                {
+                    sw.Stop();
+                    Console.WriteLine($"PatchManager.Initialize failed: {sw.ElapsedMilliseconds}ms");
+                    sw.Restart();
+                    _aobScanner.DoMainScan();
+                    _stateService.Publish(State.Attached);
+                    sw.Stop();
+                    Console.WriteLine($"AoBScanner.Scan: {sw.ElapsedMilliseconds}ms");
+
+#if DEBUG           
+                    Console.WriteLine($@"Base: 0x{_memoryService.BaseAddress.ToInt64():X}");
+#endif
+                }
+                else
+                {
+                    sw.Stop();
+                    Console.WriteLine($"PatchManager.Initialize succeeded: {sw.ElapsedMilliseconds}ms");
+                }
+
                 _hasCheckedPatch = true;
+                _stateService.Publish(State.Attached);
             }
             
             if (!_hasAllocatedMemory)

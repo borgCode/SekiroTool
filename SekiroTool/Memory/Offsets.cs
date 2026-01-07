@@ -4,7 +4,30 @@ using SekiroTool.Utilities;
 namespace SekiroTool.Memory;
 
 public static class Offsets
-{
+{private static Patch? _version;
+
+    public static Patch Version => _version
+                                         ?? throw new InvalidOperationException(
+                                             "Offsets not initialized. Call PatchManager.Initialize() first.");
+
+    public static bool Initialize(string fileVersion, IntPtr moduleBase)
+    {
+        _version = fileVersion switch
+        {
+            var v when v.StartsWith("1.2.0.0") => Patch.V102,
+            var v when v.StartsWith("1.3.0.0") => Patch.V103and4,
+            var v when v.StartsWith("1.4.0.0") => Patch.V103and4,
+            var v when v.StartsWith("1.5.0.0") => Patch.V105,
+            var v when v.StartsWith("1.6.0.0") => Patch.V106,
+            _ => null
+        };
+
+        if (!_version.HasValue)
+            return false;
+
+        InitializeBaseAddresses(moduleBase);
+        return true;
+    }
     public static class WorldChrMan
     {
         public static IntPtr Base;
@@ -342,6 +365,160 @@ public static class Offsets
         public static IntPtr OpenRegularShopPatch;
         public static IntPtr DefaultSoundVolWrite;
         public static IntPtr PlayerSoundView;
+    }
+
+    private static void InitializeBaseAddresses(IntPtr moduleBase)
+    {
+        WorldChrMan.Base = moduleBase + Version switch
+{
+    Patch.V102 => 0x3B67DF0,
+    Patch.V103and4 => 0x3B68E30,
+    Patch.V105 => 0x3D7A1E0,
+    Patch.V106 => 0x3D7A1E0,
+    _ => 0
+};
+MenuMan.Base = moduleBase + Version switch
+{
+    Patch.V102 => 0x3B55048,
+    Patch.V103and4 => 0x3B56088,
+    Patch.V105 => 0x3D67408,
+    Patch.V106 => 0x3D67408,
+    _ => 0
+};
+WorldAiMan.Base = moduleBase + Version switch
+{
+    Patch.V102 => 0x3B422D0,
+    Patch.V103and4 => 0x3B43310,
+    Patch.V105 => 0x3D55070,
+    Patch.V106 => 0x3D55070,
+    _ => 0
+};
+DamageManager.Base = moduleBase + Version switch
+{
+    Patch.V102 => 0x3B65B00,
+    Patch.V103and4 => 0x3B66B40,
+    Patch.V105 => 0x3D77EF0,
+    Patch.V106 => 0x3D77EF0,
+    _ => 0
+};
+DebugFlags.Base = moduleBase + Version switch
+{
+    Patch.V102 => 0x3B67F8C,
+    Patch.V103and4 => 0x3B68FCC,
+    Patch.V105 => 0x3D7A366,
+    Patch.V106 => 0x3D7A366,
+    _ => 0
+};
+MapItemMan.Base = moduleBase + Version switch
+{
+    Patch.V102 => 0x3B5AA00,
+    Patch.V103and4 => 0x3B5BA40,
+    Patch.V105 => 0x3D6CDC0,
+    Patch.V106 => 0x3D6CDC0,
+    _ => 0
+};
+EventFlagMan.Base = moduleBase + Version switch
+{
+    Patch.V102 => 0x3B43248,
+    Patch.V103and4 => 0x3B44288,
+    Patch.V105 => 0x3D55FE8,
+    Patch.V106 => 0x3D55FE8,
+    _ => 0
+};
+DebugEventMan.Base = moduleBase + Version switch
+{
+    Patch.V102 => 0x3B42C68,
+    Patch.V103and4 => 0x3B43CA8,
+    Patch.V105 => 0x3D55A08,
+    Patch.V106 => 0x3D55A08,
+    _ => 0
+};
+SprjFlipperImp.Base = moduleBase + Version switch
+{
+    Patch.V102 => 0x3C8C2C8,
+    Patch.V103and4 => 0x3C8D308,
+    Patch.V105 => 0x3E9F748,
+    Patch.V106 => 0x3E9F748,
+    _ => 0
+};
+FieldArea.Base = moduleBase + Version switch
+{
+    Patch.V102 => 0x3B49CD8,
+    Patch.V103and4 => 0x3B4AD18,
+    Patch.V105 => 0x3D5C0A0,
+    Patch.V106 => 0x3D5C0A0,
+    _ => 0
+};
+FrpgHavokMan.Base = moduleBase + Version switch
+{
+    Patch.V102 => 0x3B5B240,
+    Patch.V103and4 => 0x3B5C280,
+    Patch.V105 => 0x3D6D640,
+    Patch.V106 => 0x3D6D640,
+    _ => 0
+};
+GameDataMan.Base = moduleBase + Version switch
+{
+    Patch.V102 => 0x3B47CF0,
+    Patch.V103and4 => 0x3B48D30,
+    Patch.V105 => 0x3D5AAC0,
+    Patch.V106 => 0x3D5AAC0,
+    _ => 0
+};
+PauseRequest.Base = moduleBase + Version switch
+{
+    Patch.V102 => 0x3B688C2,
+    Patch.V103and4 => 0x3B69902,
+    Patch.V105 => 0x3D7ACB2,
+    Patch.V106 => 0x3D7ACB2,
+    _ => 0
+};
+DlUserInputManager.Base = moduleBase + Version switch
+{
+    Patch.V102 => 0x3D2A550,
+    Patch.V103and4 => 0x3D2B5A0,
+    Patch.V105 => 0x3F42B28,
+    Patch.V106 => 0x3F42B28,
+    _ => 0
+};
+TargetingView.Base = moduleBase + Version switch
+{
+    Patch.V102 => 0x3B41C88,
+    Patch.V103and4 => 0x3B42CC8,
+    Patch.V105 => 0x3D54A28,
+    Patch.V106 => 0x3D54A28,
+    _ => 0
+};
+IdolRequests.Base = moduleBase + Version switch
+{
+    Patch.V105 => 0x3AFEB88,
+    Patch.V106 => 0x3AFEB88,
+    _ => 0
+};
+GameRendFlags.Base = moduleBase + Version switch
+{
+    Patch.V102 => 0x3007C8,
+    Patch.V103and4 => 0x3017C8,
+    Patch.V105 => 0x3B01838,
+    Patch.V106 => 0x3B01838,
+    _ => 0
+};
+MeshBase.Base = moduleBase + Version switch
+{
+    Patch.V102 => 0x3B65BC0,
+    Patch.V103and4 => 0x3B66C00,
+    Patch.V105 => 0x3D77FA4,
+    Patch.V106 => 0x3D77FA4,
+    _ => 0
+};
+Fd4PadManager.Base = moduleBase + Version switch
+{
+    Patch.V102 => 0x3D2A288,
+    Patch.V103and4 => 0x3D2B2C0,
+    Patch.V105 => 0x3F42850,
+    Patch.V106 => 0x3F42850,
+    _ => 0
+};
     }
 
     public static class Hooks

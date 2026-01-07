@@ -6,11 +6,11 @@ namespace SekiroTool.Memory;
 
 public class AoBScanner(IMemoryService memoryService)
 {
-    
     private ConcurrentDictionary<string, long> saved = new();
     
     public void DoMainScan()
     {
+ 
         string appData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             "SekiroTool");
         Directory.CreateDirectory(appData);
@@ -25,6 +25,8 @@ public class AoBScanner(IMemoryService memoryService)
             }
         }
 
+        
+        
         Parallel.Invoke(
             () => Offsets.WorldChrMan.Base = FindAddressByPattern(Patterns.WorldChrMan),
             () => Offsets.WorldChrManDbg.Base = FindAddressByPattern(Patterns.WorldChrManDbg),
@@ -135,86 +137,93 @@ public class AoBScanner(IMemoryService memoryService)
                 writer.WriteLine($"{pair.Key}={pair.Value:X}");
         }
         
-
+        
 
 #if DEBUG
-        Console.WriteLine($"WorldChrMan.Base: 0x{Offsets.WorldChrMan.Base.ToInt64():X}");
-        Console.WriteLine($"WorldChrManDbg.Base: 0x{Offsets.WorldChrManDbg.Base.ToInt64():X}");
-        Console.WriteLine($"MenuMan.Base: 0x{Offsets.MenuMan.Base.ToInt64():X}");
-        Console.WriteLine($"WorldAiMan.Base: 0x{Offsets.WorldAiMan.Base.ToInt64():X}");
-        Console.WriteLine($"DamageManager.Base: 0x{Offsets.DamageManager.Base.ToInt64():X}");
-        Console.WriteLine($"DebugFlags.Base: 0x{Offsets.DebugFlags.Base.ToInt64():X}");
-        Console.WriteLine($"MapItemMan.Base: 0x{Offsets.MapItemMan.Base.ToInt64():X}");
-        Console.WriteLine($"EventFlagMan.Base: 0x{Offsets.EventFlagMan.Base.ToInt64():X}");
-        Console.WriteLine($"DebugEventMan.Base: 0x{Offsets.DebugEventMan.Base.ToInt64():X}");
-        Console.WriteLine($"SprjFlipperImp.Base: 0x{Offsets.SprjFlipperImp.Base.ToInt64():X}");
-        Console.WriteLine($"FieldArea.Base: 0x{Offsets.FieldArea.Base.ToInt64():X}");
-        Console.WriteLine($"FrpgHavokMan.Base: 0x{Offsets.FrpgHavokMan.Base.ToInt64():X}");
-        Console.WriteLine($"GameDataMan.Base: 0x{Offsets.GameDataMan.Base.ToInt64():X}");
-        Console.WriteLine($"PauseRequest.Base: 0x{Offsets.PauseRequest.Base.ToInt64():X}");
-        Console.WriteLine($"DlUserInputManager.Base: 0x{Offsets.DlUserInputManager.Base.ToInt64():X}");
-        Console.WriteLine($"TargetingView.Base: 0x{Offsets.TargetingView.Base.ToInt64():X}");
-        Console.WriteLine($"IdolRequests.Base: 0x{Offsets.IdolRequests.Base.ToInt64():X}");
-        Console.WriteLine($"GameRendFlags.Base: 0x{Offsets.GameRendFlags.Base.ToInt64():X}");
-        Console.WriteLine($"MeshBase.Base: 0x{Offsets.MeshBase.Base.ToInt64():X}");
-        Console.WriteLine($"Fd4PadManager.Base: 0x{Offsets.Fd4PadManager.Base.ToInt64():X}");
+Console.WriteLine(" ");
+Console.WriteLine("BASES:------------------------------------------------");
+Console.WriteLine($"WorldChrMan.Base: 0x{Offsets.WorldChrMan.Base.ToInt64():X}");
+Console.WriteLine($"MenuMan.Base: 0x{Offsets.MenuMan.Base.ToInt64():X}");
+Console.WriteLine($"WorldAiMan.Base: 0x{Offsets.WorldAiMan.Base.ToInt64():X}");
+Console.WriteLine($"DamageManager.Base: 0x{Offsets.DamageManager.Base.ToInt64():X}");
+Console.WriteLine($"DebugFlags.Base: 0x{Offsets.DebugFlags.Base.ToInt64():X}");
+Console.WriteLine($"MapItemMan.Base: 0x{Offsets.MapItemMan.Base.ToInt64():X}");
+Console.WriteLine($"EventFlagMan.Base: 0x{Offsets.EventFlagMan.Base.ToInt64():X}");
+Console.WriteLine($"DebugEventMan.Base: 0x{Offsets.DebugEventMan.Base.ToInt64():X}");
+Console.WriteLine($"SprjFlipperImp.Base: 0x{Offsets.SprjFlipperImp.Base.ToInt64():X}");
+Console.WriteLine($"FieldArea.Base: 0x{Offsets.FieldArea.Base.ToInt64():X}");
+Console.WriteLine($"FrpgHavokMan.Base: 0x{Offsets.FrpgHavokMan.Base.ToInt64():X}");
+Console.WriteLine($"GameDataMan.Base: 0x{Offsets.GameDataMan.Base.ToInt64():X}");
+Console.WriteLine($"PauseRequest.Base: 0x{Offsets.PauseRequest.Base.ToInt64():X}");
+Console.WriteLine($"DlUserInputManager.Base: 0x{Offsets.DlUserInputManager.Base.ToInt64():X}");
+Console.WriteLine($"TargetingView.Base: 0x{Offsets.TargetingView.Base.ToInt64():X}");
+Console.WriteLine($"IdolRequests.Base: 0x{Offsets.IdolRequests.Base.ToInt64():X}");
+Console.WriteLine($"GameRendFlags.Base: 0x{Offsets.GameRendFlags.Base.ToInt64():X}");
+Console.WriteLine($"MeshBase.Base: 0x{Offsets.MeshBase.Base.ToInt64():X}");
+Console.WriteLine($"Fd4PadManager.Base: 0x{Offsets.Fd4PadManager.Base.ToInt64():X}");
 
-        Console.WriteLine($"Hooks.LockedTarget: 0x{Offsets.Hooks.LockedTarget:X}");
-        Console.WriteLine($"Hooks.FreezeTargetPosture: 0x{Offsets.Hooks.FreezeTargetPosture:X}");
-        Console.WriteLine($"Hooks.SetWarpCoordinates: 0x{Offsets.Hooks.SetWarpCoordinates:X}");
-        Console.WriteLine($"Hooks.SetWarpAngle: 0x{Offsets.Hooks.SetWarpAngle:X}");
-        Console.WriteLine($"Hooks.AddSubGoal: 0x{Offsets.Hooks.AddSubGoal:X}");
-        Console.WriteLine($"Hooks.InAirTimer: 0x{Offsets.Hooks.InAirTimer:X}");
-        Console.WriteLine($"Hooks.UpdateCoords: 0x{Offsets.Hooks.UpdateCoords:X}");
-        Console.WriteLine($"Hooks.PadTriggers: 0x{Offsets.Hooks.PadTriggers:X}");
-        Console.WriteLine($"Hooks.KeyBoard: 0x{Offsets.Hooks.KeyBoard:X}");
-        Console.WriteLine($"Hooks.InfinitePoise: 0x{Offsets.Hooks.InfinitePoise:X}");
-        Console.WriteLine($"Hooks.AiHasSpEffect: 0x{Offsets.Hooks.AiHasSpEffect:X}");
-        Console.WriteLine($"Hooks.GetMouseDelta: 0x{Offsets.Hooks.GetMouseDelta:X}");
-        Console.WriteLine($"Hooks.HpWrite: 0x{Offsets.Hooks.HpWrite:X}");
-        Console.WriteLine($"Hooks.InfiniteConfetti: 0x{Offsets.Hooks.InfiniteConfetti:X}");
-        Console.WriteLine($"Hooks.SetLastAct: 0x{Offsets.Hooks.SetLastAct:X}");
+Console.WriteLine(" ");
+Console.WriteLine("HOOKS:------------------------------------------------");
+Console.WriteLine($"Hooks.StartMusic: 0x{Offsets.Hooks.StartMusic:X}");
+Console.WriteLine($"Hooks.LockedTarget: 0x{Offsets.Hooks.LockedTarget:X}");
+Console.WriteLine($"Hooks.FreezeTargetPosture: 0x{Offsets.Hooks.FreezeTargetPosture:X}");
+Console.WriteLine($"Hooks.SetWarpCoordinates: 0x{Offsets.Hooks.SetWarpCoordinates:X}");
+Console.WriteLine($"Hooks.SetWarpAngle: 0x{Offsets.Hooks.SetWarpAngle:X}");
+Console.WriteLine($"Hooks.AddSubGoal: 0x{Offsets.Hooks.AddSubGoal:X}");
+Console.WriteLine($"Hooks.InAirTimer: 0x{Offsets.Hooks.InAirTimer:X}");
+Console.WriteLine($"Hooks.UpdateCoords: 0x{Offsets.Hooks.UpdateCoords:X}");
+Console.WriteLine($"Hooks.PadTriggers: 0x{Offsets.Hooks.PadTriggers:X}");
+Console.WriteLine($"Hooks.KeyBoard: 0x{Offsets.Hooks.KeyBoard:X}");
+Console.WriteLine($"Hooks.InfinitePoise: 0x{Offsets.Hooks.InfinitePoise:X}");
+Console.WriteLine($"Hooks.AiHasSpEffect: 0x{Offsets.Hooks.AiHasSpEffect:X}");
+Console.WriteLine($"Hooks.GetMouseDelta: 0x{Offsets.Hooks.GetMouseDelta:X}");
+Console.WriteLine($"Hooks.HpWrite: 0x{Offsets.Hooks.HpWrite:X}");
+Console.WriteLine($"Hooks.InfiniteConfetti: 0x{Offsets.Hooks.InfiniteConfetti:X}");
+Console.WriteLine($"Hooks.SetLastAct: 0x{Offsets.Hooks.SetLastAct:X}");
 
-
-        Console.WriteLine($"Patches.DebugFont: 0x{Offsets.Patches.DebugFont.ToInt64():X}");
-        Console.WriteLine($"Patches.EventView: 0x{Offsets.Patches.EventView.ToInt64():X}");
-        Console.WriteLine($"Patches.MenuTutorialSkip: 0x{Offsets.Patches.MenuTutorialSkip.ToInt64():X}");
-        Console.WriteLine($"Patches.ShowSmallHintBox: 0x{Offsets.Patches.ShowSmallHintBox.ToInt64():X}");
-        Console.WriteLine($"Patches.ShowTutorialText: 0x{Offsets.Patches.ShowTutorialText.ToInt64():X}");
-        Console.WriteLine($"Patches.SaveInCombat: 0x{Offsets.Patches.SaveInCombat.ToInt64():X}");
-        Console.WriteLine($"Patches.OpenRegularShopPatch: 0x{Offsets.Patches.OpenRegularShopPatch.ToInt64():X}");
-        Console.WriteLine($"Patches.PlayerSoundView: 0x{Offsets.Patches.PlayerSoundView.ToInt64():X}");
-
-        Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");
-        Console.WriteLine($"Functions.Rest: 0x{Offsets.Functions.Rest:X}");
-        Console.WriteLine($"Functions.SetEvent: 0x{Offsets.Functions.SetEvent:X}");
-        Console.WriteLine($"Functions.GetEvent: 0x{Offsets.Functions.GetEvent:X}");
-        Console.WriteLine($"Functions.Warp: 0x{Offsets.Functions.Warp:X}");
-        Console.WriteLine($"Functions.ApplySpEffect: 0x{Offsets.Functions.ApplySpEffect:X}");
-        Console.WriteLine($"Functions.ItemSpawn: 0x{Offsets.Functions.ItemSpawn:X}");
-        Console.WriteLine(
-            $"Functions.GetEnemyInsWithPackedWorldIdAndChrId: 0x{Offsets.Functions.GetChrInsWithHandle:X}");
-        Console.WriteLine($"Functions.FindChrInsChrEntityId: 0x{Offsets.Functions.FindChrInsChrEntityId:X}");
-        Console.WriteLine($"Functions.OpenRegularShop: 0x{Offsets.Functions.OpenRegularShop:X}");
-        Console.WriteLine($"Functions.OpenSkillMenu: 0x{Offsets.Functions.OpenSkillMenu:X}");
-        Console.WriteLine($"Functions.UpgradeProstheticsMenu: 0x{Offsets.Functions.UpgradeProstheticsMenu:X}");
-        Console.WriteLine($"Functions.OpenScalesShop: 0x{Offsets.Functions.OpenScalesShop:X}");
-        Console.WriteLine($"Functions.OpenProstheticsShop: 0x{Offsets.Functions.OpenProstheticsShop:X}");
-        Console.WriteLine($"Functions.FrpgCastRay: 0x{Offsets.Functions.FrpgCastRay:X}");
-        Console.WriteLine($"Functions.GetItemSlot: 0x{Offsets.Functions.GetItemSlot:X}");
-        Console.WriteLine($"Functions.GetItemPtrFromSlot: 0x{Offsets.Functions.GetItemPtrFromSlot:X}");
-        Console.WriteLine(
-            $"Functions.EzStateExternalEventTempCtor: 0x{Offsets.Functions.EzStateExternalEventTempCtor:X}");
-        Console.WriteLine($"Functions.AwardItemLot: 0x{Offsets.Functions.AwardItemLot:X}");
-        Console.WriteLine($"Functions.SetMessageTagValue: 0x{Offsets.Functions.SetMessageTagValue:X}");
-        Console.WriteLine($"Functions.AdjustItemCount: 0x{Offsets.Functions.AdjustItemCount:X}");
-        Console.WriteLine($"Functions.OpenGenericDialog: 0x{Offsets.Functions.OpenGenericDialog:X}");
-        Console.WriteLine($"Functions.RemoveItem: 0x{Offsets.Functions.RemoveItem:X}");
-        Console.WriteLine($"Functions.GiveSkillAndPros: 0x{Offsets.Functions.GiveSkillAndPros:X}");
-        Console.WriteLine($"Functions.GetGoodsParam: 0x{Offsets.Functions.GetGoodsParam:X}");
-        Console.WriteLine($"Functions.ForceAnimationByChrEventModule: 0x{Offsets.Functions.ForceAnimationByChrEventModule:X}");
-        Console.WriteLine($"Functions.MatrixVectorToProduct: 0x{Offsets.Functions.MatrixVectorToProduct:X}");
-        Console.WriteLine($"Functions.GetMovement: 0x{Offsets.Functions.GetMovement:X}");
+Console.WriteLine(" ");
+Console.WriteLine("PATCHES:------------------------------------------------");
+Console.WriteLine($"Patches.NoLogo: 0x{Offsets.Patches.NoLogo.ToInt64():X}");
+Console.WriteLine($"Patches.DefaultSoundVolWrite: 0x{Offsets.Patches.DefaultSoundVolWrite.ToInt64():X}");
+Console.WriteLine($"Patches.DebugFont: 0x{Offsets.Patches.DebugFont.ToInt64():X}");
+Console.WriteLine($"Patches.EventView: 0x{Offsets.Patches.EventView.ToInt64():X}");
+Console.WriteLine($"Patches.MenuTutorialSkip: 0x{Offsets.Patches.MenuTutorialSkip.ToInt64():X}");
+Console.WriteLine($"Patches.ShowSmallHintBox: 0x{Offsets.Patches.ShowSmallHintBox.ToInt64():X}");
+Console.WriteLine($"Patches.ShowTutorialText: 0x{Offsets.Patches.ShowTutorialText.ToInt64():X}");
+Console.WriteLine($"Patches.SaveInCombat: 0x{Offsets.Patches.SaveInCombat.ToInt64():X}");
+Console.WriteLine($"Patches.OpenRegularShopPatch: 0x{Offsets.Patches.OpenRegularShopPatch.ToInt64():X}");
+Console.WriteLine($"Patches.PlayerSoundView: 0x{Offsets.Patches.PlayerSoundView.ToInt64():X}");
+Console.WriteLine(" ");
+Console.WriteLine("FUNCTIONS:------------------------------------------------");
+Console.WriteLine($"Functions.StopMusic: 0x{Offsets.Functions.StopMusic:X}");
+Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");
+Console.WriteLine($"Functions.Rest: 0x{Offsets.Functions.Rest:X}");
+Console.WriteLine($"Functions.SetEvent: 0x{Offsets.Functions.SetEvent:X}");
+Console.WriteLine($"Functions.GetEvent: 0x{Offsets.Functions.GetEvent:X}");
+Console.WriteLine($"Functions.Warp: 0x{Offsets.Functions.Warp:X}");
+Console.WriteLine($"Functions.ApplySpEffect: 0x{Offsets.Functions.ApplySpEffect:X}");
+Console.WriteLine($"Functions.ItemSpawn: 0x{Offsets.Functions.ItemSpawn:X}");
+Console.WriteLine($"Functions.GetEnemyInsWithPackedWorldIdAndChrId: 0x{Offsets.Functions.GetChrInsWithHandle:X}");
+Console.WriteLine($"Functions.FindChrInsChrEntityId: 0x{Offsets.Functions.FindChrInsChrEntityId:X}");
+Console.WriteLine($"Functions.OpenRegularShop: 0x{Offsets.Functions.OpenRegularShop:X}");
+Console.WriteLine($"Functions.OpenSkillMenu: 0x{Offsets.Functions.OpenSkillMenu:X}");
+Console.WriteLine($"Functions.UpgradeProstheticsMenu: 0x{Offsets.Functions.UpgradeProstheticsMenu:X}");
+Console.WriteLine($"Functions.OpenScalesShop: 0x{Offsets.Functions.OpenScalesShop:X}");
+Console.WriteLine($"Functions.OpenProstheticsShop: 0x{Offsets.Functions.OpenProstheticsShop:X}");
+Console.WriteLine($"Functions.FrpgCastRay: 0x{Offsets.Functions.FrpgCastRay:X}");
+Console.WriteLine($"Functions.GetItemSlot: 0x{Offsets.Functions.GetItemSlot:X}");
+Console.WriteLine($"Functions.GetItemPtrFromSlot: 0x{Offsets.Functions.GetItemPtrFromSlot:X}");
+Console.WriteLine($"Functions.EzStateExternalEventTempCtor: 0x{Offsets.Functions.EzStateExternalEventTempCtor:X}");
+Console.WriteLine($"Functions.AwardItemLot: 0x{Offsets.Functions.AwardItemLot:X}");
+Console.WriteLine($"Functions.SetMessageTagValue: 0x{Offsets.Functions.SetMessageTagValue:X}");
+Console.WriteLine($"Functions.AdjustItemCount: 0x{Offsets.Functions.AdjustItemCount:X}");
+Console.WriteLine($"Functions.OpenGenericDialog: 0x{Offsets.Functions.OpenGenericDialog:X}");
+Console.WriteLine($"Functions.RemoveItem: 0x{Offsets.Functions.RemoveItem:X}");
+Console.WriteLine($"Functions.GiveSkillAndPros: 0x{Offsets.Functions.GiveSkillAndPros:X}");
+Console.WriteLine($"Functions.GetGoodsParam: 0x{Offsets.Functions.GetGoodsParam:X}");
+Console.WriteLine($"Functions.ForceAnimationByChrEventModule: 0x{Offsets.Functions.ForceAnimationByChrEventModule:X}");
+Console.WriteLine($"Functions.MatrixVectorToProduct: 0x{Offsets.Functions.MatrixVectorToProduct:X}");
+Console.WriteLine($"Functions.GetMovement: 0x{Offsets.Functions.GetMovement:X}");
 #endif
     }
 
@@ -375,7 +384,8 @@ public class AoBScanner(IMemoryService memoryService)
             addr => Offsets.Patches.DefaultSoundVolWrite = addr, saved);
 
         Offsets.Functions.StopMusic = FindAddressByPattern(Patterns.StopMusic).ToInt64();
-
+        
+        
 
 #if DEBUG
         Console.WriteLine($"Hooks.StartMusic: 0x{Offsets.Hooks.StartMusic:X}");
