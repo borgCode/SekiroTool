@@ -130,11 +130,8 @@ namespace SekiroTool.Utilities
             };
             downloadButton.Click += (s, e) => 
             {
-                if (dontShowCheckbox.IsChecked == true)
-                {
-                    SettingsManager.Default.EnableUpdateChecks = false;
-                    SettingsManager.Default.Save();
-                }
+                SettingsManager.Default.EnableUpdateChecks = dontShowCheckbox.IsChecked != true;
+                SettingsManager.Default.Save();
                 
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
                 {
@@ -154,12 +151,9 @@ namespace SekiroTool.Utilities
             
             laterButton.Click += (s, e) => 
             {
-                if (dontShowCheckbox.IsChecked == true)
-                {
-                    SettingsManager.Default.EnableUpdateChecks = false;
-                    SettingsManager.Default.Save();
-                }
-    
+                SettingsManager.Default.EnableUpdateChecks = dontShowCheckbox.IsChecked != true;
+                SettingsManager.Default.Save();
+
                 updateWindow.Close();
             };
 
