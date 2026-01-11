@@ -51,6 +51,7 @@ public class AoBScanner(IMemoryService memoryService)
             () => Offsets.Functions.SetEvent = FindAddressByPattern(Patterns.SetEvent).ToInt64(),
             () => Offsets.Functions.GetMovement = FindAddressByPattern(Patterns.GetMovement).ToInt64(),
             () => Offsets.Functions.MatrixVectorToProduct = FindAddressByPattern(Patterns.MatrixVectorToProduct).ToInt64(),
+            () => Offsets.Functions.ExecuteTalkCommand = FindAddressByPattern(Patterns.ExecuteTalkCommand).ToInt64(),
             () => Offsets.Functions.GetEvent = FindAddressByPattern(Patterns.GetEvent).ToInt64(),
             () => Offsets.Functions.Warp = FindAddressByPattern(Patterns.Warp).ToInt64(),
             () => Offsets.Functions.AddExperience = FindAddressByPattern(Patterns.AddExperience).ToInt64(),
@@ -111,19 +112,12 @@ public class AoBScanner(IMemoryService memoryService)
                 addr => Offsets.Patches.ShowTutorialText = addr, saved),
             () => TryPatternWithFallback("SaveInCombat", Patterns.UpdateSaveCoords,
                 addr => Offsets.Patches.SaveInCombat = addr, saved),
-            () => TryPatternWithFallback("OpenRegularShopPatch", Patterns.OpenRegularShopPatch,
-                addr => Offsets.Patches.OpenRegularShopPatch = addr, saved),
             () => TryPatternWithFallback("PlayerSoundView", Patterns.PlayerSoundView,
                 addr => Offsets.Patches.PlayerSoundView = addr, saved)
         );
 
         FindMultipleCallsInFunction(Patterns.ProcessEsdCommand, new Dictionary<Action<long>, int>
         {
-            { addr => Offsets.Functions.OpenRegularShop = addr, 0xBCF },
-            { addr => Offsets.Functions.OpenSkillMenu = addr, 0x2A03 },
-            { addr => Offsets.Functions.UpgradeProstheticsMenu = addr, 0x29DC },
-            { addr => Offsets.Functions.OpenScalesShop = addr, 0x29B5 },
-            { addr => Offsets.Functions.OpenProstheticsShop = addr, 0x24FA },
             { addr => Offsets.Functions.AwardItemLot = addr, 0x228B },
             { addr => Offsets.Functions.SetMessageTagValue = addr, 0x18B4 },
             { addr => Offsets.Functions.AdjustItemCount = addr, 0x1548 },
@@ -188,7 +182,6 @@ Console.WriteLine($"Patches.MenuTutorialSkip: 0x{Offsets.Patches.MenuTutorialSki
 Console.WriteLine($"Patches.ShowSmallHintBox: 0x{Offsets.Patches.ShowSmallHintBox.ToInt64():X}");
 Console.WriteLine($"Patches.ShowTutorialText: 0x{Offsets.Patches.ShowTutorialText.ToInt64():X}");
 Console.WriteLine($"Patches.SaveInCombat: 0x{Offsets.Patches.SaveInCombat.ToInt64():X}");
-Console.WriteLine($"Patches.OpenRegularShopPatch: 0x{Offsets.Patches.OpenRegularShopPatch.ToInt64():X}");
 Console.WriteLine($"Patches.PlayerSoundView: 0x{Offsets.Patches.PlayerSoundView.ToInt64():X}");
 
 // ==================== FUNCTIONS ====================
@@ -202,11 +195,6 @@ Console.WriteLine($"Functions.ApplySpEffect: 0x{Offsets.Functions.ApplySpEffect:
 Console.WriteLine($"Functions.ItemSpawn: 0x{Offsets.Functions.ItemSpawn:X}");
 Console.WriteLine($"Functions.GetChrInsWithHandle: 0x{Offsets.Functions.GetChrInsWithHandle:X}");
 Console.WriteLine($"Functions.FindChrInsChrEntityId: 0x{Offsets.Functions.FindChrInsChrEntityId:X}");
-Console.WriteLine($"Functions.OpenRegularShop: 0x{Offsets.Functions.OpenRegularShop:X}");
-Console.WriteLine($"Functions.OpenSkillMenu: 0x{Offsets.Functions.OpenSkillMenu:X}");
-Console.WriteLine($"Functions.UpgradeProstheticsMenu: 0x{Offsets.Functions.UpgradeProstheticsMenu:X}");
-Console.WriteLine($"Functions.OpenScalesShop: 0x{Offsets.Functions.OpenScalesShop:X}");
-Console.WriteLine($"Functions.OpenProstheticsShop: 0x{Offsets.Functions.OpenProstheticsShop:X}");
 Console.WriteLine($"Functions.FrpgCastRay: 0x{Offsets.Functions.FrpgCastRay:X}");
 Console.WriteLine($"Functions.GetItemSlot: 0x{Offsets.Functions.GetItemSlot:X}");
 Console.WriteLine($"Functions.GetItemPtrFromSlot: 0x{Offsets.Functions.GetItemPtrFromSlot:X}");
@@ -221,6 +209,7 @@ Console.WriteLine($"Functions.GetGoodsParam: 0x{Offsets.Functions.GetGoodsParam:
 Console.WriteLine($"Functions.ForceAnimationByChrEventModule: 0x{Offsets.Functions.ForceAnimationByChrEventModule:X}");
 Console.WriteLine($"Functions.MatrixVectorToProduct: 0x{Offsets.Functions.MatrixVectorToProduct:X}");
 Console.WriteLine($"Functions.GetMovement: 0x{Offsets.Functions.GetMovement:X}");
+Console.WriteLine($"Functions.ExecuteTalkCommand: 0x{Offsets.Functions.ExecuteTalkCommand:X}");
 #endif
     }
 

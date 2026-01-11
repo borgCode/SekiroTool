@@ -262,12 +262,6 @@ public static class Patterns
         AddressingMode.Absolute
     );
 
-    public static readonly Pattern OpenRegularShopPatch = new Pattern(
-        new byte[] { 0x48, 0x85, 0xC0, 0x74, 0x09, 0x48, 0x8B, 0x88, 0xD0 },
-        "xxxxxxxxx",
-        -0x5,
-        AddressingMode.Absolute
-    );
 
     public static readonly Pattern DefaultSoundVolWrite = new Pattern(
         new byte[] { 0x66, 0xC7, 0x41, 0x04, 0x07 },
@@ -286,6 +280,17 @@ public static class Patterns
     #endregion
 
     #region Functions
+
+    public static readonly Pattern ExecuteTalkCommand = new Pattern(
+        new byte[]
+        {
+            0x48, 0x81, 0xEC, 0x90, 0x01, 0x00, 0x00, 0x48, 0xC7, 0x44, 0x24, 0x78, 0xFE, 0xFF, 0xFF, 0xFF, 0x48, 0x89,
+            0x58, 0x18, 0x0F, 0x29, 0x70, 0xB8
+        },
+        "xxxxxxxxxxxxxxxxxxxxxxxx",
+        -0x15,
+        AddressingMode.Absolute
+    );
 
     public static readonly Pattern GetMovement = new Pattern(
         new byte[] { 0x48, 0x8B, 0x41, 0x28, 0x44, 0x8B, 0xD2, 0x4C },

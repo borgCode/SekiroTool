@@ -1,10 +1,10 @@
 ﻿namespace SekiroTool.GameIds;
 
-public class ScaleLineup(long startId, long endId, long unk)
+public class ScaleLineup(int startId, int endId, int unk)
 {
-    public long StartId { get; } = startId;
-    public long EndId { get; } = endId;
-    public long Unk { get; } = unk;
+    public int StartId { get; } = startId;
+    public int EndId { get; } = endId;
+    public int Unk { get; } = unk;
     
     
     public static readonly ScaleLineup Harunaga = new ScaleLineup(1000000, 1000099, 1);

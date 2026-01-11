@@ -1,9 +1,9 @@
 ﻿namespace SekiroTool.GameIds;
 
-public class ShopLineup(long startId, long endId)
+public class ShopLineup(int startId, int endId)
 {
-    public long StartId { get; } = startId;
-    public long EndId { get; } = endId;
+    public int StartId { get; } = startId;
+    public int EndId { get; } = endId;
 
 
     public static readonly ShopLineup Idol = new ShopLineup(1030, 1039);

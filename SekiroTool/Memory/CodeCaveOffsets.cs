@@ -65,6 +65,9 @@ public static class CodeCaveOffsets
 
     public const int ShouldExitSnakeLoopFlag = 0x1460;
     public const int SnakeLoopIsRunningFlag = 0x1461;
-    public const int SnakeCanyonIntoAnimationLoopCode = 0x1462;
-    
+    public const int SnakeCanyonIntoAnimationLoopCode = 0x1462; // 0x71 size
+
+    public const int EzStateTalkParams = 0x1500;
+    public const int EzStateExecuteTalkCommandCode = 0x1540;  //0xA3
+
 }

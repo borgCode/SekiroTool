@@ -193,6 +193,25 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 48 89 e5                mov    rbp,rsp
+        ///48 81 ec 08 06 00 00    sub    rsp,0x608
+        ///48 8d 8d e0 fb ff ff    lea    rcx,[rbp-0x420]
+        ///ba 00 00 00 00          mov    edx,0x0
+        ///e8 00 00 00 00          call   1b &lt;_main+0x1b&gt;
+        ///48 8d 8d c8 fb ff ff    lea    rcx,[rbp-0x438]
+        ///48 8d 95 98 fa ff ff    lea    rdx,[rbp-0x568]
+        ///48 89 51 08             mov    QWORD PTR [rcx+0x8],rdx
+        ///4c 8d 85 70 fa ff ff    lea    r8,[rbp-0x590]
+        ///4c 89 82 c8 00 00 00    mov    QWORD PTR [rdx+0xc8],r8
+        ///49 89 50 20             mov    QWORD PT [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ExecuteTalkCommand {
+            get {
+                return ResourceManager.GetString("ExecuteTalkCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 50                      push   rax
         ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;
         ///48 8b 80 f8 1f 00 00    mov    rax,QWORD PTR [rax+0x1ff8]
@@ -580,21 +599,6 @@ namespace SekiroTool {
         internal static string NoMenuMusic {
             get {
                 return ResourceManager.GetString("NoMenuMusic", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 48 83 ec 48             sub    rsp,0x48
-        ///48 8d 0c 24             lea    rcx,[rsp]
-        ///48 b8 00 00 00 00 00    movabs rax,0x0
-        ///00 00 00
-        ///ff d0                   call   rax
-        ///48 83 c4 48             add    rsp,0x48
-        ///c3                      ret.
-        /// </summary>
-        internal static string OpenMenuNoParams {
-            get {
-                return ResourceManager.GetString("OpenMenuNoParams", resourceCulture);
             }
         }
         

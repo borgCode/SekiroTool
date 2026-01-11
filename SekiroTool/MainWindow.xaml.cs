@@ -63,6 +63,7 @@ public partial class MainWindow : Window
         IUtilityService utilityService = new UtilityService(_memoryService, hookManager);
         IItemService itemService = new ItemService(_memoryService);
         ISettingsService settingsService = new SettingsService(_memoryService, _nopManager, hookManager);
+        IEzStateService ezStateService = new EzStateService(_memoryService);
 
 
         PlayerViewModel playerViewModel = new PlayerViewModel(_playerService, _hotkeyManager, _stateService);
@@ -73,7 +74,7 @@ public partial class MainWindow : Window
         TargetViewModel targetViewModel =
             new TargetViewModel(_stateService, _hotkeyManager, targetService, debugDrawService);
         UtilityViewModel utilityViewModel =
-            new UtilityViewModel(utilityService, _stateService, _hotkeyManager, debugDrawService, playerViewModel);
+            new UtilityViewModel(utilityService, _stateService, _hotkeyManager, debugDrawService, playerViewModel, ezStateService);
         ItemViewModel itemViewModel = new ItemViewModel(itemService, _stateService);
         EventViewModel eventViewModel = new EventViewModel(eventService, _stateService, debugDrawService, itemService);
         SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, _stateService, _hotkeyManager);
