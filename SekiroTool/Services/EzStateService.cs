@@ -21,6 +21,8 @@ public class EzStateService(IMemoryService memoryService) : IEzStateService
         }
         
         var bytes = AsmLoader.GetAsmBytes("ExecuteTalkCommand");
+
+        
         AsmHelper.WriteRelativeOffsets(bytes, new []
         {
             (code.ToInt64() + 0x16, Functions.EzStateExternalEventTempCtor, 5, 0x16 + 1),
@@ -36,6 +38,9 @@ public class EzStateService(IMemoryService memoryService) : IEzStateService
         
         
         memoryService.WriteBytes(code, bytes);
+        int menuHandleOffset = EzStateMenuHandle;
+        memoryService.WriteInt32(code + 0x34 + 3, menuHandleOffset);
+        
         memoryService.RunThread(code);
     }
 }

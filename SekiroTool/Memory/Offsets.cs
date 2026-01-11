@@ -375,6 +375,14 @@ public static class Offsets
         public static IntPtr Base;
     }
 
+    public static int EzStateMenuHandle = Version switch
+    {
+
+        Version1_2_0 or Version1_3_0 or Version1_4_0 => 0xB8,
+        Version1_5_0 or Version1_6_0 => 0xC8,
+        _ => 0
+    };
+
     public static class Patches
     {
         public static IntPtr NoLogo;
