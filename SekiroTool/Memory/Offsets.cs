@@ -339,7 +339,6 @@ public static class Offsets
         public static IntPtr ShowSmallHintBox;
         public static IntPtr ShowTutorialText;
         public static IntPtr SaveInCombat;
-        public static IntPtr OpenRegularShopPatch;
         public static IntPtr DefaultSoundVolWrite;
         public static IntPtr PlayerSoundView;
     }
@@ -376,16 +375,12 @@ public static class Offsets
         public static long ItemSpawn;
         public static long GetChrInsWithHandle;
         public static long FindChrInsChrEntityId;
-        public static long OpenRegularShop;
-        public static long OpenSkillMenu;
-        public static long UpgradeProstheticsMenu;
-        public static long OpenScalesShop;
-        public static long OpenProstheticsShop;
         public static long FrpgCastRay;
         public static long StopMusic;
         public static long GetItemSlot;
         public static long GetItemPtrFromSlot;
         public static long EzStateExternalEventTempCtor;
+        public static long ExecuteTalkCommand;
         public static long AwardItemLot;
         public static long SetMessageTagValue;
         public static long AdjustItemCount;

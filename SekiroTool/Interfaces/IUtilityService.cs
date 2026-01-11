@@ -8,11 +8,6 @@ public interface IUtilityService
     void TogglePlayerSoundView(bool isEnabled);
     void ToggleGameRendFlag(int offset, bool isEnabled);
     void ToggleMeshFlag(int offset, bool isEnabled);
-    void OpenSkillMenu();
-    void OpenUpgradeProstheticsMenu();
-    void OpenRegularShop(ShopLineup shopLineup);
-    void OpenScalesShop(ScaleLineup scaleLineup);
-    void OpenProstheticsShop(ShopLineup shopLineup);
     void SetGameSpeed(float gameSpeed);
     float GetGameSpeed();
     void WriteNoClipSpeed(float speedMultiplier);

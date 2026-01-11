@@ -171,15 +171,6 @@ c6 05 00 00 00 00 00    mov    BYTE PTR [rip+0x0],0x0
 0000000000000071 &lt;exit&gt;:
 c3                      ret</value>
     </data>
-    <data name="OpenMenuNoParams" xml:space="preserve">
-        <value>48 83 ec 48             sub    rsp,0x48
-48 8d 0c 24             lea    rcx,[rsp]
-48 b8 00 00 00 00 00    movabs rax,0x0
-00 00 00
-ff d0                   call   rax
-48 83 c4 48             add    rsp,0x48
-c3                      ret</value>
-    </data>
     <data name="OpenMenuTwoParams" xml:space="preserve">
         <value>48 83 ec 48             sub    rsp,0x48
 48 8d 0c 24             lea    rcx,[rsp]
@@ -1478,6 +1469,43 @@ ff d0                   call   rax
 48 8b 4c 24 28          mov    rcx,QWORD PTR [rsp+0x28]
 48 83 c4 48             add    rsp,0x48
 66 c7 41 2c 33 02       mov    WORD PTR [rcx+0x2c],0x233
+c3                      ret</value>
+    </data>
+    <data name="ExecuteTalkCommand" xml:space="preserve">
+        <value>48 89 e5                mov    rbp,rsp
+48 81 ec 08 06 00 00    sub    rsp,0x608
+48 8d 8d e0 fb ff ff    lea    rcx,[rbp-0x420]
+ba 00 00 00 00          mov    edx,0x0
+e8 00 00 00 00          call   1b &lt;_main+0x1b&gt;
+48 8d 8d c8 fb ff ff    lea    rcx,[rbp-0x438]
+48 8d 95 98 fa ff ff    lea    rdx,[rbp-0x568]
+48 89 51 08             mov    QWORD PTR [rcx+0x8],rdx
+4c 8d 85 70 fa ff ff    lea    r8,[rbp-0x590]
+4c 89 82 c8 00 00 00    mov    QWORD PTR [rdx+0xc8],r8
+49 89 50 20             mov    QWORD PTR [r8+0x20],rdx
+48 8d 9d 30 fa ff ff    lea    rbx,[rbp-0x5d0]
+48 89 1a                mov    QWORD PTR [rdx],rbx
+c7 43 20 ff ff ff ff    mov    DWORD PTR [rbx+0x20],0xffffffff
+bb 00 00 00 00          mov    ebx,0x0
+31 ff                   xor    edi,edi
+48 8d 35 00 00 00 00    lea    rsi,[rip+0x0]        # 5e &lt;param_loop&gt;
+00000000005e &lt;param_loop&gt;:
+8b 04 be                mov    eax,DWORD PTR [rsi+rdi*4]
+4c 8d 85 60 fa ff ff    lea    r8,[rbp-0x5a0]
+41 89 00                mov    DWORD PTR [r8],eax
+41 c7 40 08 02 00 00    mov    DWORD PTR [r8+0x8],0x2
+00
+8d 57 01                lea    edx,[rdi+0x1]
+48 8d 8d e0 fb ff ff    lea    rcx,[rbp-0x420]
+48 8b 01                mov    rax,QWORD PTR [rcx]
+ff 50 08                call   QWORD PTR [rax+0x8]
+ff c7                   inc    edi
+39 df                   cmp    edi,ebx
+7c d5                   jl     5e &lt;param_loop&gt;
+48 8d 8d c8 fb ff ff    lea    rcx,[rbp-0x438]
+48 8d 95 e0 fb ff ff    lea    rdx,[rbp-0x420]
+e8 00 00 00 00          call   9c &lt;param_loop+0x3e&gt;
+48 81 c4 08 06 00 00    add    rsp,0x608
 c3                      ret</value>
     </data>
 </root>

@@ -18,18 +18,20 @@ public class UtilityViewModel : BaseViewModel
     private readonly HotkeyManager _hotkeyManager;
     private readonly IDebugDrawService _debugDrawService;
     private readonly PlayerViewModel _playerViewModel;
-
+    private readonly IEzStateService _ezStateService;
 
     private bool _wasNoDeathEnabled;
     private float _desiredSpeed = 2;
 
     public UtilityViewModel(IUtilityService utilityService, IStateService stateService,
-        HotkeyManager hotkeyManager, IDebugDrawService debugDrawService, PlayerViewModel playerViewModel)
+        HotkeyManager hotkeyManager, IDebugDrawService debugDrawService, PlayerViewModel playerViewModel,
+        IEzStateService ezStateService)
     {
         _utilityService = utilityService;
         _hotkeyManager = hotkeyManager;
         _debugDrawService = debugDrawService;
         _playerViewModel = playerViewModel;
+        _ezStateService = ezStateService;
 
         RegisterHotkeys();
 
@@ -58,7 +60,6 @@ public class UtilityViewModel : BaseViewModel
         KoremoriCommand = new DelegateCommand(() => OpenScalesShop(ScaleLineup.Koremori));
         ProstheticsCommand = new DelegateCommand(() => OpenProstheticsShop(ShopLineup.Prosthetics));
     }
-
 
     #region Commands
 
@@ -158,7 +159,6 @@ public class UtilityViewModel : BaseViewModel
         }
     }
 
-
     private bool _isHideSfxEnabled;
 
     public bool IsHideSfxEnabled
@@ -233,7 +233,6 @@ public class UtilityViewModel : BaseViewModel
         }
     }
 
-
     private float _gameSpeed;
 
     public float GameSpeed
@@ -247,7 +246,7 @@ public class UtilityViewModel : BaseViewModel
             }
         }
     }
-    
+
     private bool _isSaveInCombatEnabled;
 
     public bool IsSaveInCombatEnabled
@@ -398,8 +397,6 @@ public class UtilityViewModel : BaseViewModel
             if (!AreOptionsEnabled || !IsFreeCamEnabled) return;
             _utilityService.MoveCamToPlayer();
         });
-        
-        
     }
 
     private void OnGameLoaded()
@@ -416,7 +413,8 @@ public class UtilityViewModel : BaseViewModel
         if (IsDrawLowHitEnabled) _utilityService.ToggleMeshFlag(Offsets.MeshBase.LowHit, true);
         if (IsDrawHighHitEnabled) _utilityService.ToggleMeshFlag(Offsets.MeshBase.HighHit, true);
         if (IsDrawObjMeshEnabled) _utilityService.ToggleMeshFlag(Offsets.MeshBase.Objects, true);
-        if (IsDrawChrRagdollEnabled) EnableDrawFeature(() => _utilityService.ToggleMeshFlag(Offsets.MeshBase.Chr, true));
+        if (IsDrawChrRagdollEnabled)
+            EnableDrawFeature(() => _utilityService.ToggleMeshFlag(Offsets.MeshBase.Chr, true));
         if (IsSaveInCombatEnabled) _utilityService.ToggleSaveInCombat(true);
     }
 
@@ -425,7 +423,6 @@ public class UtilityViewModel : BaseViewModel
         if (_debugDrawService.GetCount() < 1) _debugDrawService.RequestDebugDraw();
         action.Invoke();
     }
-
 
     private void OnGameNotLoaded()
     {
@@ -456,11 +453,20 @@ public class UtilityViewModel : BaseViewModel
 
     private void MoveCamToPlayer() => _utilityService.MoveCamToPlayer();
 
-    private void OpenSkillMenu() => _utilityService.OpenSkillMenu();
-    private void OpenUpgradeProstheticsMenu() => _utilityService.OpenUpgradeProstheticsMenu();
-    private void OpenRegularShop(ShopLineup shopLineup) => _utilityService.OpenRegularShop(shopLineup);
-    private void OpenScalesShop(ScaleLineup scaleLineup) => _utilityService.OpenScalesShop(scaleLineup);
-    private void OpenProstheticsShop(ShopLineup shopLineup) => _utilityService.OpenProstheticsShop(shopLineup);
+    private void OpenSkillMenu() => _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenSkillMenu);
+
+    private void OpenUpgradeProstheticsMenu() =>
+        _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenProstheticsUpgrade);
+
+    private void OpenRegularShop(ShopLineup shopLineup) =>
+        _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenRegularShop(shopLineup));
+
+    private void OpenScalesShop(ScaleLineup scaleLineup) =>
+        _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenScaleShop(scaleLineup));
+
+    private void OpenProstheticsShop(ShopLineup shopLineup) =>
+        _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenProstheticsShop(shopLineup));
+
     private void OpenUpgradePrayerBead() => _utilityService.OpenUpgradePrayerBead();
 
     #endregion
