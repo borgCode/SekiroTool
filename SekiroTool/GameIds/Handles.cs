@@ -8,6 +8,7 @@ public static class Handles
     {
         [Patch.Version1_2_0] = 0x100300b8,
         [Patch.Version1_3_0] = 0x100300b8,
+        [Patch.Version1_4_0] = 0x100300b8,
         [Patch.Version1_5_0] = 0x100300ba, 
         [Patch.Version1_6_0] = 0x100300ba
     };
