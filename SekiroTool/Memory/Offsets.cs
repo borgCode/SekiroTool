@@ -17,7 +17,6 @@ public static class Offsets
         {
             var v when v.StartsWith("1.2.0.") => Version1_2_0,
             var v when v.StartsWith("1.3.0.") => Version1_3_0,
-            var v when v.StartsWith("1.3.0.") => Version1_3_0,
             var v when v.StartsWith("1.4.0.") => Version1_4_0,
             var v when v.StartsWith("1.5.0.") => Version1_5_0,
             var v when v.StartsWith("1.6.0.") => Version1_6_0,
@@ -375,9 +374,8 @@ public static class Offsets
         public static IntPtr Base;
     }
 
-    public static int EzStateMenuHandle = Version switch
+    public static int EzStateMenuHandle => Version switch
     {
-
         Version1_2_0 or Version1_3_0 or Version1_4_0 => 0xB8,
         Version1_5_0 or Version1_6_0 => 0xC8,
         _ => 0
