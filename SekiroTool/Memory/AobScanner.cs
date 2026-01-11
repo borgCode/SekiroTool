@@ -71,6 +71,11 @@ public class AoBScanner(IMemoryService memoryService)
             () => Offsets.Functions.FindChrInsChrEntityId = FindAddressByPattern(Patterns.FindChrInsChrEntityId).ToInt64(),
             () => Offsets.Functions.ForceAnimationByChrEventModule = FindAddressByPattern(Patterns.ForceAnimationByChrEventModule).ToInt64(),
             () => Offsets.Functions.FormatCutscenePathString = FindAddressByPattern(Patterns.FormatCutscenePathString).ToInt64(),
+            () => Offsets.Functions.AwardItemLot = FindAddressByPattern(Patterns.AwardItemLot).ToInt64(),
+            () => Offsets.Functions.SetMessageTagValue = FindAddressByPattern(Patterns.SetMessageTagValue).ToInt64(),
+            () => Offsets.Functions.AdjustItemCount = FindAddressByPattern(Patterns.AdjustItemCount).ToInt64(),
+            () => Offsets.Functions.OpenGenericDialog = FindAddressByPattern(Patterns.OpenGenericDialog).ToInt64(),
+            
             () => TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
                 addr => Offsets.Hooks.LockedTarget = addr.ToInt64(), saved),
             () => TryPatternWithFallback("FreezeTargetPosture", Patterns.FreezeTargetPosture,
@@ -115,14 +120,6 @@ public class AoBScanner(IMemoryService memoryService)
             () => TryPatternWithFallback("PlayerSoundView", Patterns.PlayerSoundView,
                 addr => Offsets.Patches.PlayerSoundView = addr, saved)
         );
-
-        FindMultipleCallsInFunction(Patterns.ProcessEsdCommand, new Dictionary<Action<long>, int>
-        {
-            { addr => Offsets.Functions.AwardItemLot = addr, 0x228B },
-            { addr => Offsets.Functions.SetMessageTagValue = addr, 0x18B4 },
-            { addr => Offsets.Functions.AdjustItemCount = addr, 0x1548 },
-            { addr => Offsets.Functions.OpenGenericDialog = addr, 0x9CC },
-        });
 
         using (var writer = new StreamWriter(savePath))
         {
