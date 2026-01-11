@@ -1,6 +1,4 @@
-﻿using SekiroTool.Enums;
-using SekiroTool.GameIds;
-using SekiroTool.Interfaces;
+﻿using SekiroTool.Interfaces;
 using SekiroTool.Memory;
 using SekiroTool.Utilities;
 using static SekiroTool.Memory.Offsets;
@@ -32,46 +30,16 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
         memoryService.WriteUInt8(MeshBase.Base + MeshBase.Mode, 1);
         memoryService.WriteUInt8(MeshBase.Base + offset, isEnabled ? 1 : 0);
     }
-    
+
     public void SetGameSpeed(float gameSpeed)
     {
-        if (PatchChecker.CurrentPatch == Patch.Version1_5_0)
-        {
-            var gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeedV105;
-            memoryService.WriteFloat((IntPtr)gameSpeedPtr, gameSpeed);
-        }
-
-        else if (PatchChecker.CurrentPatch == Patch.Version1_3_0 || PatchChecker.CurrentPatch == Patch.Version1_2_0)
-        {
-            var gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeedV104;
-            memoryService.WriteFloat((IntPtr)gameSpeedPtr, gameSpeed);
-        }
-
-        else
-        {
-            var gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeed;
-            memoryService.WriteFloat((IntPtr)gameSpeedPtr, gameSpeed);
-        }
+        long gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeed;
+        memoryService.WriteFloat((IntPtr)gameSpeedPtr, gameSpeed);
     }
 
     public float GetGameSpeed()
     {
-        long gameSpeedPtr;
-
-        if (PatchChecker.CurrentPatch == Patch.Version1_5_0)
-        {
-            gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeedV105;
-        }
-
-        else if (PatchChecker.CurrentPatch == Patch.Version1_3_0 || PatchChecker.CurrentPatch == Patch.Version1_2_0)
-        {
-            gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeedV104;
-        }
-
-        else
-        {
-            gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeed;
-        }
+        long gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeed;
 
         return memoryService.ReadFloat((IntPtr)gameSpeedPtr);
     }
@@ -145,7 +113,7 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
                 (coordUpdateCode.ToInt64() + 0x118, zDirectionLoc.ToInt64(), 7, 0x118 + 2),
                 (coordUpdateCode.ToInt64() + 0x147, coordsUpdateHook + 0x7, 5, 0x147 + 1)
             });
-            
+
             memoryService.WriteUInt8(physicsPtr + (int)ChrIns.ChrPhysicsOffsets.NoGravity, 1);
 
             memoryService.WriteBytes(coordUpdateCode, bytes);

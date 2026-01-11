@@ -21,7 +21,7 @@ namespace SekiroTool;
 /// </summary>
 public partial class MainWindow : Window
 {
-    private readonly IMemoryService _memoryService;
+    private readonly MemoryService _memoryService;
     private readonly IStateService _stateService;
     private readonly IPlayerService _playerService;
 
@@ -137,8 +137,16 @@ public partial class MainWindow : Window
 
             if (!_hasCheckedPatch)
             {
-                PatchChecker.Initialize(_memoryService.TargetProcess.MainModule.FileName, _memoryService);
-                Console.WriteLine(PatchChecker.CurrentPatch?.ToString() ?? "Unknown");
+                if (!PatchChecker.Initialize(_memoryService))
+                {
+                    _aobScanner.DoEarlyScan();
+                    _stateService.Publish(State.EarlyAttached);
+                    _aobScanner.DoMainScan();
+                }
+                
+#if DEBUG
+                Console.WriteLine($@"Base: 0x{_memoryService.BaseAddress.ToInt64():X}");
+#endif
                 _hasCheckedPatch = true;
             }
             
@@ -149,15 +157,7 @@ public partial class MainWindow : Window
                 _hasAllocatedMemory = true;
               
             }
-
-            if (!_hasScanned)
-            {
-                _aobScanner.DoEarlyScan();
-                _stateService.Publish(State.EarlyAttached);
-                _aobScanner.DoMainScan();
-                _hasScanned = true;
-            }
-
+            
             if (!_hasPublishedAttached)
             {
                 _stateService.Publish(State.Attached);

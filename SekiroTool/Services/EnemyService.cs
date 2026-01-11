@@ -10,38 +10,38 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
 {
     public void ToggleNoDeath(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.GetOffset(DebugFlags.DebugFlag.AllNoDeath), isEnabled ? 1 : 0);
+        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.AllNoDeath, isEnabled ? 1 : 0);
     }
 
     public void ToggleNoDamage(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.GetOffset(DebugFlags.DebugFlag.AllNoDamage), isEnabled ? 1 : 0);
+        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.AllNoDamage, isEnabled ? 1 : 0);
     }
 
     public void ToggleNoHit(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.GetOffset(DebugFlags.DebugFlag.AllNoHit), isEnabled ? 1 : 0);
+        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.AllNoHit, isEnabled ? 1 : 0);
     }
 
     public void ToggleNoAttack(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.GetOffset(DebugFlags.DebugFlag.AllNoAttack), isEnabled ? 1 : 0);
+        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.AllNoAttack, isEnabled ? 1 : 0);
     }
 
     public void ToggleNoMove(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.GetOffset(DebugFlags.DebugFlag.AllNoMove), isEnabled ? 1 : 0);
+        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.AllNoMove, isEnabled ? 1 : 0);
     }
 
     public void ToggleDisableAi(bool isEnabled)
     {
         if (isEnabled) reminderService.ChangeIdolIcon();
-        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.GetOffset(DebugFlags.DebugFlag.DisableAi), isEnabled ? 1 : 0);
+        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.DisableAi, isEnabled ? 1 : 0);
     }
 
     public void ToggleNoPostureBuildup(bool isEnabled)
     {
-        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.GetOffset(DebugFlags.DebugFlag.AllNoPosture), isEnabled ? 1 : 0);
+        memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.AllNoPosture, isEnabled ? 1 : 0);
     }
         
     
@@ -50,7 +50,7 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
 
     public void SkipDragonPhaseOne()
     {
-        var dragonHandle = Handles.GetDragonHandle(PatchChecker.CurrentPatch.Value);
+        var dragonHandle = Handles.GetDragonHandle(Offsets.Version);
         if (!dragonHandle.HasValue) return;
         
         var bytes = AsmLoader.GetAsmBytes("DragonSkipPhaseOne");

@@ -1,10 +1,40 @@
 ﻿using SekiroTool.Enums;
 using SekiroTool.Utilities;
+using static SekiroTool.Enums.Patch;
 
 namespace SekiroTool.Memory;
 
 public static class Offsets
 {
+    private static Patch? _version;
+
+    public static Patch Version => _version
+                                   ?? Version1_6_0;
+
+    public static bool Initialize(string fileVersion, IntPtr moduleBase)
+    {
+        _version = fileVersion switch
+        {
+            var v when v.StartsWith("1.2.0.") => Version1_2_0,
+            var v when v.StartsWith("1.3.0.") => Version1_3_0,
+            var v when v.StartsWith("1.3.0.") => Version1_3_0,
+            var v when v.StartsWith("1.4.0.") => Version1_4_0,
+            var v when v.StartsWith("1.5.0.") => Version1_5_0,
+            var v when v.StartsWith("1.6.0.") => Version1_6_0,
+            _ => null
+        };
+
+        if (!_version.HasValue)
+        {
+            MsgBox.Show(
+                $@"Unknown patch version: {_version}, please report it on GitHub. Scanning for addresses instead.");
+            return false;
+        }
+
+        InitializeBaseAddresses(moduleBase);
+        return true;
+    }
+
     public static class WorldChrMan
     {
         public static IntPtr Base;
@@ -144,80 +174,93 @@ public static class Offsets
     {
         public static IntPtr Base;
 
-        private static readonly Dictionary<Patch, Func<DebugFlag, int>> OffsetResolvers = new()
+        public static int PlayerNoDeath => Version switch
         {
-            [Patch.Version1_2_0] = flag => (int)flag,
-            [Patch.Version1_3_0] = GetV104Offset,
-            [Patch.Version1_5_0] = flag => (int)flag,
-            [Patch.Version1_6_0] = flag => (int)flag,
+            _ => 0x0,
         };
 
-        public enum DebugFlag
+        public static int PlayerOneShotHealth => Version switch
         {
-            PlayerNoDeath,
-            PlayerOneShotHealth,
-            PlayerOneShotPosture,
-            PlayerNoGoodsConsume,
-            PlayerNoEmblemsConsume,
-            PlayerNoRevivalConsume,
-            PlayerHide,
-            PlayerSilent,
-            AllNoDeath,
-            AllNoDamage,
-            AllNoHit,
-            AllNoAttack,
-            AllNoMove,
-            DisableAi,
-            AllNoPosture,
-        }
-
-        private static readonly Dictionary<DebugFlag, int> V104Offsets = new()
-        {
-            [DebugFlag.PlayerNoDeath] = 0x0,
-            [DebugFlag.PlayerOneShotHealth] = 0x1,
-            [DebugFlag.PlayerOneShotPosture] = -0x34,
-            [DebugFlag.PlayerNoGoodsConsume] = -0x33,
-            [DebugFlag.PlayerNoEmblemsConsume] = -0x32,
-            [DebugFlag.PlayerNoRevivalConsume] = -0x31,
-            [DebugFlag.PlayerHide] = -0x2D,
-            [DebugFlag.PlayerSilent] = -0x2C,
-            [DebugFlag.AllNoDeath] = -0x2B,
-            [DebugFlag.AllNoDamage] = -0x2A,
-            [DebugFlag.AllNoHit] = -0x29,
-            [DebugFlag.AllNoAttack] = -0x28,
-            [DebugFlag.AllNoMove] = -0x27,
-            [DebugFlag.DisableAi] = -0x26,
-            [DebugFlag.AllNoPosture] = -0x1F,
+            _ => 0x1,
         };
 
-
-        private static readonly Dictionary<DebugFlag, int> StandardOffsets = new()
+        public static int PlayerOneShotPosture => Version switch
         {
-            [DebugFlag.PlayerNoDeath] = 0x0,
-            [DebugFlag.PlayerOneShotHealth] = 0x1,
-            [DebugFlag.PlayerOneShotPosture] = 0x2,
-            [DebugFlag.PlayerNoGoodsConsume] = 0x3,
-            [DebugFlag.PlayerNoEmblemsConsume] = 0x4,
-            [DebugFlag.PlayerNoRevivalConsume] = 0x5,
-            [DebugFlag.PlayerHide] = 0x9,
-            [DebugFlag.PlayerSilent] = 0xA,
-            [DebugFlag.AllNoDeath] = 0xB,
-            [DebugFlag.AllNoDamage] = 0xC,
-            [DebugFlag.AllNoHit] = 0xD,
-            [DebugFlag.AllNoAttack] = 0xE,
-            [DebugFlag.AllNoMove] = 0xF,
-            [DebugFlag.DisableAi] = 0x10,
-            [DebugFlag.AllNoPosture] = 0x17,
+            Version1_3_0 => -0x34,
+            _ => 0x2,
         };
 
-        private static int GetV104Offset(DebugFlag flag) => V104Offsets[flag];
-
-        public static int GetOffset(DebugFlag flag)
+        public static int PlayerNoGoodsConsume => Version switch
         {
-            var patch = PatchChecker.CurrentPatch;
+            Version1_3_0 => -0x33,
+            _ => 0x3,
+        };
 
-            return patch == Patch.Version1_3_0 ? V104Offsets[flag] : StandardOffsets[flag];
-        }
+        public static int PlayerNoEmblemsConsume => Version switch
+        {
+            Version1_3_0 => -0x32,
+            _ => 0x4,
+        };
+
+        public static int PlayerNoRevivalConsume => Version switch
+        {
+            Version1_3_0 => -0x31,
+            _ => 0x5,
+        };
+
+        public static int PlayerHide => Version switch
+        {
+            Version1_3_0 => -0x2D,
+            _ => 0x9,
+        };
+
+        public static int PlayerSilent => Version switch
+        {
+            Version1_3_0 => -0x2C,
+            _ => 0xA,
+        };
+
+        public static int AllNoDeath => Version switch
+        {
+            Version1_3_0 => -0x2B,
+            _ => 0xB,
+        };
+
+        public static int AllNoDamage => Version switch
+        {
+            Version1_3_0 => -0x2A,
+            _ => 0xC,
+        };
+
+        public static int AllNoHit => Version switch
+        {
+            Version1_3_0 => -0x29,
+            _ => 0xD,
+        };
+
+        public static int AllNoAttack => Version switch
+        {
+            Version1_3_0 => -0x28,
+            _ => 0xE,
+        };
+
+        public static int AllNoMove => Version switch
+        {
+            Version1_3_0 => -0x27,
+            _ => 0xF,
+        };
+
+        public static int DisableAi => Version switch
+        {
+            Version1_3_0 => -0x26,
+            _ => 0x10,
+        };
+
+        public static int AllNoPosture => Version switch
+        {
+            Version1_3_0 => -0x1F,
+            _ => 0x17,
+        };
     }
 
     public static class MapItemMan
@@ -258,16 +301,18 @@ public static class Offsets
         public const int DrawAllEvent = 0x18;
         public const int DisableEvent = 0x44;
     }
-    
+
     public static class SprjFlipperImp
     {
         public static IntPtr Base;
 
-        public const int GameSpeed = 0x344;
-        public const int GameSpeedV104 = 0x360;
-        public const int GameSpeedV105 = 0x364;
+        public static int GameSpeed => Version switch
+        {
+            Version1_2_0 or Version1_3_0 => 0x360,
+            Version1_5_0 => 0x364,
+            _ => 0x344,
+        };
     }
-    
 
     public static class PauseRequest
     {
@@ -393,5 +438,600 @@ public static class Offsets
         public static long ForceAnimationByChrEventModule;
         public static long FormatCutscenePathString;
         public static long GetMovement;
+    }
+
+    private static void InitializeBaseAddresses(IntPtr moduleBase)
+    {
+        WorldChrMan.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B67DF0,
+            Version1_3_0 or Version1_4_0 => 0x3B68E30,
+            Version1_6_0 => 0x3D7A1E0,
+            _ => 0
+        };
+
+        WorldChrManDbg.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B67F98,
+            Version1_3_0 or Version1_4_0 => 0x3B68FD8,
+            Version1_6_0 => 0x3D7A388,
+            _ => 0
+        };
+
+        MenuMan.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B55048,
+            Version1_3_0 or Version1_4_0 => 0x3B56088,
+            Version1_6_0 => 0x3D67408,
+            _ => 0
+        };
+
+        WorldAiMan.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B422D0,
+            Version1_3_0 or Version1_4_0 => 0x3B43310,
+            Version1_6_0 => 0x3D55070,
+            _ => 0
+        };
+
+        DamageManager.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B65B00,
+            Version1_3_0 or Version1_4_0 => 0x3B66B40,
+            Version1_6_0 => 0x3D77EF0,
+            _ => 0
+        };
+
+        DebugFlags.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B67F8C,
+            Version1_3_0 or Version1_4_0 => 0x3B68FCC,
+            Version1_6_0 => 0x3D7A366,
+            _ => 0
+        };
+
+        MapItemMan.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B5AA00,
+            Version1_3_0 or Version1_4_0 => 0x3B5BA40,
+            Version1_6_0 => 0x3D6CDC0,
+            _ => 0
+        };
+
+        EventFlagMan.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B43248,
+            Version1_3_0 or Version1_4_0 => 0x3B44288,
+            Version1_6_0 => 0x3D55FE8,
+            _ => 0
+        };
+
+        DebugEventMan.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B42C68,
+            Version1_3_0 or Version1_4_0 => 0x3B43CA8,
+            Version1_6_0 => 0x3D55A08,
+            _ => 0
+        };
+
+        SprjFlipperImp.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3C8C2C8,
+            Version1_3_0 or Version1_4_0 => 0x3C8D308,
+            Version1_6_0 => 0x3E9F748,
+            _ => 0
+        };
+
+        FieldArea.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B49CD8,
+            Version1_3_0 or Version1_4_0 => 0x3B4AD18,
+            Version1_6_0 => 0x3D5C0A0,
+            _ => 0
+        };
+
+        FrpgHavokMan.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B5B240,
+            Version1_3_0 or Version1_4_0 => 0x3B5C280,
+            Version1_6_0 => 0x3D6D640,
+            _ => 0
+        };
+
+        GameDataMan.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B47CF0,
+            Version1_3_0 or Version1_4_0 => 0x3B48D30,
+            Version1_6_0 => 0x3D5AAC0,
+            _ => 0
+        };
+
+        PauseRequest.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B688C2,
+            Version1_3_0 or Version1_4_0 => 0x3B69902,
+            Version1_6_0 => 0x3D7ACB2,
+            _ => 0
+        };
+
+        DlUserInputManager.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3D2A550,
+            Version1_3_0 or Version1_4_0 => 0x3D2B5A0,
+            Version1_6_0 => 0x3F42B28,
+            _ => 0
+        };
+
+        TargetingView.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B41C88,
+            Version1_3_0 or Version1_4_0 => 0x3B42CC8,
+            Version1_6_0 => 0x3D54A28,
+            _ => 0
+        };
+
+        IdolRequests.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x775E76,
+            Version1_3_0 or Version1_4_0 => 0x775ED6,
+            Version1_6_0 => 0x77C6A7,
+            _ => 0
+        };
+
+        GameRendFlags.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x39007C8,
+            Version1_3_0 or Version1_4_0 => 0x39017C8,
+            Version1_6_0 => 0x3B01838,
+            _ => 0
+        };
+
+        MeshBase.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B65BC0,
+            Version1_3_0 or Version1_4_0 => 0x3B66C00,
+            Version1_6_0 => 0x3D77FA4,
+            _ => 0
+        };
+
+        Fd4PadManager.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3D2A288,
+            Version1_3_0 or Version1_4_0 => 0x3D2B2C0,
+            Version1_6_0 => 0x3F42850,
+            _ => 0
+        };
+
+        Functions.ExecuteTalkCommand = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x117BF00,
+            Version1_3_0 or Version1_4_0 => 0x117CA30,
+            Version1_6_0 => 0x11C63A0,
+            _ => 0
+        };
+
+        Functions.GetMovement = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x24B18E0,
+            Version1_3_0 or Version1_4_0 => 0x24B2850,
+            Version1_6_0 => 0x25E7950,
+            _ => 0
+        };
+
+        Functions.MatrixVectorToProduct = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xEBCDA0,
+            Version1_3_0 or Version1_4_0 => 0xEBD6E0,
+            Version1_6_0 => 0xF01400,
+            _ => 0
+        };
+
+        Functions.AddSen = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x7B7F50,
+            Version1_3_0 or Version1_4_0 => 0x7B8090,
+            Version1_6_0 => 0x7C1190,
+            _ => 0
+        };
+
+        Functions.Rest = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xA1B030,
+            Version1_3_0 or Version1_4_0 => 0xA1B6C0,
+            Version1_6_0 => 0xA2BE40,
+            _ => 0
+        };
+
+        Functions.AddExperience = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x7B7CB0,
+            Version1_3_0 or Version1_4_0 => 0x7B7DF0,
+            Version1_6_0 => 0x7C0EF0,
+            _ => 0
+        };
+
+        Functions.SetEvent = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x6C1B90,
+            Version1_3_0 or Version1_4_0 => 0x6C1BF0,
+            Version1_6_0 => 0x6C4520,
+            _ => 0
+        };
+
+        Functions.GetEvent = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x6C15A0,
+            Version1_3_0 or Version1_4_0 => 0x6C1600,
+            Version1_6_0 => 0x6C3E60,
+            _ => 0
+        };
+
+        Functions.Warp = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x68C410,
+            Version1_3_0 or Version1_4_0 => 0x68C470,
+            Version1_6_0 => 0x68E870,
+            _ => 0
+        };
+
+        Functions.ApplySpEffect = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x9F17C0,
+            Version1_3_0 or Version1_4_0 => 0x9F1E50,
+            Version1_6_0 => 0xA01720,
+            _ => 0
+        };
+
+        Functions.ItemSpawn = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x910B90,
+            Version1_3_0 or Version1_4_0 => 0x911090,
+            Version1_6_0 => 0x91C970,
+            _ => 0
+        };
+
+        Functions.GetChrInsWithHandle = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xA37E30,
+            Version1_3_0 or Version1_4_0 => 0xA384C0,
+            Version1_6_0 => 0xA49F90,
+            _ => 0
+        };
+
+        Functions.FindChrInsChrEntityId = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x6BF190,
+            Version1_3_0 or Version1_4_0 => 0x6BF1F0,
+            Version1_6_0 => 0x6C1A10,
+            _ => 0
+        };
+
+        Functions.ExecuteTalkCommand = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x117BF47,
+            Version1_3_0 or Version1_4_0 => 0x117CA77,
+            Version1_6_0 => 0x11C63E7,
+            _ => 0
+        };
+
+        Functions.FrpgCastRay = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x940FF0,
+            Version1_3_0 or Version1_4_0 => 0x9414F0,
+            Version1_6_0 => 0x94CC50,
+            _ => 0
+        };
+
+        Functions.StopMusic = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x8C36C0,
+            Version1_3_0 or Version1_4_0 => 0x8C3BC0,
+            Version1_6_0 => 0x8CEA40,
+            _ => 0
+        };
+
+        Functions.GetItemSlot = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x79EFB0,
+            Version1_3_0 or Version1_4_0 => 0x79F010,
+            Version1_6_0 => 0x7A7AF0,
+            _ => 0
+        };
+
+        Functions.GetItemPtrFromSlot = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x7A1CC0,
+            Version1_3_0 or Version1_4_0 => 0x7A1D20,
+            Version1_6_0 => 0x7AABF0,
+            _ => 0
+        };
+
+        Functions.EzStateExternalEventTempCtor = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x1BB9000,
+            Version1_3_0 or Version1_4_0 => 0x1BB9B50,
+            Version1_6_0 => 0x1C17660,
+            _ => 0
+        };
+
+        Functions.RemoveItem = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x796650,
+            Version1_3_0 or Version1_4_0 => 0x7966B0,
+            Version1_6_0 => 0x79ECA0,
+            _ => 0
+        };
+
+        Functions.GiveSkillAndPros = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xA84350,
+            Version1_3_0 or Version1_4_0 => 0xA849E0,
+            Version1_6_0 => 0xA9A910,
+            _ => 0
+        };
+
+        Functions.RemoveSpEffect = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xBE3F00,
+            Version1_3_0 or Version1_4_0 => 0xBE45B0,
+            Version1_6_0 => 0xBFB6D0,
+            _ => 0
+        };
+
+        Functions.GetGoodsParam = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x10799C0,
+            Version1_3_0 or Version1_4_0 => 0x107A300,
+            Version1_6_0 => 0x10BF630,
+            _ => 0
+        };
+
+        Functions.ForceAnimationByChrEventModule = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xBC1360,
+            Version1_3_0 or Version1_4_0 => 0xBC1A10,
+            Version1_6_0 => 0xBD84C0,
+            _ => 0
+        };
+
+        Functions.FormatCutscenePathString = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x10FFD40,
+            Version1_3_0 or Version1_4_0 => 0x1100680,
+            Version1_6_0 => 0x11497C0,
+            _ => 0
+        };
+
+        Functions.OpenGenericDialog = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x1171260,
+            Version1_3_0 or Version1_4_0 => 0x1171D90,
+            Version1_6_0 => 0x11BB410,
+            _ => 0
+        };
+
+        Functions.AwardItemLot = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x687B90,
+            Version1_3_0 or Version1_4_0 => 0x687BF0,
+            Version1_6_0 => 0x689FF0,
+            _ => 0
+        };
+
+        Functions.AdjustItemCount = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x792520,
+            Version1_3_0 or Version1_4_0 => 0x792580,
+            Version1_6_0 => 0x79AB70,
+            _ => 0
+        };
+
+        Functions.SetMessageTagValue = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x117EF00,
+            Version1_3_0 or Version1_4_0 => 0x117FA30,
+            Version1_6_0 => 0x11C9460,
+            _ => 0
+        };
+
+        Patches.SaveInCombat = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xA63F95,
+            Version1_3_0 or Version1_4_0 => 0xA64625,
+            Version1_6_0 => 0xA76275,
+            _ => 0
+        };
+
+        Patches.NoLogo = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xDEBF2B,
+            Version1_3_0 or Version1_4_0 => 0xDEC85B,
+            Version1_6_0 => 0xE1B51B,
+            _ => 0
+        };
+
+        Patches.DebugFont = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x24F6EE6,
+            Version1_3_0 or Version1_4_0 => 0x24F7E56,
+            Version1_6_0 => 0x262D186,
+            _ => 0
+        };
+
+        Patches.EventView = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x6D0560,
+            Version1_3_0 or Version1_4_0 => 0x6D05C0,
+            Version1_6_0 => 0x6D30F0,
+            _ => 0
+        };
+
+        Patches.MenuTutorialSkip = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xD73E22,
+            Version1_3_0 or Version1_4_0 => 0xD74752,
+            Version1_6_0 => 0xD9A642,
+            _ => 0
+        };
+
+        Patches.ShowSmallHintBox = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x8FE263,
+            Version1_3_0 or Version1_4_0 => 0x8FE763,
+            Version1_6_0 => 0x909FA3,
+            _ => 0
+        };
+
+        Patches.ShowTutorialText = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x8FE213,
+            Version1_3_0 or Version1_4_0 => 0x8FE713,
+            Version1_6_0 => 0x909F53,
+            _ => 0
+        };
+
+        Patches.DefaultSoundVolWrite = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x7B3D46,
+            Version1_3_0 or Version1_4_0 => 0x7B3E86,
+            Version1_6_0 => 0x7BCEA6,
+            _ => 0
+        };
+
+        Patches.PlayerSoundView = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x60E63D,
+            Version1_3_0 or Version1_4_0 => 0x60E69D,
+            Version1_6_0 => 0x6114BD,
+            _ => 0
+        };
+
+        Hooks.LockedTarget = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x9B3F0A,
+            Version1_3_0 or Version1_4_0 => 0x9B459A,
+            Version1_6_0 => 0x9C3ADA,
+            _ => 0
+        };
+
+        Hooks.FreezeTargetPosture = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xBBF61B,
+            Version1_3_0 or Version1_4_0 => 0xBBFCCB,
+            Version1_6_0 => 0xBD677B,
+            _ => 0
+        };
+
+        Hooks.SetWarpCoordinates = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x82871A,
+            Version1_3_0 or Version1_4_0 => 0x828C1A,
+            Version1_6_0 => 0x832A3A,
+            _ => 0
+        };
+
+        Hooks.SetWarpAngle = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x8286FA,
+            Version1_3_0 or Version1_4_0 => 0x828BFA,
+            Version1_6_0 => 0x832A1A,
+            _ => 0
+        };
+
+        Hooks.AddSubGoal = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x5CB690,
+            Version1_3_0 or Version1_4_0 => 0x5CB6F0,
+            Version1_6_0 => 0x5CE510,
+            _ => 0
+        };
+
+        Hooks.InAirTimer = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xBAC4D3,
+            Version1_3_0 or Version1_4_0 => 0xBACB83,
+            Version1_6_0 => 0xBC3633,
+            _ => 0
+        };
+
+        Hooks.PadTriggers = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x1A950B0,
+            Version1_3_0 or Version1_4_0 => 0x1A95BE0,
+            Version1_6_0 => 0x1ADF8C0,
+            _ => 0
+        };
+
+        Hooks.KeyBoard = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x1A452F8,
+            Version1_3_0 or Version1_4_0 => 0x1A45E28,
+            Version1_6_0 => 0x1A8FB08,
+            _ => 0
+        };
+
+        Hooks.UpdateCoords = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xBAD636,
+            Version1_3_0 or Version1_4_0 => 0xBADCE6,
+            Version1_6_0 => 0xBC4796,
+            _ => 0
+        };
+
+        Hooks.InfinitePoise = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xB55361,
+            Version1_3_0 or Version1_4_0 => 0xB55A11,
+            Version1_6_0 => 0xB6C011,
+            _ => 0
+        };
+
+        Hooks.AiHasSpEffect = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x61086B,
+            Version1_3_0 or Version1_4_0 => 0x6108CB,
+            Version1_6_0 => 0x6136EB,
+            _ => 0
+        };
+
+        Hooks.InfiniteConfetti = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xBEF42E,
+            Version1_3_0 or Version1_4_0 => 0xBEFADE,
+            Version1_6_0 => 0xC06BFE,
+            _ => 0
+        };
+
+        Hooks.GetMouseDelta = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x7E755D,
+            Version1_3_0 or Version1_4_0 => 0x7E769D,
+            Version1_6_0 => 0x7F0FFD,
+            _ => 0
+        };
+
+        Hooks.StartMusic = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x8C3860,
+            Version1_3_0 or Version1_4_0 => 0x8C3D60,
+            Version1_6_0 => 0x8CEBE0,
+            _ => 0
+        };
+
+        Hooks.HpWrite = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xBBF3BE,
+            Version1_3_0 or Version1_4_0 => 0xBBFA6E,
+            Version1_6_0 => 0xBD651E,
+            _ => 0
+        };
+
+        Hooks.SetLastAct = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x5DF21D,
+            Version1_3_0 or Version1_4_0 => 0x5DF27D,
+            Version1_6_0 => 0x5E209D,
+            _ => 0
+        };
     }
 }
