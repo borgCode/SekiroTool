@@ -43,7 +43,6 @@ public static class Offsets
         public const int WorldBlockId = 0x8;
     }
 
-
     public static class ChrIns
     {
         public const int BitFlagsStart = 0x1F40;
@@ -450,670 +449,670 @@ public static class Offsets
     private static void InitializeBaseAddresses(IntPtr moduleBase)
     {
         WorldChrMan.Base = moduleBase + Version switch
-{
-    Version1_2_0 => 0x3B67DF0,
-    Version1_3_0 or Version1_4_0 => 0x3B68E30,
-    Version1_6_0 => 0x3D7A1E0,
-    _ => 0
-};
-
-WorldChrManDbg.Base = moduleBase + Version switch
-{
-    Version1_2_0 => 0x3B67F98,
-    Version1_3_0 or Version1_4_0 => 0x3B68FD8,
-    Version1_6_0 => 0x3D7A388,
-    _ => 0
-};
-
-MenuMan.Base = moduleBase + Version switch
-{
-    Version1_2_0 => 0x3B55048,
-    Version1_3_0 or Version1_4_0 => 0x3B56088,
-    Version1_6_0 => 0x3D67408,
-    _ => 0
-};
-
-WorldAiMan.Base = moduleBase + Version switch
-{
-    Version1_2_0 => 0x3B422D0,
-    Version1_3_0 or Version1_4_0 => 0x3B43310,
-    Version1_6_0 => 0x3D55070,
-    _ => 0
-};
-
-DamageManager.Base = moduleBase + Version switch
-{
-    Version1_2_0 => 0x3B65B00,
-    Version1_3_0 or Version1_4_0 => 0x3B66B40,
-    Version1_6_0 => 0x3D77EF0,
-    _ => 0
-};
-
-DebugFlags.Base = moduleBase + Version switch
-{
-    Version1_2_0 => 0x3B67F8C,
-    Version1_3_0 or Version1_4_0 => 0x3B68FCC,
-    Version1_6_0 => 0x3D7A366,
-    _ => 0
-};
-
-MapItemMan.Base = moduleBase + Version switch
-{
-    Version1_2_0 => 0x3B5AA00,
-    Version1_3_0 or Version1_4_0 => 0x3B5BA40,
-    Version1_6_0 => 0x3D6CDC0,
-    _ => 0
-};
-
-EventFlagMan.Base = moduleBase + Version switch
-{
-    Version1_2_0 => 0x3B43248,
-    Version1_3_0 or Version1_4_0 => 0x3B44288,
-    Version1_6_0 => 0x3D55FE8,
-    _ => 0
-};
-
-DebugEventMan.Base = moduleBase + Version switch
-{
-    Version1_2_0 => 0x3B42C68,
-    Version1_3_0 or Version1_4_0 => 0x3B43CA8,
-    Version1_6_0 => 0x3D55A08,
-    _ => 0
-};
-
-SprjFlipperImp.Base = moduleBase + Version switch
-{
-    Version1_2_0 => 0x3C8C2C8,
-    Version1_3_0 or Version1_4_0 => 0x3C8D308,
-    Version1_6_0 => 0x3E9F748,
-    _ => 0
-};
-
-FieldArea.Base = moduleBase + Version switch
-{
-    Version1_2_0 => 0x3B49CD8,
-    Version1_3_0 or Version1_4_0 => 0x3B4AD18,
-    Version1_6_0 => 0x3D5C0A0,
-    _ => 0
-};
-
-FrpgHavokMan.Base = moduleBase + Version switch
-{
-    Version1_2_0 => 0x3B5B240,
-    Version1_3_0 or Version1_4_0 => 0x3B5C280,
-    Version1_6_0 => 0x3D6D640,
-    _ => 0
-};
-
-GameDataMan.Base = moduleBase + Version switch
-{
-    Version1_2_0 => 0x3B47CF0,
-    Version1_3_0 or Version1_4_0 => 0x3B48D30,
-    Version1_6_0 => 0x3D5AAC0,
-    _ => 0
-};
-
-PauseRequest.Base = moduleBase + Version switch
-{
-    Version1_2_0 => 0x3B688C2,
-    Version1_3_0 or Version1_4_0 => 0x3B69902,
-    Version1_6_0 => 0x3D7ACB2,
-    _ => 0
-};
-
-DlUserInputManager.Base = moduleBase + Version switch
-{
-    Version1_2_0 => 0x3D2A550,
-    Version1_3_0 or Version1_4_0 => 0x3D2B5A0,
-    Version1_6_0 => 0x3F42B28,
-    _ => 0
-};
-
-TargetingView.Base = moduleBase + Version switch
-{
-    Version1_2_0 => 0x3B41C88,
-    Version1_3_0 or Version1_4_0 => 0x3B42CC8,
-    Version1_6_0 => 0x3D54A28,
-    _ => 0
-};
-
-IdolRequests.Base = moduleBase + Version switch
-{
-    Version1_2_0 => 0x775E76,
-    Version1_3_0 or Version1_4_0 => 0x775ED6,
-    Version1_6_0 => 0x77C6A7,
-    _ => 0
-};
-
-GameRendFlags.Base = moduleBase + Version switch
-{
-    Version1_2_0 => 0x39007C8,
-    Version1_3_0 or Version1_4_0 => 0x39017C8,
-    Version1_6_0 => 0x3B01838,
-    _ => 0
-};
-
-MeshBase.Base = moduleBase + Version switch
-{
-    Version1_2_0 => 0x3B65BC0,
-    Version1_3_0 or Version1_4_0 => 0x3B66C00,
-    Version1_6_0 => 0x3D77FA4,
-    _ => 0
-};
-
-Fd4PadManager.Base = moduleBase + Version switch
-{
-    Version1_2_0 => 0x3D2A288,
-    Version1_3_0 or Version1_4_0 => 0x3D2B2C0,
-    Version1_6_0 => 0x3F42850,
-    _ => 0
-};
-
-Functions.ExecuteTalkCommand = moduleBase + Version switch
-{
-    Version1_2_0 => 0x117BF00,
-    Version1_3_0 or Version1_4_0 => 0x117CA30,
-    Version1_6_0 => 0x11C63A0,
-    _ => 0
-};
-
-Functions.GetMovement = moduleBase + Version switch
-{
-    Version1_2_0 => 0x24B18E0,
-    Version1_3_0 or Version1_4_0 => 0x24B2850,
-    Version1_6_0 => 0x25E7950,
-    _ => 0
-};
-
-Functions.MatrixVectorToProduct = moduleBase + Version switch
-{
-    Version1_2_0 => 0xEBCDA0,
-    Version1_3_0 or Version1_4_0 => 0xEBD6E0,
-    Version1_6_0 => 0xF01400,
-    _ => 0
-};
-
-Functions.AddSen = moduleBase + Version switch
-{
-    Version1_2_0 => 0x7B7F50,
-    Version1_3_0 or Version1_4_0 => 0x7B8090,
-    Version1_6_0 => 0x7C1190,
-    _ => 0
-};
-
-Functions.Rest = moduleBase + Version switch
-{
-    Version1_2_0 => 0xA1B030,
-    Version1_3_0 or Version1_4_0 => 0xA1B6C0,
-    Version1_6_0 => 0xA2BE40,
-    _ => 0
-};
-
-Functions.AddExperience = moduleBase + Version switch
-{
-    Version1_2_0 => 0x7B7CB0,
-    Version1_3_0 or Version1_4_0 => 0x7B7DF0,
-    Version1_6_0 => 0x7C0EF0,
-    _ => 0
-};
-
-Functions.SetEvent = moduleBase + Version switch
-{
-    Version1_2_0 => 0x6C1B90,
-    Version1_3_0 or Version1_4_0 => 0x6C1BF0,
-    Version1_6_0 => 0x6C4520,
-    _ => 0
-};
-
-Functions.GetEvent = moduleBase + Version switch
-{
-    Version1_2_0 => 0x6C15A0,
-    Version1_3_0 or Version1_4_0 => 0x6C1600,
-    Version1_6_0 => 0x6C3E60,
-    _ => 0
-};
-
-Functions.Warp = moduleBase + Version switch
-{
-    Version1_2_0 => 0x68C410,
-    Version1_3_0 or Version1_4_0 => 0x68C470,
-    Version1_6_0 => 0x68E870,
-    _ => 0
-};
-
-Functions.ApplySpEffect = moduleBase + Version switch
-{
-    Version1_2_0 => 0x9F17C0,
-    Version1_3_0 or Version1_4_0 => 0x9F1E50,
-    Version1_6_0 => 0xA01720,
-    _ => 0
-};
-
-Functions.ItemSpawn = moduleBase + Version switch
-{
-    Version1_2_0 => 0x910B90,
-    Version1_3_0 or Version1_4_0 => 0x911090,
-    Version1_6_0 => 0x91C970,
-    _ => 0
-};
-
-Functions.GetChrInsWithHandle = moduleBase + Version switch
-{
-    Version1_2_0 => 0xA37E30,
-    Version1_3_0 or Version1_4_0 => 0xA384C0,
-    Version1_6_0 => 0xA49F90,
-    _ => 0
-};
-
-Functions.FindChrInsChrEntityId = moduleBase + Version switch
-{
-    Version1_2_0 => 0x6BF190,
-    Version1_3_0 or Version1_4_0 => 0x6BF1F0,
-    Version1_6_0 => 0x6C1A10,
-    _ => 0
-};
-
-Functions.FrpgCastRay = moduleBase + Version switch
-{
-    Version1_2_0 => 0x940FF0,
-    Version1_3_0 or Version1_4_0 => 0x9414F0,
-    Version1_6_0 => 0x94CC50,
-    _ => 0
-};
-
-Functions.StopMusic = moduleBase + Version switch
-{
-    Version1_2_0 => 0x8C36C0,
-    Version1_3_0 or Version1_4_0 => 0x8C3BC0,
-    Version1_6_0 => 0x8CEA40,
-    _ => 0
-};
-
-Functions.GetItemSlot = moduleBase + Version switch
-{
-    Version1_2_0 => 0x79EFB0,
-    Version1_3_0 or Version1_4_0 => 0x79F010,
-    Version1_6_0 => 0x7A7AF0,
-    _ => 0
-};
-
-Functions.GetItemPtrFromSlot = moduleBase + Version switch
-{
-    Version1_2_0 => 0x7A1CC0,
-    Version1_3_0 or Version1_4_0 => 0x7A1D20,
-    Version1_6_0 => 0x7AABF0,
-    _ => 0
-};
-
-Functions.EzStateExternalEventTempCtor = moduleBase + Version switch
-{
-    Version1_2_0 => 0x1BB9000,
-    Version1_3_0 or Version1_4_0 => 0x1BB9B50,
-    Version1_6_0 => 0x1C17660,
-    _ => 0
-};
-
-Functions.RemoveItem = moduleBase + Version switch
-{
-    Version1_2_0 => 0x796650,
-    Version1_3_0 or Version1_4_0 => 0x7966B0,
-    Version1_6_0 => 0x79ECA0,
-    _ => 0
-};
-
-Functions.GiveSkillAndPros = moduleBase + Version switch
-{
-    Version1_2_0 => 0xA84350,
-    Version1_3_0 or Version1_4_0 => 0xA849E0,
-    Version1_6_0 => 0xA9A910,
-    _ => 0
-};
-
-Functions.RemoveSpEffect = moduleBase + Version switch
-{
-    Version1_2_0 => 0xBE3F00,
-    Version1_3_0 or Version1_4_0 => 0xBE45B0,
-    Version1_6_0 => 0xBFB6D0,
-    _ => 0
-};
-
-Functions.GetGoodsParam = moduleBase + Version switch
-{
-    Version1_2_0 => 0x10799C0,
-    Version1_3_0 or Version1_4_0 => 0x107A300,
-    Version1_6_0 => 0x10BF630,
-    _ => 0
-};
-
-Functions.ForceAnimationByChrEventModule = moduleBase + Version switch
-{
-    Version1_2_0 => 0xBC1360,
-    Version1_3_0 or Version1_4_0 => 0xBC1A10,
-    Version1_6_0 => 0xBD84C0,
-    _ => 0
-};
-
-Functions.FormatCutscenePathString = moduleBase + Version switch
-{
-    Version1_2_0 => 0x10FFD40,
-    Version1_3_0 or Version1_4_0 => 0x1100680,
-    Version1_6_0 => 0x11497C0,
-    _ => 0
-};
-
-Functions.OpenGenericDialog = moduleBase + Version switch
-{
-    Version1_2_0 => 0x1171260,
-    Version1_3_0 or Version1_4_0 => 0x1171D90,
-    Version1_6_0 => 0x11BB410,
-    _ => 0
-};
-
-Functions.AwardItemLot = moduleBase + Version switch
-{
-    Version1_2_0 => 0x687B90,
-    Version1_3_0 or Version1_4_0 => 0x687BF0,
-    Version1_6_0 => 0x689FF0,
-    _ => 0
-};
-
-Functions.AdjustItemCount = moduleBase + Version switch
-{
-    Version1_2_0 => 0x792520,
-    Version1_3_0 or Version1_4_0 => 0x792580,
-    Version1_6_0 => 0x79AB70,
-    _ => 0
-};
-
-Functions.SetMessageTagValue = moduleBase + Version switch
-{
-    Version1_2_0 => 0x117EF00,
-    Version1_3_0 or Version1_4_0 => 0x117FA30,
-    Version1_6_0 => 0x11C9460,
-    _ => 0
-};
-
-Patches.SaveInCombat = moduleBase + Version switch
-{
-    Version1_2_0 => 0xA63F95,
-    Version1_3_0 or Version1_4_0 => 0xA64625,
-    Version1_6_0 => 0xA76275,
-    _ => 0
-};
-
-Patches.NoLogo = moduleBase + Version switch
-{
-    Version1_2_0 => 0xDEBF2B,
-    Version1_3_0 or Version1_4_0 => 0xDEC85B,
-    Version1_6_0 => 0xE1B51B,
-    _ => 0
-};
-
-Patches.DebugFont = moduleBase + Version switch
-{
-    Version1_2_0 => 0x24F6EE6,
-    Version1_3_0 or Version1_4_0 => 0x24F7E56,
-    Version1_6_0 => 0x262D186,
-    _ => 0
-};
-
-Patches.EventView = moduleBase + Version switch
-{
-    Version1_2_0 => 0x6D0560,
-    Version1_3_0 or Version1_4_0 => 0x6D05C0,
-    Version1_6_0 => 0x6D30F0,
-    _ => 0
-};
-
-Patches.MenuTutorialSkip = moduleBase + Version switch
-{
-    Version1_2_0 => 0xD73E22,
-    Version1_3_0 or Version1_4_0 => 0xD74752,
-    Version1_6_0 => 0xD9A642,
-    _ => 0
-};
-
-Patches.ShowSmallHintBox = moduleBase + Version switch
-{
-    Version1_2_0 => 0x8FE263,
-    Version1_3_0 or Version1_4_0 => 0x8FE763,
-    Version1_6_0 => 0x909FA3,
-    _ => 0
-};
-
-Patches.ShowTutorialText = moduleBase + Version switch
-{
-    Version1_2_0 => 0x8FE213,
-    Version1_3_0 or Version1_4_0 => 0x8FE713,
-    Version1_6_0 => 0x909F53,
-    _ => 0
-};
-
-Patches.DefaultSoundVolWrite = moduleBase + Version switch
-{
-    Version1_2_0 => 0x7B3D46,
-    Version1_3_0 or Version1_4_0 => 0x7B3E86,
-    Version1_6_0 => 0x7BCEA6,
-    _ => 0
-};
-
-Patches.PlayerSoundView = moduleBase + Version switch
-{
-    Version1_2_0 => 0x60E63D,
-    Version1_3_0 or Version1_4_0 => 0x60E69D,
-    Version1_6_0 => 0x6114BD,
-    _ => 0
-};
-
-Hooks.LockedTarget = moduleBase + Version switch
-{
-    Version1_2_0 => 0x9B3F0A,
-    Version1_3_0 or Version1_4_0 => 0x9B459A,
-    Version1_6_0 => 0x9C3ADA,
-    _ => 0
-};
-
-Hooks.FreezeTargetPosture = moduleBase + Version switch
-{
-    Version1_2_0 => 0xBBF61B,
-    Version1_3_0 or Version1_4_0 => 0xBBFCCB,
-    Version1_6_0 => 0xBD677B,
-    _ => 0
-};
-
-Hooks.SetWarpCoordinates = moduleBase + Version switch
-{
-    Version1_2_0 => 0x82871A,
-    Version1_3_0 or Version1_4_0 => 0x828C1A,
-    Version1_6_0 => 0x832A3A,
-    _ => 0
-};
-
-Hooks.SetWarpAngle = moduleBase + Version switch
-{
-    Version1_2_0 => 0x8286FA,
-    Version1_3_0 or Version1_4_0 => 0x828BFA,
-    Version1_6_0 => 0x832A1A,
-    _ => 0
-};
-
-Hooks.AddSubGoal = moduleBase + Version switch
-{
-    Version1_2_0 => 0x5CB690,
-    Version1_3_0 or Version1_4_0 => 0x5CB6F0,
-    Version1_6_0 => 0x5CE510,
-    _ => 0
-};
-
-Hooks.InAirTimer = moduleBase + Version switch
-{
-    Version1_2_0 => 0xBAC4D3,
-    Version1_3_0 or Version1_4_0 => 0xBACB83,
-    Version1_6_0 => 0xBC3633,
-    _ => 0
-};
-
-Hooks.PadTriggers = moduleBase + Version switch
-{
-    Version1_2_0 => 0x1A950B0,
-    Version1_3_0 or Version1_4_0 => 0x1A95BE0,
-    Version1_6_0 => 0x1ADF8C0,
-    _ => 0
-};
-
-Hooks.KeyBoard = moduleBase + Version switch
-{
-    Version1_2_0 => 0x1A452F8,
-    Version1_3_0 or Version1_4_0 => 0x1A45E28,
-    Version1_6_0 => 0x1A8FB08,
-    _ => 0
-};
-
-Hooks.UpdateCoords = moduleBase + Version switch
-{
-    Version1_2_0 => 0xBAD636,
-    Version1_3_0 or Version1_4_0 => 0xBADCE6,
-    Version1_6_0 => 0xBC4796,
-    _ => 0
-};
-
-Hooks.InfinitePoise = moduleBase + Version switch
-{
-    Version1_2_0 => 0xB55361,
-    Version1_3_0 or Version1_4_0 => 0xB55A11,
-    Version1_6_0 => 0xB6C011,
-    _ => 0
-};
-
-Hooks.AiHasSpEffect = moduleBase + Version switch
-{
-    Version1_2_0 => 0x61086B,
-    Version1_3_0 or Version1_4_0 => 0x6108CB,
-    Version1_6_0 => 0x6136EB,
-    _ => 0
-};
-
-Hooks.InfiniteConfetti = moduleBase + Version switch
-{
-    Version1_2_0 => 0xBEF42E,
-    Version1_3_0 or Version1_4_0 => 0xBEFADE,
-    Version1_6_0 => 0xC06BFE,
-    _ => 0
-};
-
-Hooks.GetMouseDelta = moduleBase + Version switch
-{
-    Version1_2_0 => 0x7E755D,
-    Version1_3_0 or Version1_4_0 => 0x7E769D,
-    Version1_6_0 => 0x7F0FFD,
-    _ => 0
-};
-
-Hooks.StartMusic = moduleBase + Version switch
-{
-    Version1_2_0 => 0x8C3860,
-    Version1_3_0 or Version1_4_0 => 0x8C3D60,
-    Version1_6_0 => 0x8CEBE0,
-    _ => 0
-};
-
-Hooks.HpWrite = moduleBase + Version switch
-{
-    Version1_2_0 => 0xBBF3BE,
-    Version1_3_0 or Version1_4_0 => 0xBBFA6E,
-    Version1_6_0 => 0xBD651E,
-    _ => 0
-};
-
-Hooks.SetLastAct = moduleBase + Version switch
-{
-    Version1_2_0 => 0x5DF21D,
-    Version1_3_0 or Version1_4_0 => 0x5DF27D,
-    Version1_6_0 => 0x5E209D,
-    _ => 0
-};
-
-
-        
-Console.WriteLine("========== BASES ==========");
-Console.WriteLine($"WorldChrMan.Base: 0x{Offsets.WorldChrMan.Base.ToInt64():X}");
-Console.WriteLine($"WorldChrManDbg.Base: 0x{Offsets.WorldChrManDbg.Base.ToInt64():X}");
-Console.WriteLine($"MenuMan.Base: 0x{Offsets.MenuMan.Base.ToInt64():X}");
-Console.WriteLine($"WorldAiMan.Base: 0x{Offsets.WorldAiMan.Base.ToInt64():X}");
-Console.WriteLine($"DamageManager.Base: 0x{Offsets.DamageManager.Base.ToInt64():X}");
-Console.WriteLine($"DebugFlags.Base: 0x{Offsets.DebugFlags.Base.ToInt64():X}");
-Console.WriteLine($"MapItemMan.Base: 0x{Offsets.MapItemMan.Base.ToInt64():X}");
-Console.WriteLine($"EventFlagMan.Base: 0x{Offsets.EventFlagMan.Base.ToInt64():X}");
-Console.WriteLine($"DebugEventMan.Base: 0x{Offsets.DebugEventMan.Base.ToInt64():X}");
-Console.WriteLine($"SprjFlipperImp.Base: 0x{Offsets.SprjFlipperImp.Base.ToInt64():X}");
-Console.WriteLine($"FieldArea.Base: 0x{Offsets.FieldArea.Base.ToInt64():X}");
-Console.WriteLine($"FrpgHavokMan.Base: 0x{Offsets.FrpgHavokMan.Base.ToInt64():X}");
-Console.WriteLine($"GameDataMan.Base: 0x{Offsets.GameDataMan.Base.ToInt64():X}");
-Console.WriteLine($"PauseRequest.Base: 0x{Offsets.PauseRequest.Base.ToInt64():X}");
-Console.WriteLine($"DlUserInputManager.Base: 0x{Offsets.DlUserInputManager.Base.ToInt64():X}");
-Console.WriteLine($"TargetingView.Base: 0x{Offsets.TargetingView.Base.ToInt64():X}");
-Console.WriteLine($"IdolRequests.Base: 0x{Offsets.IdolRequests.Base.ToInt64():X}");
-Console.WriteLine($"GameRendFlags.Base: 0x{Offsets.GameRendFlags.Base.ToInt64():X}");
-Console.WriteLine($"MeshBase.Base: 0x{Offsets.MeshBase.Base.ToInt64():X}");
-Console.WriteLine($"Fd4PadManager.Base: 0x{Offsets.Fd4PadManager.Base.ToInt64():X}");
-
-
-Console.WriteLine("\n========== HOOKS ==========");
-Console.WriteLine($"Hooks.LockedTarget: 0x{Offsets.Hooks.LockedTarget:X}");
-Console.WriteLine($"Hooks.FreezeTargetPosture: 0x{Offsets.Hooks.FreezeTargetPosture:X}");
-Console.WriteLine($"Hooks.SetWarpCoordinates: 0x{Offsets.Hooks.SetWarpCoordinates:X}");
-Console.WriteLine($"Hooks.SetWarpAngle: 0x{Offsets.Hooks.SetWarpAngle:X}");
-Console.WriteLine($"Hooks.AddSubGoal: 0x{Offsets.Hooks.AddSubGoal:X}");
-Console.WriteLine($"Hooks.InAirTimer: 0x{Offsets.Hooks.InAirTimer:X}");
-Console.WriteLine($"Hooks.UpdateCoords: 0x{Offsets.Hooks.UpdateCoords:X}");
-Console.WriteLine($"Hooks.PadTriggers: 0x{Offsets.Hooks.PadTriggers:X}");
-Console.WriteLine($"Hooks.KeyBoard: 0x{Offsets.Hooks.KeyBoard:X}");
-Console.WriteLine($"Hooks.InfinitePoise: 0x{Offsets.Hooks.InfinitePoise:X}");
-Console.WriteLine($"Hooks.AiHasSpEffect: 0x{Offsets.Hooks.AiHasSpEffect:X}");
-Console.WriteLine($"Hooks.GetMouseDelta: 0x{Offsets.Hooks.GetMouseDelta:X}");
-Console.WriteLine($"Hooks.HpWrite: 0x{Offsets.Hooks.HpWrite:X}");
-Console.WriteLine($"Hooks.InfiniteConfetti: 0x{Offsets.Hooks.InfiniteConfetti:X}");
-Console.WriteLine($"Hooks.SetLastAct: 0x{Offsets.Hooks.SetLastAct:X}");
-Console.WriteLine($"Hooks.NoMenuMusic: 0x{Offsets.Hooks.StartMusic:X}");
-
-
-
-Console.WriteLine("\n========== PATCHES ==========");
-Console.WriteLine($"Patches.DebugFont: 0x{Offsets.Patches.DebugFont.ToInt64():X}");
-Console.WriteLine($"Patches.EventView: 0x{Offsets.Patches.EventView.ToInt64():X}");
-Console.WriteLine($"Patches.MenuTutorialSkip: 0x{Offsets.Patches.MenuTutorialSkip.ToInt64():X}");
-Console.WriteLine($"Patches.ShowSmallHintBox: 0x{Offsets.Patches.ShowSmallHintBox.ToInt64():X}");
-Console.WriteLine($"Patches.ShowTutorialText: 0x{Offsets.Patches.ShowTutorialText.ToInt64():X}");
-Console.WriteLine($"Patches.SaveInCombat: 0x{Offsets.Patches.SaveInCombat.ToInt64():X}");
-Console.WriteLine($"Patches.PlayerSoundView: 0x{Offsets.Patches.PlayerSoundView.ToInt64():X}");
-
-
-Console.WriteLine("\n========== FUNCTIONS ==========");
-Console.WriteLine($"Functions.AddSen: 0x{Offsets.Functions.AddSen:X}");
-Console.WriteLine($"Functions.Rest: 0x{Offsets.Functions.Rest:X}");
-Console.WriteLine($"Functions.SetEvent: 0x{Offsets.Functions.SetEvent:X}");
-Console.WriteLine($"Functions.GetEvent: 0x{Offsets.Functions.GetEvent:X}");
-Console.WriteLine($"Functions.Warp: 0x{Offsets.Functions.Warp:X}");
-Console.WriteLine($"Functions.ApplySpEffect: 0x{Offsets.Functions.ApplySpEffect:X}");
-Console.WriteLine($"Functions.ItemSpawn: 0x{Offsets.Functions.ItemSpawn:X}");
-Console.WriteLine($"Functions.GetChrInsWithHandle: 0x{Offsets.Functions.GetChrInsWithHandle:X}");
-Console.WriteLine($"Functions.FindChrInsChrEntityId: 0x{Offsets.Functions.FindChrInsChrEntityId:X}");
-Console.WriteLine($"Functions.FrpgCastRay: 0x{Offsets.Functions.FrpgCastRay:X}");
-Console.WriteLine($"Functions.GetItemSlot: 0x{Offsets.Functions.GetItemSlot:X}");
-Console.WriteLine($"Functions.GetItemPtrFromSlot: 0x{Offsets.Functions.GetItemPtrFromSlot:X}");
-Console.WriteLine($"Functions.EzStateExternalEventTempCtor: 0x{Offsets.Functions.EzStateExternalEventTempCtor:X}");
-Console.WriteLine($"Functions.AwardItemLot: 0x{Offsets.Functions.AwardItemLot:X}");
-Console.WriteLine($"Functions.SetMessageTagValue: 0x{Offsets.Functions.SetMessageTagValue:X}");
-Console.WriteLine($"Functions.AdjustItemCount: 0x{Offsets.Functions.AdjustItemCount:X}");
-Console.WriteLine($"Functions.OpenGenericDialog: 0x{Offsets.Functions.OpenGenericDialog:X}");
-Console.WriteLine($"Functions.RemoveItem: 0x{Offsets.Functions.RemoveItem:X}");
-Console.WriteLine($"Functions.GiveSkillAndPros: 0x{Offsets.Functions.GiveSkillAndPros:X}");
-Console.WriteLine($"Functions.GetGoodsParam: 0x{Offsets.Functions.GetGoodsParam:X}");
-Console.WriteLine($"Functions.ForceAnimationByChrEventModule: 0x{Offsets.Functions.ForceAnimationByChrEventModule:X}");
-Console.WriteLine($"Functions.MatrixVectorToProduct: 0x{Offsets.Functions.MatrixVectorToProduct:X}");
-Console.WriteLine($"Functions.GetMovement: 0x{Offsets.Functions.GetMovement:X}");
-Console.WriteLine($"Functions.ExecuteTalkCommand: 0x{Offsets.Functions.ExecuteTalkCommand:X}");
+        {
+            Version1_2_0 => 0x3B67DF0,
+            Version1_3_0 or Version1_4_0 => 0x3B68E30,
+            Version1_6_0 => 0x3D7A1E0,
+            _ => 0
+        };
+
+        WorldChrManDbg.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B67F98,
+            Version1_3_0 or Version1_4_0 => 0x3B68FD8,
+            Version1_6_0 => 0x3D7A388,
+            _ => 0
+        };
+
+        MenuMan.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B55048,
+            Version1_3_0 or Version1_4_0 => 0x3B56088,
+            Version1_6_0 => 0x3D67408,
+            _ => 0
+        };
+
+        WorldAiMan.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B422D0,
+            Version1_3_0 or Version1_4_0 => 0x3B43310,
+            Version1_6_0 => 0x3D55070,
+            _ => 0
+        };
+
+        DamageManager.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B65B00,
+            Version1_3_0 or Version1_4_0 => 0x3B66B40,
+            Version1_6_0 => 0x3D77EF0,
+            _ => 0
+        };
+
+        DebugFlags.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B67F8C,
+            Version1_3_0 or Version1_4_0 => 0x3B68FCC,
+            Version1_6_0 => 0x3D7A366,
+            _ => 0
+        };
+
+        MapItemMan.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B5AA00,
+            Version1_3_0 or Version1_4_0 => 0x3B5BA40,
+            Version1_6_0 => 0x3D6CDC0,
+            _ => 0
+        };
+
+        EventFlagMan.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B43248,
+            Version1_3_0 or Version1_4_0 => 0x3B44288,
+            Version1_6_0 => 0x3D55FE8,
+            _ => 0
+        };
+
+        DebugEventMan.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B42C68,
+            Version1_3_0 or Version1_4_0 => 0x3B43CA8,
+            Version1_6_0 => 0x3D55A08,
+            _ => 0
+        };
+
+        SprjFlipperImp.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3C8C2C8,
+            Version1_3_0 or Version1_4_0 => 0x3C8D308,
+            Version1_6_0 => 0x3E9F748,
+            _ => 0
+        };
+
+        FieldArea.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B49CD8,
+            Version1_3_0 or Version1_4_0 => 0x3B4AD18,
+            Version1_6_0 => 0x3D5C0A0,
+            _ => 0
+        };
+
+        FrpgHavokMan.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B5B240,
+            Version1_3_0 or Version1_4_0 => 0x3B5C280,
+            Version1_6_0 => 0x3D6D640,
+            _ => 0
+        };
+
+        GameDataMan.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B47CF0,
+            Version1_3_0 or Version1_4_0 => 0x3B48D30,
+            Version1_6_0 => 0x3D5AAC0,
+            _ => 0
+        };
+
+        PauseRequest.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B688C2,
+            Version1_3_0 or Version1_4_0 => 0x3B69902,
+            Version1_6_0 => 0x3D7ACB2,
+            _ => 0
+        };
+
+        DlUserInputManager.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3D2A550,
+            Version1_3_0 or Version1_4_0 => 0x3D2B5A0,
+            Version1_6_0 => 0x3F42B28,
+            _ => 0
+        };
+
+        TargetingView.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B41C88,
+            Version1_3_0 or Version1_4_0 => 0x3B42CC8,
+            Version1_6_0 => 0x3D54A28,
+            _ => 0
+        };
+
+        IdolRequests.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x775E76,
+            Version1_3_0 or Version1_4_0 => 0x775ED6,
+            Version1_6_0 => 0x77C6A7,
+            _ => 0
+        };
+
+        GameRendFlags.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x39007C8,
+            Version1_3_0 or Version1_4_0 => 0x39017C8,
+            Version1_6_0 => 0x3B01838,
+            _ => 0
+        };
+
+        MeshBase.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3B65BC0,
+            Version1_3_0 or Version1_4_0 => 0x3B66C00,
+            Version1_6_0 => 0x3D77FA4,
+            _ => 0
+        };
+
+        Fd4PadManager.Base = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x3D2A288,
+            Version1_3_0 or Version1_4_0 => 0x3D2B2C0,
+            Version1_6_0 => 0x3F42850,
+            _ => 0
+        };
+
+        Functions.ExecuteTalkCommand = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x117BF00,
+            Version1_3_0 or Version1_4_0 => 0x117CA30,
+            Version1_6_0 => 0x11C63A0,
+            _ => 0
+        };
+
+        Functions.GetMovement = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x24B18E0,
+            Version1_3_0 or Version1_4_0 => 0x24B2850,
+            Version1_6_0 => 0x25E7950,
+            _ => 0
+        };
+
+        Functions.MatrixVectorToProduct = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xEBCDA0,
+            Version1_3_0 or Version1_4_0 => 0xEBD6E0,
+            Version1_6_0 => 0xF01400,
+            _ => 0
+        };
+
+        Functions.AddSen = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x7B7F50,
+            Version1_3_0 or Version1_4_0 => 0x7B8090,
+            Version1_6_0 => 0x7C1190,
+            _ => 0
+        };
+
+        Functions.Rest = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xA1B030,
+            Version1_3_0 or Version1_4_0 => 0xA1B6C0,
+            Version1_6_0 => 0xA2BE40,
+            _ => 0
+        };
+
+        Functions.AddExperience = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x7B7CB0,
+            Version1_3_0 or Version1_4_0 => 0x7B7DF0,
+            Version1_6_0 => 0x7C0EF0,
+            _ => 0
+        };
+
+        Functions.SetEvent = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x6C1B90,
+            Version1_3_0 or Version1_4_0 => 0x6C1BF0,
+            Version1_6_0 => 0x6C4520,
+            _ => 0
+        };
+
+        Functions.GetEvent = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x6C15A0,
+            Version1_3_0 or Version1_4_0 => 0x6C1600,
+            Version1_6_0 => 0x6C3E60,
+            _ => 0
+        };
+
+        Functions.Warp = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x68C410,
+            Version1_3_0 or Version1_4_0 => 0x68C470,
+            Version1_6_0 => 0x68E870,
+            _ => 0
+        };
+
+        Functions.ApplySpEffect = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x9F17C0,
+            Version1_3_0 or Version1_4_0 => 0x9F1E50,
+            Version1_6_0 => 0xA01720,
+            _ => 0
+        };
+
+        Functions.ItemSpawn = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x910B90,
+            Version1_3_0 or Version1_4_0 => 0x911090,
+            Version1_6_0 => 0x91C970,
+            _ => 0
+        };
+
+        Functions.GetChrInsWithHandle = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xA37E30,
+            Version1_3_0 or Version1_4_0 => 0xA384C0,
+            Version1_6_0 => 0xA49F90,
+            _ => 0
+        };
+
+        Functions.FindChrInsChrEntityId = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x6BF190,
+            Version1_3_0 or Version1_4_0 => 0x6BF1F0,
+            Version1_6_0 => 0x6C1A10,
+            _ => 0
+        };
+
+        Functions.FrpgCastRay = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x940FF0,
+            Version1_3_0 or Version1_4_0 => 0x9414F0,
+            Version1_6_0 => 0x94CC50,
+            _ => 0
+        };
+
+        Functions.StopMusic = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x8C36C0,
+            Version1_3_0 or Version1_4_0 => 0x8C3BC0,
+            Version1_6_0 => 0x8CEA40,
+            _ => 0
+        };
+
+        Functions.GetItemSlot = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x79EFB0,
+            Version1_3_0 or Version1_4_0 => 0x79F010,
+            Version1_6_0 => 0x7A7AF0,
+            _ => 0
+        };
+
+        Functions.GetItemPtrFromSlot = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x7A1CC0,
+            Version1_3_0 or Version1_4_0 => 0x7A1D20,
+            Version1_6_0 => 0x7AABF0,
+            _ => 0
+        };
+
+        Functions.EzStateExternalEventTempCtor = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x1BB9000,
+            Version1_3_0 or Version1_4_0 => 0x1BB9B50,
+            Version1_6_0 => 0x1C17660,
+            _ => 0
+        };
+
+        Functions.RemoveItem = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x796650,
+            Version1_3_0 or Version1_4_0 => 0x7966B0,
+            Version1_6_0 => 0x79ECA0,
+            _ => 0
+        };
+
+        Functions.GiveSkillAndPros = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xA84350,
+            Version1_3_0 or Version1_4_0 => 0xA849E0,
+            Version1_6_0 => 0xA9A910,
+            _ => 0
+        };
+
+        Functions.RemoveSpEffect = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xBE3F00,
+            Version1_3_0 or Version1_4_0 => 0xBE45B0,
+            Version1_6_0 => 0xBFB6D0,
+            _ => 0
+        };
+
+        Functions.GetGoodsParam = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x10799C0,
+            Version1_3_0 or Version1_4_0 => 0x107A300,
+            Version1_6_0 => 0x10BF630,
+            _ => 0
+        };
+
+        Functions.ForceAnimationByChrEventModule = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xBC1360,
+            Version1_3_0 or Version1_4_0 => 0xBC1A10,
+            Version1_6_0 => 0xBD84C0,
+            _ => 0
+        };
+
+        Functions.FormatCutscenePathString = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x10FFD40,
+            Version1_3_0 or Version1_4_0 => 0x1100680,
+            Version1_6_0 => 0x11497C0,
+            _ => 0
+        };
+
+        Functions.OpenGenericDialog = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x1171260,
+            Version1_3_0 or Version1_4_0 => 0x1171D90,
+            Version1_6_0 => 0x11BB410,
+            _ => 0
+        };
+
+        Functions.AwardItemLot = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x687B90,
+            Version1_3_0 or Version1_4_0 => 0x687BF0,
+            Version1_6_0 => 0x689FF0,
+            _ => 0
+        };
+
+        Functions.AdjustItemCount = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x792520,
+            Version1_3_0 or Version1_4_0 => 0x792580,
+            Version1_6_0 => 0x79AB70,
+            _ => 0
+        };
+
+        Functions.SetMessageTagValue = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x117EF00,
+            Version1_3_0 or Version1_4_0 => 0x117FA30,
+            Version1_6_0 => 0x11C9460,
+            _ => 0
+        };
+
+        Patches.SaveInCombat = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xA63F95,
+            Version1_3_0 or Version1_4_0 => 0xA64625,
+            Version1_6_0 => 0xA76275,
+            _ => 0
+        };
+
+        Patches.NoLogo = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xDEBF2B,
+            Version1_3_0 or Version1_4_0 => 0xDEC85B,
+            Version1_6_0 => 0xE1B51B,
+            _ => 0
+        };
+
+        Patches.DebugFont = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x24F6EE6,
+            Version1_3_0 or Version1_4_0 => 0x24F7E56,
+            Version1_6_0 => 0x262D186,
+            _ => 0
+        };
+
+        Patches.EventView = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x6D0560,
+            Version1_3_0 or Version1_4_0 => 0x6D05C0,
+            Version1_6_0 => 0x6D30F0,
+            _ => 0
+        };
+
+        Patches.MenuTutorialSkip = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xD73E22,
+            Version1_3_0 or Version1_4_0 => 0xD74752,
+            Version1_6_0 => 0xD9A642,
+            _ => 0
+        };
+
+        Patches.ShowSmallHintBox = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x8FE263,
+            Version1_3_0 or Version1_4_0 => 0x8FE763,
+            Version1_6_0 => 0x909FA3,
+            _ => 0
+        };
+
+        Patches.ShowTutorialText = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x8FE213,
+            Version1_3_0 or Version1_4_0 => 0x8FE713,
+            Version1_6_0 => 0x909F53,
+            _ => 0
+        };
+
+        Patches.DefaultSoundVolWrite = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x7B3D46,
+            Version1_3_0 or Version1_4_0 => 0x7B3E86,
+            Version1_6_0 => 0x7BCEA6,
+            _ => 0
+        };
+
+        Patches.PlayerSoundView = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x60E63D,
+            Version1_3_0 or Version1_4_0 => 0x60E69D,
+            Version1_6_0 => 0x6114BD,
+            _ => 0
+        };
+
+        Hooks.LockedTarget = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x9B3F0A,
+            Version1_3_0 or Version1_4_0 => 0x9B459A,
+            Version1_6_0 => 0x9C3ADA,
+            _ => 0
+        };
+
+        Hooks.FreezeTargetPosture = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xBBF61B,
+            Version1_3_0 or Version1_4_0 => 0xBBFCCB,
+            Version1_6_0 => 0xBD677B,
+            _ => 0
+        };
+
+        Hooks.SetWarpCoordinates = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x82871A,
+            Version1_3_0 or Version1_4_0 => 0x828C1A,
+            Version1_6_0 => 0x832A3A,
+            _ => 0
+        };
+
+        Hooks.SetWarpAngle = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x8286FA,
+            Version1_3_0 or Version1_4_0 => 0x828BFA,
+            Version1_6_0 => 0x832A1A,
+            _ => 0
+        };
+
+        Hooks.AddSubGoal = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x5CB690,
+            Version1_3_0 or Version1_4_0 => 0x5CB6F0,
+            Version1_6_0 => 0x5CE510,
+            _ => 0
+        };
+
+        Hooks.InAirTimer = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xBAC4D3,
+            Version1_3_0 or Version1_4_0 => 0xBACB83,
+            Version1_6_0 => 0xBC3633,
+            _ => 0
+        };
+
+        Hooks.PadTriggers = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x1A950B0,
+            Version1_3_0 or Version1_4_0 => 0x1A95BE0,
+            Version1_6_0 => 0x1ADF8C0,
+            _ => 0
+        };
+
+        Hooks.KeyBoard = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x1A452F8,
+            Version1_3_0 or Version1_4_0 => 0x1A45E28,
+            Version1_6_0 => 0x1A8FB08,
+            _ => 0
+        };
+
+        Hooks.UpdateCoords = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xBAD636,
+            Version1_3_0 or Version1_4_0 => 0xBADCE6,
+            Version1_6_0 => 0xBC4796,
+            _ => 0
+        };
+
+        Hooks.InfinitePoise = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xB55361,
+            Version1_3_0 or Version1_4_0 => 0xB55A11,
+            Version1_6_0 => 0xB6C011,
+            _ => 0
+        };
+
+        Hooks.AiHasSpEffect = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x61086B,
+            Version1_3_0 or Version1_4_0 => 0x6108CB,
+            Version1_6_0 => 0x6136EB,
+            _ => 0
+        };
+
+        Hooks.InfiniteConfetti = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xBEF42E,
+            Version1_3_0 or Version1_4_0 => 0xBEFADE,
+            Version1_6_0 => 0xC06BFE,
+            _ => 0
+        };
+
+        Hooks.GetMouseDelta = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x7E755D,
+            Version1_3_0 or Version1_4_0 => 0x7E769D,
+            Version1_6_0 => 0x7F0FFD,
+            _ => 0
+        };
+
+        Hooks.StartMusic = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x8C3860,
+            Version1_3_0 or Version1_4_0 => 0x8C3D60,
+            Version1_6_0 => 0x8CEBE0,
+            _ => 0
+        };
+
+        Hooks.HpWrite = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xBBF3BE,
+            Version1_3_0 or Version1_4_0 => 0xBBFA6E,
+            Version1_6_0 => 0xBD651E,
+            _ => 0
+        };
+
+        Hooks.SetLastAct = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x5DF21D,
+            Version1_3_0 or Version1_4_0 => 0x5DF27D,
+            Version1_6_0 => 0x5E209D,
+            _ => 0
+        };
+
+#if DEBUG
+
+        Console.WriteLine("========== BASES ==========");
+        Console.WriteLine($"WorldChrMan.Base: 0x{WorldChrMan.Base.ToInt64():X}");
+        Console.WriteLine($"WorldChrManDbg.Base: 0x{WorldChrManDbg.Base.ToInt64():X}");
+        Console.WriteLine($"MenuMan.Base: 0x{MenuMan.Base.ToInt64():X}");
+        Console.WriteLine($"WorldAiMan.Base: 0x{WorldAiMan.Base.ToInt64():X}");
+        Console.WriteLine($"DamageManager.Base: 0x{DamageManager.Base.ToInt64():X}");
+        Console.WriteLine($"DebugFlags.Base: 0x{DebugFlags.Base.ToInt64():X}");
+        Console.WriteLine($"MapItemMan.Base: 0x{MapItemMan.Base.ToInt64():X}");
+        Console.WriteLine($"EventFlagMan.Base: 0x{EventFlagMan.Base.ToInt64():X}");
+        Console.WriteLine($"DebugEventMan.Base: 0x{DebugEventMan.Base.ToInt64():X}");
+        Console.WriteLine($"SprjFlipperImp.Base: 0x{SprjFlipperImp.Base.ToInt64():X}");
+        Console.WriteLine($"FieldArea.Base: 0x{FieldArea.Base.ToInt64():X}");
+        Console.WriteLine($"FrpgHavokMan.Base: 0x{FrpgHavokMan.Base.ToInt64():X}");
+        Console.WriteLine($"GameDataMan.Base: 0x{GameDataMan.Base.ToInt64():X}");
+        Console.WriteLine($"PauseRequest.Base: 0x{PauseRequest.Base.ToInt64():X}");
+        Console.WriteLine($"DlUserInputManager.Base: 0x{DlUserInputManager.Base.ToInt64():X}");
+        Console.WriteLine($"TargetingView.Base: 0x{TargetingView.Base.ToInt64():X}");
+        Console.WriteLine($"IdolRequests.Base: 0x{IdolRequests.Base.ToInt64():X}");
+        Console.WriteLine($"GameRendFlags.Base: 0x{GameRendFlags.Base.ToInt64():X}");
+        Console.WriteLine($"MeshBase.Base: 0x{MeshBase.Base.ToInt64():X}");
+        Console.WriteLine($"Fd4PadManager.Base: 0x{Fd4PadManager.Base.ToInt64():X}");
+
+
+        Console.WriteLine("\n========== HOOKS ==========");
+        Console.WriteLine($"Hooks.LockedTarget: 0x{Hooks.LockedTarget:X}");
+        Console.WriteLine($"Hooks.FreezeTargetPosture: 0x{Hooks.FreezeTargetPosture:X}");
+        Console.WriteLine($"Hooks.SetWarpCoordinates: 0x{Hooks.SetWarpCoordinates:X}");
+        Console.WriteLine($"Hooks.SetWarpAngle: 0x{Hooks.SetWarpAngle:X}");
+        Console.WriteLine($"Hooks.AddSubGoal: 0x{Hooks.AddSubGoal:X}");
+        Console.WriteLine($"Hooks.InAirTimer: 0x{Hooks.InAirTimer:X}");
+        Console.WriteLine($"Hooks.UpdateCoords: 0x{Hooks.UpdateCoords:X}");
+        Console.WriteLine($"Hooks.PadTriggers: 0x{Hooks.PadTriggers:X}");
+        Console.WriteLine($"Hooks.KeyBoard: 0x{Hooks.KeyBoard:X}");
+        Console.WriteLine($"Hooks.InfinitePoise: 0x{Hooks.InfinitePoise:X}");
+        Console.WriteLine($"Hooks.AiHasSpEffect: 0x{Hooks.AiHasSpEffect:X}");
+        Console.WriteLine($"Hooks.GetMouseDelta: 0x{Hooks.GetMouseDelta:X}");
+        Console.WriteLine($"Hooks.HpWrite: 0x{Hooks.HpWrite:X}");
+        Console.WriteLine($"Hooks.InfiniteConfetti: 0x{Hooks.InfiniteConfetti:X}");
+        Console.WriteLine($"Hooks.SetLastAct: 0x{Hooks.SetLastAct:X}");
+        Console.WriteLine($"Hooks.NoMenuMusic: 0x{Hooks.StartMusic:X}");
+
+
+        Console.WriteLine("\n========== PATCHES ==========");
+        Console.WriteLine($"Patches.DebugFont: 0x{Patches.DebugFont.ToInt64():X}");
+        Console.WriteLine($"Patches.EventView: 0x{Patches.EventView.ToInt64():X}");
+        Console.WriteLine($"Patches.MenuTutorialSkip: 0x{Patches.MenuTutorialSkip.ToInt64():X}");
+        Console.WriteLine($"Patches.ShowSmallHintBox: 0x{Patches.ShowSmallHintBox.ToInt64():X}");
+        Console.WriteLine($"Patches.ShowTutorialText: 0x{Patches.ShowTutorialText.ToInt64():X}");
+        Console.WriteLine($"Patches.SaveInCombat: 0x{Patches.SaveInCombat.ToInt64():X}");
+        Console.WriteLine($"Patches.PlayerSoundView: 0x{Patches.PlayerSoundView.ToInt64():X}");
+
+
+        Console.WriteLine("\n========== FUNCTIONS ==========");
+        Console.WriteLine($"Functions.AddSen: 0x{Functions.AddSen:X}");
+        Console.WriteLine($"Functions.Rest: 0x{Functions.Rest:X}");
+        Console.WriteLine($"Functions.SetEvent: 0x{Functions.SetEvent:X}");
+        Console.WriteLine($"Functions.GetEvent: 0x{Functions.GetEvent:X}");
+        Console.WriteLine($"Functions.Warp: 0x{Functions.Warp:X}");
+        Console.WriteLine($"Functions.ApplySpEffect: 0x{Functions.ApplySpEffect:X}");
+        Console.WriteLine($"Functions.ItemSpawn: 0x{Functions.ItemSpawn:X}");
+        Console.WriteLine($"Functions.GetChrInsWithHandle: 0x{Functions.GetChrInsWithHandle:X}");
+        Console.WriteLine($"Functions.FindChrInsChrEntityId: 0x{Functions.FindChrInsChrEntityId:X}");
+        Console.WriteLine($"Functions.FrpgCastRay: 0x{Functions.FrpgCastRay:X}");
+        Console.WriteLine($"Functions.GetItemSlot: 0x{Functions.GetItemSlot:X}");
+        Console.WriteLine($"Functions.GetItemPtrFromSlot: 0x{Functions.GetItemPtrFromSlot:X}");
+        Console.WriteLine(
+            $"Functions.EzStateExternalEventTempCtor: 0x{Functions.EzStateExternalEventTempCtor:X}");
+        Console.WriteLine($"Functions.AwardItemLot: 0x{Functions.AwardItemLot:X}");
+        Console.WriteLine($"Functions.SetMessageTagValue: 0x{Functions.SetMessageTagValue:X}");
+        Console.WriteLine($"Functions.AdjustItemCount: 0x{Functions.AdjustItemCount:X}");
+        Console.WriteLine($"Functions.OpenGenericDialog: 0x{Functions.OpenGenericDialog:X}");
+        Console.WriteLine($"Functions.RemoveItem: 0x{Functions.RemoveItem:X}");
+        Console.WriteLine($"Functions.GiveSkillAndPros: 0x{Functions.GiveSkillAndPros:X}");
+        Console.WriteLine($"Functions.GetGoodsParam: 0x{Functions.GetGoodsParam:X}");
+        Console.WriteLine(
+            $"Functions.ForceAnimationByChrEventModule: 0x{Functions.ForceAnimationByChrEventModule:X}");
+        Console.WriteLine($"Functions.MatrixVectorToProduct: 0x{Functions.MatrixVectorToProduct:X}");
+        Console.WriteLine($"Functions.GetMovement: 0x{Functions.GetMovement:X}");
+        Console.WriteLine($"Functions.ExecuteTalkCommand: 0x{Functions.ExecuteTalkCommand:X}");
+#endif
     }
-    
 }
-
