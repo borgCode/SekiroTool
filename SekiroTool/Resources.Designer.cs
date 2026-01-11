@@ -603,6 +603,19 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 83 fa 01                cmp    edx,0x1
+        ///75 01                   jne    6 &lt;thisismycode&gt;
+        ///c3                      ret
+        ///48 89 74 24 10          mov    QWORD PTR [rsp+0x10],rsi
+        ///e9 00 00 00 00          jmp    10 &lt;thisismycode+0xa&gt;.
+        /// </summary>
+        internal static string NoMenuMusicEarlyPatches {
+            get {
+                return ResourceManager.GetString("NoMenuMusicEarlyPatches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 48 83 ec 48             sub    rsp,0x48
         ///48 8d 0c 24             lea    rcx,[rsp]
         ///48 ba 00 00 00 00 00    movabs rdx,0x0

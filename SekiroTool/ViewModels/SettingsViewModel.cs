@@ -398,6 +398,9 @@ public class SettingsViewModel : BaseViewModel
     {
         if (IsNoTutorialsEnabled) _settingsService.ToggleNoTutorials(true);
         if (IsNoCameraSpinEnabled) _settingsService.ToggleNoCameraSpin(true);
+        if (IsNoLogoEnabled) _settingsService.ToggleNoLogo(true);
+        if (IsDefaultSoundChangeEnabled) _settingsService.PatchDefaultSound(DefaultSoundVolume);
+        if (IsDisableMenuMusicEnabled) _settingsService.ToggleDisableMusic(true);
     }
 
     private void OnGameEarlyAttached()

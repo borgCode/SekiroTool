@@ -43,6 +43,7 @@ public static class Offsets
         public const int WorldBlockId = 0x8;
     }
 
+
     public static class ChrIns
     {
         public const int BitFlagsStart = 0x1F40;
@@ -1073,6 +1074,8 @@ Console.WriteLine($"Hooks.GetMouseDelta: 0x{Offsets.Hooks.GetMouseDelta:X}");
 Console.WriteLine($"Hooks.HpWrite: 0x{Offsets.Hooks.HpWrite:X}");
 Console.WriteLine($"Hooks.InfiniteConfetti: 0x{Offsets.Hooks.InfiniteConfetti:X}");
 Console.WriteLine($"Hooks.SetLastAct: 0x{Offsets.Hooks.SetLastAct:X}");
+Console.WriteLine($"Hooks.NoMenuMusic: 0x{Offsets.Hooks.StartMusic:X}");
+
 
 
 Console.WriteLine("\n========== PATCHES ==========");

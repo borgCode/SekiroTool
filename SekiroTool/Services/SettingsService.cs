@@ -1,4 +1,5 @@
-﻿using SekiroTool.Interfaces;
+﻿using SekiroTool.Enums;
+using SekiroTool.Interfaces;
 using SekiroTool.Memory;
 using SekiroTool.Utilities;
 using static SekiroTool.Memory.Offsets;
@@ -59,13 +60,27 @@ public class SettingsService(IMemoryService memoryService, NopManager nopManager
         {
             StopMusic();
 
-            var hookLoc = Hooks.StartMusic;
-            var bytes = AsmLoader.GetAsmBytes("NoMenuMusic");
-            var jmpBytes = AsmHelper.GetJmpOriginOffsetBytes(hookLoc, 6, code + 0x10);
-            Array.Copy(jmpBytes, 0, bytes, 0xB + 1, jmpBytes.Length);
-            memoryService.WriteBytes(code, bytes);
-            hookManager.InstallHook(code.ToInt64(), hookLoc,
-                [0x40, 0x57, 0x48, 0x83, 0xEC, 0x30]);
+            if (Offsets.Version == Patch.Version1_6_0)
+            {
+                var hookLoc = Hooks.StartMusic;
+                var bytes = AsmLoader.GetAsmBytes("NoMenuMusic");
+                var jmpBytes = AsmHelper.GetJmpOriginOffsetBytes(hookLoc, 6, code + 0x11);
+                Array.Copy(jmpBytes, 0, bytes, 0xC + 1, jmpBytes.Length);
+                memoryService.WriteBytes(code, bytes);
+                hookManager.InstallHook(code.ToInt64(), hookLoc,
+                    [0x40, 0x57, 0x48, 0x83, 0xEC, 0x30]);
+            }
+            else
+            {
+                var hookLoc = Hooks.StartMusic;
+                var bytes = AsmLoader.GetAsmBytes("NoMenuMusicEarlyPatches");
+                var jmpBytes = AsmHelper.GetJmpOriginOffsetBytes(hookLoc, 6, code + 0x10);
+                Array.Copy(jmpBytes, 0, bytes, 0xB + 1, jmpBytes.Length);
+                memoryService.WriteBytes(code, bytes);
+                hookManager.InstallHook(code.ToInt64(), hookLoc,
+                    [0x48, 0x89, 0x74, 0x24, 0x10]);
+            }
+            
         }
         else
         {
