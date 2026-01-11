@@ -452,6 +452,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x3B67DF0,
             Version1_3_0 or Version1_4_0 => 0x3B68E30,
+            Version1_5_0 => 0x3D7A140,
             Version1_6_0 => 0x3D7A1E0,
             _ => 0
         };
@@ -460,6 +461,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x3B67F98,
             Version1_3_0 or Version1_4_0 => 0x3B68FD8,
+            Version1_5_0 => 0x3D7A2E8,
             Version1_6_0 => 0x3D7A388,
             _ => 0
         };
@@ -468,6 +470,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x3B55048,
             Version1_3_0 or Version1_4_0 => 0x3B56088,
+            Version1_5_0 => 0x3D67368,
             Version1_6_0 => 0x3D67408,
             _ => 0
         };
@@ -476,6 +479,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x3B422D0,
             Version1_3_0 or Version1_4_0 => 0x3B43310,
+            Version1_5_0 => 0x3D54FD0,
             Version1_6_0 => 0x3D55070,
             _ => 0
         };
@@ -484,6 +488,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x3B65B00,
             Version1_3_0 or Version1_4_0 => 0x3B66B40,
+            Version1_5_0 => 0x3D77E50,
             Version1_6_0 => 0x3D77EF0,
             _ => 0
         };
@@ -492,6 +497,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x3B67F8C,
             Version1_3_0 or Version1_4_0 => 0x3B68FCC,
+            Version1_5_0 => 0x3D7A2C6,
             Version1_6_0 => 0x3D7A366,
             _ => 0
         };
@@ -500,6 +506,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x3B5AA00,
             Version1_3_0 or Version1_4_0 => 0x3B5BA40,
+            Version1_5_0 => 0x3D6CD20,
             Version1_6_0 => 0x3D6CDC0,
             _ => 0
         };
@@ -508,6 +515,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x3B43248,
             Version1_3_0 or Version1_4_0 => 0x3B44288,
+            Version1_5_0 => 0x3D55F48,
             Version1_6_0 => 0x3D55FE8,
             _ => 0
         };
@@ -516,6 +524,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x3B42C68,
             Version1_3_0 or Version1_4_0 => 0x3B43CA8,
+            Version1_5_0 => 0x3D55968,
             Version1_6_0 => 0x3D55A08,
             _ => 0
         };
@@ -524,6 +533,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x3C8C2C8,
             Version1_3_0 or Version1_4_0 => 0x3C8D308,
+            Version1_5_0 => 0x3E9F6A8,
             Version1_6_0 => 0x3E9F748,
             _ => 0
         };
@@ -532,6 +542,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x3B49CD8,
             Version1_3_0 or Version1_4_0 => 0x3B4AD18,
+            Version1_5_0 => 0x3D5C000,
             Version1_6_0 => 0x3D5C0A0,
             _ => 0
         };
@@ -540,6 +551,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x3B5B240,
             Version1_3_0 or Version1_4_0 => 0x3B5C280,
+            Version1_5_0 => 0x3D6D5A0,
             Version1_6_0 => 0x3D6D640,
             _ => 0
         };
@@ -548,6 +560,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x3B47CF0,
             Version1_3_0 or Version1_4_0 => 0x3B48D30,
+            Version1_5_0 => 0x3D5AA20,
             Version1_6_0 => 0x3D5AAC0,
             _ => 0
         };
@@ -556,6 +569,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x3B688C2,
             Version1_3_0 or Version1_4_0 => 0x3B69902,
+            Version1_5_0 => 0x3D7AC12,
             Version1_6_0 => 0x3D7ACB2,
             _ => 0
         };
@@ -564,6 +578,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x3D2A550,
             Version1_3_0 or Version1_4_0 => 0x3D2B5A0,
+            Version1_5_0 => 0x3F42A88,
             Version1_6_0 => 0x3F42B28,
             _ => 0
         };
@@ -572,6 +587,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x3B41C88,
             Version1_3_0 or Version1_4_0 => 0x3B42CC8,
+            Version1_5_0 => 0x3D54988,
             Version1_6_0 => 0x3D54A28,
             _ => 0
         };
@@ -580,7 +596,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x775E76,
             Version1_3_0 or Version1_4_0 => 0x775ED6,
-            Version1_6_0 => 0x77C6A7,
+            Version1_5_0 or Version1_6_0 => 0x77C6A7,
             _ => 0
         };
 
@@ -588,7 +604,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x39007C8,
             Version1_3_0 or Version1_4_0 => 0x39017C8,
-            Version1_6_0 => 0x3B01838,
+            Version1_5_0 or Version1_6_0 => 0x3B01838,
             _ => 0
         };
 
@@ -596,6 +612,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x3B65BC0,
             Version1_3_0 or Version1_4_0 => 0x3B66C00,
+            Version1_5_0 => 0x3D77F04,
             Version1_6_0 => 0x3D77FA4,
             _ => 0
         };
@@ -604,6 +621,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x3D2A288,
             Version1_3_0 or Version1_4_0 => 0x3D2B2C0,
+            Version1_5_0 => 0x3F427B0,
             Version1_6_0 => 0x3F42850,
             _ => 0
         };
@@ -612,6 +630,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x117BF00,
             Version1_3_0 or Version1_4_0 => 0x117CA30,
+            Version1_5_0 => 0x11C5FD0,
             Version1_6_0 => 0x11C63A0,
             _ => 0
         };
@@ -620,6 +639,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x24B18E0,
             Version1_3_0 or Version1_4_0 => 0x24B2850,
+            Version1_5_0 => 0x25E75D0,
             Version1_6_0 => 0x25E7950,
             _ => 0
         };
@@ -628,6 +648,7 @@ public static class Offsets
         {
             Version1_2_0 => 0xEBCDA0,
             Version1_3_0 or Version1_4_0 => 0xEBD6E0,
+            Version1_5_0 => 0xF01030,
             Version1_6_0 => 0xF01400,
             _ => 0
         };
@@ -636,7 +657,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x7B7F50,
             Version1_3_0 or Version1_4_0 => 0x7B8090,
-            Version1_6_0 => 0x7C1190,
+            Version1_5_0 or Version1_6_0 => 0x7C1190,
             _ => 0
         };
 
@@ -644,7 +665,7 @@ public static class Offsets
         {
             Version1_2_0 => 0xA1B030,
             Version1_3_0 or Version1_4_0 => 0xA1B6C0,
-            Version1_6_0 => 0xA2BE40,
+            Version1_5_0 or Version1_6_0 => 0xA2BE40,
             _ => 0
         };
 
@@ -652,7 +673,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x7B7CB0,
             Version1_3_0 or Version1_4_0 => 0x7B7DF0,
-            Version1_6_0 => 0x7C0EF0,
+            Version1_5_0 or Version1_6_0 => 0x7C0EF0,
             _ => 0
         };
 
@@ -660,7 +681,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x6C1B90,
             Version1_3_0 or Version1_4_0 => 0x6C1BF0,
-            Version1_6_0 => 0x6C4520,
+            Version1_5_0 or Version1_6_0 => 0x6C4520,
             _ => 0
         };
 
@@ -668,7 +689,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x6C15A0,
             Version1_3_0 or Version1_4_0 => 0x6C1600,
-            Version1_6_0 => 0x6C3E60,
+            Version1_5_0 or Version1_6_0 => 0x6C3E60,
             _ => 0
         };
 
@@ -676,7 +697,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x68C410,
             Version1_3_0 or Version1_4_0 => 0x68C470,
-            Version1_6_0 => 0x68E870,
+            Version1_5_0 or Version1_6_0 => 0x68E870,
             _ => 0
         };
 
@@ -684,7 +705,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x9F17C0,
             Version1_3_0 or Version1_4_0 => 0x9F1E50,
-            Version1_6_0 => 0xA01720,
+            Version1_5_0 or Version1_6_0 => 0xA01720,
             _ => 0
         };
 
@@ -692,7 +713,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x910B90,
             Version1_3_0 or Version1_4_0 => 0x911090,
-            Version1_6_0 => 0x91C970,
+            Version1_5_0 or Version1_6_0 => 0x91C970,
             _ => 0
         };
 
@@ -700,7 +721,7 @@ public static class Offsets
         {
             Version1_2_0 => 0xA37E30,
             Version1_3_0 or Version1_4_0 => 0xA384C0,
-            Version1_6_0 => 0xA49F90,
+            Version1_5_0 or Version1_6_0 => 0xA49F90,
             _ => 0
         };
 
@@ -708,7 +729,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x6BF190,
             Version1_3_0 or Version1_4_0 => 0x6BF1F0,
-            Version1_6_0 => 0x6C1A10,
+            Version1_5_0 or Version1_6_0 => 0x6C1A10,
             _ => 0
         };
 
@@ -716,7 +737,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x940FF0,
             Version1_3_0 or Version1_4_0 => 0x9414F0,
-            Version1_6_0 => 0x94CC50,
+            Version1_5_0 or Version1_6_0 => 0x94CC50,
             _ => 0
         };
 
@@ -724,7 +745,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x8C36C0,
             Version1_3_0 or Version1_4_0 => 0x8C3BC0,
-            Version1_6_0 => 0x8CEA40,
+            Version1_5_0 or Version1_6_0 => 0x8CEA40,
             _ => 0
         };
 
@@ -732,7 +753,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x79EFB0,
             Version1_3_0 or Version1_4_0 => 0x79F010,
-            Version1_6_0 => 0x7A7AF0,
+            Version1_5_0 or Version1_6_0 => 0x7A7AF0,
             _ => 0
         };
 
@@ -740,7 +761,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x7A1CC0,
             Version1_3_0 or Version1_4_0 => 0x7A1D20,
-            Version1_6_0 => 0x7AABF0,
+            Version1_5_0 or Version1_6_0 => 0x7AABF0,
             _ => 0
         };
 
@@ -748,6 +769,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x1BB9000,
             Version1_3_0 or Version1_4_0 => 0x1BB9B50,
+            Version1_5_0 => 0x1C17290,
             Version1_6_0 => 0x1C17660,
             _ => 0
         };
@@ -756,7 +778,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x796650,
             Version1_3_0 or Version1_4_0 => 0x7966B0,
-            Version1_6_0 => 0x79ECA0,
+            Version1_5_0 or Version1_6_0 => 0x79ECA0,
             _ => 0
         };
 
@@ -764,7 +786,7 @@ public static class Offsets
         {
             Version1_2_0 => 0xA84350,
             Version1_3_0 or Version1_4_0 => 0xA849E0,
-            Version1_6_0 => 0xA9A910,
+            Version1_5_0 or Version1_6_0 => 0xA9A910,
             _ => 0
         };
 
@@ -772,7 +794,7 @@ public static class Offsets
         {
             Version1_2_0 => 0xBE3F00,
             Version1_3_0 or Version1_4_0 => 0xBE45B0,
-            Version1_6_0 => 0xBFB6D0,
+            Version1_5_0 or Version1_6_0 => 0xBFB6D0,
             _ => 0
         };
 
@@ -780,6 +802,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x10799C0,
             Version1_3_0 or Version1_4_0 => 0x107A300,
+            Version1_5_0 => 0x10BF260,
             Version1_6_0 => 0x10BF630,
             _ => 0
         };
@@ -788,7 +811,7 @@ public static class Offsets
         {
             Version1_2_0 => 0xBC1360,
             Version1_3_0 or Version1_4_0 => 0xBC1A10,
-            Version1_6_0 => 0xBD84C0,
+            Version1_5_0 or Version1_6_0 => 0xBD84C0,
             _ => 0
         };
 
@@ -796,6 +819,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x10FFD40,
             Version1_3_0 or Version1_4_0 => 0x1100680,
+            Version1_5_0 => 0x11493F0,
             Version1_6_0 => 0x11497C0,
             _ => 0
         };
@@ -804,6 +828,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x1171260,
             Version1_3_0 or Version1_4_0 => 0x1171D90,
+            Version1_5_0 => 0x11BB040,
             Version1_6_0 => 0x11BB410,
             _ => 0
         };
@@ -812,7 +837,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x687B90,
             Version1_3_0 or Version1_4_0 => 0x687BF0,
-            Version1_6_0 => 0x689FF0,
+            Version1_5_0 or Version1_6_0 => 0x689FF0,
             _ => 0
         };
 
@@ -820,7 +845,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x792520,
             Version1_3_0 or Version1_4_0 => 0x792580,
-            Version1_6_0 => 0x79AB70,
+            Version1_5_0 or Version1_6_0 => 0x79AB70,
             _ => 0
         };
 
@@ -828,6 +853,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x117EF00,
             Version1_3_0 or Version1_4_0 => 0x117FA30,
+            Version1_5_0 => 0x11C9090,
             Version1_6_0 => 0x11C9460,
             _ => 0
         };
@@ -836,7 +862,7 @@ public static class Offsets
         {
             Version1_2_0 => 0xA63F95,
             Version1_3_0 or Version1_4_0 => 0xA64625,
-            Version1_6_0 => 0xA76275,
+            Version1_5_0 or Version1_6_0 => 0xA76275,
             _ => 0
         };
 
@@ -844,6 +870,7 @@ public static class Offsets
         {
             Version1_2_0 => 0xDEBF2B,
             Version1_3_0 or Version1_4_0 => 0xDEC85B,
+            Version1_5_0 => 0xE1B1AB,
             Version1_6_0 => 0xE1B51B,
             _ => 0
         };
@@ -852,6 +879,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x24F6EE6,
             Version1_3_0 or Version1_4_0 => 0x24F7E56,
+            Version1_5_0 => 0x262CE06,
             Version1_6_0 => 0x262D186,
             _ => 0
         };
@@ -860,7 +888,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x6D0560,
             Version1_3_0 or Version1_4_0 => 0x6D05C0,
-            Version1_6_0 => 0x6D30F0,
+            Version1_5_0 or Version1_6_0 => 0x6D30F0,
             _ => 0
         };
 
@@ -868,6 +896,7 @@ public static class Offsets
         {
             Version1_2_0 => 0xD73E22,
             Version1_3_0 or Version1_4_0 => 0xD74752,
+            Version1_5_0 => 0xD9A2D2,
             Version1_6_0 => 0xD9A642,
             _ => 0
         };
@@ -876,7 +905,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x8FE263,
             Version1_3_0 or Version1_4_0 => 0x8FE763,
-            Version1_6_0 => 0x909FA3,
+            Version1_5_0 or Version1_6_0 => 0x909FA3,
             _ => 0
         };
 
@@ -884,7 +913,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x8FE213,
             Version1_3_0 or Version1_4_0 => 0x8FE713,
-            Version1_6_0 => 0x909F53,
+            Version1_5_0 or Version1_6_0 => 0x909F53,
             _ => 0
         };
 
@@ -892,7 +921,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x7B3D46,
             Version1_3_0 or Version1_4_0 => 0x7B3E86,
-            Version1_6_0 => 0x7BCEA6,
+            Version1_5_0 or Version1_6_0 => 0x7BCEA6,
             _ => 0
         };
 
@@ -900,7 +929,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x60E63D,
             Version1_3_0 or Version1_4_0 => 0x60E69D,
-            Version1_6_0 => 0x6114BD,
+            Version1_5_0 or Version1_6_0 => 0x6114BD,
             _ => 0
         };
 
@@ -908,7 +937,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x9B3F0A,
             Version1_3_0 or Version1_4_0 => 0x9B459A,
-            Version1_6_0 => 0x9C3ADA,
+            Version1_5_0 or Version1_6_0 => 0x9C3ADA,
             _ => 0
         };
 
@@ -916,7 +945,7 @@ public static class Offsets
         {
             Version1_2_0 => 0xBBF61B,
             Version1_3_0 or Version1_4_0 => 0xBBFCCB,
-            Version1_6_0 => 0xBD677B,
+            Version1_5_0 or Version1_6_0 => 0xBD677B,
             _ => 0
         };
 
@@ -924,7 +953,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x82871A,
             Version1_3_0 or Version1_4_0 => 0x828C1A,
-            Version1_6_0 => 0x832A3A,
+            Version1_5_0 or Version1_6_0 => 0x832A3A,
             _ => 0
         };
 
@@ -932,7 +961,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x8286FA,
             Version1_3_0 or Version1_4_0 => 0x828BFA,
-            Version1_6_0 => 0x832A1A,
+            Version1_5_0 or Version1_6_0 => 0x832A1A,
             _ => 0
         };
 
@@ -940,7 +969,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x5CB690,
             Version1_3_0 or Version1_4_0 => 0x5CB6F0,
-            Version1_6_0 => 0x5CE510,
+            Version1_5_0 or Version1_6_0 => 0x5CE510,
             _ => 0
         };
 
@@ -948,7 +977,7 @@ public static class Offsets
         {
             Version1_2_0 => 0xBAC4D3,
             Version1_3_0 or Version1_4_0 => 0xBACB83,
-            Version1_6_0 => 0xBC3633,
+            Version1_5_0 or Version1_6_0 => 0xBC3633,
             _ => 0
         };
 
@@ -956,6 +985,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x1A950B0,
             Version1_3_0 or Version1_4_0 => 0x1A95BE0,
+            Version1_5_0 => 0x1ADF4F0,
             Version1_6_0 => 0x1ADF8C0,
             _ => 0
         };
@@ -964,6 +994,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x1A452F8,
             Version1_3_0 or Version1_4_0 => 0x1A45E28,
+            Version1_5_0 => 0x1A8F738,
             Version1_6_0 => 0x1A8FB08,
             _ => 0
         };
@@ -972,7 +1003,7 @@ public static class Offsets
         {
             Version1_2_0 => 0xBAD636,
             Version1_3_0 or Version1_4_0 => 0xBADCE6,
-            Version1_6_0 => 0xBC4796,
+            Version1_5_0 or Version1_6_0 => 0xBC4796,
             _ => 0
         };
 
@@ -980,7 +1011,7 @@ public static class Offsets
         {
             Version1_2_0 => 0xB55361,
             Version1_3_0 or Version1_4_0 => 0xB55A11,
-            Version1_6_0 => 0xB6C011,
+            Version1_5_0 or Version1_6_0 => 0xB6C011,
             _ => 0
         };
 
@@ -988,7 +1019,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x61086B,
             Version1_3_0 or Version1_4_0 => 0x6108CB,
-            Version1_6_0 => 0x6136EB,
+            Version1_5_0 or Version1_6_0 => 0x6136EB,
             _ => 0
         };
 
@@ -996,7 +1027,7 @@ public static class Offsets
         {
             Version1_2_0 => 0xBEF42E,
             Version1_3_0 or Version1_4_0 => 0xBEFADE,
-            Version1_6_0 => 0xC06BFE,
+            Version1_5_0 or Version1_6_0 => 0xC06BFE,
             _ => 0
         };
 
@@ -1004,7 +1035,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x7E755D,
             Version1_3_0 or Version1_4_0 => 0x7E769D,
-            Version1_6_0 => 0x7F0FFD,
+            Version1_5_0 or Version1_6_0 => 0x7F0FFD,
             _ => 0
         };
 
@@ -1012,6 +1043,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x8C3860,
             Version1_3_0 or Version1_4_0 => 0x8C3D60,
+            Version1_5_0 => 0x8CEBF3,
             Version1_6_0 => 0x8CEBE0,
             _ => 0
         };
@@ -1020,7 +1052,7 @@ public static class Offsets
         {
             Version1_2_0 => 0xBBF3BE,
             Version1_3_0 or Version1_4_0 => 0xBBFA6E,
-            Version1_6_0 => 0xBD651E,
+            Version1_5_0 or Version1_6_0 => 0xBD651E,
             _ => 0
         };
 
@@ -1028,9 +1060,10 @@ public static class Offsets
         {
             Version1_2_0 => 0x5DF21D,
             Version1_3_0 or Version1_4_0 => 0x5DF27D,
-            Version1_6_0 => 0x5E209D,
+            Version1_5_0 or Version1_6_0 => 0x5E209D,
             _ => 0
         };
+
 
 #if DEBUG
 
