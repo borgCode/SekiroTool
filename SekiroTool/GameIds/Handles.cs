@@ -6,10 +6,10 @@ public static class Handles
 {
     private static readonly Dictionary<Patch, int> DragonPatchHandles = new()
     {
-        [Patch.V102] = 0x100300b8,
-        [Patch.V103and4] = 0x100300b8,
-        [Patch.V105] = 0x100300ba, 
-        [Patch.V106] = 0x100300ba
+        [Patch.Version1_2_0] = 0x100300b8,
+        [Patch.Version1_3_0] = 0x100300b8,
+        [Patch.Version1_5_0] = 0x100300ba, 
+        [Patch.Version1_6_0] = 0x100300ba
     };
     
     public static int? GetDragonHandle(Patch patch)

@@ -137,7 +137,7 @@ public partial class MainWindow : Window
 
             if (!_hasCheckedPatch)
             {
-                PatchChecker.Initialize(_memoryService.TargetProcess.MainModule.FileName);
+                PatchChecker.Initialize(_memoryService.TargetProcess.MainModule.FileName, _memoryService);
                 Console.WriteLine(PatchChecker.CurrentPatch?.ToString() ?? "Unknown");
                 _hasCheckedPatch = true;
             }

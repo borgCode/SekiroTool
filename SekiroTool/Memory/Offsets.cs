@@ -146,10 +146,10 @@ public static class Offsets
 
         private static readonly Dictionary<Patch, Func<DebugFlag, int>> OffsetResolvers = new()
         {
-            [Patch.V102] = flag => (int)flag,
-            [Patch.V103and4] = GetV104Offset,
-            [Patch.V105] = flag => (int)flag,
-            [Patch.V106] = flag => (int)flag,
+            [Patch.Version1_2_0] = flag => (int)flag,
+            [Patch.Version1_3_0] = GetV104Offset,
+            [Patch.Version1_5_0] = flag => (int)flag,
+            [Patch.Version1_6_0] = flag => (int)flag,
         };
 
         public enum DebugFlag
@@ -216,7 +216,7 @@ public static class Offsets
         {
             var patch = PatchChecker.CurrentPatch;
 
-            return patch == Patch.V103and4 ? V104Offsets[flag] : StandardOffsets[flag];
+            return patch == Patch.Version1_3_0 ? V104Offsets[flag] : StandardOffsets[flag];
         }
     }
 

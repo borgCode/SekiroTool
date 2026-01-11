@@ -35,13 +35,13 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
     
     public void SetGameSpeed(float gameSpeed)
     {
-        if (PatchChecker.CurrentPatch == Patch.V105)
+        if (PatchChecker.CurrentPatch == Patch.Version1_5_0)
         {
             var gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeedV105;
             memoryService.WriteFloat((IntPtr)gameSpeedPtr, gameSpeed);
         }
 
-        else if (PatchChecker.CurrentPatch == Patch.V103and4 || PatchChecker.CurrentPatch == Patch.V102)
+        else if (PatchChecker.CurrentPatch == Patch.Version1_3_0 || PatchChecker.CurrentPatch == Patch.Version1_2_0)
         {
             var gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeedV104;
             memoryService.WriteFloat((IntPtr)gameSpeedPtr, gameSpeed);
@@ -58,12 +58,12 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
     {
         long gameSpeedPtr;
 
-        if (PatchChecker.CurrentPatch == Patch.V105)
+        if (PatchChecker.CurrentPatch == Patch.Version1_5_0)
         {
             gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeedV105;
         }
 
-        else if (PatchChecker.CurrentPatch == Patch.V103and4 || PatchChecker.CurrentPatch == Patch.V102)
+        else if (PatchChecker.CurrentPatch == Patch.Version1_3_0 || PatchChecker.CurrentPatch == Patch.Version1_2_0)
         {
             gameSpeedPtr = memoryService.ReadInt64(SprjFlipperImp.Base) + SprjFlipperImp.GameSpeedV104;
         }
