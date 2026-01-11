@@ -307,7 +307,7 @@ public static class Offsets
 
         public static int GameSpeed => Version switch
         {
-            Version1_2_0 or Version1_3_0 => 0x360,
+            Version1_2_0 or Version1_3_0 or Version1_4_0 => 0x360,
             Version1_5_0 => 0x364,
             _ => 0x344,
         };
