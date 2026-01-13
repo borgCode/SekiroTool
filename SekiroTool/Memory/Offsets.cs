@@ -1043,7 +1043,7 @@ public static class Offsets
         {
             Version1_2_0 => 0x8C3860,
             Version1_3_0 or Version1_4_0 => 0x8C3D60,
-            Version1_5_0 => 0x8CEBF3,
+            Version1_5_0 => 0x8CEBE0,
             Version1_6_0 => 0x8CEBE0,
             _ => 0
         };
