@@ -425,7 +425,7 @@ public static class Offsets
         public static long ApplySpEffect;
         public static long ItemSpawn;
         public static long GetChrInsWithHandle;
-        public static long FindChrInsChrEntityId;
+        public static long ForceAnimation;
         public static long FrpgCastRay;
         public static long StopMusic;
         public static long GetItemSlot;
@@ -725,13 +725,14 @@ public static class Offsets
             _ => 0
         };
 
-        Functions.FindChrInsChrEntityId = moduleBase + Version switch
+        Functions.ForceAnimation = moduleBase + Version switch
         {
-            Version1_2_0 => 0x6BF190,
-            Version1_3_0 or Version1_4_0 => 0x6BF1F0,
-            Version1_5_0 or Version1_6_0 => 0x6C1A10,
+            Version1_2_0 => 0x6D2F00,
+            Version1_3_0 or Version1_4_0 => 0x6D2F60,
+            Version1_5_0 or Version1_6_0 => 0x6D5A90,
             _ => 0
         };
+
 
         Functions.FrpgCastRay = moduleBase + Version switch
         {
@@ -1129,7 +1130,7 @@ public static class Offsets
         Console.WriteLine($"Functions.ApplySpEffect: 0x{Functions.ApplySpEffect:X}");
         Console.WriteLine($"Functions.ItemSpawn: 0x{Functions.ItemSpawn:X}");
         Console.WriteLine($"Functions.GetChrInsWithHandle: 0x{Functions.GetChrInsWithHandle:X}");
-        Console.WriteLine($"Functions.FindChrInsChrEntityId: 0x{Functions.FindChrInsChrEntityId:X}");
+        Console.WriteLine($"Functions.ForceAnimation: 0x{Functions.ForceAnimation:X}");
         Console.WriteLine($"Functions.FrpgCastRay: 0x{Functions.FrpgCastRay:X}");
         Console.WriteLine($"Functions.GetItemSlot: 0x{Functions.GetItemSlot:X}");
         Console.WriteLine($"Functions.GetItemPtrFromSlot: 0x{Functions.GetItemPtrFromSlot:X}");
