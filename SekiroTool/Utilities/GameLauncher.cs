@@ -21,8 +21,12 @@ namespace SekiroTool.Utilities
                     return;
                 }
 
-                var process = new Process { StartInfo = new ProcessStartInfo(exePath) };
-                process.Start();
+                var psi = new ProcessStartInfo(exePath)
+                {
+                    UseShellExecute = true,
+                    WorkingDirectory = Path.GetDirectoryName(exePath)
+                };
+                Process.Start(psi);
             }
             catch (Exception ex)
             {

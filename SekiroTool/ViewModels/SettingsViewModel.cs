@@ -249,7 +249,12 @@ public class SettingsViewModel : BaseViewModel
             if (!SetProperty(ref _isDisableMenuMusicEnabled, value)) return;
             SettingsManager.Default.DisableMenuMusic = value;
             SettingsManager.Default.Save();
+            if (_isDisableMenuMusicEnabled)
+            {
+                _settingsService.StopMusic();
+            }
             _settingsService.ToggleDisableMusic(_isDisableMenuMusicEnabled);
+            
         }
     }
 
@@ -398,8 +403,10 @@ public class SettingsViewModel : BaseViewModel
     {
         if (IsNoTutorialsEnabled) _settingsService.ToggleNoTutorials(true);
         if (IsNoCameraSpinEnabled) _settingsService.ToggleNoCameraSpin(true);
-        if (IsNoLogoEnabled) _settingsService.ToggleNoLogo(true);
         if (IsDefaultSoundChangeEnabled) _settingsService.PatchDefaultSound(DefaultSoundVolume);
+        
+        
+        if (IsNoLogoEnabled) _settingsService.ToggleNoLogo(true);
         if (IsDisableMenuMusicEnabled) _settingsService.ToggleDisableMusic(true);
     }
 

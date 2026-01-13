@@ -3,6 +3,7 @@
 public interface ISettingsService
 {
     void Quitout();
+    void StopMusic();
     void ToggleNoLogo(bool isEnabled);
     void ToggleNoTutorials(bool isEnabled);
     void ToggleNoCameraSpin(bool isEnabled);

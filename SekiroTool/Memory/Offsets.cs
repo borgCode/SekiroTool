@@ -185,79 +185,79 @@ public static class Offsets
 
         public static int PlayerOneShotPosture => Version switch
         {
-            Version1_3_0 => -0x34,
+            Version1_3_0 or Version1_4_0 => -0x34,
             _ => 0x2,
         };
 
         public static int PlayerNoGoodsConsume => Version switch
         {
-            Version1_3_0 => -0x33,
+            Version1_3_0 or Version1_4_0 or Version1_4_0 => -0x33,
             _ => 0x3,
         };
 
         public static int PlayerNoEmblemsConsume => Version switch
         {
-            Version1_3_0 => -0x32,
+            Version1_3_0 or Version1_4_0 => -0x32,
             _ => 0x4,
         };
 
         public static int PlayerNoRevivalConsume => Version switch
         {
-            Version1_3_0 => -0x31,
+            Version1_3_0 or Version1_4_0 => -0x31,
             _ => 0x5,
         };
 
         public static int PlayerHide => Version switch
         {
-            Version1_3_0 => -0x2D,
+            Version1_3_0 or Version1_4_0 => -0x2D,
             _ => 0x9,
         };
 
         public static int PlayerSilent => Version switch
         {
-            Version1_3_0 => -0x2C,
+            Version1_3_0 or Version1_4_0 => -0x2C,
             _ => 0xA,
         };
 
         public static int AllNoDeath => Version switch
         {
-            Version1_3_0 => -0x2B,
+            Version1_3_0 or Version1_4_0 => -0x2B,
             _ => 0xB,
         };
 
         public static int AllNoDamage => Version switch
         {
-            Version1_3_0 => -0x2A,
+            Version1_3_0 or Version1_4_0 => -0x2A,
             _ => 0xC,
         };
 
         public static int AllNoHit => Version switch
         {
-            Version1_3_0 => -0x29,
+            Version1_3_0 or Version1_4_0 => -0x29,
             _ => 0xD,
         };
 
         public static int AllNoAttack => Version switch
         {
-            Version1_3_0 => -0x28,
+            Version1_3_0 or Version1_4_0 => -0x28,
             _ => 0xE,
         };
 
         public static int AllNoMove => Version switch
         {
-            Version1_3_0 => -0x27,
+            Version1_3_0 or Version1_4_0 => -0x27,
             _ => 0xF,
         };
 
         public static int DisableAi => Version switch
         {
-            Version1_3_0 => -0x26,
+            Version1_3_0 or Version1_4_0 => -0x26,
             _ => 0x10,
         };
 
         public static int AllNoPosture => Version switch
         {
-            Version1_3_0 => -0x1F,
+            Version1_3_0 or Version1_4_0 => -0x1F,
             _ => 0x17,
         };
     }
@@ -1111,6 +1111,7 @@ public static class Offsets
 
         Console.WriteLine("\n========== PATCHES ==========");
         Console.WriteLine($"Patches.DebugFont: 0x{Patches.DebugFont.ToInt64():X}");
+        Console.WriteLine($"Patches.NoLogo: 0x{Patches.NoLogo.ToInt64():X}");
         Console.WriteLine($"Patches.EventView: 0x{Patches.EventView.ToInt64():X}");
         Console.WriteLine($"Patches.MenuTutorialSkip: 0x{Patches.MenuTutorialSkip.ToInt64():X}");
         Console.WriteLine($"Patches.ShowSmallHintBox: 0x{Patches.ShowSmallHintBox.ToInt64():X}");

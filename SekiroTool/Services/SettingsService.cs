@@ -1,4 +1,5 @@
-﻿using SekiroTool.Enums;
+﻿using System.Diagnostics;
+using SekiroTool.Enums;
 using SekiroTool.Interfaces;
 using SekiroTool.Memory;
 using SekiroTool.Utilities;
@@ -11,8 +12,20 @@ public class SettingsService(IMemoryService memoryService, NopManager nopManager
     public void Quitout() =>
         memoryService.WriteUInt8((IntPtr)memoryService.ReadInt64(MenuMan.Base) + MenuMan.Quitout, 1);
 
-    public void ToggleNoLogo(bool isEnabled) => memoryService.WriteBytes(Patches.NoLogo, isEnabled ? [0xEB] : [0x74]);
-    
+    public async void ToggleNoLogo(bool isEnabled)
+    {
+        if (isEnabled)
+        {
+            if (!await WaitForValidBytes(Patches.NoLogo, [0x74]))
+                return;
+            memoryService.WriteBytes(Patches.NoLogo, [0xEB]);
+        }
+        else
+        {
+            memoryService.WriteBytes(Patches.NoLogo, [0x74]);
+        }
+    }
+
     public void ToggleNoTutorials(bool isEnabled)
     {
         if (isEnabled)
@@ -53,32 +66,33 @@ public class SettingsService(IMemoryService memoryService, NopManager nopManager
         }
     }
 
-    public void ToggleDisableMusic(bool isEnabled)
+    public async void ToggleDisableMusic(bool isEnabled)
     {
         var code = CodeCaveOffsets.Base + CodeCaveOffsets.NoMenuMusic;
         if (isEnabled)
         {
-            StopMusic();
-
+            var hookLoc = Hooks.StartMusic;
+            var originalBytes = OriginalBytesByPatch.StartMusic.GetOriginal();
+            
+            if (!await WaitForValidBytes((IntPtr)hookLoc, originalBytes))
+                return;
+            
+            
             if (Offsets.Version == Patch.Version1_6_0)
             {
-                var hookLoc = Hooks.StartMusic;
                 var bytes = AsmLoader.GetAsmBytes("NoMenuMusic");
                 var jmpBytes = AsmHelper.GetJmpOriginOffsetBytes(hookLoc, 6, code + 0x11);
                 Array.Copy(jmpBytes, 0, bytes, 0xC + 1, jmpBytes.Length);
                 memoryService.WriteBytes(code, bytes);
-                hookManager.InstallHook(code.ToInt64(), hookLoc,
-                    [0x40, 0x57, 0x48, 0x83, 0xEC, 0x30]);
+                hookManager.InstallHook(code.ToInt64(), hookLoc, originalBytes);
             }
             else
             {
-                var hookLoc = Hooks.StartMusic;
                 var bytes = AsmLoader.GetAsmBytes("NoMenuMusicEarlyPatches");
                 var jmpBytes = AsmHelper.GetJmpOriginOffsetBytes(hookLoc, 6, code + 0x10);
                 Array.Copy(jmpBytes, 0, bytes, 0xB + 1, jmpBytes.Length);
                 memoryService.WriteBytes(code, bytes);
-                hookManager.InstallHook(code.ToInt64(), hookLoc,
-                    [0x48, 0x89, 0x74, 0x24, 0x10]);
+                hookManager.InstallHook(code.ToInt64(), hookLoc, originalBytes);
             }
             
         }
@@ -87,8 +101,22 @@ public class SettingsService(IMemoryService memoryService, NopManager nopManager
            hookManager.UninstallHook(code.ToInt64());
         }
     }
+    
+    private async Task<bool> WaitForValidBytes(IntPtr address, byte[] expectedBytes, int timeout = 5000)
+    {
+        var sw = Stopwatch.StartNew();
+        while (sw.ElapsedMilliseconds < timeout)
+        {
+            var bytes = memoryService.ReadBytes(address, expectedBytes.Length);
+            if (bytes.SequenceEqual(expectedBytes))
+                return true;
+    
+            await Task.Delay(10);
+        }
+        return false;
+    }
 
-    private void StopMusic()
+    public void StopMusic()
     {
         var bytes = AsmLoader.GetAsmBytes("StopMusic");
         var funcBytes = BitConverter.GetBytes(Functions.StopMusic);
@@ -96,9 +124,14 @@ public class SettingsService(IMemoryService memoryService, NopManager nopManager
         memoryService.AllocateAndExecute(bytes);
     }
 
-    public void PatchDefaultSound(int defaultSoundVolume)
+    public async void PatchDefaultSound(int defaultSoundVolume)
     {
         var defaultSoundWrite = Patches.DefaultSoundVolWrite;
+
+        byte[] bytes = [0x07, 0x07];
+        if (!await WaitForValidBytes(defaultSoundWrite + 0x4, bytes))
+            return;
+        
         memoryService.WriteUInt8(defaultSoundWrite + 0x4, defaultSoundVolume);
         memoryService.WriteUInt8(defaultSoundWrite + 0x5, defaultSoundVolume);
     }
