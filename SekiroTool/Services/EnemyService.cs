@@ -159,9 +159,8 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
             (code.ToInt64() + 0x0, runningFlag.ToInt64(), 7, 0x0 + 2),
             (code.ToInt64() + 0x9, runningFlag.ToInt64(), 7, 0x9 + 2),
             (code.ToInt64() + 0x1e, exitFlag.ToInt64(), 7, 0x1e + 2),
-            (code.ToInt64() + 0x34, Functions.FindChrInsChrEntityId, 5, 0x34 + 1),
-            (code.ToInt64() + 0x4f, Functions.ForceAnimationByChrEventModule, 5, 0x4f + 1),
-            (code.ToInt64() + 0x66, runningFlag.ToInt64(), 7, 0x66 + 2),
+            (code.ToInt64() + 0x31, Functions.ForceAnimation, 5, 0x31 + 1),
+            (code.ToInt64() + 0x48, runningFlag.ToInt64(), 7, 0x48 + 2),
         ]);
         
         Array.Copy(BitConverter.GetBytes(sleepAddr), 0, bytes, 0x14 + 2, 8);

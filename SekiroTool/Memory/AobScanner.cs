@@ -68,7 +68,7 @@ public class AoBScanner(IMemoryService memoryService)
                 FindAddressByPattern(Patterns.EzStateExternalEventTempCtor).ToInt64(),
             () => Offsets.Functions.RemoveItem = FindAddressByPattern(Patterns.RemoveItem).ToInt64(),
             () => Offsets.Functions.GiveSkillAndPros = FindAddressByPattern(Patterns.GiveSkillAndPros).ToInt64(),
-            () => Offsets.Functions.FindChrInsChrEntityId = FindAddressByPattern(Patterns.FindChrInsChrEntityId).ToInt64(),
+            () => Offsets.Functions.ForceAnimation = FindAddressByPattern(Patterns.ForceAnimation).ToInt64(),
             () => Offsets.Functions.ForceAnimationByChrEventModule = FindAddressByPattern(Patterns.ForceAnimationByChrEventModule).ToInt64(),
             () => Offsets.Functions.FormatCutscenePathString = FindAddressByPattern(Patterns.FormatCutscenePathString).ToInt64(),
             () => Offsets.Functions.AwardItemLot = FindAddressByPattern(Patterns.AwardItemLot).ToInt64(),
@@ -191,7 +191,7 @@ Console.WriteLine($"Functions.Warp: 0x{Offsets.Functions.Warp:X}");
 Console.WriteLine($"Functions.ApplySpEffect: 0x{Offsets.Functions.ApplySpEffect:X}");
 Console.WriteLine($"Functions.ItemSpawn: 0x{Offsets.Functions.ItemSpawn:X}");
 Console.WriteLine($"Functions.GetChrInsWithHandle: 0x{Offsets.Functions.GetChrInsWithHandle:X}");
-Console.WriteLine($"Functions.FindChrInsChrEntityId: 0x{Offsets.Functions.FindChrInsChrEntityId:X}");
+Console.WriteLine($"Functions.ForceAnimation: 0x{Offsets.Functions.ForceAnimation:X}");
 Console.WriteLine($"Functions.FrpgCastRay: 0x{Offsets.Functions.FrpgCastRay:X}");
 Console.WriteLine($"Functions.GetItemSlot: 0x{Offsets.Functions.GetItemSlot:X}");
 Console.WriteLine($"Functions.GetItemPtrFromSlot: 0x{Offsets.Functions.GetItemPtrFromSlot:X}");

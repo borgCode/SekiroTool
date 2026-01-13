@@ -815,19 +815,17 @@ namespace SekiroTool {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 80 3d 00 00 00 00 01    cmp    BYTE PTR [rip+0x0],0x1
-        ///74 68                   je     71 &lt;exit&gt;
-        ///c6 05 00 00 00 00 01    mov    BYTE PTR [rip+0x0],0x1
+        ///   Looks up a localized string similar to 80 3d 00 00 00 00 01    cmp    BYTE PTR [rip+0x0],0x1        # 7 &lt;_main+0x7&gt;
+        ///74 4a                   je     53 &lt;exit&gt;
+        ///c6 05 00 00 00 00 01    mov    BYTE PTR [rip+0x0],0x1        # 10 &lt;_main+0x10&gt;
         ///48 83 ec 28             sub    rsp,0x28
         ///48 bb 00 00 00 00 00    movabs rbx,0x0
         ///00 00 00
-        ///000000000000001e &lt;loop&gt;:
-        ///80 3d 00 00 00 00 01    cmp    BYTE PTR [rip+0x0],0x1
-        ///74 3f                   je     66 &lt;end_run&gt;
-        ///c7 44 24 20 32 cc 10    mov    DWORD PTR [rsp+0x20],0x10cc32
-        ///00
-        ///48 8d 4c 24 20          lea    rcx,[rsp+0x20]
-        ///e8 00 00 00 00          call   [rest of string was truncated]&quot;;.
+        ///00000000001e &lt;loop&gt;:
+        ///80 3d 00 00 00 00 01    cmp    BYTE PTR [rip+0x0],0x1        # 25 &lt;loop+0x7&gt;
+        ///74 21                   je     48 &lt;end_run&gt;
+        ///b9 32 cc 10 00          mov    ecx,0x10cc32
+        ///ba 20 4e 00 00          mov     [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SnakeCanyonIntroAnimationLoop {
             get {
