@@ -239,6 +239,7 @@ public class EnemyViewModel : BaseViewModel
         set
         {
             SetProperty(ref _isSnakeIntroLoopEnabled, value);
+            if (!AreOptionsEnabled) return;
             _enemyService.ToggleSnakeCanyonIntroAnimationLoop(_isSnakeIntroLoopEnabled);
         }
     }
@@ -299,6 +300,7 @@ public class EnemyViewModel : BaseViewModel
 
     private void OnGameNotLoaded()
     {
+        if (IsSnakeIntroLoopEnabled) _enemyService.ToggleSnakeCanyonIntroAnimationLoop(false);
         AreOptionsEnabled = false;
     }
 
