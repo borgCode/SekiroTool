@@ -30,9 +30,6 @@
 
             <StackPanel Margin="0,5,0,10">
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                    <CheckBox Content="Enable Hotkeys"
-                              IsChecked="{Binding IsEnableHotkeysEnabled}"
-                              Margin="0,0,10,0" />
                     <CheckBox Content="No Logo"
                               IsChecked="{Binding IsNoLogoEnabled}"
                               Margin="0,0,10,0" />
@@ -120,6 +117,11 @@
             <Separator Margin="0,0,0,10" />
             <Grid>
                 <TextBlock Text="Hotkey Bindings" FontWeight="Bold" Margin="10,0,0,10" HorizontalAlignment="Left" />
+                
+                <CheckBox Content="Enable Hotkeys"
+                          IsChecked="{Binding IsEnableHotkeysEnabled}"
+                          HorizontalAlignment="Center"
+                          Margin="0,0,0,10" />
                 <Button
                     Content="Clear All Bindings"
                     Margin="0,0,20,10"
