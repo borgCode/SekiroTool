@@ -42,12 +42,16 @@ public class SettingsService(IMemoryService memoryService, NopManager nopManager
         }
     }
     
-    public void ToggleNoCameraSpin(bool isEnabled)
+    public async void ToggleNoCameraSpin(bool isEnabled)
     {
         var code = CodeCaveOffsets.Base + CodeCaveOffsets.NoCameraSpin;
         if (isEnabled)
         {
             var inputManager = DlUserInputManager.Base;
+            
+            if (!await WaitForValidPtr(inputManager))
+                return;
+            
             var hookLoc = Hooks.GetMouseDelta;
             var bytes = AsmLoader.GetAsmBytes("NoCameraSpin");
             AsmHelper.WriteRelativeOffsets(bytes, new []
@@ -65,6 +69,18 @@ public class SettingsService(IMemoryService memoryService, NopManager nopManager
             hookManager.UninstallHook(code.ToInt64());
         }
     }
+
+    private async Task<bool> WaitForValidPtr(IntPtr ptr, int timeout = 5000)
+    {
+        var sw = Stopwatch.StartNew();
+        while (sw.ElapsedMilliseconds < timeout)
+        {
+            if (memoryService.ReadInt64(ptr) != IntPtr.Zero) return true;
+            await Task.Delay(10);
+        }
+        return false;
+    }
+    
 
     public async void ToggleDisableMusic(bool isEnabled)
     {
