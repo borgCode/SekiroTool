@@ -688,6 +688,7 @@ public class TargetViewModel : BaseViewModel
 
     private void OnGameNotLoaded()
     {
+        IsFreezePostureEnabled = false;
         AreOptionsEnabled = false;
     }
 
