@@ -49,7 +49,6 @@ public class AoBScanner(IMemoryService memoryService)
             () => Offsets.Functions.AddSen = FindAddressByPattern(Patterns.AddSen).ToInt64(),
             () => Offsets.Functions.Rest = FindAddressByPattern(Patterns.Rest).ToInt64(),
             () => Offsets.Functions.SetEvent = FindAddressByPattern(Patterns.SetEvent).ToInt64(),
-            () => Offsets.Functions.GetMovement = FindAddressByPattern(Patterns.GetMovement).ToInt64(),
             () => Offsets.Functions.MatrixVectorToProduct = FindAddressByPattern(Patterns.MatrixVectorToProduct).ToInt64(),
             () => Offsets.Functions.ExecuteTalkCommand = FindAddressByPattern(Patterns.ExecuteTalkCommand).ToInt64(),
             () => Offsets.Functions.GetEvent = FindAddressByPattern(Patterns.GetEvent).ToInt64(),
@@ -205,7 +204,6 @@ Console.WriteLine($"Functions.GiveSkillAndPros: 0x{Offsets.Functions.GiveSkillAn
 Console.WriteLine($"Functions.GetGoodsParam: 0x{Offsets.Functions.GetGoodsParam:X}");
 Console.WriteLine($"Functions.ForceAnimationByChrEventModule: 0x{Offsets.Functions.ForceAnimationByChrEventModule:X}");
 Console.WriteLine($"Functions.MatrixVectorToProduct: 0x{Offsets.Functions.MatrixVectorToProduct:X}");
-Console.WriteLine($"Functions.GetMovement: 0x{Offsets.Functions.GetMovement:X}");
 Console.WriteLine($"Functions.ExecuteTalkCommand: 0x{Offsets.Functions.ExecuteTalkCommand:X}");
 #endif
     }
