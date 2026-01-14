@@ -443,7 +443,8 @@ public static class Offsets
         public static long MatrixVectorToProduct;
         public static long ForceAnimationByChrEventModule;
         public static long FormatCutscenePathString;
-        public static long GetMovement;
+        public static long GetRawY;
+        public static long GetRawX;
     }
 
     private static void InitializeBaseAddresses(IntPtr moduleBase)
@@ -635,14 +636,22 @@ public static class Offsets
             _ => 0
         };
 
-        Functions.GetMovement = moduleBase + Version switch
+        Functions.GetRawY = moduleBase + Version switch
         {
-            Version1_2_0 => 0x24B18E0,
-            Version1_3_0 or Version1_4_0 => 0x24B2850,
-            Version1_5_0 => 0x25E75D0,
-            Version1_6_0 => 0x25E7950,
+            Version1_2_0 => 0x954E60,
+            Version1_3_0 or Version1_4_0 => 0x955330,
+            Version1_5_0 or Version1_6_0 => 0x9603D0,
             _ => 0
         };
+
+        Functions.GetRawX = moduleBase + Version switch
+        {
+            Version1_2_0 => 0x954EC0,
+            Version1_3_0 or Version1_4_0 => 0x955430,
+            Version1_5_0 or Version1_6_0 => 0x9603E0,
+            _ => 0
+        };
+
 
         Functions.MatrixVectorToProduct = moduleBase + Version switch
         {
@@ -1146,8 +1155,9 @@ public static class Offsets
         Console.WriteLine(
             $"Functions.ForceAnimationByChrEventModule: 0x{Functions.ForceAnimationByChrEventModule:X}");
         Console.WriteLine($"Functions.MatrixVectorToProduct: 0x{Functions.MatrixVectorToProduct:X}");
-        Console.WriteLine($"Functions.GetMovement: 0x{Functions.GetMovement:X}");
         Console.WriteLine($"Functions.ExecuteTalkCommand: 0x{Functions.ExecuteTalkCommand:X}");
+        Console.WriteLine($"Functions.GetRawY: 0x{Functions.GetRawY:X}");
+        Console.WriteLine($"Functions.GetRawX: 0x{Functions.GetRawX:X}");
 #endif
     }
 }

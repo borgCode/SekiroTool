@@ -475,7 +475,7 @@ namespace SekiroTool {
         ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;
         ///48 8b 80 88 00 00 00    mov    rax,QWORD PTR [rax+0x88]
         ///48 3b 46 08             cmp    rax,QWORD PTR [rsi+0x8]
-        ///0f 85 26 01 00 00       jne    13f &lt;normal&gt;
+        ///0f 85 52 01 00 00       jne    16b &lt;normal&gt;
         ///0f 10 b6 80 00 00 00    movups xmm6,XMMWORD PTR [rsi+0x80]
         ///52                      push   rdx
         ///51                      push   rcx

@@ -103,15 +103,15 @@ public class UtilityService(IMemoryService memoryService, HookManager hookManage
             AsmHelper.WriteRelativeOffsets(bytes, new[]
             {
                 (coordUpdateCode.ToInt64() + 0x1, worldChrMan.ToInt64(), 7, 0x1 + 3),
-                (coordUpdateCode.ToInt64() + 0x42, fd4PadMan.ToInt64(), 7, 0x42 + 3),
-                (coordUpdateCode.ToInt64() + 0x5B, Functions.GetMovement, 5, 0x5B + 1),
-                (coordUpdateCode.ToInt64() + 0x6D, Functions.GetMovement, 5, 0x6D + 1),
-                (coordUpdateCode.ToInt64() + 0x9F, fieldArea.ToInt64(), 7, 0x9F + 3),
-                (coordUpdateCode.ToInt64() + 0xB2, Functions.MatrixVectorToProduct, 5, 0xB2 + 1),
-                (coordUpdateCode.ToInt64() + 0xD1, speedScaleLoc.ToInt64(), 9, 0xD1 + 5),
-                (coordUpdateCode.ToInt64() + 0xEE, zDirectionLoc.ToInt64(), 6, 0xEE + 2),
-                (coordUpdateCode.ToInt64() + 0x118, zDirectionLoc.ToInt64(), 7, 0x118 + 2),
-                (coordUpdateCode.ToInt64() + 0x147, coordsUpdateHook + 0x7, 5, 0x147 + 1)
+                (coordUpdateCode.ToInt64() + 0x5C, fd4PadMan.ToInt64(), 7, 0x5C + 3),
+                (coordUpdateCode.ToInt64() + 0x70, Functions.GetRawY, 5, 0x70 + 1),
+                (coordUpdateCode.ToInt64() + 0x7D, Functions.GetRawX, 5, 0x7D + 1),
+                (coordUpdateCode.ToInt64() + 0xB1, fieldArea.ToInt64(), 7, 0xB1 + 3),
+                (coordUpdateCode.ToInt64() + 0xC4, Functions.MatrixVectorToProduct, 5, 0xC4 + 1),
+                (coordUpdateCode.ToInt64() + 0xF9, speedScaleLoc.ToInt64(), 9, 0xF9 + 5),
+                (coordUpdateCode.ToInt64() + 0x116, zDirectionLoc.ToInt64(), 6, 0x116 + 2),
+                (coordUpdateCode.ToInt64() + 0x140, zDirectionLoc.ToInt64(), 7, 0x140 + 2),
+                (coordUpdateCode.ToInt64() + 0x173, coordsUpdateHook + 0x7, 5, 0x173 + 1)
             });
 
             memoryService.WriteUInt8(physicsPtr + (int)ChrIns.ChrPhysicsOffsets.NoGravity, 1);
