@@ -29,7 +29,7 @@ public class SettingsService(IMemoryService memoryService, NopManager nopManager
 
     public void ToggleNoTutorials(bool isEnabled)
     {
-        memoryService.WriteBytes(Patches.MenuTutorialSkip, isEnabled ? [0x90, 0x90] : [0x84, 0xC0]);
+        memoryService.WriteBytes(Patches.MenuTutorialSkip, isEnabled ? [0x90, 0x90, 0x90, 0x90] : [0x84, 0xC0, 0x75, 0x08]);
         memoryService.WriteBytes(Patches.ShowSmallHintBox,
             isEnabled ? [0x90, 0x90, 0x90, 0x90, 0x90] : OriginalBytesByPatch.ShowSmallHintBox.GetOriginal());
         memoryService.WriteBytes(Patches.ShowTutorialText,

@@ -37,6 +37,7 @@ public class SettingsViewModel : BaseViewModel
         stateService.Subscribe(State.Attached, OnGameAttached);
         stateService.Subscribe(State.EarlyAttached, OnGameEarlyAttached);
         stateService.Subscribe(State.GameStart, OnGameStart);
+        stateService.Subscribe(State.Loaded, OnGameLoaded);
 
         RegisterHotkeys();
 
@@ -132,6 +133,8 @@ public class SettingsViewModel : BaseViewModel
         
         ClearHotkeysCommand = new DelegateCommand(ClearHotkeys);
     }
+
+  
 
     #region Commands
 
@@ -398,11 +401,16 @@ public class SettingsViewModel : BaseViewModel
     {
         _hotkeyManager.RegisterAction(HotkeyActions.Quitout, () => _settingsService.Quitout());
     }
-
-    private void OnGameAttached()
+    
+    private void OnGameLoaded()
     {
         if (IsNoTutorialsEnabled) _settingsService.ToggleNoTutorials(true);
         if (IsNoCameraSpinEnabled) _settingsService.ToggleNoCameraSpin(true);
+    }
+
+    private void OnGameAttached()
+    {
+      
         if (IsDefaultSoundChangeEnabled) _settingsService.PatchDefaultSound(DefaultSoundVolume);
         
         
