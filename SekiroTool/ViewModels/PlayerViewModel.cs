@@ -20,6 +20,8 @@ public class PlayerViewModel : BaseViewModel
     private Dictionary<uint, uint> _idolsByAreaDict;
 
     private bool _pauseUpdates;
+
+    private const float DefaultDamageMultiplier = 1.0f;
     
     private const float DefaultSpeed = 1f;
     private float _playerDesiredSpeed = -1f;
@@ -59,9 +61,6 @@ public class PlayerViewModel : BaseViewModel
     }
 
     
-
-    
-
     #region Commands
 
     public ICommand SavePositionCommand { get; set; }
@@ -88,8 +87,7 @@ public class PlayerViewModel : BaseViewModel
     // Check TargetViewModel for examples of commands when you need to implement that
 
     #endregion
-
-
+    
     #region Properties
 
     private bool _areOptionsEnabled;
@@ -467,6 +465,39 @@ public class PlayerViewModel : BaseViewModel
         get => _addExperienceUpDown;
         set => SetProperty(ref _addExperienceUpDown, value);
     }
+
+
+    private float _damageMultiplier = DefaultDamageMultiplier;
+
+    public float DamageMultiplier
+    {
+        get => _damageMultiplier;
+        set
+        {
+            if (SetProperty(ref _damageMultiplier, value))
+            {
+                if (IsDamageMultiplierEnabled) _playerService.SetDamageMultiplier(_damageMultiplier);
+            }
+        }
+    }
+
+    private bool _isDamageMultiplierEnabled;
+
+    public bool IsDamageMultiplierEnabled
+    {
+        get => _isDamageMultiplierEnabled;
+        set
+        {
+            if (SetProperty(ref _isDamageMultiplierEnabled, value))
+            {
+                if (_isDamageMultiplierEnabled)
+                {
+                    _playerService.SetDamageMultiplier(_damageMultiplier);
+                }
+                _playerService.ToggleDamageMultiplier(_isDamageMultiplierEnabled);
+            }
+        }
+    }
     
     
     public void SetSpeed(double value) => PlayerSpeed = (float)value;
@@ -523,7 +554,9 @@ public class PlayerViewModel : BaseViewModel
         _hotkeyManager.RegisterAction(HotkeyActions.TogglePlayerSpeed, () => TogglePlayerSpeed());
         _hotkeyManager.RegisterAction(HotkeyActions.IncreasePlayerSpeed, () => SetSpeed(Math.Min(10, PlayerSpeed + 0.25f)));
         _hotkeyManager.RegisterAction(HotkeyActions.DecreasePlayerSpeed, () => SetSpeed(Math.Max(0, PlayerSpeed - 0.25f)));
-
+        _hotkeyManager.RegisterAction(HotkeyActions.IncreaseDamageMultiplier, () => DamageMultiplier = Math.Min(10, DamageMultiplier + 0.1f));
+        _hotkeyManager.RegisterAction(HotkeyActions.DecreaseDamageMultiplier, () => DamageMultiplier = Math.Max(0.1f, PlayerSpeed - 0.1f));
+        _hotkeyManager.RegisterAction(HotkeyActions.ToggleDamageMultiplier, () => IsDamageMultiplierEnabled = !IsDamageMultiplierEnabled);
 
 
     }
@@ -566,6 +599,12 @@ public class PlayerViewModel : BaseViewModel
         {
             _playerService.ToggleGachiinFlag(true);
             _playerService.ToggleInfiniteBuffs(true);
+        }
+
+        if (IsDamageMultiplierEnabled)
+        {
+            _playerService.SetDamageMultiplier(_damageMultiplier);
+            _playerService.ToggleDamageMultiplier(true);
         }
         
         NewGame = _playerService.GetNewGame();

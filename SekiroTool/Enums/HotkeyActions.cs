@@ -24,10 +24,12 @@ public enum HotkeyActions
     ApplyGachiin,
     RemoveConfetti,
     RemoveGachiin,
-    
     TogglePlayerSpeed,
     IncreasePlayerSpeed,
     DecreasePlayerSpeed,
+    IncreaseDamageMultiplier,
+    DecreaseDamageMultiplier,
+    ToggleDamageMultiplier,
     
     SkipDragonPhaseOne,
     TriggerDragonFinalAttack,

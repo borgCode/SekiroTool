@@ -434,6 +434,35 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         memoryService.AllocateAndExecute(bytes);
     }
 
+    public void ToggleDamageMultiplier(bool isEnabled)
+    {
+        var code = CodeCaveOffsets.Base + CodeCaveOffsets.DamageMultiplierCode;
+        if (isEnabled)
+        {
+            var bytes = AsmLoader.GetAsmBytes("DamageMultiplier");
+            var damageMultiplier = CodeCaveOffsets.Base + CodeCaveOffsets.DamageMultiplier;
+            var origin = Hooks.DamageMultiplier;
+            AsmHelper.WriteRelativeOffsets(bytes, [
+            (code.ToInt64() + 0x8, WorldChrMan.Base.ToInt64(), 7, 0x8 + 3),
+            (code.ToInt64() + 0x24, damageMultiplier.ToInt64(), 9, 0x24 + 5),
+            (code.ToInt64() + 0x37, origin + 7, 5, 0x37 + 1)
+            ]);
+            
+            memoryService.WriteBytes(code, bytes);
+            hookManager.InstallHook(code.ToInt64(), origin, [0x41, 0x8B, 0x96, 0xE0, 0x01, 0x00, 0x00]);
+        }
+        else
+        {
+            hookManager.UninstallHook(code.ToInt64());
+        }
+    }
+
+    public void SetDamageMultiplier(float multiplier)
+    {
+        var damageMultiplier = CodeCaveOffsets.Base + CodeCaveOffsets.DamageMultiplier;
+        memoryService.WriteFloat(damageMultiplier, multiplier);
+    }
+
     public float GetPlayerSpeed() =>
         memoryService.ReadFloat(GetChrBehaviorPtr() + (int)ChrIns.ChrBehaviorOffsets.AnimationSpeed);
 

@@ -201,8 +201,23 @@
                               IsChecked="{Binding IsPlayerSilentEnabled}"
                               Margin="0,2" />
                     <CheckBox Content="Infinite Poise"
+                              Margin="0,2"
                               IsChecked="{Binding IsInfinitePoiseEnabled}" />
-
+                    <CheckBox Content="Damage Multiplier"
+                              Margin="0,2"
+                              IsChecked="{Binding IsDamageMultiplierEnabled}" />
+                    <xctk:DoubleUpDown
+                        Margin="15, 5, 0, 2"
+                        IsEnabled="{Binding IsDamageMultiplierEnabled}"
+                        Value="{Binding DamageMultiplier}"
+                        Maximum="50"
+                        Minimum="0.1"
+                        Increment="0.1"
+                        FormatString="F1"
+                        >
+                        
+                    </xctk:DoubleUpDown>
+                    
 
                 </StackPanel>
             </Grid>
