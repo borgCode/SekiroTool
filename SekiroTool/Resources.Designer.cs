@@ -157,12 +157,12 @@ namespace SekiroTool {
         ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # f &lt;_main+0xf&gt;
         ///48 8b 80 88 00 00 00    mov    rax,QWORD PTR [rax+0x88]
         ///49 3b 86 90 01 00 00    cmp    rax,QWORD PTR [r14+0x190]
-        ///75 17                   jne    36 &lt;normal&gt;
+        ///75 3d                   jne    5c &lt;normal&gt;
+        ///53                      push   rbx
         ///f3 44 0f 2a e2          cvtsi2ss xmm12,edx
-        ///f3 44 0f 59 25 00 00    mulss  xmm12,DWORD PTR [rip+0x0]        # 2d &lt;_main+0x2d&gt;
+        ///f3 44 0f 59 25 00 00    mulss  xmm12,DWORD PTR [rip+0x0]        # 2e &lt;_main+0x2e&gt;
         ///00 00
-        ///f3 41 0f 2c d4          cvttss2si edx,xmm12
-        ///4 [rest of string was truncated]&quot;;.
+        ///f3 41 0f 2 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string DamageMultiplier {
             get {

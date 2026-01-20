@@ -444,8 +444,9 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
             var origin = Hooks.DamageMultiplier;
             AsmHelper.WriteRelativeOffsets(bytes, [
             (code.ToInt64() + 0x8, WorldChrMan.Base.ToInt64(), 7, 0x8 + 3),
-            (code.ToInt64() + 0x24, damageMultiplier.ToInt64(), 9, 0x24 + 5),
-            (code.ToInt64() + 0x37, origin + 7, 5, 0x37 + 1)
+            (code.ToInt64() + 0x25, damageMultiplier.ToInt64(), 9, 0x25 + 5),
+            (code.ToInt64() + 0x46, damageMultiplier.ToInt64(), 9, 0x46 + 5),
+            (code.ToInt64() + 0x5D, origin + 7, 5, 0x5D + 1)
             ]);
             
             memoryService.WriteBytes(code, bytes);
