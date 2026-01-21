@@ -18,5 +18,6 @@ public static class GameEvent
     public const long HirataFire = 8304;
     public const long IsTutorial = 8306;
     public const long HeadlessApe = 8303;
-    
+
+    public const long EmmaSkip = 11115900;
 }

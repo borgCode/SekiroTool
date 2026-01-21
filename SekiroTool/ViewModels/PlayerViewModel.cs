@@ -487,7 +487,7 @@ public class PlayerViewModel : BaseViewModel
 
     #region Private Methods
 
-    private void RegisterHotkeys()
+    private void RegisterHotkeys() 
     {
         _hotkeyManager.RegisterAction(HotkeyActions.SavePos1, () => SavePosition(0));
         _hotkeyManager.RegisterAction(HotkeyActions.SavePos2, () => SavePosition(1));
