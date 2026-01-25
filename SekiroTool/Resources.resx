@@ -1521,4 +1521,47 @@ c3                      ret
 48 89 74 24 10          mov    QWORD PTR [rsp+0x10],rsi
 e9 00 00 00 00          jmp    10 &lt;thisismycode+0xa&gt;</value>
     </data>
+    <data name="DamageMultiplier" xml:space="preserve">
+        <value>41 8b 96 e0 01 00 00    mov    edx,DWORD PTR [r14+0x1e0]
+50                      push   rax
+48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # f &lt;_main+0xf&gt;
+48 8b 80 88 00 00 00    mov    rax,QWORD PTR [rax+0x88]
+49 3b 86 90 01 00 00    cmp    rax,QWORD PTR [r14+0x190]
+75 44                   jne    63 &lt;normal&gt;
+41 83 7e 28 05          cmp    DWORD PTR [r14+0x28],0x5
+74 3d                   je     63 &lt;normal&gt;
+53                      push   rbx
+f3 44 0f 2a e2          cvtsi2ss xmm12,edx
+f3 44 0f 59 25 00 00    mulss  xmm12,DWORD PTR [rip+0x0]        # 35 &lt;_main+0x35&gt;
+00 00
+f3 41 0f 2c d4          cvttss2si edx,xmm12
+41 89 96 e0 01 00 00    mov    DWORD PTR [r14+0x1e0],edx
+41 8b 9e e4 01 00 00    mov    ebx,DWORD PTR [r14+0x1e4]
+f3 44 0f 2a e3          cvtsi2ss xmm12,ebx
+f3 44 0f 59 25 00 00    mulss  xmm12,DWORD PTR [rip+0x0]        # 56 &lt;_main+0x56&gt;
+00 00
+f3 41 0f 2c dc          cvttss2si ebx,xmm12
+41 89 9e e4 01 00 00    mov    DWORD PTR [r14+0x1e4],ebx
+5b                      pop    rbx
+000000000063 &lt;normal&gt;:
+58                      pop    rax
+e9 00 00 00 00          jmp    69 &lt;normal+0x6&gt;</value>
+    </data>
+    <data name="DamageMultiplier_Deflect" xml:space="preserve">
+        <value>48 8b 88 f8 1f 00 00    mov    rcx,QWORD PTR [rax+0x1ff8]
+50                      push   rax
+48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # f &lt;_main+0xf&gt;
+4c 3b b0 88 00 00 00    cmp    r14,QWORD PTR [rax+0x88]
+75 1b                   jne    33 &lt;exit&gt;
+f3 44 0f 2a e3          cvtsi2ss xmm12,ebx
+f3 44 0f 59 25 00 00    mulss  xmm12,DWORD PTR [rip+0x0]        # 26 &lt;_main+0x26&gt;
+00 00
+f3 41 0f 2c dc          cvttss2si ebx,xmm12
+89 da                   mov    edx,ebx
+f7 da                   neg    edx
+45 0f 57 e4             xorps  xmm12,xmm12
+000000000033 &lt;exit&gt;:
+58                      pop    rax
+e9 00 00 00 00          jmp    39 &lt;exit+0x6&gt;</value>
+    </data>
 </root>

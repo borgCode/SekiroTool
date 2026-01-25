@@ -70,4 +70,8 @@ public static class CodeCaveOffsets
     public const int EzStateTalkParams = 0x1500;
     public const int EzStateExecuteTalkCommandCode = 0x1540;  //0xA3
 
+    public const int DamageMultiplier = 0x1640;
+    public const int DamageMultiplierCode = 0x1650; //0x69
+    public const int DamageMultiplierDeflectCode = 0x1700; //0x39
+
 }

@@ -65,6 +65,9 @@ public class SettingsViewModel : BaseViewModel
             new("Decrease Player Speed", HotkeyActions.DecreasePlayerSpeed),
             new("Toggle Player Speed", HotkeyActions.TogglePlayerSpeed),
             new("No Damage", HotkeyActions.NoDamage),
+            new("Increase Damage Multiplier", HotkeyActions.IncreaseDamageMultiplier),
+            new("Decrease Damage Multiplier", HotkeyActions.DecreaseDamageMultiplier),
+            new("Toggle Damage Multiplier", HotkeyActions.ToggleDamageMultiplier),
         ];
 
         EnemiesHotkeys =

@@ -416,6 +416,8 @@ public static class Offsets
         public static long HpWrite;
         public static long InfiniteConfetti;
         public static long SetLastAct;
+        public static long DamageMultiplier;
+        public static long DamageMultiplierDeflect;
     }
 
     public static class Functions
@@ -1078,6 +1080,22 @@ public static class Offsets
             _ => 0
         };
 
+        Hooks.DamageMultiplier = moduleBase + Version switch
+        {
+            Version1_2_0 => 0xB57BCA,
+            Version1_3_0 or Version1_4_0 => 0xB5827A,
+            Version1_5_0 or Version1_6_0 => 0xB6E87A,
+            _ => 0
+        };
+
+        Hooks.DamageMultiplierDeflect = moduleBase.ToInt64() + Version switch
+        {
+            Version1_2_0 => 0xB5304D,
+            Version1_3_0 or Version1_4_0 => 0xB536FD,
+            Version1_5_0 or Version1_6_0 => 0xB69CFD,
+            _ => 0
+        };
+
 
 #if DEBUG
 
@@ -1121,6 +1139,8 @@ public static class Offsets
         Console.WriteLine($"Hooks.InfiniteConfetti: 0x{Hooks.InfiniteConfetti:X}");
         Console.WriteLine($"Hooks.SetLastAct: 0x{Hooks.SetLastAct:X}");
         Console.WriteLine($"Hooks.NoMenuMusic: 0x{Hooks.StartMusic:X}");
+        Console.WriteLine($"Hooks.DamageMultiplier: 0x{Hooks.DamageMultiplier:X}");
+        Console.WriteLine($"Hooks.DamageMultiplierDeflect: 0x{Hooks.DamageMultiplierDeflect:X}");
 
 
         Console.WriteLine("\n========== PATCHES ==========");

@@ -434,6 +434,59 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         memoryService.AllocateAndExecute(bytes);
     }
 
+    public void ToggleDamageMultiplier(bool isEnabled)
+    {
+        var damageMultiplierCode = CodeCaveOffsets.Base + CodeCaveOffsets.DamageMultiplierCode;
+        var damageMultiplierDeflectCode = CodeCaveOffsets.Base + CodeCaveOffsets.DamageMultiplierDeflectCode;
+        if (isEnabled)
+        {
+            InstallDamageMultiplierHook(damageMultiplierCode);
+            InstallDamageMultiplierDeflectHook(damageMultiplierDeflectCode);
+        }
+        else
+        {
+            hookManager.UninstallHook(damageMultiplierCode.ToInt64());
+            hookManager.UninstallHook(damageMultiplierDeflectCode.ToInt64());
+        }
+    }
+    
+    private void InstallDamageMultiplierHook(IntPtr damageMultiplierCode)
+    {
+        var bytes = AsmLoader.GetAsmBytes("DamageMultiplier");
+        var damageMultiplier = CodeCaveOffsets.Base + CodeCaveOffsets.DamageMultiplier;
+        var origin = Hooks.DamageMultiplier;
+        AsmHelper.WriteRelativeOffsets(bytes, [
+            (damageMultiplierCode.ToInt64() + 0x8, WorldChrMan.Base.ToInt64(), 7, 0x8 + 3),
+            (damageMultiplierCode.ToInt64() + 0x2C, damageMultiplier.ToInt64(), 9, 0x2C + 5),
+            (damageMultiplierCode.ToInt64() + 0x4D, damageMultiplier.ToInt64(), 9, 0x4D + 5),
+            (damageMultiplierCode.ToInt64() + 0x64, origin + 7, 5, 0x64 + 1)
+        ]);
+            
+        memoryService.WriteBytes(damageMultiplierCode, bytes);
+        hookManager.InstallHook(damageMultiplierCode.ToInt64(), origin, [0x41, 0x8B, 0x96, 0xE0, 0x01, 0x00, 0x00]);
+    }
+    
+    private void InstallDamageMultiplierDeflectHook(IntPtr damageMultiplierDeflectCode)
+    {
+        var bytes = AsmLoader.GetAsmBytes("DamageMultiplier_Deflect");
+        var damageMultiplier = CodeCaveOffsets.Base + CodeCaveOffsets.DamageMultiplier;
+        var origin = Hooks.DamageMultiplierDeflect;
+        AsmHelper.WriteRelativeOffsets(bytes, [
+            (damageMultiplierDeflectCode.ToInt64() + 0x8, WorldChrMan.Base.ToInt64(), 7, 0x8 + 3),
+            (damageMultiplierDeflectCode.ToInt64() + 0x1D, damageMultiplier.ToInt64(), 9, 0x1D + 5),
+            (damageMultiplierDeflectCode.ToInt64() + 0x34, origin + 7, 5, 0x34 + 1)
+        ]);
+        
+        memoryService.WriteBytes(damageMultiplierDeflectCode, bytes);
+        hookManager.InstallHook(damageMultiplierDeflectCode.ToInt64(), origin, [0x48, 0x8B, 0x88, 0xF8, 0x1F, 0x00, 0x00]);
+    }
+
+    public void SetDamageMultiplier(float multiplier)
+    {
+        var damageMultiplier = CodeCaveOffsets.Base + CodeCaveOffsets.DamageMultiplier;
+        memoryService.WriteFloat(damageMultiplier, multiplier);
+    }
+
     public float GetPlayerSpeed() =>
         memoryService.ReadFloat(GetChrBehaviorPtr() + (int)ChrIns.ChrBehaviorOffsets.AnimationSpeed);
 
