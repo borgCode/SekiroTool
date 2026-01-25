@@ -34,7 +34,7 @@ public class TargetService(IMemoryService memoryService, HookManager hookManager
         }
     }
 
-    public ulong GetTargetAddr() =>
+    public ulong GetTargetChrIns() =>
         memoryService.ReadUInt64(CodeCaveOffsets.Base + CodeCaveOffsets.LockedTarget);
 
     public void SetHp(int hp) =>
@@ -262,6 +262,12 @@ public class TargetService(IMemoryService memoryService, HookManager hookManager
         memoryService.WriteUInt8(forceActPtr, value);
     }
 
+    public uint GetTargetHandle() => memoryService.ReadUInt32((IntPtr) GetTargetChrIns() + ChrIns.Handle);
+
+    public uint GetCharacterId() => memoryService.ReadUInt32((IntPtr) GetTargetChrIns() + ChrIns.CharacterId);
+
+    public int GetEntityId() => memoryService.ReadInt32((IntPtr) GetTargetChrIns() + ChrIns.EntityId);
+    
     #endregion
 
 

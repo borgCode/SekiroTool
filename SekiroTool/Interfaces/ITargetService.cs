@@ -4,7 +4,7 @@ public interface ITargetService
 {
     void ToggleTargetHook(bool isEnabled);
 
-    ulong GetTargetAddr();
+    ulong GetTargetChrIns();
     
     void SetHp(int hp);
     int GetCurrentHp();
@@ -64,6 +64,10 @@ public interface ITargetService
     void ToggleTargetRepeatAct(bool isEnabled);
     void ToggleTargetRepeatKengekiAct(bool isEnabled);
 
+    uint GetTargetHandle();
+    uint GetCharacterId();
+    int GetEntityId();
 
-    
+
+
 }
