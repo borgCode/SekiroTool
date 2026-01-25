@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System.ComponentModel;
+using System.Globalization;
+using System.IO;
+using System.Reflection;
 
 namespace SekiroTool.Utilities;
 
@@ -34,31 +37,26 @@ public class SettingsManager
     {
         try
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(SettingsPath));
-                
-            var lines = new[]
+            Directory.CreateDirectory(Path.GetDirectoryName(SettingsPath)!);
+            var lines = new List<string>();
+
+            foreach (var prop in GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
-                $"HotkeyActionIds={HotkeyActionIds}",
-                $"EnableHotkeys={EnableHotkeys}",
-                $"NoLogo={NoLogo}",
-                $"AlwaysOnTop={AlwaysOnTop}",
-                $"NoTutorials={NoTutorials}",
-                $"NoCameraSpin={NoCameraSpin}",
-                $"DisabledCutscenes={DisableCutscenes}",
-                $"DisableMenuMusic={DisableMenuMusic}",
-                $"DefaultSoundChangeEnabled={DefaultSoundChangeEnabled}",
-                $"DefaultSoundVolume={DefaultSoundVolume}",
-                $"WindowLeft={WindowLeft}",
-                $"WindowTop={WindowTop}",
-                $"EnableUpdateChecks={EnableUpdateChecks}",
-                $"HotkeyReminder={HotkeyReminder}",
-            };
+                var value = prop.GetValue(this);
+                var stringValue = value switch
+                {
+                    double d => d.ToString(CultureInfo.InvariantCulture),
+                    float f => f.ToString(CultureInfo.InvariantCulture),
+                    _ => value?.ToString() ?? ""
+                };
+                lines.Add($"{prop.Name}={stringValue}");
+            }
 
             File.WriteAllLines(SettingsPath, lines);
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error saving settings: {ex.Message}");
+            Console.WriteLine($@"Error saving settings: {ex.Message}");
         }
     }
 
@@ -67,81 +65,50 @@ public class SettingsManager
     {
         var settings = new SettingsManager();
 
-        if (File.Exists(SettingsPath))
+        foreach (var prop in typeof(SettingsManager).GetProperties(BindingFlags.Public | BindingFlags.Instance))
         {
-            try
-            {
-                foreach (var line in File.ReadAllLines(SettingsPath))
-                {
-                    var parts = line.Split(new[] { '=' }, 2);
-                    if (parts.Length == 2)
-                    {
-                        var key = parts[0];
-                        var value = parts[1];
+            var defaultAttr = prop.GetCustomAttribute<DefaultValueAttribute>();
+            if (defaultAttr != null)
+                prop.SetValue(settings, defaultAttr.Value);
+        }
 
-                        switch (key)
-                        {
-                            case "HotkeyActionIds": settings.HotkeyActionIds = value; break;
-                            case "EnableHotkeys":
-                                bool.TryParse(value, out bool eh);
-                                settings.EnableHotkeys = eh;
-                                break;
-                            case "NoLogo":
-                                bool.TryParse(value, out bool nl);
-                                settings.NoLogo = nl;
-                                break;
-                            case "NoTutorials":
-                                bool.TryParse(value, out bool nt);
-                                settings.NoTutorials = nt;
-                                break;
-                            case "AlwaysOnTop":
-                                bool.TryParse(value, out bool aot);
-                                settings.AlwaysOnTop = aot;
-                                break;
-                            case "NoCameraSpin":
-                                bool.TryParse(value, out bool ncp);
-                                settings.NoCameraSpin = ncp;
-                                break;
-                            case "DisabledCutscenes":
-                                bool.TryParse(value, out bool dc);
-                                settings.DisableCutscenes = dc;
-                                break;
-                            case "DisableMenuMusic":
-                                bool.TryParse(value, out bool dmm);
-                                settings.DisableMenuMusic = dmm;
-                                break;
-                            case "DefaultSoundChangeEnabled":
-                                bool.TryParse(value, out bool dsce);
-                                settings.DefaultSoundChangeEnabled = dsce;
-                                break;
-                            case "DefaultSoundVolume":
-                                int.TryParse(value, out int dsv);
-                                settings.DefaultSoundVolume = dsv;
-                                break;
-                            case "WindowLeft":
-                                double.TryParse(value, out double wl);
-                                settings.WindowLeft = wl;
-                                break;
-                            case "WindowTop":
-                                double.TryParse(value, out double wt);
-                                settings.WindowTop = wt;
-                                break;
-                            case "EnableUpdateChecks":
-                                bool.TryParse(value, out bool euc);
-                                settings.EnableUpdateChecks = euc;
-                                break;
-                            case "HotkeyReminder":
-                                bool.TryParse(value, out bool hr);
-                                settings.HotkeyReminder = hr;
-                                break;
-                        }
-                    }
-                }
-            }
-            catch
+        if (!File.Exists(SettingsPath))
+            return settings;
+
+        try
+        {
+            var props = new Dictionary<string, PropertyInfo>();
+            foreach (var prop in typeof(SettingsManager).GetProperties(BindingFlags.Public | BindingFlags.Instance))
+                props[prop.Name] = prop;
+
+            foreach (var line in File.ReadAllLines(SettingsPath))
             {
-                // Return default settings on error
+                var parts = line.Split(['='], 2);
+                if (parts.Length != 2) continue;
+
+                var key = parts[0];
+                var value = parts[1];
+
+                if (!props.TryGetValue(key, out var prop)) continue;
+
+                object parsed = (prop.PropertyType switch
+                {
+                    { } t when t == typeof(double) =>
+                        double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var d) ? d : 0.0,
+                    { } t when t == typeof(float) =>
+                        float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var f) ? f : 0f,
+                    { } t when t == typeof(bool) =>
+                        bool.TryParse(value, out var b) && b,
+                    { } t when t == typeof(string) => value,
+                    _ => null
+                })!;
+
+                prop.SetValue(settings, parsed);
             }
+        }
+        catch
+        {
+            // Return default settings on error
         }
 
         return settings;
