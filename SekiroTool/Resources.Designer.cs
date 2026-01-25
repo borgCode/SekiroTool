@@ -170,6 +170,25 @@ namespace SekiroTool {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 48 8b 88 f8 1f 00 00    mov    rcx,QWORD PTR [rax+0x1ff8]
+        ///50                      push   rax
+        ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # f &lt;_main+0xf&gt;
+        ///4c 3b b0 88 00 00 00    cmp    r14,QWORD PTR [rax+0x88]
+        ///75 1b                   jne    33 &lt;exit&gt;
+        ///f3 44 0f 2a e3          cvtsi2ss xmm12,ebx
+        ///f3 44 0f 59 25 00 00    mulss  xmm12,DWORD PTR [rip+0x0]        # 26 &lt;_main+0x26&gt;
+        ///00 00
+        ///f3 41 0f 2c dc          cvttss2si ebx,xmm12
+        ///89 da                   mov    edx,ebx
+        ///f7 da                [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string DamageMultiplier_Deflect {
+            get {
+                return ResourceManager.GetString("DamageMultiplier_Deflect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 88 98 42 b7 00 00       mov    BYTE PTR [rax+0xb742],bl
         ///81 78 18 00 75 19 03    cmp    DWORD PTR [rax+0x18],0x3197500
         ///0f 85 15 01 00 00       jne    128 &lt;normal&gt;

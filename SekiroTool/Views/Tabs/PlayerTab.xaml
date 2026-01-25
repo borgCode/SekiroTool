@@ -212,6 +212,7 @@
                         Value="{Binding DamageMultiplier}"
                         Maximum="50"
                         Minimum="0.1"
+                        ClipValueToMinMax="True"
                         Increment="0.1"
                         FormatString="F1"
                         >
