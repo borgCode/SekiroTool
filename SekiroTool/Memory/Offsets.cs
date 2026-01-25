@@ -45,6 +45,10 @@ public static class Offsets
 
     public static class ChrIns
     {
+        public const int Handle = 0x8;
+        public const int CharacterId = 0x68;
+        public const int EntityId = 0x1A24;
+        
         public const int BitFlagsStart = 0x1F40;
 
         public static readonly BitFlag NoHit = new(0x0, 1 << 5);
