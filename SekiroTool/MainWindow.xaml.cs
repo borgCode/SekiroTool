@@ -58,7 +58,7 @@ public partial class MainWindow : Window
         IEnemyService enemyService = new EnemyService(_memoryService, hookManager, reminderService);
         ITargetService targetService = new TargetService(_memoryService, hookManager, reminderService);
         IDebugDrawService debugDrawService = new DebugDrawService(_memoryService, _stateService, _nopManager);
-        IEventService eventService = new EventService(_memoryService);
+        IEventService eventService = new EventService(_memoryService, _hotkeyManager);
         IUtilityService utilityService = new UtilityService(_memoryService, hookManager);
         IItemService itemService = new ItemService(_memoryService);
         ISettingsService settingsService = new SettingsService(_memoryService, _nopManager, hookManager);
@@ -75,7 +75,7 @@ public partial class MainWindow : Window
         UtilityViewModel utilityViewModel =
             new UtilityViewModel(utilityService, _stateService, _hotkeyManager, debugDrawService, playerViewModel, ezStateService);
         ItemViewModel itemViewModel = new ItemViewModel(itemService, _stateService);
-        EventViewModel eventViewModel = new EventViewModel(eventService, _stateService, debugDrawService, itemService);
+        EventViewModel eventViewModel = new EventViewModel(eventService, _stateService, debugDrawService, itemService, _hotkeyManager);
         SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, _stateService, _hotkeyManager);
 
         var playerTab = new PlayerTab(playerViewModel);
