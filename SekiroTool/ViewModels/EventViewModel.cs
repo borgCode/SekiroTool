@@ -516,9 +516,16 @@ public class EventViewModel : BaseViewModel
 
     private void SetHeadlessApe(object parameter)=> 
         _eventService.SetEvent(GameEvent.HeadlessApe, Convert.ToBoolean(parameter));
+
+    private void EmmaSkip(object parameter)
+    {
+        bool isOn = _eventService.GetEvent(GameEvent.EmmaFightFlag);
+        if (isOn)
+        {
+            _eventService.SetEvent(GameEvent.EmmaSkip, true);
+        }
+    }
     
-    private void EmmaSkip(object parameter) 
-        => _eventService.SetEvent(GameEvent.EmmaSkip, true);
    
     #endregion
 }

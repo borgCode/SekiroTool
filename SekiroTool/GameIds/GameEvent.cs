@@ -20,4 +20,5 @@ public static class GameEvent
     public const long HeadlessApe = 8303;
 
     public const long EmmaSkip = 11115900;
+    public const long EmmaFightFlag = 71110020;
 }
