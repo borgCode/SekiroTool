@@ -119,10 +119,9 @@ public partial class MainWindow : Window
 
     private bool _loaded;
 
-    private bool _hasScanned;
-
-    private bool _hasAllocatedMemory;
     
+    private bool _hasAllocatedMemory;
+    private DateTime? _attachedTime;
     private bool _hasPublishedAttached;
     private bool _hasCheckedPatch;
 
@@ -133,6 +132,15 @@ public partial class MainWindow : Window
             IsAttachedText.Text = "Attached to game";
             IsAttachedText.Foreground = (SolidColorBrush)Application.Current.Resources["AttachedBrush"];
             LaunchGameButton.IsEnabled = false;
+            
+            if (!_attachedTime.HasValue)
+            {
+                _attachedTime = DateTime.Now;
+                return;
+            }
+            
+            if ((DateTime.Now - _attachedTime.Value).TotalSeconds < 2)
+                return;
 
             if (!_hasCheckedPatch)
             {
@@ -183,9 +191,8 @@ public partial class MainWindow : Window
                 _stateService.Publish(State.Detached);
                 _hasPublishedAttached = false;
             }
-
+            _attachedTime = null;
             _loaded = false;
-            _hasScanned = false;
             _hasAllocatedMemory = false;
             IsAttachedText.Text = "Not attached";
             IsAttachedText.Foreground = (SolidColorBrush)Application.Current.Resources["NotAttachedBrush"];
