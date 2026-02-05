@@ -323,5 +323,22 @@
 
             </StackPanel>
         </Border>
+        
+        <Border Grid.Row="4"
+                BorderThickness="1"
+                BorderBrush="#333"
+                CornerRadius="3">
+            <StackPanel Margin="10">
+                <TextBlock Text="Boss Skips"
+                           Margin="0,0,0,10" />
+
+                <Button Content="Skip Emma"
+                          Command="{Binding SetEmmaSkipCommand}"
+                          Margin="0,2"
+                          Width="100"
+                          HorizontalAlignment="Left"/>
+                
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>

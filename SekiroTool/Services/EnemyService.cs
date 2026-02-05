@@ -62,6 +62,21 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
 
         memoryService.AllocateAndExecute(bytes);
     }
+    
+    // public void SkipGeni3()
+    // {
+    //     var geni3Handle = Handles.GetGeni3Handle(Offsets.Version);
+    //     if (!geni3Handle.HasValue) return;
+    //     
+    //     var bytes = AsmLoader.GetAsmBytes("SkipGeni3");
+    //     AsmHelper.WriteAbsoluteAddresses(bytes, [
+    //         (memoryService.ReadInt64(WorldChrMan.Base), 0x0 + 2),
+    //         (geni3Handle.Value, 0xA + 2),
+    //         (Functions.GetChrInsWithHandle, 0x18 + 2)
+    //     ]);
+    //
+    //     memoryService.AllocateAndExecute(bytes);
+    // }
 
     public void ToggleDragonActCombo(byte[] actArray, bool isEnabled, bool shouldDoStage1Twice)
     {
