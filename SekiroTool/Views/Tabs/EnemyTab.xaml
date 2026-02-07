@@ -125,7 +125,7 @@
                     <StackPanel Grid.Column="0" Margin="0,0,20,0">
                         <Button Content="Skip Dragon Phase 1"
                                 IsEnabled="{Binding AreOptionsEnabled}"
-                                Command="{Binding SkipDragonPhaseOneCommand}"
+                                Command="{Binding SkipGeni3Command}"
                                 Height="24"
                                 Margin="0,0,0,5" />
                         

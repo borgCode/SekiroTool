@@ -16,4 +16,6 @@ public interface IEnemyService
     void ToggleDragonActCombo(byte[] actArray, bool isEnabled, bool shouldDoStage1Twice);
     void ToggleButterflyNoSummons(bool isEnabled);
     void ToggleSnakeCanyonIntroAnimationLoop(bool isEnabled);
+    IntPtr GetChrInsByEntityId(int entityId);
+    void SkipGeni3ByHpWrite();
 }

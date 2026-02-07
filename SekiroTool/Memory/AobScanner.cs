@@ -74,6 +74,8 @@ public class AoBScanner(IMemoryService memoryService)
             () => Offsets.Functions.SetMessageTagValue = FindAddressByPattern(Patterns.SetMessageTagValue).ToInt64(),
             () => Offsets.Functions.AdjustItemCount = FindAddressByPattern(Patterns.AdjustItemCount).ToInt64(),
             () => Offsets.Functions.OpenGenericDialog = FindAddressByPattern(Patterns.OpenGenericDialog).ToInt64(),
+            () => Offsets.Functions.GetChrInsByEntityId = FindAddressByPattern(Patterns.GetChrInsByEntityId).ToInt64(),
+            
             
             () => TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
                 addr => Offsets.Hooks.LockedTarget = addr.ToInt64(), saved),
@@ -205,6 +207,8 @@ Console.WriteLine($"Functions.GetGoodsParam: 0x{Offsets.Functions.GetGoodsParam:
 Console.WriteLine($"Functions.ForceAnimationByChrEventModule: 0x{Offsets.Functions.ForceAnimationByChrEventModule:X}");
 Console.WriteLine($"Functions.MatrixVectorToProduct: 0x{Offsets.Functions.MatrixVectorToProduct:X}");
 Console.WriteLine($"Functions.ExecuteTalkCommand: 0x{Offsets.Functions.ExecuteTalkCommand:X}");
+
+
 #endif
     }
 

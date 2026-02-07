@@ -29,6 +29,7 @@ public class EnemyViewModel : BaseViewModel
 
         SkipDragonPhaseOneCommand = new DelegateCommand(SkipDragonPhaseOne);
         TriggerDragonFinalAttackCommand = new DelegateCommand(TriggerFinalDragonAttack);
+        SkipGeni3Command = new DelegateCommand(SkipGeni3);
     }
 
     
@@ -36,6 +37,8 @@ public class EnemyViewModel : BaseViewModel
 
     public ICommand SkipDragonPhaseOneCommand { get; set; }
     public ICommand TriggerDragonFinalAttackCommand { get; set; }
+    
+    public ICommand SkipGeni3Command { get; set; }
     
     #endregion
 
@@ -312,5 +315,14 @@ public class EnemyViewModel : BaseViewModel
         _eventService.SetEvent(GameEvent.TriggerFinalDragonAttack, true);
     }
 
+    private void SkipGeni3()
+    {
+       IntPtr chrIns = _enemyService.GetChrInsByEntityId(1120830);
+       if (chrIns != IntPtr.Zero)
+       {
+           _enemyService.SkipGeni3ByHpWrite();
+       }
+    }
+    
     #endregion
 }

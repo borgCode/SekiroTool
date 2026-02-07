@@ -8,6 +8,8 @@ namespace SekiroTool.Services;
 
 public class EnemyService(IMemoryService memoryService, HookManager hookManager, IReminderService reminderService) : IEnemyService
 {
+    private IEnemyService _enemyServiceImplementation;
+
     public void ToggleNoDeath(bool isEnabled)
     {
         memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.AllNoDeath, isEnabled ? 1 : 0);
@@ -59,9 +61,10 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
             (dragonHandle.Value, 0xA + 2),
             (Functions.GetChrInsWithHandle, 0x18 + 2)
         ]);
-
+        
         memoryService.AllocateAndExecute(bytes);
     }
+    
 
     public void ToggleDragonActCombo(byte[] actArray, bool isEnabled, bool shouldDoStage1Twice)
     {
@@ -174,4 +177,34 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
         var exitFlag = CodeCaveOffsets.Base + CodeCaveOffsets.ShouldExitSnakeLoopFlag;
         memoryService.WriteUInt8(exitFlag, 1);
     }
+
+    public IntPtr GetChrInsByEntityId(int entityId)
+    {
+        memoryService.WriteInt32(CodeCaveOffsets.Base + CodeCaveOffsets.EntityIdInput, entityId);
+        
+        var bytes = AsmLoader.GetAsmBytes("GetChrInsByEntityId");
+        AsmHelper.WriteAbsoluteAddresses(bytes, new[]
+        {
+            (CodeCaveOffsets.Base.ToInt64() + CodeCaveOffsets.EntityIdInput, 0x0 + 2),
+            (Functions.GetChrInsByEntityId, 0xa + 2),
+            (CodeCaveOffsets.Base.ToInt64()+ CodeCaveOffsets.ChrInsByEntityIdResult,0x1e + 2)
+        });
+        memoryService.AllocateAndExecute(bytes);
+        
+        return (IntPtr)memoryService.ReadInt64(CodeCaveOffsets.Base + CodeCaveOffsets.ChrInsByEntityIdResult);
+    }
+    
+    public void SkipGeni3ByHpWrite()
+    {
+        var bytes = AsmLoader.GetAsmBytes("SkipGeni3");
+        AsmHelper.WriteAbsoluteAddresses(bytes, new[]
+        {
+            (CodeCaveOffsets.Base.ToInt64() + CodeCaveOffsets.EntityIdInput, 0x0 + 2),
+            (Functions.GetChrInsByEntityId, 0xe + 2),
+            (CodeCaveOffsets.Base.ToInt64()+ CodeCaveOffsets.ChrInsByEntityIdResult,0x18 + 2)
+            
+        });
+        memoryService.AllocateAndExecute(bytes);
+    }
+    
 }

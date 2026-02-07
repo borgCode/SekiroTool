@@ -451,6 +451,7 @@ public static class Offsets
         public static long FormatCutscenePathString;
         public static long GetRawY;
         public static long GetRawX;
+        public static long GetChrInsByEntityId;
     }
 
     private static void InitializeBaseAddresses(IntPtr moduleBase)
@@ -697,6 +698,12 @@ public static class Offsets
             Version1_2_0 => 0x6C1B90,
             Version1_3_0 or Version1_4_0 => 0x6C1BF0,
             Version1_5_0 or Version1_6_0 => 0x6C4520,
+            _ => 0
+        };
+
+        Functions.GetChrInsByEntityId = moduleBase + Version switch
+        {
+            Version1_6_0 => 0x06c1a10,
             _ => 0
         };
 
@@ -1182,6 +1189,7 @@ public static class Offsets
         Console.WriteLine($"Functions.ExecuteTalkCommand: 0x{Functions.ExecuteTalkCommand:X}");
         Console.WriteLine($"Functions.GetRawY: 0x{Functions.GetRawY:X}");
         Console.WriteLine($"Functions.GetRawX: 0x{Functions.GetRawX:X}");
+        Console.WriteLine($"Functions.GetChrInsByEntityId: 0x{Functions.GetChrInsByEntityId:X}");
 #endif
     }
 }
