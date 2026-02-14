@@ -63,13 +63,14 @@ public partial class MainWindow : Window
         IItemService itemService = new ItemService(_memoryService);
         ISettingsService settingsService = new SettingsService(_memoryService, _nopManager, hookManager);
         IEzStateService ezStateService = new EzStateService(_memoryService);
+        IChrInsService chrInsService = new ChrInsService(_memoryService);
 
 
         PlayerViewModel playerViewModel = new PlayerViewModel(_playerService, _hotkeyManager, _stateService);
         TravelViewModel travelViewModel =
             new TravelViewModel(travelService, _stateService, _hotkeyManager, eventService);
         EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _hotkeyManager, _stateService,
-            debugDrawService, eventService);
+            debugDrawService, eventService, chrInsService);
         TargetViewModel targetViewModel =
             new TargetViewModel(_stateService, _hotkeyManager, targetService, debugDrawService);
         UtilityViewModel utilityViewModel =

@@ -13,14 +13,16 @@ public class EnemyViewModel : BaseViewModel
     private readonly HotkeyManager _hotkeyManager;
     private readonly IDebugDrawService _debugDrawService;
     private readonly IEventService _eventService;
+    private readonly IChrInsService _chrInsService;
 
     public EnemyViewModel(IEnemyService enemyService, HotkeyManager hotkeyManager, IStateService stateService,
-        IDebugDrawService debugDrawService, IEventService eventService)
+        IDebugDrawService debugDrawService, IEventService eventService, IChrInsService chrInsService)
     {
         _enemyService = enemyService;
         _hotkeyManager = hotkeyManager;
         _debugDrawService = debugDrawService;
         _eventService = eventService;
+        _chrInsService = chrInsService;
 
         RegisterHotkeys();
 
@@ -317,7 +319,7 @@ public class EnemyViewModel : BaseViewModel
 
     private void SkipGeni3()
     {
-       IntPtr chrIns = _enemyService.GetChrInsByEntityId(1120830);
+       IntPtr chrIns = _chrInsService.GetChrInsByEntityId(1120830);
        if (chrIns != IntPtr.Zero)
        {
            _enemyService.SkipGeni3ByHpWrite();
