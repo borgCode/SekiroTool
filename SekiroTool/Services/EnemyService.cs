@@ -8,8 +8,6 @@ namespace SekiroTool.Services;
 
 public class EnemyService(IMemoryService memoryService, HookManager hookManager, IReminderService reminderService) : IEnemyService
 {
-    private IEnemyService _enemyServiceImplementation;
-
     public void ToggleNoDeath(bool isEnabled)
     {
         memoryService.WriteUInt8(DebugFlags.Base + DebugFlags.AllNoDeath, isEnabled ? 1 : 0);
