@@ -5,6 +5,7 @@ using SekiroTool.Core;
 using SekiroTool.Enums;
 using SekiroTool.GameIds;
 using SekiroTool.Interfaces;
+using SekiroTool.Utilities;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 using Item = SekiroTool.Models.Item;
 
@@ -15,16 +16,20 @@ public class EventViewModel : BaseViewModel
     private readonly IEventService _eventService;
     private readonly IDebugDrawService _debugDrawService;
     private readonly IItemService _itemService;
+    private readonly HotkeyManager _hotkeyManager;
 
     public static readonly Brush ActiveButtonColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#963839"));
     public static readonly Brush DefaultButtonColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#252525"));
     
     public EventViewModel(IEventService eventService, IStateService stateService,
-        IDebugDrawService debugDrawService, IItemService itemService)
+        IDebugDrawService debugDrawService, IItemService itemService, HotkeyManager hotkeyManager)
     {
         _eventService = eventService;
         _debugDrawService = debugDrawService;
         _itemService = itemService;
+        _hotkeyManager = hotkeyManager;
+        
+        RegisterHotkeys();
 
         stateService.Subscribe(State.Loaded, OnGameLoaded);
         stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
@@ -44,6 +49,7 @@ public class EventViewModel : BaseViewModel
         SetInvasionCommand = new DelegateCommand(SetInvasion);
         SetAshinaNightCommand = new DelegateCommand(SetAshinaNight);
         SetHeadlessApeCommand = new DelegateCommand(SetHeadlessApe);
+        SetEmmaSkipCommand = new DelegateCommand(EmmaSkip);
     }
     
     #region Commands
@@ -62,6 +68,8 @@ public class EventViewModel : BaseViewModel
     public ICommand SetInvasionCommand { get; set; }
     public ICommand SetAshinaNightCommand { get; set; }
     public ICommand SetHeadlessApeCommand { get; set; }
+    
+    public ICommand SetEmmaSkipCommand { get; set; }
 
     #endregion
 
@@ -272,6 +280,11 @@ public class EventViewModel : BaseViewModel
 
     #region Private Methods
 
+    private void RegisterHotkeys()
+    {
+        _hotkeyManager.RegisterAction(HotkeyActions.EmmaSkip, () => EmmaSkip(true));
+    }
+    
     private void OnGameLoaded()
     {
         AreOptionsEnabled = true;
@@ -504,5 +517,15 @@ public class EventViewModel : BaseViewModel
     private void SetHeadlessApe(object parameter)=> 
         _eventService.SetEvent(GameEvent.HeadlessApe, Convert.ToBoolean(parameter));
 
+    private void EmmaSkip(object parameter)
+    {
+        bool isOn = _eventService.GetEvent(GameEvent.EmmaFightFlag);
+        if (isOn)
+        {
+            _eventService.SetEvent(GameEvent.EmmaSkip, true);
+        }
+    }
+    
+   
     #endregion
 }

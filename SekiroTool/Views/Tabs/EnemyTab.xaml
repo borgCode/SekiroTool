@@ -12,6 +12,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            
         </Grid.RowDefinitions>
 
         <Border Grid.Row="0"
@@ -274,7 +276,12 @@
                 <CheckBox Content="Loop Snake Canyon Intro Animation"
                           IsChecked="{Binding IsSnakeIntroLoopEnabled}"
                           Margin="0,2" />
+                
             </StackPanel>
         </Border>
+        
+                
+            
+        
     </Grid>
 </UserControl>

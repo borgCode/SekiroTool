@@ -59,10 +59,9 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
             (dragonHandle.Value, 0xA + 2),
             (Functions.GetChrInsWithHandle, 0x18 + 2)
         ]);
-        
+
         memoryService.AllocateAndExecute(bytes);
     }
-    
 
     public void ToggleDragonActCombo(byte[] actArray, bool isEnabled, bool shouldDoStage1Twice)
     {

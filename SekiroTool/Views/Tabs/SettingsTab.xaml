@@ -181,6 +181,19 @@
                         </ItemsControl>
                     </ScrollViewer>
                 </TabItem>
+                <TabItem Header="Event">
+                    <ScrollViewer MaxHeight="350" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding EventHotkeys}"
+                                      Padding="5"
+                                      ItemTemplate="{StaticResource HotkeyItemTemplate}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="2" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </TabItem>
             </TabControl>
         </StackPanel>
     </Border>

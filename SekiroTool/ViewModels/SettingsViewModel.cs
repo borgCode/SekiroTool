@@ -27,6 +27,7 @@ public class SettingsViewModel : BaseViewModel
     public ObservableCollection<HotkeyBindingViewModel> EnemiesHotkeys { get; }
     public ObservableCollection<HotkeyBindingViewModel> TargetHotkeys { get; }
     public ObservableCollection<HotkeyBindingViewModel> UtilityHotkeys { get; }
+    public ObservableCollection<HotkeyBindingViewModel> EventHotkeys { get; }
 
     public SettingsViewModel(ISettingsService settingsService, IStateService stateService,
         HotkeyManager hotkeyManager)
@@ -98,6 +99,11 @@ public class SettingsViewModel : BaseViewModel
             new("Free Cam", HotkeyActions.FreeCam),
             new("Move Cam To Player", HotkeyActions.MoveCamToPlayer),
         ];
+        
+        EventHotkeys =
+        [
+            new("Skip Emma", HotkeyActions.EmmaSkip)
+        ];
 
         TargetHotkeys =
         [
@@ -130,6 +136,7 @@ public class SettingsViewModel : BaseViewModel
             .Concat(EnemiesHotkeys)
             .Concat(TargetHotkeys)
             .Concat(UtilityHotkeys)
+            .Concat((EventHotkeys))
             .ToDictionary(h => h.ActionId);
 
         LoadHotkeyDisplays();

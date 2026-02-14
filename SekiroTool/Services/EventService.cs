@@ -5,7 +5,7 @@ using static SekiroTool.Memory.Offsets;
 
 namespace SekiroTool.Services;
 
-public class EventService(IMemoryService memoryService) : IEventService
+public class EventService(IMemoryService memoryService, HotkeyManager hotkeyManager) : IEventService
 {
     public void SetEvent(long eventId, bool setValue)
     {
@@ -56,4 +56,5 @@ public class EventService(IMemoryService memoryService) : IEventService
         var ptr = memoryService.ReadInt64(DebugEventMan.Base) + DebugEventMan.DisableEvent;
         memoryService.WriteUInt8((IntPtr)ptr, isEnabled ? 1 : 0);
     }
+    
 }

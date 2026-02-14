@@ -58,7 +58,7 @@ public partial class MainWindow : Window
         IEnemyService enemyService = new EnemyService(_memoryService, hookManager, reminderService);
         ITargetService targetService = new TargetService(_memoryService, hookManager, reminderService);
         IDebugDrawService debugDrawService = new DebugDrawService(_memoryService, _stateService, _nopManager);
-        IEventService eventService = new EventService(_memoryService);
+        IEventService eventService = new EventService(_memoryService, _hotkeyManager);
         IUtilityService utilityService = new UtilityService(_memoryService, hookManager);
         IItemService itemService = new ItemService(_memoryService);
         ISettingsService settingsService = new SettingsService(_memoryService, _nopManager, hookManager);
@@ -75,7 +75,7 @@ public partial class MainWindow : Window
         UtilityViewModel utilityViewModel =
             new UtilityViewModel(utilityService, _stateService, _hotkeyManager, debugDrawService, playerViewModel, ezStateService);
         ItemViewModel itemViewModel = new ItemViewModel(itemService, _stateService);
-        EventViewModel eventViewModel = new EventViewModel(eventService, _stateService, debugDrawService, itemService);
+        EventViewModel eventViewModel = new EventViewModel(eventService, _stateService, debugDrawService, itemService, _hotkeyManager);
         SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, _stateService, _hotkeyManager);
 
         var playerTab = new PlayerTab(playerViewModel);
@@ -119,10 +119,9 @@ public partial class MainWindow : Window
 
     private bool _loaded;
 
-    private bool _hasScanned;
-
-    private bool _hasAllocatedMemory;
     
+    private bool _hasAllocatedMemory;
+    private DateTime? _attachedTime;
     private bool _hasPublishedAttached;
     private bool _hasCheckedPatch;
 
@@ -133,6 +132,15 @@ public partial class MainWindow : Window
             IsAttachedText.Text = "Attached to game";
             IsAttachedText.Foreground = (SolidColorBrush)Application.Current.Resources["AttachedBrush"];
             LaunchGameButton.IsEnabled = false;
+            
+            if (!_attachedTime.HasValue)
+            {
+                _attachedTime = DateTime.Now;
+                return;
+            }
+            
+            if ((DateTime.Now - _attachedTime.Value).TotalSeconds < 2)
+                return;
 
             if (!_hasCheckedPatch)
             {
@@ -183,9 +191,8 @@ public partial class MainWindow : Window
                 _stateService.Publish(State.Detached);
                 _hasPublishedAttached = false;
             }
-
+            _attachedTime = null;
             _loaded = false;
-            _hasScanned = false;
             _hasAllocatedMemory = false;
             IsAttachedText.Text = "Not attached";
             IsAttachedText.Foreground = (SolidColorBrush)Application.Current.Resources["NotAttachedBrush"];
