@@ -879,13 +879,12 @@ namespace SekiroTool {
         ///ff d0                   call   rax
         ///48 83 c4 28             add    rsp,0x28
         ///48 85 c0                test   rax,rax
-        ///74 15                   je     38 &lt;exit&gt;
+        ///74 22                   je     45 &lt;exit&gt;
+        ///48 89 c3                mov    rbx,rax
         ///48 8b 83 f8 1f 00 00    mov    rax,QWORD PTR [rbx+0x1ff8]
-        ///48 8b 40 18             mov    rax,QWORD PTR [rax+0x18]
-        ///c7 80 30 01 00 00 00    mov    DWORD PTR [rax+0x130],0x0
-        ///00 00 00
-        ///0000000000000038 &lt;exit&gt;:
-        /// c [rest of string was truncated]&quot;;.
+        ///48 85 c0                test   rax,rax
+        ///74 13                   je     45 &lt;exit&gt;
+        ///48 8b 40 18             mov     [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SkipGeni3 {
             get {

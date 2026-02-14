@@ -74,7 +74,7 @@ public static class Offsets
             Posture = 0x148,
             MaxPosture = 0x14C,
             BitFlags = 0x228,
-            CurrentBossPhase = 0x25C
+            CurrentBossNode = 0x25C
         }
 
         [Flags]
