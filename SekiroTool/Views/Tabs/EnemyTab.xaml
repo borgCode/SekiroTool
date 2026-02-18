@@ -127,7 +127,7 @@
                     <StackPanel Grid.Column="0" Margin="0,0,20,0">
                         <Button Content="Skip Dragon Phase 1"
                                 IsEnabled="{Binding AreOptionsEnabled}"
-                                Command="{Binding SkipGeni3Command}"
+                                Command="{Binding SkipDragonPhaseOneCommand}"
                                 Height="24"
                                 Margin="0,0,0,5" />
                         
@@ -278,8 +278,29 @@
                           Margin="0,2" />
                 
             </StackPanel>
+            
         </Border>
-        
+        <Border Grid.Row="4"
+                BorderThickness="1"
+                BorderBrush="#333"
+                CornerRadius="3">
+            <StackPanel Margin="10">
+                <TextBlock Text="Boss Skips"
+                           Margin="0,0,0,10" />
+
+                <Button Content="Skip Emma"
+                        Command="{Binding SetEmmaSkipCommand}"
+                        Margin="0,2"
+                        Width="100"
+                        HorizontalAlignment="Left"/>
+                <Button Content="Skip Geni 3"
+                        Command="{Binding SkipGeni3Command}"
+                        Margin="0,5"
+                        Width="100"
+                        HorizontalAlignment="Left"/>
+                
+            </StackPanel>
+        </Border>
                 
             
         

@@ -266,6 +266,11 @@ public class EnemyViewModel : BaseViewModel
             if (!AreOptionsEnabled) return;
             TriggerFinalDragonAttack();
         });
+        _hotkeyManager.RegisterAction(HotkeyActions.Geni3Skip, () =>
+        {
+            if (!AreOptionsEnabled) return;
+            SkipGeni3();
+        });
         
         _hotkeyManager.RegisterAction(HotkeyActions.NoButterflySummons,
             () => { IsNoButterflySummonsEnabled = !IsNoButterflySummonsEnabled; });
