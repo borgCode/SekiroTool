@@ -191,5 +191,18 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
         });
         memoryService.AllocateAndExecute(bytes);
     }
+
+    public void SkipArmorTowerGeni()
+    {
+        memoryService.WriteInt32(CodeCaveOffsets.Base + CodeCaveOffsets.EntityIdInput, 1110800);
+        
+        var bytes = AsmLoader.GetAsmBytes("SkipGeni3");
+        AsmHelper.WriteAbsoluteAddresses(bytes, new[]
+        {
+            (CodeCaveOffsets.Base.ToInt64() + CodeCaveOffsets.EntityIdInput, 0x0 + 2),
+            (Functions.GetChrInsByEntityId, 0xe + 2)
+        });
+        memoryService.AllocateAndExecute(bytes);
+    }
     
 }

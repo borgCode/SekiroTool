@@ -134,7 +134,8 @@ public class SettingsViewModel : BaseViewModel
         ];
         BossSkipHotkeys =
         [
-            new("Skip Geni 3", HotkeyActions.Geni3Skip)
+            new("Skip Geni 3", HotkeyActions.Geni3Skip),
+            new("Skip Geni 2 (Armor)", HotkeyActions.Geni2Skip)
         ];
             
         

@@ -17,4 +17,5 @@ public interface IEnemyService
     void ToggleButterflyNoSummons(bool isEnabled);
     void ToggleSnakeCanyonIntroAnimationLoop(bool isEnabled);
     void SkipGeni3ByHpWrite();
+    void SkipArmorTowerGeni();
 }

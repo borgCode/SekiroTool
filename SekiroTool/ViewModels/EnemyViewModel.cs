@@ -32,6 +32,7 @@ public class EnemyViewModel : BaseViewModel
         SkipDragonPhaseOneCommand = new DelegateCommand(SkipDragonPhaseOne);
         TriggerDragonFinalAttackCommand = new DelegateCommand(TriggerFinalDragonAttack);
         SkipGeni3Command = new DelegateCommand(SkipGeni3);
+        SkipTowerGeniCommand = new DelegateCommand(SkipTowerArmoredGeni);
     }
 
     
@@ -41,6 +42,8 @@ public class EnemyViewModel : BaseViewModel
     public ICommand TriggerDragonFinalAttackCommand { get; set; }
     
     public ICommand SkipGeni3Command { get; set; }
+    
+    public ICommand SkipTowerGeniCommand { get; set; }
     
     #endregion
 
@@ -271,7 +274,11 @@ public class EnemyViewModel : BaseViewModel
             if (!AreOptionsEnabled) return;
             SkipGeni3();
         });
-        
+        _hotkeyManager.RegisterAction(HotkeyActions.Geni2Skip, () =>
+        {
+            if (!AreOptionsEnabled) return;
+            SkipTowerArmoredGeni();
+        });
         _hotkeyManager.RegisterAction(HotkeyActions.NoButterflySummons,
             () => { IsNoButterflySummonsEnabled = !IsNoButterflySummonsEnabled; });
         
@@ -329,6 +336,15 @@ public class EnemyViewModel : BaseViewModel
        {
            _enemyService.SkipGeni3ByHpWrite();
        }
+    }
+
+    private void SkipTowerArmoredGeni()
+    {
+        IntPtr chrIns = _chrInsService.GetChrInsByEntityId(1110800);
+        if (chrIns != IntPtr.Zero)
+        {
+            _enemyService.SkipArmorTowerGeni();
+        }
     }
     
     #endregion
