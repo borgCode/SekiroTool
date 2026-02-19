@@ -701,10 +701,12 @@ public static class Offsets
             _ => 0
         };
 
-        Functions.GetChrInsByEntityId = moduleBase + Version switch
+        Functions.GetChrInsByEntityId = moduleBase.ToInt64() + Version switch
         {
-            Version1_6_0 => 0x06c1a10,
-            _ => 0
+            Version1_2_0 => 0x6BF190,
+            Version1_3_0 or Version1_4_0 => 0x6BF1F0,
+            Version1_5_0 or Version1_6_0 => 0x6C1A10,
+           _ => 0
         };
 
         Functions.GetEvent = moduleBase + Version switch
