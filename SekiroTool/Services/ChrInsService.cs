@@ -11,7 +11,7 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
 
     #region Public Methods
     
-    public IntPtr GetChrInsByEntityId(int entityId)
+    public nint GetChrInsByEntityId(int entityId)
     {
         memoryService.WriteInt32(CodeCaveOffsets.Base + CodeCaveOffsets.EntityIdInput, entityId);
         
@@ -19,13 +19,27 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
         AsmHelper.WriteAbsoluteAddresses(bytes, new[]
         {
             (CodeCaveOffsets.Base.ToInt64() + CodeCaveOffsets.EntityIdInput, 0x0 + 2),
-            (Offsets.Functions.GetChrInsByEntityId, 0xa + 2),
+            (Functions.GetChrInsByEntityId, 0xa + 2),
             (CodeCaveOffsets.Base.ToInt64()+ CodeCaveOffsets.ChrInsByEntityIdResult,0x1e + 2)
         });
         memoryService.AllocateAndExecute(bytes);
         
         return (IntPtr) memoryService.ReadInt64(CodeCaveOffsets.Base + CodeCaveOffsets.ChrInsByEntityIdResult);
     }
-    
+
+    public void SetHp(IntPtr chrIns, int hp) =>
+        memoryService.WriteInt32(GetChrDataPtr(chrIns) + (int)ChrIns.ChrDataOffsets.Hp, hp);
+
+    public void SetHpNode(IntPtr chrIns, int nodeNum) =>
+        memoryService.WriteInt32(GetChrDataPtr(chrIns) + (int)ChrIns.ChrDataOffsets.CurrentBossNode, nodeNum);
+
+    #endregion
+
+
+    #region Private Methods
+
+    private nint GetChrDataPtr(nint chrIns) =>
+        memoryService.FollowPointers(chrIns, ChrIns.ChrDataModule, true, false);
+
     #endregion
 }
