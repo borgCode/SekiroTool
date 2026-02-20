@@ -555,7 +555,7 @@ public class PlayerViewModel : BaseViewModel
         _hotkeyManager.RegisterAction(HotkeyActions.IncreasePlayerSpeed, () => SetSpeed(Math.Min(10, PlayerSpeed + 0.25f)));
         _hotkeyManager.RegisterAction(HotkeyActions.DecreasePlayerSpeed, () => SetSpeed(Math.Max(0, PlayerSpeed - 0.25f)));
         _hotkeyManager.RegisterAction(HotkeyActions.IncreaseDamageMultiplier, () => DamageMultiplier = Math.Min(10, DamageMultiplier + 0.1f));
-        _hotkeyManager.RegisterAction(HotkeyActions.DecreaseDamageMultiplier, () => DamageMultiplier = Math.Max(0.1f, PlayerSpeed - 0.1f));
+        _hotkeyManager.RegisterAction(HotkeyActions.DecreaseDamageMultiplier, () => DamageMultiplier = Math.Max(0.1f, DamageMultiplier - 0.1f));
         _hotkeyManager.RegisterAction(HotkeyActions.ToggleDamageMultiplier, () => IsDamageMultiplierEnabled = !IsDamageMultiplierEnabled);
 
 

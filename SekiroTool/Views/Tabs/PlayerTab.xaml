@@ -211,10 +211,10 @@
                         IsEnabled="{Binding IsDamageMultiplierEnabled}"
                         Value="{Binding DamageMultiplier}"
                         Maximum="50"
-                        Minimum="0.1"
+                        Minimum="0.01"
                         ClipValueToMinMax="True"
                         Increment="0.1"
-                        FormatString="F1"
+                        FormatString="F2"
                         >
                         
                     </xctk:DoubleUpDown>
