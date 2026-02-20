@@ -15,6 +15,9 @@ public class EnemyViewModel : BaseViewModel
     private readonly IEventService _eventService;
     private readonly IChrInsService _chrInsService;
 
+    public const int TowerGeniEntityId = 1110800;
+    public const int Geni3EntityId = 1120830;
+
     public EnemyViewModel(IEnemyService enemyService, HotkeyManager hotkeyManager, IStateService stateService,
         IDebugDrawService debugDrawService, IEventService eventService, IChrInsService chrInsService)
     {
@@ -331,20 +334,14 @@ public class EnemyViewModel : BaseViewModel
 
     private void SkipGeni3()
     {
-       IntPtr chrIns = _chrInsService.GetChrInsByEntityId(1120830);
-       if (chrIns != IntPtr.Zero)
-       {
-           _enemyService.SkipGeni3ByHpWrite();
-       }
+       nint chrIns = _chrInsService.GetChrInsByEntityId(Geni3EntityId);
+       _chrInsService.SetHpNode(chrIns, 0);
     }
 
     private void SkipTowerArmoredGeni()
     {
-        IntPtr chrIns = _chrInsService.GetChrInsByEntityId(1110800);
-        if (chrIns != IntPtr.Zero)
-        {
-            _enemyService.SkipArmorTowerGeni();
-        }
+        nint chrIns = _chrInsService.GetChrInsByEntityId(TowerGeniEntityId);
+        _chrInsService.SetHpNode(chrIns, 0);
     }
     
     #endregion

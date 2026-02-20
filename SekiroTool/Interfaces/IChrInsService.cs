@@ -2,5 +2,7 @@ namespace SekiroTool.Interfaces;
 
 public interface IChrInsService
 {
-   IntPtr GetChrInsByEntityId(int entityId);
+   nint GetChrInsByEntityId(int entityId);
+   void SetHp(nint chrIns, int hp);
+   void SetHpNode(nint chrIns, int nodeNum);
 }

@@ -33,7 +33,7 @@ public interface IMemoryService
     uint RunThread(nint address, uint timeout = uint.MaxValue);
     bool RunThreadAndWaitForCompletion(nint address, uint timeout = uint.MaxValue);
     
-    public nint FollowPointers(nint baseAddress, int[] offsets, bool readFinalPtr);
+    public nint FollowPointers(nint baseAddress, int[] offsets, bool readFinalPtr, bool derefBase = true);
     void AllocateAndExecute(byte[] shellcode);
     void AllocCodeCave();
 

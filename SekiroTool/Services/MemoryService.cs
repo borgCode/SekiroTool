@@ -177,19 +177,19 @@ public class MemoryService : IMemoryService
         return waitResult == 0;
     }
 
-    public IntPtr FollowPointers(IntPtr baseAddress, int[] offsets, bool readFinalPtr)
+    public IntPtr FollowPointers(IntPtr baseAddress, int[] offsets, bool readFinalPtr, bool derefBase = true)
     {
-        ulong ptr = ReadUInt64(baseAddress);
+        long ptr = derefBase ? ReadInt64(baseAddress) : baseAddress;
 
         for (int i = 0; i < offsets.Length - 1; i++)
         {
-            ptr = ReadUInt64((IntPtr)ptr + offsets[i]);
+            ptr = ReadInt64((IntPtr)ptr + offsets[i]);
         }
 
         IntPtr finalAddress = (IntPtr)ptr + offsets[offsets.Length - 1];
 
         if (readFinalPtr)
-            return (IntPtr)ReadUInt64(finalAddress);
+            return (IntPtr)ReadInt64(finalAddress);
 
 
         return finalAddress;
