@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using SekiroTool.Interfaces;
 using SekiroTool.Memory;
@@ -18,53 +20,61 @@ public class MemoryService : IMemoryService
     private bool _disposed;
     public bool IsAttached { get; private set; }
     public Process? TargetProcess { get; private set; }
-    public nint ProcessHandle { get; private set; } = nint.Zero;
+    public nint ProcessHandle { get; private set; } = IntPtr.Zero;
     public nint BaseAddress { get; private set; }
+    public int ModuleMemorySize { get; private set; }
 
     private Timer _autoAttachTimer;
 
-
-    public byte ReadUInt8(nint addr)
+    public T Read<T>(nint addr) where T : unmanaged
     {
-        var bytes = ReadBytes(addr, 1);
-        return bytes[0];
+        int size = Unsafe.SizeOf<T>();
+        var bytes = ReadBytes(addr, size);
+        return MemoryMarshal.Read<T>(bytes);
     }
 
-    public uint ReadUInt32(IntPtr addr)
+    public T[] ReadArray<T>(nint addr, int count) where T : unmanaged
     {
-        var bytes = ReadBytes(addr, 4);
-        return BitConverter.ToUInt32(bytes, 0);
+        int size = Unsafe.SizeOf<T>() * count;
+        var bytes = ReadBytes(addr, size);
+        return MemoryMarshal.Cast<byte, T>(bytes).ToArray();
     }
 
-    public ulong ReadUInt64(IntPtr addr)
+    public string HexDump(nint addr, int size)
     {
-        var bytes = ReadBytes(addr, 8);
-        return BitConverter.ToUInt64(bytes, 0);
+        var data = ReadBytes(addr, size);
+        return HexDump(data);
     }
 
-    public int ReadInt32(IntPtr addr)
+    private string HexDump(byte[] data, int? maxBytes = null)
     {
-        var bytes = ReadBytes(addr, 4);
-        return BitConverter.ToInt32(bytes, 0);
+        int bytesToDump = maxBytes.HasValue ? Math.Min(maxBytes.Value, data.Length) : data.Length;
+        var sb = new StringBuilder();
+
+        for (int i = 0; i < bytesToDump; i += 16)
+        {
+            int lineLength = Math.Min(16, bytesToDump - i);
+            string hex = BitConverter.ToString(data, i, lineLength).Replace("-", " ");
+            string ascii = new string(data.Skip(i).Take(lineLength)
+                .Select(b => b >= 32 && b < 127 ? (char)b : '.').ToArray());
+            sb.AppendLine($"{i:X4}: {hex,-48} {ascii}");
+        }
+
+        return sb.ToString();
     }
 
-    public long ReadInt64(IntPtr addr)
+    public void Write<T>(nint addr, T value) where T : unmanaged
     {
-        var bytes = ReadBytes(addr, 8);
-        return BitConverter.ToInt64(bytes, 0);
+        int size = Unsafe.SizeOf<T>();
+        var bytes = new byte[size];
+        MemoryMarshal.Write(bytes, ref value);
+        WriteBytes(addr, bytes);
     }
 
-    public float ReadFloat(IntPtr addr)
-    {
-        var bytes = ReadBytes(addr, 4);
-        return BitConverter.ToSingle(bytes, 0);
-    }
+    public void Write(nint addr, bool value) =>
+        Write(addr, value ? (byte)1 : (byte)0);
 
-    public double ReadDouble(IntPtr addr)
-    {
-        var bytes = ReadBytes(addr, 8);
-        return BitConverter.ToDouble(bytes, 0);
-    }
+
 
     public string ReadString(IntPtr addr, int maxLength = 32)
     {
@@ -137,7 +147,7 @@ public class MemoryService : IMemoryService
 
     public void SetBitValue(IntPtr addr, int flagMask, bool setValue)
     {
-        byte currentByte = ReadUInt8(addr);
+        byte currentByte = Read<byte>(addr);
         byte modifiedByte;
 
         if (setValue)
@@ -149,14 +159,14 @@ public class MemoryService : IMemoryService
 
     public bool IsBitSet(IntPtr addr, int flagMask)
     {
-        byte currentByte = ReadUInt8(addr);
+        byte currentByte = Read<byte>(addr);
 
         return (currentByte & flagMask) != 0;
     }
 
     public uint RunThread(nint address, uint timeout = 0xFFFFFFFF)
     {
-        nint thread = Kernel32.CreateRemoteThread(ProcessHandle, nint.Zero, 0, address, nint.Zero, 0, nint.Zero);
+        nint thread = Kernel32.CreateRemoteThread(ProcessHandle, IntPtr.Zero, 0, address, IntPtr.Zero, 0, IntPtr.Zero);
         var ret = Kernel32.WaitForSingleObject(thread, timeout);
         Kernel32.CloseHandle(thread);
         return ret;
@@ -164,9 +174,9 @@ public class MemoryService : IMemoryService
 
     public bool RunThreadAndWaitForCompletion(nint address, uint timeout = 0xFFFFFFFF)
     {
-        nint thread = Kernel32.CreateRemoteThread(ProcessHandle, nint.Zero, 0, address, nint.Zero, 0, nint.Zero);
+        nint thread = Kernel32.CreateRemoteThread(ProcessHandle, IntPtr.Zero, 0, address, IntPtr.Zero, 0, IntPtr.Zero);
 
-        if (thread == nint.Zero)
+        if (thread == IntPtr.Zero)
         {
             return false;
         }
@@ -177,29 +187,28 @@ public class MemoryService : IMemoryService
         return waitResult == 0;
     }
 
-    public IntPtr FollowPointers(IntPtr baseAddress, int[] offsets, bool readFinalPtr, bool derefBase = true)
+    public nint FollowPointers(nint baseAddress, int[] offsets, bool readFinalPtr, bool derefBase = true)
     {
-        long ptr = derefBase ? ReadInt64(baseAddress) : baseAddress;
+        nint ptr = derefBase ? Read<nint>(baseAddress) : baseAddress;
 
         for (int i = 0; i < offsets.Length - 1; i++)
         {
-            ptr = ReadInt64((IntPtr)ptr + offsets[i]);
+            ptr = Read<nint>(ptr + offsets[i]);
         }
 
-        IntPtr finalAddress = (IntPtr)ptr + offsets[offsets.Length - 1];
+        nint finalAddress = ptr + offsets[offsets.Length - 1];
 
         if (readFinalPtr)
-            return (IntPtr)ReadInt64(finalAddress);
-
+            return Read<nint>(finalAddress);
 
         return finalAddress;
     }
-    
+
     public void AllocateAndExecute(byte[] shellcode)
     {
-        nint allocatedMemory = Kernel32.VirtualAllocEx(ProcessHandle, nint.Zero, (uint)shellcode.Length);
+        nint allocatedMemory = Kernel32.VirtualAllocEx(ProcessHandle, IntPtr.Zero, (uint)shellcode.Length);
 
-        if (allocatedMemory == nint.Zero) return;
+        if (allocatedMemory == IntPtr.Zero) return;
 
         WriteBytes(allocatedMemory, shellcode);
         bool executionSuccess = RunThreadAndWaitForCompletion(allocatedMemory);
@@ -216,11 +225,11 @@ public class MemoryService : IMemoryService
         uint codeCaveSize = 0x2000;
         nint allocatedMemory;
 
-        for (nint addr = searchRangeEnd; addr.ToInt64() > searchRangeStart.ToInt64(); addr -= 0x10000)
+        for (nint addr = searchRangeEnd; addr > searchRangeStart; addr -= 0x10000)
         {
             allocatedMemory = Kernel32.VirtualAllocEx(ProcessHandle, addr, codeCaveSize);
 
-            if (allocatedMemory != nint.Zero)
+            if (allocatedMemory != IntPtr.Zero)
             {
                 CodeCaveOffsets.Base = allocatedMemory;
                 break;
@@ -246,7 +255,6 @@ public class MemoryService : IMemoryService
 
         _autoAttachTimer.Start();
     }
-
 
     private void TryAttachToProcess()
     {
@@ -282,6 +290,7 @@ public class MemoryService : IMemoryService
                 if (TargetProcess.MainModule != null)
                 {
                     BaseAddress = TargetProcess.MainModule.BaseAddress;
+                    ModuleMemorySize = TargetProcess.MainModule.ModuleMemorySize;
                 }
 
                 IsAttached = true;

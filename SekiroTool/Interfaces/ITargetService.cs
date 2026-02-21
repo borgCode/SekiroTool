@@ -4,7 +4,7 @@ public interface ITargetService
 {
     void ToggleTargetHook(bool isEnabled);
 
-    ulong GetTargetChrIns();
+    nint GetTargetChrIns();
     
     void SetHp(int hp);
     int GetCurrentHp();

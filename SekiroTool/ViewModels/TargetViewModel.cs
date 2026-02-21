@@ -18,7 +18,7 @@ public class TargetViewModel : BaseViewModel
     private bool _isTargetOptionsEnabled;
     private bool _isValidTarget;
 
-    private ulong _currentTargetAddr;
+    private nint _currentTargetAddr;
 
     private int _customHp;
     private bool _customHpHasBeenSet;
@@ -616,7 +616,7 @@ public class TargetViewModel : BaseViewModel
         IsValidTarget = true;
 
 
-        ulong targetAddr = _targetService.GetTargetChrIns();
+        nint targetAddr = _targetService.GetTargetChrIns();
 
 
         if (targetAddr != _currentTargetAddr)
@@ -628,7 +628,7 @@ public class TargetViewModel : BaseViewModel
             uint handle = _targetService.GetTargetHandle();
             uint characterId = _targetService.GetCharacterId();
             int entityId = _targetService.GetEntityId();
-            Console.WriteLine($@"Target Info: handle: {handle:X} characterId: {characterId} entityId: {entityId} enemyIns: {targetAddr:X}");
+            Console.WriteLine($@"Target Info: handle: {handle:X} characterId: {characterId} entityId: {entityId} enemyIns: {(long)targetAddr:X}");
 
 #endif
 
@@ -666,7 +666,7 @@ public class TargetViewModel : BaseViewModel
 
     private bool IsTargetValid()
     {
-        ulong targetAddr = _targetService.GetTargetChrIns();
+        nint targetAddr = _targetService.GetTargetChrIns();
         if (targetAddr == 0) return false;
 
         float health = _targetService.GetCurrentHp();
