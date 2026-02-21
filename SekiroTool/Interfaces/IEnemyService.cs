@@ -1,6 +1,4 @@
-﻿using SekiroTool.GameIds;
-
-namespace SekiroTool.Interfaces;
+﻿namespace SekiroTool.Interfaces;
 
 public interface IEnemyService
 {

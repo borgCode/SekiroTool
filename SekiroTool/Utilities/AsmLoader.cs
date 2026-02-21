@@ -1,20 +1,27 @@
 ﻿using System.Text.RegularExpressions;
+using SekiroTool.Enums;
 
 namespace SekiroTool.Utilities
 {
     public static class AsmLoader
     {
         private const string BytePattern = @"^(?:[\da-f]{2} )*(?:[\da-f]{2}(?=\s|$))";
+        
+        private static readonly Dictionary<AsmScript, byte[]> Cache = new();
 
-        internal static byte[] GetAsmBytes(string resourceName)
+        public static byte[] GetAsmBytes(AsmScript resourceName)
         {
-            string asmFile = GetResourceContent(resourceName);
-            return ParseBytes(asmFile);
+            if (!Cache.TryGetValue(resourceName, out byte[] template))
+            {
+                template = ParseBytes(GetResourceContent(resourceName.ToString()));
+                Cache[resourceName] = template;
+            }
+            return (byte[])template.Clone();
         }
 
         private static string GetResourceContent(string resourceName)
         {
-            object? resource = Resources.ResourceManager.GetObject(resourceName);
+            object resource = Resources.ResourceManager.GetObject(resourceName);
             return resource as string ??
                    throw new ArgumentException($"Resource '{resourceName}' not found or is not a string.");
         }

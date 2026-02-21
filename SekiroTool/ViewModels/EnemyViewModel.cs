@@ -13,14 +13,19 @@ public class EnemyViewModel : BaseViewModel
     private readonly HotkeyManager _hotkeyManager;
     private readonly IDebugDrawService _debugDrawService;
     private readonly IEventService _eventService;
+    private readonly IChrInsService _chrInsService;
+
+    public const int TowerGeniEntityId = 1110800;
+    public const int Geni3EntityId = 1120830;
 
     public EnemyViewModel(IEnemyService enemyService, HotkeyManager hotkeyManager, IStateService stateService,
-        IDebugDrawService debugDrawService, IEventService eventService)
+        IDebugDrawService debugDrawService, IEventService eventService, IChrInsService chrInsService)
     {
         _enemyService = enemyService;
         _hotkeyManager = hotkeyManager;
         _debugDrawService = debugDrawService;
         _eventService = eventService;
+        _chrInsService = chrInsService;
 
         RegisterHotkeys();
 
@@ -29,6 +34,8 @@ public class EnemyViewModel : BaseViewModel
 
         SkipDragonPhaseOneCommand = new DelegateCommand(SkipDragonPhaseOne);
         TriggerDragonFinalAttackCommand = new DelegateCommand(TriggerFinalDragonAttack);
+        SkipGeni3Command = new DelegateCommand(SkipGeni3);
+        SkipTowerGeniCommand = new DelegateCommand(SkipTowerArmoredGeni);
     }
 
     
@@ -36,6 +43,10 @@ public class EnemyViewModel : BaseViewModel
 
     public ICommand SkipDragonPhaseOneCommand { get; set; }
     public ICommand TriggerDragonFinalAttackCommand { get; set; }
+    
+    public ICommand SkipGeni3Command { get; set; }
+    
+    public ICommand SkipTowerGeniCommand { get; set; }
     
     #endregion
 
@@ -261,7 +272,16 @@ public class EnemyViewModel : BaseViewModel
             if (!AreOptionsEnabled) return;
             TriggerFinalDragonAttack();
         });
-        
+        _hotkeyManager.RegisterAction(HotkeyActions.Geni3Skip, () =>
+        {
+            if (!AreOptionsEnabled) return;
+            SkipGeni3();
+        });
+        _hotkeyManager.RegisterAction(HotkeyActions.Geni2Skip, () =>
+        {
+            if (!AreOptionsEnabled) return;
+            SkipTowerArmoredGeni();
+        });
         _hotkeyManager.RegisterAction(HotkeyActions.NoButterflySummons,
             () => { IsNoButterflySummonsEnabled = !IsNoButterflySummonsEnabled; });
         
@@ -312,5 +332,17 @@ public class EnemyViewModel : BaseViewModel
         _eventService.SetEvent(GameEvent.TriggerFinalDragonAttack, true);
     }
 
+    private void SkipGeni3()
+    {
+       nint chrIns = _chrInsService.GetChrInsByEntityId(Geni3EntityId);
+       _chrInsService.SetHpNode(chrIns, 0);
+    }
+
+    private void SkipTowerArmoredGeni()
+    {
+        nint chrIns = _chrInsService.GetChrInsByEntityId(TowerGeniEntityId);
+        _chrInsService.SetHpNode(chrIns, 0);
+    }
+    
     #endregion
 }

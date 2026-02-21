@@ -45,15 +45,15 @@ public class DebugDrawService : IDebugDrawService
     private void ToggleDebugDraw(bool isEnabled)
     {
         
-        var flagPtr = _memoryService.ReadInt64(WorldChrManDbg.Base) + WorldChrManDbg.EnableDebugDraw;
+        var flagPtr = _memoryService.Read<nint>(WorldChrManDbg.Base) + WorldChrManDbg.EnableDebugDraw;
         if (isEnabled)
         {
             _nopManager.InstallNop(Patches.DebugFont, 5);
-            _memoryService.WriteUInt8((IntPtr)flagPtr, 1);
+            _memoryService.Write(flagPtr, (byte)1);
         }
         else
         {
-            _memoryService.WriteUInt8((IntPtr)flagPtr, 0);
+            _memoryService.Write(flagPtr, (byte)0);
        
         }
     }

@@ -5,8 +5,8 @@ namespace SekiroTool.Memory
 {
     public class HookManager
     {
+        private readonly Dictionary<nint, HookData> _hookRegistry = new();
         private readonly IMemoryService _memoryService;
-        private readonly Dictionary<long, HookData> _hookRegistry = new Dictionary<long, HookData>();
 
         public HookManager(IMemoryService memoryService, IStateService stateService)
         {
@@ -16,26 +16,24 @@ namespace SekiroTool.Memory
 
         private class HookData
         {
-            public long OriginAddr { get; set; }
-            public long CaveAddr { get; set; }
+            public nint OriginAddr { get; set; }
+            public nint CaveAddr { get; set; }
             public byte[] OriginalBytes { get; set; }
         }
 
-
-        public long InstallHook(long codeLoc, long origin, byte[] originalBytes)
+        public void InstallHook(nint codeLoc, nint origin, byte[] originalBytes)
         {
             byte[] hookBytes = GetHookBytes(originalBytes.Length, codeLoc, origin);
-            _memoryService.WriteBytes((IntPtr)origin, hookBytes);
+            _memoryService.WriteBytes(origin, hookBytes);
             _hookRegistry[codeLoc] = new HookData
             {
                 CaveAddr = codeLoc,
                 OriginAddr = origin,
                 OriginalBytes = originalBytes
             };
-            return codeLoc;
         }
 
-        private byte[] GetHookBytes(int originalBytesLength, long target, long origin)
+        private byte[] GetHookBytes(int originalBytesLength, nint target, nint origin)
         {
             byte[] hookBytes = new byte[originalBytesLength];
             hookBytes[0] = 0xE9;
@@ -52,19 +50,15 @@ namespace SekiroTool.Memory
             return hookBytes;
         }
 
-        public void UninstallHook(long key)
+        public void UninstallHook(nint key)
         {
-            if (!_hookRegistry.TryGetValue(key, out HookData hookToUninstall))
-            {
-                return;
-            }
+            if (!_hookRegistry.TryGetValue(key, out HookData hookToUninstall)) return;
 
-            IntPtr originAddrPtr = (IntPtr)hookToUninstall.OriginAddr;
-            _memoryService.WriteBytes(originAddrPtr, hookToUninstall.OriginalBytes);
+            _memoryService.WriteBytes(hookToUninstall.OriginAddr, hookToUninstall.OriginalBytes);
             _hookRegistry.Remove(key);
         }
 
-        private void OnGameDetached()
+        public void ClearHooks()
         {
             _hookRegistry.Clear();
         }
@@ -75,6 +69,11 @@ namespace SekiroTool.Memory
             {
                 UninstallHook(key);
             }
+        }
+        
+        private void OnGameDetached()
+        {
+            _hookRegistry.Clear();
         }
     }
 }

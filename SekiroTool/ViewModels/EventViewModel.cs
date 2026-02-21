@@ -487,9 +487,6 @@ public class EventViewModel : BaseViewModel
         _itemService.SpawnItem(kusabimaru,1);
         _itemService.SpawnItem(grapple,1);
     }
-        
-
-    
     
     
     private void SetHirataTwo(object parameter)

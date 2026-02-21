@@ -278,8 +278,33 @@
                           Margin="0,2" />
                 
             </StackPanel>
+            
         </Border>
-        
+        <Border Grid.Row="4"
+                BorderThickness="1"
+                BorderBrush="#333"
+                CornerRadius="3">
+            <StackPanel Margin="10">
+                <TextBlock Text="Boss Skips"
+                           Margin="0,0,0,10" />
+
+                <Button Content="Skip Emma"
+                        Command="{Binding SetEmmaSkipCommand}"
+                        Margin="0,2"
+                        Width="125"
+                        HorizontalAlignment="Left"/>
+                <Button Content="Skip Geni 3"
+                        Command="{Binding SkipGeni3Command}"
+                        Margin="0,5"
+                        Width="125"
+                        HorizontalAlignment="Left"/>
+                <Button Content="Skip Geni 2 (Armor)"
+                        Command="{Binding SkipTowerGeniCommand}"
+                        Margin="0,5"
+                        Width="125"
+                        HorizontalAlignment="Left"/>
+            </StackPanel>
+        </Border>
                 
             
         

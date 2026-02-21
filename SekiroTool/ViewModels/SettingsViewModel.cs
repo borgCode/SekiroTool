@@ -28,6 +28,7 @@ public class SettingsViewModel : BaseViewModel
     public ObservableCollection<HotkeyBindingViewModel> TargetHotkeys { get; }
     public ObservableCollection<HotkeyBindingViewModel> UtilityHotkeys { get; }
     public ObservableCollection<HotkeyBindingViewModel> EventHotkeys { get; }
+    public ObservableCollection<HotkeyBindingViewModel> BossSkipHotkeys { get; }
 
     public SettingsViewModel(ISettingsService settingsService, IStateService stateService,
         HotkeyManager hotkeyManager)
@@ -131,14 +132,20 @@ public class SettingsViewModel : BaseViewModel
             new("Target No Death", HotkeyActions.TargetNoDeath),
             new("Target Targeting View", HotkeyActions.TargetTargetingView),
         ];
+        BossSkipHotkeys =
+        [
+            new("Skip Geni 3", HotkeyActions.Geni3Skip),
+            new("Skip Geni 2 (Armor)", HotkeyActions.Geni2Skip)
+        ];
+            
         
         _hotkeyLookup = PlayerHotkeys
             .Concat(EnemiesHotkeys)
             .Concat(TargetHotkeys)
             .Concat(UtilityHotkeys)
+            .Concat(BossSkipHotkeys)
             .Concat((EventHotkeys))
             .ToDictionary(h => h.ActionId);
-
         LoadHotkeyDisplays();
         
         ClearHotkeysCommand = new DelegateCommand(ClearHotkeys);

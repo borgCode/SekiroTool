@@ -78,7 +78,8 @@ public enum HotkeyActions
     FreeCam,
     MoveCamToPlayer,
     
-    EmmaSkip
-    
+    EmmaSkip,
+    Geni3Skip,
+    Geni2Skip
     
 }

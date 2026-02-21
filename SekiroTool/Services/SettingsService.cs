@@ -11,7 +11,7 @@ public class SettingsService(IMemoryService memoryService, NopManager nopManager
     : ISettingsService
 {
     public void Quitout() =>
-        memoryService.WriteUInt8((IntPtr)memoryService.ReadInt64(MenuMan.Base) + MenuMan.Quitout, 1);
+        memoryService.Write(memoryService.Read<nint>(MenuMan.Base) + MenuMan.Quitout, (byte)1);
 
     public async void ToggleNoLogo(bool isEnabled)
     {
@@ -41,26 +41,26 @@ public class SettingsService(IMemoryService memoryService, NopManager nopManager
         var code = CodeCaveOffsets.Base + CodeCaveOffsets.NoCameraSpin;
         if (isEnabled)
         {
-            var inputManager = DlUserInputManager.Base;
+            nint inputManager = DlUserInputManager.Base;
 
             if (!await WaitForValidPtr(inputManager))
                 return;
 
             var hookLoc = Hooks.GetMouseDelta;
-            var bytes = AsmLoader.GetAsmBytes("NoCameraSpin");
+            var bytes = AsmLoader.GetAsmBytes(AsmScript.NoCameraSpin);
             AsmHelper.WriteRelativeOffsets(bytes, new[]
             {
-                (code.ToInt64() + 0x1, inputManager.ToInt64(), 7, 0x1 + 3),
-                (code.ToInt64() + 0x21, hookLoc + 0x7, 5, 0x21 + 1)
+                (code + 0x1, inputManager, 7, 0x1 + 3),
+                (code + 0x21, hookLoc + 0x7, 5, 0x21 + 1)
             });
 
             memoryService.WriteBytes(code, bytes);
-            hookManager.InstallHook(code.ToInt64(), hookLoc,
+            hookManager.InstallHook(code, hookLoc,
                 [0x0F, 0x29, 0x83, 0xD0, 0x00, 0x00, 0x00]);
         }
         else
         {
-            hookManager.UninstallHook(code.ToInt64());
+            hookManager.UninstallHook(code);
         }
     }
 
@@ -69,7 +69,7 @@ public class SettingsService(IMemoryService memoryService, NopManager nopManager
         var sw = Stopwatch.StartNew();
         while (sw.ElapsedMilliseconds < timeout)
         {
-            if (memoryService.ReadInt64(ptr) != IntPtr.Zero) return true;
+            if (memoryService.Read<nint>(ptr) != IntPtr.Zero) return true;
             await Task.Delay(10);
         }
 
@@ -84,30 +84,30 @@ public class SettingsService(IMemoryService memoryService, NopManager nopManager
             var hookLoc = Hooks.StartMusic;
             var originalBytes = OriginalBytesByPatch.StartMusic.GetOriginal();
 
-            if (!await WaitForValidBytes((IntPtr)hookLoc, originalBytes))
+            if (!await WaitForValidBytes(hookLoc, originalBytes))
                 return;
 
 
             if (Offsets.Version == Patch.Version1_6_0)
             {
-                var bytes = AsmLoader.GetAsmBytes("NoMenuMusic");
+                var bytes = AsmLoader.GetAsmBytes(AsmScript.NoMenuMusic);
                 var jmpBytes = AsmHelper.GetJmpOriginOffsetBytes(hookLoc, 6, code + 0x11);
                 Array.Copy(jmpBytes, 0, bytes, 0xC + 1, jmpBytes.Length);
                 memoryService.WriteBytes(code, bytes);
-                hookManager.InstallHook(code.ToInt64(), hookLoc, originalBytes);
+                hookManager.InstallHook(code, hookLoc, originalBytes);
             }
             else
             {
-                var bytes = AsmLoader.GetAsmBytes("NoMenuMusicEarlyPatches");
+                var bytes = AsmLoader.GetAsmBytes(AsmScript.NoMenuMusicEarlyPatches);
                 var jmpBytes = AsmHelper.GetJmpOriginOffsetBytes(hookLoc, 6, code + 0x10);
                 Array.Copy(jmpBytes, 0, bytes, 0xB + 1, jmpBytes.Length);
                 memoryService.WriteBytes(code, bytes);
-                hookManager.InstallHook(code.ToInt64(), hookLoc, originalBytes);
+                hookManager.InstallHook(code, hookLoc, originalBytes);
             }
         }
         else
         {
-            hookManager.UninstallHook(code.ToInt64());
+            hookManager.UninstallHook(code);
         }
     }
 
@@ -128,7 +128,7 @@ public class SettingsService(IMemoryService memoryService, NopManager nopManager
 
     public void StopMusic()
     {
-        var bytes = AsmLoader.GetAsmBytes("StopMusic");
+        var bytes = AsmLoader.GetAsmBytes(AsmScript.StopMusic);
         var funcBytes = BitConverter.GetBytes(Functions.StopMusic);
         Array.Copy(funcBytes, 0, bytes, 0x4 + 2, 8);
         memoryService.AllocateAndExecute(bytes);
@@ -142,8 +142,8 @@ public class SettingsService(IMemoryService memoryService, NopManager nopManager
         if (!await WaitForValidBytes(defaultSoundWrite + 0x4, bytes))
             return;
 
-        memoryService.WriteUInt8(defaultSoundWrite + 0x4, defaultSoundVolume);
-        memoryService.WriteUInt8(defaultSoundWrite + 0x5, defaultSoundVolume);
+        memoryService.Write(defaultSoundWrite + 0x4, (byte)defaultSoundVolume);
+        memoryService.Write(defaultSoundWrite + 0x5, (byte)defaultSoundVolume);
     }
 
     public void ToggleDisableCutscenes(bool isEnabled)
