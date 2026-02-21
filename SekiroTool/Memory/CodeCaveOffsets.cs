@@ -74,4 +74,7 @@ public static class CodeCaveOffsets
     public const int DamageMultiplierCode = 0x1650; //0x69
     public const int DamageMultiplierDeflectCode = 0x1700; //0x39
 
+    public const int ChrInsByEntityIdResult = 0x1750; //0x12?
+    public const int EntityIdInput = 0x1780;
+
 }

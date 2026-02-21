@@ -536,8 +536,14 @@ public static class Patterns
         5
     );
 
+    public static readonly Pattern GetChrInsByEntityId = new Pattern(
+        new byte[] { 0x78, 0x00, 0x8B, 0xD0, 0x48, 0x8B, 0xCB, 0xE8, 0x00, 0x00, 0x00, 0x00, 0x48, 0x85, 0xC0, 0x75 },
+        "x?xxxxxx????xxxx",
+        -0x36,
+        AddressingMode.Absolute
+    );
+    
     #endregion
-
     #region Hooks
 
     public static readonly Pattern LockedTarget = new Pattern(

@@ -267,6 +267,25 @@ namespace SekiroTool {
         /// <summary>
         ///   Looks up a localized string similar to 48 b9 00 00 00 00 00    movabs rcx,0x0
         ///00 00 00
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///48 83 ec 20             sub    rsp,0x20
+        ///ff d0                   call   rax
+        ///48 83 c4 20             add    rsp,0x20
+        ///48 b9 00 00 00 00 00    movabs rcx,0x0
+        ///00 00 00
+        ///48 89 01                mov    QWORD PTR [rcx],rax
+        ///c3                      ret.
+        /// </summary>
+        internal static string GetChrInsByEntityId {
+            get {
+                return ResourceManager.GetString("GetChrInsByEntityId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 48 b9 00 00 00 00 00    movabs rcx,0x0
+        ///00 00 00
         ///48 ba 00 00 00 00 00    movabs rdx,0x0
         ///00 00 00
         ///48 b8 00 00 00 00 00    movabs rax,0x0
@@ -848,6 +867,28 @@ namespace SekiroTool {
         internal static string Skills {
             get {
                 return ResourceManager.GetString("Skills", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 48 b9 00 00 00 00 00    movabs rcx,0x0
+        ///00 00 00
+        ///48 83 ec 28             sub    rsp,0x28
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///ff d0                   call   rax
+        ///48 83 c4 28             add    rsp,0x28
+        ///48 85 c0                test   rax,rax
+        ///74 22                   je     45 &lt;exit&gt;
+        ///48 89 c3                mov    rbx,rax
+        ///48 8b 83 f8 1f 00 00    mov    rax,QWORD PTR [rbx+0x1ff8]
+        ///48 85 c0                test   rax,rax
+        ///74 13                   je     45 &lt;exit&gt;
+        ///48 8b 40 18             mov     [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string SkipGeni3 {
+            get {
+                return ResourceManager.GetString("SkipGeni3", resourceCulture);
             }
         }
         

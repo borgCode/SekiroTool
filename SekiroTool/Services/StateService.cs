@@ -10,8 +10,8 @@ public class StateService(IMemoryService memoryService) : IStateService
     
     public bool IsLoaded()
     {
-        var worldChrMan = (IntPtr)memoryService.ReadUInt64(WorldChrMan.Base);
-        var playerIns = (IntPtr)memoryService.ReadUInt64(worldChrMan + WorldChrMan.PlayerIns);
+        var worldChrMan = memoryService.Read<nint>(WorldChrMan.Base);
+        var playerIns = memoryService.Read<nint>(worldChrMan + WorldChrMan.PlayerIns);
         return playerIns != IntPtr.Zero;
     }
 

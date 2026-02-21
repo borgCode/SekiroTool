@@ -155,6 +155,7 @@
                         </ItemsControl>
                     </ScrollViewer>
                 </TabItem>
+                
                 <TabItem Header="Target">
                     <ScrollViewer MaxHeight="350" VerticalScrollBarVisibility="Auto">
                         <ItemsControl ItemsSource="{Binding TargetHotkeys}"
@@ -181,9 +182,10 @@
                         </ItemsControl>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem Header="Event">
+                
+                <TabItem Header="Boss Skips">
                     <ScrollViewer MaxHeight="350" VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding EventHotkeys}"
+                        <ItemsControl ItemsSource="{Binding BossSkipHotkeys}"
                                       Padding="5"
                                       ItemTemplate="{StaticResource HotkeyItemTemplate}">
                             <ItemsControl.ItemsPanel>
