@@ -387,71 +387,71 @@ public static class Offsets
 
     public static class Patches
     {
-        public static IntPtr NoLogo;
-        public static IntPtr DebugFont;
-        public static IntPtr EventView;
-        public static IntPtr MenuTutorialSkip;
-        public static IntPtr ShowSmallHintBox;
-        public static IntPtr ShowTutorialText;
-        public static IntPtr SaveInCombat;
-        public static IntPtr DefaultSoundVolWrite;
-        public static IntPtr PlayerSoundView;
+        public static nint NoLogo;
+        public static nint DebugFont;
+        public static nint EventView;
+        public static nint MenuTutorialSkip;
+        public static nint ShowSmallHintBox;
+        public static nint ShowTutorialText;
+        public static nint SaveInCombat;
+        public static nint DefaultSoundVolWrite;
+        public static nint PlayerSoundView;
     }
 
     public static class Hooks
     {
-        public static long LockedTarget;
-        public static long FreezeTargetPosture;
-        public static long SetWarpCoordinates;
-        public static long SetWarpAngle;
-        public static long AddSubGoal;
-        public static long InAirTimer;
-        public static long UpdateCoords;
-        public static long PadTriggers;
-        public static long KeyBoard;
-        public static long InfinitePoise;
-        public static long AiHasSpEffect;
-        public static long GetMouseDelta;
-        public static long StartMusic;
-        public static long HpWrite;
-        public static long InfiniteConfetti;
-        public static long SetLastAct;
-        public static long DamageMultiplier;
-        public static long DamageMultiplierDeflect;
+        public static nint LockedTarget;
+        public static nint FreezeTargetPosture;
+        public static nint SetWarpCoordinates;
+        public static nint SetWarpAngle;
+        public static nint AddSubGoal;
+        public static nint InAirTimer;
+        public static nint UpdateCoords;
+        public static nint PadTriggers;
+        public static nint KeyBoard;
+        public static nint InfinitePoise;
+        public static nint AiHasSpEffect;
+        public static nint GetMouseDelta;
+        public static nint StartMusic;
+        public static nint HpWrite;
+        public static nint InfiniteConfetti;
+        public static nint SetLastAct;
+        public static nint DamageMultiplier;
+        public static nint DamageMultiplierDeflect;
     }
 
     public static class Functions
     {
-        public static long AddSen;
-        public static long Rest;
-        public static long SetEvent;
-        public static long GetEvent;
-        public static long Warp;
-        public static long AddExperience;
-        public static long ApplySpEffect;
-        public static long ItemSpawn;
-        public static long GetChrInsWithHandle;
-        public static long ForceAnimation;
-        public static long FrpgCastRay;
-        public static long StopMusic;
-        public static long GetItemSlot;
-        public static long GetItemPtrFromSlot;
-        public static long EzStateExternalEventTempCtor;
-        public static long ExecuteTalkCommand;
-        public static long AwardItemLot;
-        public static long SetMessageTagValue;
-        public static long AdjustItemCount;
-        public static long OpenGenericDialog;
-        public static long RemoveSpEffect;
-        public static long RemoveItem;
-        public static long GiveSkillAndPros;
-        public static long GetGoodsParam;
-        public static long MatrixVectorToProduct;
-        public static long ForceAnimationByChrEventModule;
-        public static long FormatCutscenePathString;
-        public static long GetRawY;
-        public static long GetRawX;
-        public static long GetChrInsByEntityId;
+        public static nint AddSen;
+        public static nint Rest;
+        public static nint SetEvent;
+        public static nint GetEvent;
+        public static nint Warp;
+        public static nint AddExperience;
+        public static nint ApplySpEffect;
+        public static nint ItemSpawn;
+        public static nint GetChrInsWithHandle;
+        public static nint ForceAnimation;
+        public static nint FrpgCastRay;
+        public static nint StopMusic;
+        public static nint GetItemSlot;
+        public static nint GetItemPtrFromSlot;
+        public static nint EzStateExternalEventTempCtor;
+        public static nint ExecuteTalkCommand;
+        public static nint AwardItemLot;
+        public static nint SetMessageTagValue;
+        public static nint AdjustItemCount;
+        public static nint OpenGenericDialog;
+        public static nint RemoveSpEffect;
+        public static nint RemoveItem;
+        public static nint GiveSkillAndPros;
+        public static nint GetGoodsParam;
+        public static nint MatrixVectorToProduct;
+        public static nint ForceAnimationByChrEventModule;
+        public static nint FormatCutscenePathString;
+        public static nint GetRawY;
+        public static nint GetRawX;
+        public static nint GetChrInsByEntityId;
     }
 
     private static void InitializeBaseAddresses(IntPtr moduleBase)
@@ -701,7 +701,7 @@ public static class Offsets
             _ => 0
         };
 
-        Functions.GetChrInsByEntityId = moduleBase.ToInt64() + Version switch
+        Functions.GetChrInsByEntityId = moduleBase + Version switch
         {
             Version1_2_0 => 0x6BF190,
             Version1_3_0 or Version1_4_0 => 0x6BF1F0,
@@ -1097,7 +1097,7 @@ public static class Offsets
             _ => 0
         };
 
-        Hooks.DamageMultiplierDeflect = moduleBase.ToInt64() + Version switch
+        Hooks.DamageMultiplierDeflect = moduleBase + Version switch
         {
             Version1_2_0 => 0xB5304D,
             Version1_3_0 or Version1_4_0 => 0xB536FD,
@@ -1109,26 +1109,26 @@ public static class Offsets
 #if DEBUG
 
         Console.WriteLine("========== BASES ==========");
-        Console.WriteLine($"WorldChrMan.Base: 0x{WorldChrMan.Base.ToInt64():X}");
-        Console.WriteLine($"WorldChrManDbg.Base: 0x{WorldChrManDbg.Base.ToInt64():X}");
-        Console.WriteLine($"MenuMan.Base: 0x{MenuMan.Base.ToInt64():X}");
-        Console.WriteLine($"WorldAiMan.Base: 0x{WorldAiMan.Base.ToInt64():X}");
-        Console.WriteLine($"DamageManager.Base: 0x{DamageManager.Base.ToInt64():X}");
-        Console.WriteLine($"DebugFlags.Base: 0x{DebugFlags.Base.ToInt64():X}");
-        Console.WriteLine($"MapItemMan.Base: 0x{MapItemMan.Base.ToInt64():X}");
-        Console.WriteLine($"EventFlagMan.Base: 0x{EventFlagMan.Base.ToInt64():X}");
-        Console.WriteLine($"DebugEventMan.Base: 0x{DebugEventMan.Base.ToInt64():X}");
-        Console.WriteLine($"SprjFlipperImp.Base: 0x{SprjFlipperImp.Base.ToInt64():X}");
-        Console.WriteLine($"FieldArea.Base: 0x{FieldArea.Base.ToInt64():X}");
-        Console.WriteLine($"FrpgHavokMan.Base: 0x{FrpgHavokMan.Base.ToInt64():X}");
-        Console.WriteLine($"GameDataMan.Base: 0x{GameDataMan.Base.ToInt64():X}");
-        Console.WriteLine($"PauseRequest.Base: 0x{PauseRequest.Base.ToInt64():X}");
-        Console.WriteLine($"DlUserInputManager.Base: 0x{DlUserInputManager.Base.ToInt64():X}");
-        Console.WriteLine($"TargetingView.Base: 0x{TargetingView.Base.ToInt64():X}");
-        Console.WriteLine($"IdolRequests.Base: 0x{IdolRequests.Base.ToInt64():X}");
-        Console.WriteLine($"GameRendFlags.Base: 0x{GameRendFlags.Base.ToInt64():X}");
-        Console.WriteLine($"MeshBase.Base: 0x{MeshBase.Base.ToInt64():X}");
-        Console.WriteLine($"Fd4PadManager.Base: 0x{Fd4PadManager.Base.ToInt64():X}");
+        Console.WriteLine($"WorldChrMan.Base: 0x{WorldChrMan.Base:X}");
+        Console.WriteLine($"WorldChrManDbg.Base: 0x{WorldChrManDbg.Base:X}");
+        Console.WriteLine($"MenuMan.Base: 0x{MenuMan.Base:X}");
+        Console.WriteLine($"WorldAiMan.Base: 0x{WorldAiMan.Base:X}");
+        Console.WriteLine($"DamageManager.Base: 0x{DamageManager.Base:X}");
+        Console.WriteLine($"DebugFlags.Base: 0x{DebugFlags.Base:X}");
+        Console.WriteLine($"MapItemMan.Base: 0x{MapItemMan.Base:X}");
+        Console.WriteLine($"EventFlagMan.Base: 0x{EventFlagMan.Base:X}");
+        Console.WriteLine($"DebugEventMan.Base: 0x{DebugEventMan.Base:X}");
+        Console.WriteLine($"SprjFlipperImp.Base: 0x{SprjFlipperImp.Base:X}");
+        Console.WriteLine($"FieldArea.Base: 0x{FieldArea.Base:X}");
+        Console.WriteLine($"FrpgHavokMan.Base: 0x{FrpgHavokMan.Base:X}");
+        Console.WriteLine($"GameDataMan.Base: 0x{GameDataMan.Base:X}");
+        Console.WriteLine($"PauseRequest.Base: 0x{PauseRequest.Base:X}");
+        Console.WriteLine($"DlUserInputManager.Base: 0x{DlUserInputManager.Base:X}");
+        Console.WriteLine($"TargetingView.Base: 0x{TargetingView.Base:X}");
+        Console.WriteLine($"IdolRequests.Base: 0x{IdolRequests.Base:X}");
+        Console.WriteLine($"GameRendFlags.Base: 0x{GameRendFlags.Base:X}");
+        Console.WriteLine($"MeshBase.Base: 0x{MeshBase.Base:X}");
+        Console.WriteLine($"Fd4PadManager.Base: 0x{Fd4PadManager.Base:X}");
 
 
         Console.WriteLine("\n========== HOOKS ==========");
@@ -1153,14 +1153,14 @@ public static class Offsets
 
 
         Console.WriteLine("\n========== PATCHES ==========");
-        Console.WriteLine($"Patches.DebugFont: 0x{Patches.DebugFont.ToInt64():X}");
-        Console.WriteLine($"Patches.NoLogo: 0x{Patches.NoLogo.ToInt64():X}");
-        Console.WriteLine($"Patches.EventView: 0x{Patches.EventView.ToInt64():X}");
-        Console.WriteLine($"Patches.MenuTutorialSkip: 0x{Patches.MenuTutorialSkip.ToInt64():X}");
-        Console.WriteLine($"Patches.ShowSmallHintBox: 0x{Patches.ShowSmallHintBox.ToInt64():X}");
-        Console.WriteLine($"Patches.ShowTutorialText: 0x{Patches.ShowTutorialText.ToInt64():X}");
-        Console.WriteLine($"Patches.SaveInCombat: 0x{Patches.SaveInCombat.ToInt64():X}");
-        Console.WriteLine($"Patches.PlayerSoundView: 0x{Patches.PlayerSoundView.ToInt64():X}");
+        Console.WriteLine($"Patches.DebugFont: 0x{Patches.DebugFont:X}");
+        Console.WriteLine($"Patches.NoLogo: 0x{Patches.NoLogo:X}");
+        Console.WriteLine($"Patches.EventView: 0x{Patches.EventView:X}");
+        Console.WriteLine($"Patches.MenuTutorialSkip: 0x{Patches.MenuTutorialSkip:X}");
+        Console.WriteLine($"Patches.ShowSmallHintBox: 0x{Patches.ShowSmallHintBox:X}");
+        Console.WriteLine($"Patches.ShowTutorialText: 0x{Patches.ShowTutorialText:X}");
+        Console.WriteLine($"Patches.SaveInCombat: 0x{Patches.SaveInCombat:X}");
+        Console.WriteLine($"Patches.PlayerSoundView: 0x{Patches.PlayerSoundView:X}");
 
 
         Console.WriteLine("\n========== FUNCTIONS ==========");

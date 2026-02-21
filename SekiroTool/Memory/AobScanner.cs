@@ -46,61 +46,61 @@ public class AoBScanner(IMemoryService memoryService)
             () => Offsets.GameRendFlags.Base = FindAddressByPattern(Patterns.GameRendFlags),
             () => Offsets.MeshBase.Base = FindAddressByPattern(Patterns.MeshBase),
             () => Offsets.IdolRequests.Base = FindAddressByRelativeChain(Patterns.IdolRequests, 0, 1, 5, 0, 2, 6),
-            () => Offsets.Functions.AddSen = FindAddressByPattern(Patterns.AddSen).ToInt64(),
-            () => Offsets.Functions.Rest = FindAddressByPattern(Patterns.Rest).ToInt64(),
-            () => Offsets.Functions.SetEvent = FindAddressByPattern(Patterns.SetEvent).ToInt64(),
-            () => Offsets.Functions.MatrixVectorToProduct = FindAddressByPattern(Patterns.MatrixVectorToProduct).ToInt64(),
-            () => Offsets.Functions.ExecuteTalkCommand = FindAddressByPattern(Patterns.ExecuteTalkCommand).ToInt64(),
-            () => Offsets.Functions.GetEvent = FindAddressByPattern(Patterns.GetEvent).ToInt64(),
-            () => Offsets.Functions.Warp = FindAddressByPattern(Patterns.Warp).ToInt64(),
-            () => Offsets.Functions.AddExperience = FindAddressByPattern(Patterns.AddExperience).ToInt64(),
-            () => Offsets.Functions.ApplySpEffect = FindAddressByPattern(Patterns.ApplySpEffect).ToInt64(),
-            () => Offsets.Functions.ItemSpawn = FindAddressByPattern(Patterns.ItemSpawn).ToInt64(),
+            () => Offsets.Functions.AddSen = FindAddressByPattern(Patterns.AddSen),
+            () => Offsets.Functions.Rest = FindAddressByPattern(Patterns.Rest),
+            () => Offsets.Functions.SetEvent = FindAddressByPattern(Patterns.SetEvent),
+            () => Offsets.Functions.MatrixVectorToProduct = FindAddressByPattern(Patterns.MatrixVectorToProduct),
+            () => Offsets.Functions.ExecuteTalkCommand = FindAddressByPattern(Patterns.ExecuteTalkCommand),
+            () => Offsets.Functions.GetEvent = FindAddressByPattern(Patterns.GetEvent),
+            () => Offsets.Functions.Warp = FindAddressByPattern(Patterns.Warp),
+            () => Offsets.Functions.AddExperience = FindAddressByPattern(Patterns.AddExperience),
+            () => Offsets.Functions.ApplySpEffect = FindAddressByPattern(Patterns.ApplySpEffect),
+            () => Offsets.Functions.ItemSpawn = FindAddressByPattern(Patterns.ItemSpawn),
             () => Offsets.Functions.GetChrInsWithHandle =
-                FindAddressByPattern(Patterns.GetEnemyInsWithPackedWorldIdAndChrId).ToInt64(),
-            () => Offsets.Functions.RemoveSpEffect = FindAddressByPattern(Patterns.RemoveEffect).ToInt64(),
-            () => Offsets.Functions.GetGoodsParam = FindAddressByPattern(Patterns.GetGoodsParam).ToInt64(),
-            () => Offsets.Functions.FrpgCastRay = FindAddressByPattern(Patterns.FrpgCastRay).ToInt64(),
-            () => Offsets.Functions.GetItemSlot = FindAddressByPattern(Patterns.GetItemSlot).ToInt64(),
-            () => Offsets.Functions.GetItemPtrFromSlot = FindAddressByPattern(Patterns.GetItemPtrFromSlot).ToInt64(),
+                FindAddressByPattern(Patterns.GetEnemyInsWithPackedWorldIdAndChrId),
+            () => Offsets.Functions.RemoveSpEffect = FindAddressByPattern(Patterns.RemoveEffect),
+            () => Offsets.Functions.GetGoodsParam = FindAddressByPattern(Patterns.GetGoodsParam),
+            () => Offsets.Functions.FrpgCastRay = FindAddressByPattern(Patterns.FrpgCastRay),
+            () => Offsets.Functions.GetItemSlot = FindAddressByPattern(Patterns.GetItemSlot),
+            () => Offsets.Functions.GetItemPtrFromSlot = FindAddressByPattern(Patterns.GetItemPtrFromSlot),
             () => Offsets.Functions.EzStateExternalEventTempCtor =
-                FindAddressByPattern(Patterns.EzStateExternalEventTempCtor).ToInt64(),
-            () => Offsets.Functions.RemoveItem = FindAddressByPattern(Patterns.RemoveItem).ToInt64(),
-            () => Offsets.Functions.GiveSkillAndPros = FindAddressByPattern(Patterns.GiveSkillAndPros).ToInt64(),
-            () => Offsets.Functions.ForceAnimation = FindAddressByPattern(Patterns.ForceAnimation).ToInt64(),
-            () => Offsets.Functions.ForceAnimationByChrEventModule = FindAddressByPattern(Patterns.ForceAnimationByChrEventModule).ToInt64(),
-            () => Offsets.Functions.FormatCutscenePathString = FindAddressByPattern(Patterns.FormatCutscenePathString).ToInt64(),
-            () => Offsets.Functions.AwardItemLot = FindAddressByPattern(Patterns.AwardItemLot).ToInt64(),
-            () => Offsets.Functions.SetMessageTagValue = FindAddressByPattern(Patterns.SetMessageTagValue).ToInt64(),
-            () => Offsets.Functions.AdjustItemCount = FindAddressByPattern(Patterns.AdjustItemCount).ToInt64(),
-            () => Offsets.Functions.OpenGenericDialog = FindAddressByPattern(Patterns.OpenGenericDialog).ToInt64(),
-            () => Offsets.Functions.GetChrInsByEntityId = FindAddressByPattern(Patterns.GetChrInsByEntityId).ToInt64(),
+                FindAddressByPattern(Patterns.EzStateExternalEventTempCtor),
+            () => Offsets.Functions.RemoveItem = FindAddressByPattern(Patterns.RemoveItem),
+            () => Offsets.Functions.GiveSkillAndPros = FindAddressByPattern(Patterns.GiveSkillAndPros),
+            () => Offsets.Functions.ForceAnimation = FindAddressByPattern(Patterns.ForceAnimation),
+            () => Offsets.Functions.ForceAnimationByChrEventModule = FindAddressByPattern(Patterns.ForceAnimationByChrEventModule),
+            () => Offsets.Functions.FormatCutscenePathString = FindAddressByPattern(Patterns.FormatCutscenePathString),
+            () => Offsets.Functions.AwardItemLot = FindAddressByPattern(Patterns.AwardItemLot),
+            () => Offsets.Functions.SetMessageTagValue = FindAddressByPattern(Patterns.SetMessageTagValue),
+            () => Offsets.Functions.AdjustItemCount = FindAddressByPattern(Patterns.AdjustItemCount),
+            () => Offsets.Functions.OpenGenericDialog = FindAddressByPattern(Patterns.OpenGenericDialog),
+            () => Offsets.Functions.GetChrInsByEntityId = FindAddressByPattern(Patterns.GetChrInsByEntityId),
             
             
             () => TryPatternWithFallback("LockedTarget", Patterns.LockedTarget,
-                addr => Offsets.Hooks.LockedTarget = addr.ToInt64(), saved),
+                addr => Offsets.Hooks.LockedTarget = addr, saved),
             () => TryPatternWithFallback("FreezeTargetPosture", Patterns.FreezeTargetPosture,
-                addr => Offsets.Hooks.FreezeTargetPosture = addr.ToInt64(), saved),
+                addr => Offsets.Hooks.FreezeTargetPosture = addr, saved),
             () => TryPatternWithFallback("SetWarpCoordinates", Patterns.SetWarpCoordinates,
-                addr => Offsets.Hooks.SetWarpCoordinates = addr.ToInt64(), saved),
+                addr => Offsets.Hooks.SetWarpCoordinates = addr, saved),
             () => TryPatternWithFallback("SetWarpAngle", Patterns.SetWarpAngle,
-                addr => Offsets.Hooks.SetWarpAngle = addr.ToInt64(), saved),
+                addr => Offsets.Hooks.SetWarpAngle = addr, saved),
             () => TryPatternWithFallback("AddSubGoal", Patterns.AddSubGoal,
-                addr => Offsets.Hooks.AddSubGoal = addr.ToInt64(), saved),
+                addr => Offsets.Hooks.AddSubGoal = addr, saved),
             () => TryPatternWithFallback("InAirTimer", Patterns.InAirTimer,
-                addr => Offsets.Hooks.InAirTimer = addr.ToInt64(), saved),
+                addr => Offsets.Hooks.InAirTimer = addr, saved),
             () => TryPatternWithFallback("UpdateCoords", Patterns.UpdateCoords,
-                addr => Offsets.Hooks.UpdateCoords = addr.ToInt64(), saved),
+                addr => Offsets.Hooks.UpdateCoords = addr, saved),
             () => TryPatternWithFallback("PadTriggers", Patterns.PadTriggers,
-                addr => Offsets.Hooks.PadTriggers = addr.ToInt64(), saved),
-            () => TryPatternWithFallback("KeyBoard", Patterns.KeyBoard, addr => Offsets.Hooks.KeyBoard = addr.ToInt64(),
+                addr => Offsets.Hooks.PadTriggers = addr, saved),
+            () => TryPatternWithFallback("KeyBoard", Patterns.KeyBoard, addr => Offsets.Hooks.KeyBoard = addr,
                 saved),
             () => TryPatternWithFallback("InfinitePoise", Patterns.InfinitePoise,
-                addr => Offsets.Hooks.InfinitePoise = addr.ToInt64(), saved),
+                addr => Offsets.Hooks.InfinitePoise = addr, saved),
             () => TryPatternWithFallback("AiHasSpEffect", Patterns.AiHasSpEffect,
-                addr => Offsets.Hooks.AiHasSpEffect = addr.ToInt64(), saved),
+                addr => Offsets.Hooks.AiHasSpEffect = addr, saved),
             () => TryPatternWithFallback("GetMouseDelta", Patterns.GetMouseDelta,
-                addr => Offsets.Hooks.GetMouseDelta = addr.ToInt64(), saved),
+                addr => Offsets.Hooks.GetMouseDelta = addr, saved),
             () => TryPatternWithFallback("InfiniteConfetti", Patterns.InfiniteConfetti,
                 addr => Offsets.Hooks.InfiniteConfetti = addr, saved),
             () => TryPatternWithFallback("HpWrite", Patterns.HpWrite, addr => Offsets.Hooks.HpWrite = addr, saved),
@@ -133,26 +133,26 @@ public class AoBScanner(IMemoryService memoryService)
 #if DEBUG
         // ==================== BASES ====================
 Console.WriteLine("========== BASES ==========");
-Console.WriteLine($"WorldChrMan.Base: 0x{Offsets.WorldChrMan.Base.ToInt64():X}");
-Console.WriteLine($"WorldChrManDbg.Base: 0x{Offsets.WorldChrManDbg.Base.ToInt64():X}");
-Console.WriteLine($"MenuMan.Base: 0x{Offsets.MenuMan.Base.ToInt64():X}");
-Console.WriteLine($"WorldAiMan.Base: 0x{Offsets.WorldAiMan.Base.ToInt64():X}");
-Console.WriteLine($"DamageManager.Base: 0x{Offsets.DamageManager.Base.ToInt64():X}");
-Console.WriteLine($"DebugFlags.Base: 0x{Offsets.DebugFlags.Base.ToInt64():X}");
-Console.WriteLine($"MapItemMan.Base: 0x{Offsets.MapItemMan.Base.ToInt64():X}");
-Console.WriteLine($"EventFlagMan.Base: 0x{Offsets.EventFlagMan.Base.ToInt64():X}");
-Console.WriteLine($"DebugEventMan.Base: 0x{Offsets.DebugEventMan.Base.ToInt64():X}");
-Console.WriteLine($"SprjFlipperImp.Base: 0x{Offsets.SprjFlipperImp.Base.ToInt64():X}");
-Console.WriteLine($"FieldArea.Base: 0x{Offsets.FieldArea.Base.ToInt64():X}");
-Console.WriteLine($"FrpgHavokMan.Base: 0x{Offsets.FrpgHavokMan.Base.ToInt64():X}");
-Console.WriteLine($"GameDataMan.Base: 0x{Offsets.GameDataMan.Base.ToInt64():X}");
-Console.WriteLine($"PauseRequest.Base: 0x{Offsets.PauseRequest.Base.ToInt64():X}");
-Console.WriteLine($"DlUserInputManager.Base: 0x{Offsets.DlUserInputManager.Base.ToInt64():X}");
-Console.WriteLine($"TargetingView.Base: 0x{Offsets.TargetingView.Base.ToInt64():X}");
-Console.WriteLine($"IdolRequests.Base: 0x{Offsets.IdolRequests.Base.ToInt64():X}");
-Console.WriteLine($"GameRendFlags.Base: 0x{Offsets.GameRendFlags.Base.ToInt64():X}");
-Console.WriteLine($"MeshBase.Base: 0x{Offsets.MeshBase.Base.ToInt64():X}");
-Console.WriteLine($"Fd4PadManager.Base: 0x{Offsets.Fd4PadManager.Base.ToInt64():X}");
+Console.WriteLine($"WorldChrMan.Base: 0x{Offsets.WorldChrMan.Base:X}");
+Console.WriteLine($"WorldChrManDbg.Base: 0x{Offsets.WorldChrManDbg.Base:X}");
+Console.WriteLine($"MenuMan.Base: 0x{Offsets.MenuMan.Base:X}");
+Console.WriteLine($"WorldAiMan.Base: 0x{Offsets.WorldAiMan.Base:X}");
+Console.WriteLine($"DamageManager.Base: 0x{Offsets.DamageManager.Base:X}");
+Console.WriteLine($"DebugFlags.Base: 0x{Offsets.DebugFlags.Base:X}");
+Console.WriteLine($"MapItemMan.Base: 0x{Offsets.MapItemMan.Base:X}");
+Console.WriteLine($"EventFlagMan.Base: 0x{Offsets.EventFlagMan.Base:X}");
+Console.WriteLine($"DebugEventMan.Base: 0x{Offsets.DebugEventMan.Base:X}");
+Console.WriteLine($"SprjFlipperImp.Base: 0x{Offsets.SprjFlipperImp.Base:X}");
+Console.WriteLine($"FieldArea.Base: 0x{Offsets.FieldArea.Base:X}");
+Console.WriteLine($"FrpgHavokMan.Base: 0x{Offsets.FrpgHavokMan.Base:X}");
+Console.WriteLine($"GameDataMan.Base: 0x{Offsets.GameDataMan.Base:X}");
+Console.WriteLine($"PauseRequest.Base: 0x{Offsets.PauseRequest.Base:X}");
+Console.WriteLine($"DlUserInputManager.Base: 0x{Offsets.DlUserInputManager.Base:X}");
+Console.WriteLine($"TargetingView.Base: 0x{Offsets.TargetingView.Base:X}");
+Console.WriteLine($"IdolRequests.Base: 0x{Offsets.IdolRequests.Base:X}");
+Console.WriteLine($"GameRendFlags.Base: 0x{Offsets.GameRendFlags.Base:X}");
+Console.WriteLine($"MeshBase.Base: 0x{Offsets.MeshBase.Base:X}");
+Console.WriteLine($"Fd4PadManager.Base: 0x{Offsets.Fd4PadManager.Base:X}");
 
 // ==================== HOOKS ====================
 Console.WriteLine("\n========== HOOKS ==========");
@@ -174,13 +174,13 @@ Console.WriteLine($"Hooks.SetLastAct: 0x{Offsets.Hooks.SetLastAct:X}");
 
 // ==================== PATCHES ====================
 Console.WriteLine("\n========== PATCHES ==========");
-Console.WriteLine($"Patches.DebugFont: 0x{Offsets.Patches.DebugFont.ToInt64():X}");
-Console.WriteLine($"Patches.EventView: 0x{Offsets.Patches.EventView.ToInt64():X}");
-Console.WriteLine($"Patches.MenuTutorialSkip: 0x{Offsets.Patches.MenuTutorialSkip.ToInt64():X}");
-Console.WriteLine($"Patches.ShowSmallHintBox: 0x{Offsets.Patches.ShowSmallHintBox.ToInt64():X}");
-Console.WriteLine($"Patches.ShowTutorialText: 0x{Offsets.Patches.ShowTutorialText.ToInt64():X}");
-Console.WriteLine($"Patches.SaveInCombat: 0x{Offsets.Patches.SaveInCombat.ToInt64():X}");
-Console.WriteLine($"Patches.PlayerSoundView: 0x{Offsets.Patches.PlayerSoundView.ToInt64():X}");
+Console.WriteLine($"Patches.DebugFont: 0x{Offsets.Patches.DebugFont:X}");
+Console.WriteLine($"Patches.EventView: 0x{Offsets.Patches.EventView:X}");
+Console.WriteLine($"Patches.MenuTutorialSkip: 0x{Offsets.Patches.MenuTutorialSkip:X}");
+Console.WriteLine($"Patches.ShowSmallHintBox: 0x{Offsets.Patches.ShowSmallHintBox:X}");
+Console.WriteLine($"Patches.ShowTutorialText: 0x{Offsets.Patches.ShowTutorialText:X}");
+Console.WriteLine($"Patches.SaveInCombat: 0x{Offsets.Patches.SaveInCombat:X}");
+Console.WriteLine($"Patches.PlayerSoundView: 0x{Offsets.Patches.PlayerSoundView:X}");
 
 // ==================== FUNCTIONS ====================
 Console.WriteLine("\n========== FUNCTIONS ==========");
@@ -246,7 +246,7 @@ Console.WriteLine($"Functions.ExecuteTalkCommand: 0x{Offsets.Functions.ExecuteTa
                     break;
                 default:
                 {
-                    int offset = memoryService.ReadInt32(IntPtr.Add(instructionAddress, pattern.OffsetLocation));
+                    int offset = memoryService.Read<int>(IntPtr.Add(instructionAddress, pattern.OffsetLocation));
                     addresses[i] = IntPtr.Add(instructionAddress, offset + pattern.InstructionLength);
                     break;
                 }
@@ -262,7 +262,8 @@ Console.WriteLine($"Functions.ExecuteTalkCommand: 0x{Offsets.Functions.ExecuteTa
         byte[] buffer = new byte[chunkSize];
 
         IntPtr currentAddress = memoryService.BaseAddress;
-        IntPtr endAddress = IntPtr.Add(currentAddress, 0x7538000);
+        int memSize = memoryService.ModuleMemorySize;
+        IntPtr endAddress = IntPtr.Add(currentAddress, memSize);
 
         List<IntPtr> addresses = new List<IntPtr>();
 
@@ -311,7 +312,7 @@ Console.WriteLine($"Functions.ExecuteTalkCommand: 0x{Offsets.Functions.ExecuteTa
         {
             var callInstructionAddr = IntPtr.Add(baseInstructionAddr, mapping.Value);
 
-            int callOffset = memoryService.ReadInt32(IntPtr.Add(callInstructionAddr, 1));
+            int callOffset = memoryService.Read<int>(IntPtr.Add(callInstructionAddr, 1));
             var callTarget = IntPtr.Add(callInstructionAddr, callOffset + 5);
 
             mapping.Key(callTarget.ToInt64());
@@ -338,7 +339,7 @@ Console.WriteLine($"Functions.ExecuteTalkCommand: 0x{Offsets.Functions.ExecuteTa
             int instructionLength = chain[i + 2];
 
             IntPtr instructionAddress = IntPtr.Add(currentAddress, offset);
-            int relativeOffset = memoryService.ReadInt32(IntPtr.Add(instructionAddress, relativeOffsetPos));
+            int relativeOffset = memoryService.Read<int>(IntPtr.Add(instructionAddress, relativeOffsetPos));
             currentAddress = IntPtr.Add(instructionAddress, relativeOffset + instructionLength);
         }
 
@@ -368,13 +369,13 @@ Console.WriteLine($"Functions.ExecuteTalkCommand: 0x{Offsets.Functions.ExecuteTa
         TryPatternWithFallback("DefaultSoundVolWrite", Patterns.DefaultSoundVolWrite,
             addr => Offsets.Patches.DefaultSoundVolWrite = addr, saved);
 
-        Offsets.Functions.StopMusic = FindAddressByPattern(Patterns.StopMusic).ToInt64();
+        Offsets.Functions.StopMusic = FindAddressByPattern(Patterns.StopMusic);
 
 
 #if DEBUG
         Console.WriteLine($"Hooks.StartMusic: 0x{Offsets.Hooks.StartMusic:X}");
-        Console.WriteLine($"Patches.NoLogo: 0x{Offsets.Patches.NoLogo.ToInt64():X}");
-        Console.WriteLine($"Patches.DefaultSoundVolWrite: 0x{Offsets.Patches.DefaultSoundVolWrite.ToInt64():X}");
+        Console.WriteLine($"Patches.NoLogo: 0x{Offsets.Patches.NoLogo:X}");
+        Console.WriteLine($"Patches.DefaultSoundVolWrite: 0x{Offsets.Patches.DefaultSoundVolWrite:X}");
         Console.WriteLine($"Functions.StopMusic: 0x{Offsets.Functions.StopMusic:X}");
 #endif
     }

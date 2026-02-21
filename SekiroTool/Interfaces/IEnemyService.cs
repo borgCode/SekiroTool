@@ -1,6 +1,4 @@
-﻿using SekiroTool.GameIds;
-
-namespace SekiroTool.Interfaces;
+﻿namespace SekiroTool.Interfaces;
 
 public interface IEnemyService
 {
@@ -16,6 +14,4 @@ public interface IEnemyService
     void ToggleDragonActCombo(byte[] actArray, bool isEnabled, bool shouldDoStage1Twice);
     void ToggleButterflyNoSummons(bool isEnabled);
     void ToggleSnakeCanyonIntroAnimationLoop(bool isEnabled);
-    void SkipGeni3ByHpWrite();
-    void SkipArmorTowerGeni();
 }

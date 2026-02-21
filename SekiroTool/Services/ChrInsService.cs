@@ -1,4 +1,4 @@
-using SekiroTool.GameIds;
+using SekiroTool.Enums;
 using SekiroTool.Interfaces;
 using SekiroTool.Memory;
 using SekiroTool.Utilities;
@@ -13,25 +13,24 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
     
     public nint GetChrInsByEntityId(int entityId)
     {
-        memoryService.WriteInt32(CodeCaveOffsets.Base + CodeCaveOffsets.EntityIdInput, entityId);
+        memoryService.Write(CodeCaveOffsets.Base + CodeCaveOffsets.EntityIdInput, entityId);
         
-        var bytes = AsmLoader.GetAsmBytes("GetChrInsByEntityId");
-        AsmHelper.WriteAbsoluteAddresses(bytes, new[]
-        {
-            (CodeCaveOffsets.Base.ToInt64() + CodeCaveOffsets.EntityIdInput, 0x0 + 2),
+        var bytes = AsmLoader.GetAsmBytes(AsmScript.GetChrInsByEntityId);
+        AsmHelper.WriteAbsoluteAddresses(bytes, [
+            (CodeCaveOffsets.Base + CodeCaveOffsets.EntityIdInput, 0x0 + 2),
             (Functions.GetChrInsByEntityId, 0xa + 2),
-            (CodeCaveOffsets.Base.ToInt64()+ CodeCaveOffsets.ChrInsByEntityIdResult,0x1e + 2)
-        });
+            (CodeCaveOffsets.Base + CodeCaveOffsets.ChrInsByEntityIdResult,0x1e + 2)
+        ]);
         memoryService.AllocateAndExecute(bytes);
         
-        return (IntPtr) memoryService.ReadInt64(CodeCaveOffsets.Base + CodeCaveOffsets.ChrInsByEntityIdResult);
+        return memoryService.Read<nint>(CodeCaveOffsets.Base + CodeCaveOffsets.ChrInsByEntityIdResult);
     }
 
-    public void SetHp(IntPtr chrIns, int hp) =>
-        memoryService.WriteInt32(GetChrDataPtr(chrIns) + (int)ChrIns.ChrDataOffsets.Hp, hp);
+    public void SetHp(nint chrIns, int hp) =>
+        memoryService.Write(GetChrDataPtr(chrIns) + (int)ChrIns.ChrDataOffsets.Hp, hp);
 
-    public void SetHpNode(IntPtr chrIns, int nodeNum) =>
-        memoryService.WriteInt32(GetChrDataPtr(chrIns) + (int)ChrIns.ChrDataOffsets.CurrentBossNode, nodeNum);
+    public void SetHpNode(nint chrIns, int nodeNum) =>
+        memoryService.Write(GetChrDataPtr(chrIns) + (int)ChrIns.ChrDataOffsets.CurrentBossNode, nodeNum);
 
     #endregion
 

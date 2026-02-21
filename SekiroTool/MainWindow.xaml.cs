@@ -36,7 +36,7 @@ public partial class MainWindow : Window
         _memoryService.StartAutoAttach();
 
         InitializeComponent();
-        
+
         if (SettingsManager.Default.WindowLeft != 0 || SettingsManager.Default.WindowTop != 0)
         {
             Left = SettingsManager.Default.WindowLeft;
@@ -46,9 +46,9 @@ public partial class MainWindow : Window
 
         _aobScanner = new AoBScanner(_memoryService);
         _stateService = new StateService(_memoryService);
-        
+
         var hookManager = new HookManager(_memoryService, _stateService);
-        
+
         _nopManager = new NopManager(_memoryService, _stateService);
         _hotkeyManager = new HotkeyManager(_memoryService);
 
@@ -58,7 +58,7 @@ public partial class MainWindow : Window
         IEnemyService enemyService = new EnemyService(_memoryService, hookManager, reminderService);
         ITargetService targetService = new TargetService(_memoryService, hookManager, reminderService);
         IDebugDrawService debugDrawService = new DebugDrawService(_memoryService, _stateService, _nopManager);
-        IEventService eventService = new EventService(_memoryService, _hotkeyManager);
+        IEventService eventService = new EventService(_memoryService);
         IUtilityService utilityService = new UtilityService(_memoryService, hookManager);
         IItemService itemService = new ItemService(_memoryService);
         ISettingsService settingsService = new SettingsService(_memoryService, _nopManager, hookManager);
@@ -74,9 +74,11 @@ public partial class MainWindow : Window
         TargetViewModel targetViewModel =
             new TargetViewModel(_stateService, _hotkeyManager, targetService, debugDrawService);
         UtilityViewModel utilityViewModel =
-            new UtilityViewModel(utilityService, _stateService, _hotkeyManager, debugDrawService, playerViewModel, ezStateService);
+            new UtilityViewModel(utilityService, _stateService, _hotkeyManager, debugDrawService, playerViewModel,
+                ezStateService);
         ItemViewModel itemViewModel = new ItemViewModel(itemService, _stateService);
-        EventViewModel eventViewModel = new EventViewModel(eventService, _stateService, debugDrawService, itemService, _hotkeyManager);
+        EventViewModel eventViewModel =
+            new EventViewModel(eventService, _stateService, debugDrawService, itemService, _hotkeyManager);
         SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, _stateService, _hotkeyManager);
 
         var playerTab = new PlayerTab(playerViewModel);
@@ -96,11 +98,11 @@ public partial class MainWindow : Window
         MainTabControl.Items.Add(new TabItem { Header = "Items", Content = itemTab });
         MainTabControl.Items.Add(new TabItem { Header = "Event", Content = eventTab });
         MainTabControl.Items.Add(new TabItem { Header = "Settings", Content = settingsTab });
-        
+
         MainTabControl.SelectionChanged += MainTabControl_SelectionChanged;
 
         settingsViewModel.ApplyStartUpOptions();
-        
+
         Closing += MainWindow_Closing;
 
         _gameLoadedTimer = new DispatcherTimer
@@ -109,7 +111,7 @@ public partial class MainWindow : Window
         };
         _gameLoadedTimer.Tick += Timer_Tick;
         _gameLoadedTimer.Start();
-        
+
         VersionChecker.UpdateVersionText(AppVersion);
         if (SettingsManager.Default.EnableUpdateChecks)
         {
@@ -117,10 +119,8 @@ public partial class MainWindow : Window
         }
     }
 
-
     private bool _loaded;
 
-    
     private bool _hasAllocatedMemory;
     private DateTime? _attachedTime;
     private bool _hasPublishedAttached;
@@ -133,13 +133,13 @@ public partial class MainWindow : Window
             IsAttachedText.Text = "Attached to game";
             IsAttachedText.Foreground = (SolidColorBrush)Application.Current.Resources["AttachedBrush"];
             LaunchGameButton.IsEnabled = false;
-            
+
             if (!_attachedTime.HasValue)
             {
                 _attachedTime = DateTime.Now;
                 return;
             }
-            
+
             if ((DateTime.Now - _attachedTime.Value).TotalSeconds < 2)
                 return;
 
@@ -151,21 +151,20 @@ public partial class MainWindow : Window
                     _stateService.Publish(State.EarlyAttached);
                     _aobScanner.DoMainScan();
                 }
-                
+
 #if DEBUG
-                Console.WriteLine($@"Base: 0x{_memoryService.BaseAddress.ToInt64():X}");
+                Console.WriteLine($@"Base: 0x{(long)_memoryService.BaseAddress:X}");
 #endif
                 _hasCheckedPatch = true;
             }
-            
+
             if (!_hasAllocatedMemory)
             {
                 _memoryService.AllocCodeCave();
                 Console.WriteLine($"Code cave: 0x{CodeCaveOffsets.Base.ToInt64():X}");
                 _hasAllocatedMemory = true;
-              
             }
-            
+
             if (!_hasPublishedAttached)
             {
                 _stateService.Publish(State.Attached);
@@ -192,6 +191,7 @@ public partial class MainWindow : Window
                 _stateService.Publish(State.Detached);
                 _hasPublishedAttached = false;
             }
+
             _attachedTime = null;
             _loaded = false;
             _hasAllocatedMemory = false;
@@ -203,7 +203,7 @@ public partial class MainWindow : Window
 
     private void TrySetGameStartPrefs()
     {
-        var igt = _memoryService.ReadInt64((IntPtr)_memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.IGT);
+        var igt = _memoryService.Read<long>(_memoryService.Read<nint>(GameDataMan.Base) + GameDataMan.IGT);
         if (igt < 5000) _stateService.Publish(State.GameStart);
     }
 
@@ -231,9 +231,10 @@ public partial class MainWindow : Window
         SettingsManager.Default.WindowTop = Top;
         SettingsManager.Default.Save();
     }
-    
+
     private void LaunchGame_Click(object sender, RoutedEventArgs e) => Task.Run(GameLauncher.LaunchSekiro);
     private void CheckUpdate_Click(object sender, RoutedEventArgs e) => VersionChecker.CheckForUpdates(this, true);
+
     private void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (e.Source is TabControl && MainTabControl.SelectedItem is TabItem selectedTab)
