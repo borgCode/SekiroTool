@@ -301,8 +301,7 @@ public class ItemViewModel : BaseViewModel
         }
         else
         {
-            
-            _itemService.SpawnItem(SelectedItem, 1);
+            _itemService.SpawnItem(SelectedItem, SelectedQuantity);
         }
      
     }
