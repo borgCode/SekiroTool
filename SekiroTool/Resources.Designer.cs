@@ -152,16 +152,17 @@ namespace SekiroTool {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 41 8b 96 e0 01 00 00    mov    edx,DWORD PTR [r14+0x1e0]
-        ///50                      push   rax
-        ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # f &lt;_main+0xf&gt;
-        ///48 8b 80 88 00 00 00    mov    rax,QWORD PTR [rax+0x88]
-        ///49 3b 86 90 01 00 00    cmp    rax,QWORD PTR [r14+0x190]
-        ///75 44                   jne    63 &lt;normal&gt;
-        ///41 83 7e 28 05          cmp    DWORD PTR [r14+0x28],0x5
-        ///74 3d                   je     63 &lt;normal&gt;
-        ///53                      push   rbx
-        ///f3 44 0f 2a e2          cvtsi2ss xmm12,edx        /// [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to f3 41 0f 2c c1          cvttss2si eax,xmm9
+        ///41 83 7f 28 05          cmp    DWORD PTR [r15+0x28],0x5
+        ///74 31                   je     3d &lt;skip_all&gt;
+        ///51                      push   rcx
+        ///48 8b 0d 00 00 00 00    mov    rcx,QWORD PTR [rip+0x0]        # 14 &lt;_main+0x14&gt;
+        ///48 85 c9                test   rcx,rcx
+        ///74 23                   je     3c &lt;skip&gt;
+        ///48 8b 89 88 00 00 00    mov    rcx,QWORD PTR [rcx+0x88]
+        ///49 3b 8f 90 01 00 00    cmp    rcx,QWORD PTR [r15+0x190]
+        ///75 13                   jne    3c &lt;skip&gt;
+        ///f3 45 0f  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string DamageMultiplier {
             get {
@@ -170,17 +171,19 @@ namespace SekiroTool {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 48 8b 88 f8 1f 00 00    mov    rcx,QWORD PTR [rax+0x1ff8]
-        ///50                      push   rax
-        ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # f &lt;_main+0xf&gt;
-        ///4c 3b b0 88 00 00 00    cmp    r14,QWORD PTR [rax+0x88]
-        ///75 1b                   jne    33 &lt;exit&gt;
-        ///f3 44 0f 2a e3          cvtsi2ss xmm12,ebx
-        ///f3 44 0f 59 25 00 00    mulss  xmm12,DWORD PTR [rip+0x0]        # 26 &lt;_main+0x26&gt;
-        ///00 00
-        ///f3 41 0f 2c dc          cvttss2si ebx,xmm12
-        ///89 da                   mov    edx,ebx
-        ///f7 da                [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to 0f 28 b4 24 80 00 00    movaps xmm6,XMMWORD PTR [rsp+0x80]
+        ///00 
+        ///f3 0f 2c c0             cvttss2si eax,xmm0
+        ///80 bc 24 d0 00 00 00    cmp    BYTE PTR [rsp+0xd0],0x0
+        ///00 
+        ///74 27                   je     3d &lt;skip&gt;
+        ///51                      push   rcx
+        ///48 8b 0d 00 00 00 00    mov    rcx,QWORD PTR [rip+0x0]        # 1e &lt;_main+0x1e&gt;
+        ///48 85 c9                test   rcx,rcx
+        ///74 19                   je     3c &lt;exit&gt;
+        ///48 3b b9 88 00 00 00    cmp    rdi,QWORD PTR [rcx+0x88]
+        ///75 10                   jne    3c &lt;exit&gt;
+        ///f3 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string DamageMultiplier_Deflect {
             get {

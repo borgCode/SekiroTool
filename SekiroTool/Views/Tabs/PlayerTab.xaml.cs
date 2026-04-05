@@ -1,4 +1,6 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Input;
 using SekiroTool.Utilities;
 using SekiroTool.ViewModels;
 
@@ -14,6 +16,15 @@ public partial class PlayerTab : UserControl
         DataContext = playerViewModel;
 
         InitializeUpDownHelpers();
+    }
+
+    private void DamageMultiplierTextBox_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Enter)
+        {
+            var textBox = (TextBox)sender;
+            BindingOperations.GetBindingExpression(textBox, TextBox.TextProperty)?.UpdateSource();
+        }
     }
 
     private void InitializeUpDownHelpers()

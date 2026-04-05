@@ -437,16 +437,14 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
     {
         var bytes = AsmLoader.GetAsmBytes(AsmScript.DamageMultiplier);
         var damageMultiplier = CodeCaveOffsets.Base + CodeCaveOffsets.DamageMultiplier;
-        var origin = Hooks.DamageMultiplier;
         AsmHelper.WriteRelativeOffsets(bytes, [
-            (damageMultiplierCode + 0x8, WorldChrMan.Base, 7, 0x8 + 3),
-            (damageMultiplierCode + 0x2C, damageMultiplier, 9, 0x2C + 5),
-            (damageMultiplierCode + 0x4D, damageMultiplier, 9, 0x4D + 5),
-            (damageMultiplierCode + 0x64, origin + 7, 5, 0x64 + 1)
+            (damageMultiplierCode + 0xD, WorldChrMan.Base, 7, 0xD + 3),
+            (damageMultiplierCode + 0x2E, damageMultiplier, 9, 0x2E + 5),
+            (damageMultiplierCode + 0x3D, Hooks.DamageMultiplier + 5, 5, 0x3D + 1)
         ]);
 
         memoryService.WriteBytes(damageMultiplierCode, bytes);
-        hookManager.InstallHook(damageMultiplierCode, origin, [0x41, 0x8B, 0x96, 0xE0, 0x01, 0x00, 0x00]);
+        hookManager.InstallHook(damageMultiplierCode, Hooks.DamageMultiplier, [0xF3, 0x41, 0x0F, 0x2C, 0xC1]);
     }
 
     private void InstallDamageMultiplierDeflectHook(IntPtr damageMultiplierDeflectCode)
@@ -455,17 +453,17 @@ public class PlayerService(IMemoryService memoryService, HookManager hookManager
         var damageMultiplier = CodeCaveOffsets.Base + CodeCaveOffsets.DamageMultiplier;
         var origin = Hooks.DamageMultiplierDeflect;
         AsmHelper.WriteRelativeOffsets(bytes, [
-            (damageMultiplierDeflectCode + 0x8, WorldChrMan.Base, 7, 0x8 + 3),
-            (damageMultiplierDeflectCode + 0x1D, damageMultiplier, 9, 0x1D + 5),
-            (damageMultiplierDeflectCode + 0x34, origin + 7, 5, 0x34 + 1)
+            (damageMultiplierDeflectCode + 0x17, WorldChrMan.Base, 7, 0x17 + 3),
+            (damageMultiplierDeflectCode + 0x30, damageMultiplier, 8, 0x30 + 4),
+            (damageMultiplierDeflectCode + 0x3D, origin + 12, 5, 0x3D + 1)
         ]);
 
         memoryService.WriteBytes(damageMultiplierDeflectCode, bytes);
         hookManager.InstallHook(damageMultiplierDeflectCode, origin,
-            [0x48, 0x8B, 0x88, 0xF8, 0x1F, 0x00, 0x00]);
+            [0x0F, 0x28, 0xB4, 0x24, 0x80, 0x00, 0x00, 0x00, 0xF3, 0x0F, 0x2C, 0xC0]);
     }
 
-    public void SetDamageMultiplier(float multiplier)
+    public void SetDamageMultiplier(double multiplier)
     {
         var damageMultiplier = CodeCaveOffsets.Base + CodeCaveOffsets.DamageMultiplier;
         memoryService.Write(damageMultiplier, multiplier);

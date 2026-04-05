@@ -21,7 +21,9 @@ public class PlayerViewModel : BaseViewModel
 
     private bool _pauseUpdates;
 
-    private const float DefaultDamageMultiplier = 1.0f;
+    private const double DefaultDamageMultiplier = 1.0;
+    private const double MinDamageMultiplier = 0.0;
+    private const double MaxDamageMultiplier = 999999.0;
     
     private const float DefaultSpeed = 1f;
     private float _playerDesiredSpeed = -1f;
@@ -467,16 +469,30 @@ public class PlayerViewModel : BaseViewModel
     }
 
 
-    private float _damageMultiplier = DefaultDamageMultiplier;
+    private double _damageMultiplier = DefaultDamageMultiplier;
 
-    public float DamageMultiplier
+    public double DamageMultiplier
     {
         get => _damageMultiplier;
         set
         {
-            if (SetProperty(ref _damageMultiplier, value))
+            var clamped = Math.Max(MinDamageMultiplier, Math.Min(MaxDamageMultiplier, value));
+            if (SetProperty(ref _damageMultiplier, clamped))
             {
+                OnPropertyChanged(nameof(DamageMultiplierText));
                 if (IsDamageMultiplierEnabled) _playerService.SetDamageMultiplier(_damageMultiplier);
+            }
+        }
+    }
+
+    public string DamageMultiplierText
+    {
+        get => _damageMultiplier.ToString("G");
+        set
+        {
+            if (double.TryParse(value, out var parsed))
+            {
+                DamageMultiplier = parsed;
             }
         }
     }
@@ -554,8 +570,8 @@ public class PlayerViewModel : BaseViewModel
         _hotkeyManager.RegisterAction(HotkeyActions.TogglePlayerSpeed, () => TogglePlayerSpeed());
         _hotkeyManager.RegisterAction(HotkeyActions.IncreasePlayerSpeed, () => SetSpeed(Math.Min(10, PlayerSpeed + 0.25f)));
         _hotkeyManager.RegisterAction(HotkeyActions.DecreasePlayerSpeed, () => SetSpeed(Math.Max(0, PlayerSpeed - 0.25f)));
-        _hotkeyManager.RegisterAction(HotkeyActions.IncreaseDamageMultiplier, () => DamageMultiplier = Math.Min(10, DamageMultiplier + 0.1f));
-        _hotkeyManager.RegisterAction(HotkeyActions.DecreaseDamageMultiplier, () => DamageMultiplier = Math.Max(0.1f, DamageMultiplier - 0.1f));
+        _hotkeyManager.RegisterAction(HotkeyActions.IncreaseDamageMultiplier, () => DamageMultiplier = Math.Min(MaxDamageMultiplier, DamageMultiplier + 0.1));
+        _hotkeyManager.RegisterAction(HotkeyActions.DecreaseDamageMultiplier, () => DamageMultiplier = Math.Max(MinDamageMultiplier, DamageMultiplier - 0.1));
         _hotkeyManager.RegisterAction(HotkeyActions.ToggleDamageMultiplier, () => IsDamageMultiplierEnabled = !IsDamageMultiplierEnabled);
 
 
@@ -627,6 +643,7 @@ public class PlayerViewModel : BaseViewModel
     private void PlayerTick(object? sender, EventArgs e)
     {
         if (_pauseUpdates) return;
+        
         var coords = _playerService.GetCoords();
         PosX = coords.x;
         PosY = coords.y;

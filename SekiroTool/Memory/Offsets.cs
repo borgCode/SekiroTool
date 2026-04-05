@@ -1091,17 +1091,17 @@ public static class Offsets
 
         Hooks.DamageMultiplier = moduleBase + Version switch
         {
-            Version1_2_0 => 0xB57BCA,
-            Version1_3_0 or Version1_4_0 => 0xB5827A,
-            Version1_5_0 or Version1_6_0 => 0xB6E87A,
+            Version1_2_0 => 0xB573C6,
+            Version1_3_0 or Version1_4_0 => 0xB57A76,
+            Version1_5_0 or Version1_6_0 => 0xB6E076,
             _ => 0
         };
 
         Hooks.DamageMultiplierDeflect = moduleBase + Version switch
         {
-            Version1_2_0 => 0xB5304D,
-            Version1_3_0 or Version1_4_0 => 0xB536FD,
-            Version1_5_0 or Version1_6_0 => 0xB69CFD,
+            Version1_2_0 => 0x8383A3,
+            Version1_3_0 or Version1_4_0 => 0x8388A3,
+            Version1_5_0 or Version1_6_0 => 0x842943,
             _ => 0
         };
 

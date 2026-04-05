@@ -206,18 +206,14 @@
                     <CheckBox Content="Damage Multiplier"
                               Margin="0,2"
                               IsChecked="{Binding IsDamageMultiplierEnabled}" />
-                    <xctk:DoubleUpDown
+                    <TextBox
                         Margin="15, 5, 0, 2"
                         IsEnabled="{Binding IsDamageMultiplierEnabled}"
-                        Value="{Binding DamageMultiplier}"
-                        Maximum="50"
-                        Minimum="0.01"
-                        ClipValueToMinMax="True"
-                        Increment="0.1"
-                        FormatString="F2"
-                        >
-                        
-                    </xctk:DoubleUpDown>
+                        Text="{Binding DamageMultiplierText, UpdateSourceTrigger=LostFocus}"
+                        Width="120"
+                        HorizontalAlignment="Left"
+                        KeyDown="DamageMultiplierTextBox_KeyDown"
+                        />
                     
 
                 </StackPanel>
