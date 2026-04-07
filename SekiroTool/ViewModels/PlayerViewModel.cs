@@ -23,7 +23,7 @@ public class PlayerViewModel : BaseViewModel
 
     private const double DefaultDamageMultiplier = 1.0;
     private const double MinDamageMultiplier = 0.0;
-    private const double MaxDamageMultiplier = 999999.0;
+    private const double MaxDamageMultiplier = 100.0;
     
     private const float DefaultSpeed = 1f;
     private float _playerDesiredSpeed = -1f;
