@@ -21,6 +21,7 @@ public class UtilityViewModel : BaseViewModel
     private readonly IEzStateService _ezStateService;
 
     private bool _wasNoDeathEnabled;
+    private bool _wasNoDeathEnabledWithoutKillbox;
     private float _desiredSpeed = 2;
 
     public UtilityViewModel(IUtilityService utilityService, IStateService stateService,
@@ -290,12 +291,14 @@ public class UtilityViewModel : BaseViewModel
                 _utilityService.WriteNoClipSpeed(NoClipSpeed);
                 _utilityService.ToggleNoClip(_isNoClipEnabled);
                 _wasNoDeathEnabled = _playerViewModel.IsNoDeathEnabled;
+                _wasNoDeathEnabledWithoutKillbox = _playerViewModel.IsNoDeathEnabledWithoutKillbox;
                 _playerViewModel.IsNoDeathEnabled = true;
             }
             else
             {
                 _utilityService.ToggleNoClip(_isNoClipEnabled);
                 _playerViewModel.IsNoDeathEnabled = _wasNoDeathEnabled;
+                _playerViewModel.IsNoDeathEnabledWithoutKillbox = _wasNoDeathEnabledWithoutKillbox;
             }
         }
     }
