@@ -46,7 +46,11 @@ public class ItemService(IMemoryService memoryService) : IItemService
 
     public void RemoveItem(int id)
     {
+        
         var bytes = AsmLoader.GetAsmBytes(AsmScript.RemoveItem);
+        
+        AsmHelper.WriteImmediateDword(bytes, ChrIns.PlayerGameDataOffsets.EquipInventoryData,0xE + 3 );
+        
         AsmHelper.WriteAbsoluteAddresses(bytes, [
             (GameDataMan.Base, 0x0 + 2),
             (id, 0x18 + 2),

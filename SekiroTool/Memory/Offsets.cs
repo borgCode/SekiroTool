@@ -130,13 +130,16 @@ public static class Offsets
             ForceKengekiAct = 0xB743,
             LastKengekiAct = 0xB744
         }
-
-        public enum PlayerGameDataOffsets
+        public static class PlayerGameDataOffsets
         {
-            AttackPower = 0x48,
-            Experience = 0x160,
-            EquipGameData = 0x518,
-            EquipInventoryData = 0x5B0
+            public static int AttackPower = 0x48;
+            public static int Experience = 0x160;
+            public static int EquipGameData = 0x518;
+            public static int EquipInventoryData = Version switch
+            {
+                Version1_3_0 or Version1_4_0 => 0x5A8,
+               _ => 0x5B0
+            };
         }
     }
 
