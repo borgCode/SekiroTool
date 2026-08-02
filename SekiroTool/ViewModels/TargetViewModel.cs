@@ -170,14 +170,26 @@ public class TargetViewModel : BaseViewModel
     public int TargetCurrentHealth
     {
         get => _targetCurrentHealth;
-        set => SetProperty(ref _targetCurrentHealth, value);
+        set
+        {
+            SetProperty(ref _targetCurrentHealth, value);
+            OnPropertyChanged(nameof(TargetHealthPercentage));
+        }
     }
 
     public int TargetMaxHealth
     {
         get => _targetMaxHealth;
-        set => SetProperty(ref _targetMaxHealth, value);
+        set
+        {
+            SetProperty(ref _targetMaxHealth, value);
+            OnPropertyChanged(nameof(TargetHealthPercentage));
+        }
     }
+    
+    public string TargetHealthPercentage => TargetMaxHealth > 0
+        ? (TargetCurrentHealth / (double)TargetMaxHealth * 100).ToString("F1")
+        : "0.0";
 
     public bool IsFreezeHealthEnabled
     {
@@ -204,14 +216,26 @@ public class TargetViewModel : BaseViewModel
     public int TargetCurrentPosture
     {
         get => _targetCurrentPosture;
-        set => SetProperty(ref _targetCurrentPosture, value);
+        set
+        {
+            SetProperty(ref _targetCurrentPosture, value);
+            OnPropertyChanged(nameof(TargetPosturePercentage));
+        }
     }
 
     public int TargetMaxPosture
     {
         get => _targetMaxPosture;
-        set => SetProperty(ref _targetMaxPosture, value);
+        set
+        {
+            SetProperty(ref _targetMaxPosture, value);
+            OnPropertyChanged(nameof(TargetPosturePercentage));
+        }
     }
+    
+    public string TargetPosturePercentage => TargetMaxPosture > 0
+        ? (TargetCurrentPosture / (double)TargetMaxPosture * 100).ToString("F1")
+        : "0.0";
 
     public bool IsFreezePostureEnabled
     {
