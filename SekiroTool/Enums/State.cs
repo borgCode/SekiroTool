@@ -9,6 +9,6 @@ public enum State
     NotLoaded,
     GameStart,
     AppClosing,
-    AppStarting,
+    AppStart,
     EventTabActivated,
 }

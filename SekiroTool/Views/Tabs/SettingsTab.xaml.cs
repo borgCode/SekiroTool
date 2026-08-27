@@ -8,14 +8,14 @@ namespace SekiroTool.Views.Tabs;
 public partial class SettingsTab : UserControl
 {
     private readonly SettingsViewModel _settingsViewModel;
-        
+
     public SettingsTab(SettingsViewModel settingsViewModel)
     {
         DataContext = settingsViewModel;
         _settingsViewModel = settingsViewModel;
         InitializeComponent();
     }
-    
+
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
         Dispatcher.BeginInvoke(new Action(() =>

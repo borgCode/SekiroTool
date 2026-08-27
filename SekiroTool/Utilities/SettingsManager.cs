@@ -11,6 +11,8 @@ public class SettingsManager
     public static SettingsManager Default => _default ??= Load();
     
     public string HotkeyActionIds { get; set; } = "";
+    public bool ActivateOnLaunchEnabled { get; set; }
+    public string ActivateOnLaunchActionIds { get; set; } = "";
     public bool EnableHotkeys { get; set; }
     public bool NoLogo { get; set; }
     public bool AlwaysOnTop { get; set; }

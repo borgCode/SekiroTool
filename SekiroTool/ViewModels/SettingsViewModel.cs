@@ -7,6 +7,7 @@ using SekiroTool.Core;
 using SekiroTool.Enums;
 using SekiroTool.Interfaces;
 using SekiroTool.Utilities;
+using SekiroTool.Views.Windows;
 using Key = H.Hooks.Key;
 using KeyboardEventArgs = H.Hooks.KeyboardEventArgs;
 
@@ -16,6 +17,8 @@ public class SettingsViewModel : BaseViewModel
 {
     private readonly ISettingsService _settingsService;
     private readonly HotkeyManager _hotkeyManager;
+    private readonly ActivateOnLaunchViewModel _activateOnLaunchViewModel;
+    private ActivateOnLaunchWindow _activateOnLaunchWindow;
 
     private readonly Dictionary<string, HotkeyBindingViewModel> _hotkeyLookup;
 
@@ -31,10 +34,11 @@ public class SettingsViewModel : BaseViewModel
     public ObservableCollection<HotkeyBindingViewModel> BossSkipHotkeys { get; }
 
     public SettingsViewModel(ISettingsService settingsService, IStateService stateService,
-        HotkeyManager hotkeyManager)
+        HotkeyManager hotkeyManager, ActivateOnLaunchViewModel activateOnLaunchViewModel)
     {
         _settingsService = settingsService;
         _hotkeyManager = hotkeyManager;
+        _activateOnLaunchViewModel = activateOnLaunchViewModel;
 
         stateService.Subscribe(State.Attached, OnGameAttached);
         stateService.Subscribe(State.EarlyAttached, OnGameEarlyAttached);
@@ -148,15 +152,17 @@ public class SettingsViewModel : BaseViewModel
             .Concat((EventHotkeys))
             .ToDictionary(h => h.ActionId);
         LoadHotkeyDisplays();
-        
+
         ClearHotkeysCommand = new DelegateCommand(ClearHotkeys);
+        OpenActivateOnLaunchCommand = new DelegateCommand(OpenActivateOnLaunch);
     }
 
-  
+
 
     #region Commands
 
     public ICommand ClearHotkeysCommand { get; set; }
+    public ICommand OpenActivateOnLaunchCommand { get; set; }
 
     #endregion
 
@@ -562,6 +568,24 @@ public class SettingsViewModel : BaseViewModel
     {
         _hotkeyManager.ClearAll();
         LoadHotkeyDisplays();
+    }
+
+    private void OpenActivateOnLaunch()
+    {
+        if (_activateOnLaunchWindow != null && _activateOnLaunchWindow.IsVisible)
+        {
+            _activateOnLaunchWindow.Activate();
+            return;
+        }
+
+        _activateOnLaunchWindow = new ActivateOnLaunchWindow(_activateOnLaunchViewModel)
+        {
+            DataContext = _activateOnLaunchViewModel,
+            Owner = Application.Current.MainWindow
+        };
+
+        _activateOnLaunchWindow.Closed += (_, _) => _activateOnLaunchWindow = null;
+        _activateOnLaunchWindow.ShowDialog();
     }
 
     #endregion
