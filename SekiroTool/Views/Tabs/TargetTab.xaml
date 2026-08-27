@@ -40,8 +40,9 @@
                             <Run Text="{Binding TargetCurrentHealth, Mode=OneWay}" />
                             <Run Text="/" />
                             <Run Text="{Binding TargetMaxHealth, Mode=OneWay}" />
+                            <Run Text="{Binding TargetHealthPercentage, Mode=OneWay, StringFormat={}({0}%)}" />
                         </TextBlock>
-
+                        
                         <xctk:IntegerUpDown Width="80" Margin="5,2"
                                             HorizontalAlignment="Right"
                                             Value="{Binding CustomHp}"
@@ -158,6 +159,7 @@
                             <Run Text="{Binding TargetCurrentPosture, Mode=OneWay}" />
                             <Run Text="/" />
                             <Run Text="{Binding TargetMaxPosture, Mode=OneWay}" />
+                            <Run Text="{Binding TargetPosturePercentage, Mode=OneWay, StringFormat={}({0}%)}" />
                         </TextBlock>
                         <xctk:IntegerUpDown Width="80" Margin="5,2"
                                             HorizontalAlignment="Right"
